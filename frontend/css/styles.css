@@ -2771,7 +2771,7 @@ a.tab .tab-count { font-size: .72rem; opacity: .8; }
 
 /* The opening window: a wiki being written, then the quiz it feeds. Both panels
    share one fixed-height box, so alternating never moves the page. */
-.ld-studio-stage { position: relative; padding: 1rem; min-height: 258px; }
+.ld-studio-stage { position: relative; padding: 1rem; min-height: 344px; }
 .ld-studio-tabs { display: flex; align-items: center; gap: .3rem; padding: .4rem .6rem; border-bottom: 1px solid var(--border); }
 .ld-studio-tab {
   border: 1px solid transparent; background: none; color: var(--muted); font: inherit;
@@ -2791,30 +2791,72 @@ a.tab .tab-count { font-size: .72rem; opacity: .8; }
   transition: opacity .32s ease, transform .32s ease, visibility .32s;
 }
 .ld-studio-panel.is-on { opacity: 1; visibility: visible; transform: none; }
-.ld-studio-panel[data-studio-panel="wiki"] { grid-template-columns: 78px minmax(0, 1fr); gap: .9rem; }
+.ld-studio-panel[data-studio-panel="wiki"] { grid-template-columns: 54px minmax(0, 1fr) 168px; gap: .85rem; }
+.ld-studio-panel[data-studio-panel="quiz"] { align-content: center; gap: .7rem; }
 .ld-studio-nav { display: grid; gap: .45rem; align-content: start; }
 .ld-studio-nav span { display: block; height: 9px; border-radius: 3px; background: var(--surface-2); }
 .ld-studio-nav span.is-on { background: color-mix(in srgb, var(--accent) 45%, var(--surface-2)); }
 .ld-studio-nav span.is-sub { margin-left: .5rem; height: 7px; }
-.ld-studio-doc h4 {
-  height: 11px; width: 62%; margin: 0 0 .55rem; border-radius: 3px;
-  background: color-mix(in srgb, var(--text) 26%, transparent);
+.ld-studio-doc { display: grid; gap: .5rem; align-content: start; }
+.ld-studio-doc h4 { margin: 0; font-size: .85rem; line-height: 1.25; color: var(--text); letter-spacing: -.01em; }
+.ld-studio-doc p { position: relative; margin: 0; font-size: .74rem; line-height: 1.55; color: var(--muted); }
+.ld-studio-doc p.ld-studio-typed {
+  color: var(--text); padding: .3rem .45rem; border-radius: 6px;
+  background: color-mix(in srgb, var(--accent) 9%, transparent);
 }
-.ld-studio-doc p { position: relative; height: 8px; margin: 0 0 .4rem; border-radius: 3px; background: var(--surface-2); }
-.ld-studio-doc p.short { width: 74%; }
-.ld-studio-doc p.ld-studio-typed { width: 86%; height: 9px; background: color-mix(in srgb, var(--accent) 22%, var(--surface-2)); }
-.ld-studio-doc .ld-caret { top: -3px; height: 15px; }
-.ld-studio-doc .ld-diff { margin: .5rem 0 .1rem; }
+.ld-studio-doc .ld-caret { top: .2rem; height: 13px; }
+.ld-studio-doc .ld-caret::after { display: none; }
+.ld-caret.c-three { left: 78%; background: var(--ok); animation-delay: .8s; }
+.ld-studio-doc .ld-diff { display: flex; flex-wrap: wrap; gap: .3rem; margin-top: .1rem; }
+.ld-studio-doc .ld-diff .add, .ld-studio-doc .ld-diff .del { font-size: .66rem; padding: .16rem .38rem; }
+.ld-studio-doc .ld-avatars { margin-top: .15rem; }
 .ld-studio-options { display: grid; gap: .4rem; }
 .ld-studio-opt {
   display: grid; grid-template-columns: 1.15rem 1fr; align-items: center; gap: .5rem;
   padding: .38rem .55rem; border: 1px solid var(--border); border-radius: 8px; background: var(--surface);
 }
 .ld-studio-opt b { font-size: .68rem; color: var(--muted); font-weight: 700; }
-.ld-studio-opt i { display: block; height: 8px; border-radius: 3px; background: var(--surface-2); }
+.ld-studio-opt span { font-size: .74rem; color: var(--text); }
 .ld-studio-opt.is-picked { border-color: color-mix(in srgb, var(--accent) 55%, var(--border)); background: var(--accent-soft); }
 .ld-studio-opt.is-picked b { color: var(--accent-2); }
-.ld-studio-opt.is-picked i { background: color-mix(in srgb, var(--accent) 30%, var(--surface-2)); }
+.ld-studio-opt.is-picked span { color: var(--accent-2); font-weight: 600; }
+
+/* The AI card: the argument the page has to make without a caption. It sits in
+   its own column, so it never covers the paragraph it comments on. */
+.ld-studio-ai {
+  align-self: start; display: grid; gap: .4rem; padding: .55rem .6rem;
+  border: 1px solid color-mix(in srgb, var(--accent) 32%, var(--border));
+  border-radius: 10px; background: var(--accent-soft);
+}
+.ld-studio-ai-badge { margin: 0; font-size: .6rem; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--accent-2); }
+.ld-studio-ai-text { margin: 0; font-size: .72rem; line-height: 1.4; color: var(--text); }
+.ld-studio-ai-actions { display: flex; flex-wrap: wrap; gap: .3rem; }
+.ld-studio-ai-actions button {
+  font: inherit; font-size: .64rem; padding: .16rem .5rem; border-radius: 999px;
+  border: 1px solid var(--border); background: var(--surface); cursor: pointer;
+}
+.ld-studio-ai-actions .ld-studio-ai-yes { border-color: transparent; background: var(--accent); color: var(--on-accent); font-weight: 600; }
+.ld-studio-ai-actions .ld-studio-ai-no { color: var(--muted); }
+.ld-studio-from { margin: 0; font-size: .68rem; color: var(--accent-2); }
+
+/* Advance controls, at the foot of the live screen: out of thumb reach of the
+   answer grid, and never the same tap as "submit". */
+.host-advance {
+  margin-top: 1rem; padding: .8rem .9rem; display: grid; gap: .55rem;
+  border: 1px solid var(--border); border-radius: 14px; background: var(--surface);
+}
+.host-advance-hint { margin: 0; font-size: .86rem; color: var(--muted); }
+.host-advance.is-ready .host-advance-hint { color: var(--ok-text); }
+.host-advance.is-ready { border-color: color-mix(in srgb, var(--ok) 45%, var(--border)); }
+.host-advance .row { margin: 0; }
+
+@media (max-width: 860px) {
+  .ld-studio-stage { min-height: 408px; }
+  .ld-studio-panel[data-studio-panel="wiki"] { grid-template-columns: minmax(0, 1fr); }
+  .ld-studio-nav { display: none; }
+  .ld-studio-ai { order: 2; }
+  .ld-studio-doc p { font-size: .72rem; }
+}
 
 .ld-chat { border: 1px solid rgba(139,92,246,.35); border-radius: 16px; padding: 1rem; background: var(--surface); box-shadow: var(--shadow); display: grid; gap: .55rem; }
 .ld-chat-head { font-size: .72rem; text-transform: uppercase; letter-spacing: .08em; color: var(--accent-2); font-weight: 700; }
