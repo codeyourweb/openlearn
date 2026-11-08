@@ -38,9 +38,37 @@ function matchRoute(pathname) {
   return null;
 }
 
+/* A view change has to be announced: a screen reader would otherwise stay in
+   the previous document, and a keyboard user would keep the focus on a link that
+   no longer exists on screen. The flag is set by user-driven navigations only, so
+   the first paint does not steal the focus. */
+let focusPending = false;
+
+function sectionOf(pathname) {
+  const link = [...document.querySelectorAll("#nav a[data-link]")].find((candidate) => {
+    const href = candidate.getAttribute("href") || "";
+    return pathname === href || pathname.startsWith(`${href}/`);
+  });
+  for (const candidate of document.querySelectorAll("#nav a[data-link]")) {
+    if (candidate === link) candidate.setAttribute("aria-current", "page");
+    else candidate.removeAttribute("aria-current");
+  }
+}
+
+function announceRoute() {
+  sectionOf(location.pathname);
+  const app = document.getElementById("app");
+  if (!app) return;
+  app.focus({ preventScroll: true });
+  const title = document.querySelector("#app h1")?.textContent?.trim() || document.title;
+  const region = document.getElementById("route-announcer");
+  if (region) region.textContent = title;
+}
+
 export function navigate(path, { replace = false } = {}) {
   if (replace) history.replaceState({}, "", path);
   else history.pushState({}, "", path);
+  focusPending = true;
   render();
 }
 
@@ -76,10 +104,19 @@ export async function render() {
   }
   window.scrollTo({ top: 0, behavior: "instant" in window ? "instant" : "auto" });
   afterRender();
+  if (focusPending) {
+    focusPending = false;
+    announceRoute();
+  } else {
+    sectionOf(location.pathname);
+  }
 }
 
 export function start() {
-  window.addEventListener("popstate", render);
+  window.addEventListener("popstate", () => {
+    focusPending = true;
+    render();
+  });
   document.addEventListener("click", (event) => {
     const link = event.target.closest("a[data-link]");
     if (!link || link.target === "_blank" || event.metaKey || event.ctrlKey || event.shiftKey) return;

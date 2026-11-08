@@ -50,5 +50,11 @@ psycopg is linked as a separate library and loaded at runtime: it can be
 replaced by another driver without touching this code, which is what section 4
 of the LGPL requires.
 
+  axe-core 4.10.2 (tools/axe, tests only) ...... MPL-2.0
+
+axe-core is vendored rather than fetched from a CDN so the accessibility audit
+runs offline and always uses the version this repository names. No page served by
+OpenLearn loads it; see tools/axe/README.md.
+
 The demo catalogue under demo/ is original content, written for this project and
 released under the same licence as the code.

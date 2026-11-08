@@ -127,32 +127,59 @@ export function showBusyOverlay(label) {
 export function confirmDialog(title, message, confirmLabel = "Confirm") {
   return new Promise((resolve) => {
     const root = document.getElementById("modal-root");
+    // A dialog that swallows Tab, forgets where the focus came from and offers
+    // no way out by keyboard is a trap for anyone not using a mouse.
+    const previous = document.activeElement;
     root.innerHTML = `
       <div class="modal-backdrop" role="presentation">
-        <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title"
+             aria-describedby="modal-desc" tabindex="-1">
           <h3 id="modal-title">${escapeHtml(title)}</h3>
-          <p class="muted">${escapeHtml(message)}</p>
+          <p class="muted" id="modal-desc">${escapeHtml(message)}</p>
           <div class="modal-actions">
             <button class="btn btn-ghost" data-action="cancel">${escapeHtml(t("action.cancel"))}</button>
             <button class="btn btn-danger" data-action="confirm">${escapeHtml(confirmLabel)}</button>
           </div>
         </div>
       </div>`;
+    const modal = root.querySelector(".modal");
     const close = (value) => {
       root.innerHTML = "";
-      document.removeEventListener("keydown", onKey);
+      document.removeEventListener("keydown", onKey, true);
+      if (previous && typeof previous.focus === "function" && document.contains(previous)) {
+        previous.focus();
+      }
       resolve(value);
     };
+    const focusables = () => Array.from(modal.querySelectorAll("button, [href], input, select, textarea"));
     const onKey = (event) => {
-      if (event.key === "Escape") close(false);
+      if (event.key === "Escape") {
+        event.preventDefault();
+        close(false);
+        return;
+      }
+      if (event.key !== "Tab") return;
+      const items = focusables();
+      if (!items.length) return;
+      const first = items[0];
+      const last = items[items.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
     };
-    document.addEventListener("keydown", onKey);
+    document.addEventListener("keydown", onKey, true);
     root.querySelector('[data-action="cancel"]').addEventListener("click", () => close(false));
     root.querySelector('[data-action="confirm"]').addEventListener("click", () => close(true));
     root.querySelector(".modal-backdrop").addEventListener("click", (event) => {
       if (event.target.classList.contains("modal-backdrop")) close(false);
     });
-    root.querySelector('[data-action="confirm"]').focus();
+    // The safe answer takes the focus: a destructive action should not be one
+    // stray Enter away.
+    root.querySelector('[data-action="cancel"]').focus();
   });
 }
 

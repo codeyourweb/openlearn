@@ -511,7 +511,7 @@ async function _wikiPage(root, params) {
         </div>
         <input id="wiki-page-filter" class="input input-sm" type="search"
                placeholder="${escapeHtml(t("wiki.filter_pages"))}" />
-        <nav class="wiki-nav" id="wiki-nav">${pagesHtml}</nav>
+        <nav class="wiki-nav" id="wiki-nav" aria-label="${escapeHtml(t("wiki.page_list"))}">${pagesHtml}</nav>
         <div class="wiki-side-actions">
           ${canWrite ? `<a class="btn btn-sm btn-primary" data-link href="/wiki/${wiki.id}/edit">${escapeHtml(t("wiki.new_page"))}</a>` : ""}
           ${

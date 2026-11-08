@@ -118,6 +118,16 @@ async function renderPlayer(root, code) {
   }
 
   let timerHandle = null;
+  let lastAnnounced = null;
+
+  const announceTimer = (message) => {
+    const region = root.querySelector("#timer-announce");
+    if (!region) return;
+    region.textContent = "";
+    window.setTimeout(() => {
+      region.textContent = message;
+    }, 40);
+  };
   let currentDeadline = null;
   let clockOffset = 0;
   let timeUp = false;
@@ -165,7 +175,14 @@ async function renderPlayer(root, code) {
         fill.style.width = `${Math.min(100, (left / total) * 100)}%`;
         fill.classList.toggle("low", left < total * 0.3);
       }
-      if (label) label.textContent = `${Math.ceil(left / 1000)}s`;
+      const secondsLeft = Math.ceil(left / 1000);
+      if (label) label.textContent = `${secondsLeft}s`;
+      // A counter read out ten times a second is noise. The thresholds that
+      // matter are the last thirty seconds and the last ten.
+      if ((secondsLeft === 30 || secondsLeft === 10) && secondsLeft !== lastAnnounced) {
+        lastAnnounced = secondsLeft;
+        announceTimer(t("play.time_left").replace("{seconds}", String(secondsLeft)));
+      }
       const runClock = root.querySelector("[data-run-clock]");
       if (runClock) {
         const deadline = state.session && state.session.run_deadline;
@@ -291,7 +308,7 @@ async function renderPlayer(root, code) {
 
     const multiple = question.multiple_answers;
     return `
-      <div class="options-grid" role="${multiple ? "group" : "radiogroup"}">
+      <div class="options-grid" role="group" aria-label="${escapeHtml(t("play.answer_choices"))}">
         ${question.options
           .map((option, index) => {
             const selected = selections.has(option.id);
@@ -313,6 +330,7 @@ async function renderPlayer(root, code) {
                 <span class="letter">${String.fromCharCode(65 + index)}</span>
                 <span>${escapeHtml(option.text)}</span>
                 ${reveal ? `<span class="option-count">${(reveal.options.find((entry) => entry.id === option.id) || {}).count || 0}</span>` : ""}
+                ${reveal && !isPoll ? `<span class="visually-hidden">${correct ? t("play.correct") : selected ? t("play.incorrect") : ""}</span>` : ""}
               </button>`;
           })
           .join("")}
@@ -336,11 +354,11 @@ async function renderPlayer(root, code) {
     const mine = (reveal.results || []).find((entry) => entry.participant_id === pid);
     if (state.session.mode === "poll") {
       // Opinion, not a contest: thank the respondent instead of scoring them.
-      return `<div class="feedback ok">${t(mine ? "play.poll_thanks" : "results.no_answer")}</div>`;
+      return `<div class="feedback ok" role="status">${t(mine ? "play.poll_thanks" : "results.no_answer")}</div>`;
     }
-    if (!mine) return `<div class="feedback wait">${t("results.no_answer")}</div>`;
-    if (mine.is_correct) return `<div class="feedback ok">${t("play.correct")} +${mine.points_awarded} ${t("common.points")}</div>`;
-    return `<div class="feedback ko">${t("play.incorrect")} — ${
+    if (!mine) return `<div class="feedback wait" role="status">${t("results.no_answer")}</div>`;
+    if (mine.is_correct) return `<div class="feedback ok" role="status">${t("play.correct")} +${mine.points_awarded} ${t("common.points")}</div>`;
+    return `<div class="feedback ko" role="status">${t("play.incorrect")} — ${
       mine.points_awarded < 0 ? `${mine.points_awarded} ${t("common.points")}` : t("play.no_points")
     }</div>`;
   };
@@ -378,6 +396,7 @@ async function renderPlayer(root, code) {
           question.deadline
             ? `<div class="timer">
                  <div class="timer-bar"><div class="timer-fill"></div></div>
+                 <span id="timer-announce" class="visually-hidden" role="status" aria-live="polite"></span>
                  <div class="timer-row">
                    <span>${question.points} ${t("common.points")}</span>
                    ${
@@ -385,7 +404,7 @@ async function renderPlayer(root, code) {
                        ? `<span class="timer-run">${t("play.whole_quiz")} <span data-run-clock></span></span>`
                        : ""
                    }
-                   <span data-timer-label>${Math.ceil(remainingMs() / 1000)}s</span>
+                   <span data-timer-label aria-hidden="true">${Math.ceil(remainingMs() / 1000)}s</span>
                  </div>
                </div>`
             : `<div class="timer timer-off">
@@ -398,7 +417,7 @@ async function renderPlayer(root, code) {
         ${swipe ? "" : `<div class="question-text">${question.text_html}</div>`}
         ${!swipe && question.image_path ? `<img class="question-image" src="${escapeHtml(question.image_path)}" alt="" />` : ""}
         <div id="answers">${optionsHtml()}</div>
-        <p class="banner warn mt-2" id="time-notice" ${timeUp && !state.reveal ? "" : "hidden"}>${t("play.time_up")}</p>
+        <p class="banner warn mt-2" id="time-notice" role="status" ${timeUp && !state.reveal ? "" : "hidden"}>${t("play.time_up")}</p>
         ${
           swipe
             ? ""
