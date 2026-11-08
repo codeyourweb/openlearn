@@ -22,7 +22,8 @@ COPY backend/requirements.txt /app/backend/requirements.txt
 RUN apt-get update \
     && apt-get install -y --no-install-recommends fonts-dejavu-core fonts-dejavu-extra \
     && rm -rf /var/lib/apt/lists/* \
-    && pip install --no-cache-dir -r /app/backend/requirements.txt
+    && python -m pip install --no-cache-dir --upgrade "pip==26.3" \
+    && python -m pip install --no-cache-dir -r /app/backend/requirements.txt
 
 COPY backend /app/backend
 COPY frontend /app/frontend
