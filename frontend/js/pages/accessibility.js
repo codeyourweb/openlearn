@@ -8,6 +8,7 @@
 
 import { t } from "../i18n.js";
 import { escapeHtml } from "../sanitize.js";
+import { setPageSeo } from "../seo.js";
 
 const VERIFIED = ["verified_1", "verified_2", "verified_3", "verified_4"];
 const LIMITS = ["limit_1", "limit_2", "limit_3", "limit_4"];
@@ -20,6 +21,13 @@ const list = (keys) =>
 export async function renderAccessibility() {
   const root = document.createElement("section");
   root.className = "page-narrow legal-page";
+  // The server sends a generic shell; the tab and the shared link say what the
+  // page is, the same way the legal notice does.
+  setPageSeo({
+    title: t("accessibility.title"),
+    description: t("accessibility.lead"),
+    path: "/accessibility",
+  });
   const reviewed = new Date().toLocaleDateString(undefined, {
     year: "numeric", month: "long", day: "numeric",
   });
