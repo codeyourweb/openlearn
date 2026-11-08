@@ -1316,8 +1316,13 @@ def test_the_editor_offers_templates_reviews_a_link_picker_and_deletion(browser)
         assert "## Etapes" in page.locator("#wiki-md").input_value()
 
         # --- AI reviews sit at the top of the editing area ---------------
+        # They only exist on an instance that offers an AI provider: a public
+        # continuous-integration run has no key, so the buttons are rendered
+        # disabled and the scenario says so instead of reporting a frontend bug.
         reviews = page.locator(".ed-reviews button[data-review]")
         assert reviews.count() == 3
+        if page.locator('html[data-ai="off"]').count():
+            pytest.skip("The instance under test declares AI off: no review to click.")
         for index in range(3):
             expect(reviews.nth(index)).to_be_visible()
 
@@ -1372,7 +1377,8 @@ def test_rich_formatting_keeps_the_selected_text_and_the_landing_is_home(browser
         # that hides the presentation page on a private instance --
         page.goto(f"{BASE_URL}/about", wait_until="networkidle")
         expect(page.locator('[data-view="discover"] .ld-hero h1')).to_be_visible()
-        expect(page.locator(".landing .ld-scene")).to_have_count(6)
+        # Seven chapters: the accessibility one joined the six product scenes.
+        expect(page.locator(".landing .ld-scene")).to_have_count(7)
         expect(page.locator(".ld-scene-ai .ld-ai-badge")).to_be_visible()
         first_nav = page.locator("#nav a:visible").first
         meta = page.request.get(f"{BASE_URL}/api/v1/meta").json()
