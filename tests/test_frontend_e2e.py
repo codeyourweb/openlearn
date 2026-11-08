@@ -666,7 +666,11 @@ def test_format_chooser_offers_four_cards_and_a_method_step_before_the_editor(br
         cards.nth(1).click()
         expect(page).to_have_url(re.compile(r".*/quizzes/new/swipe$"), timeout=15000)
         methods = page.locator(".mode-card")
-        expect(methods).to_have_count(2)
+        # Manual, plus an AI draft when the instance offers a provider: without
+        # one the second card is not rendered at all, which is the whole point
+        # of the ai-only rule.
+        offered = 2 if page.locator('html[data-ai="on"]').count() else 1
+        expect(methods).to_have_count(offered)
         expect(methods.nth(0)).to_contain_text("Manual")
         methods.nth(0).click()
         expect(page).to_have_url(re.compile(r".*/quizzes/new/swipe/manual$"), timeout=15000)
@@ -1475,10 +1479,16 @@ def test_rich_formatting_keeps_the_selected_text_and_the_landing_is_home(browser
 
         # --- the wiki sidebar separates generating from deleting ------------
         page.goto(f"{BASE_URL}/wiki/{wiki_id}/p/accueil", wait_until="networkidle")
-        expect(page.locator(".wiki-side-foot #wiki-ai-open")).to_be_visible()
-        page.click("#wiki-ai-open")
-        expect(page.locator("#wiki-ai-panel")).to_be_visible()
-        expect(page.locator(".wiki-content")).to_be_hidden()
+        if page.locator('html[data-ai="on"]').count():
+            expect(page.locator(".wiki-side-foot #wiki-ai-open")).to_be_visible()
+            page.click("#wiki-ai-open")
+            expect(page.locator("#wiki-ai-panel")).to_be_visible()
+            expect(page.locator(".wiki-content")).to_be_hidden()
+        else:
+            # No provider: the button is rendered but the ai-only rule hides it,
+            # and the reading area stays visible.
+            expect(page.locator("#wiki-ai-open")).to_be_hidden()
+            expect(page.locator(".wiki-content")).to_be_visible()
 
         assert recorder.errors == [], f"frontend errors: {recorder.errors}"
     finally:
