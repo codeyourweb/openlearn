@@ -433,11 +433,20 @@ function nodeToMarkdown(node, depth = 0) {
       return childrenToMarkdown(node, depth);
     }
     default: {
+      if (INLINE_TAGS.has(tag)) return inlineNode(node);
       const inner = childrenToMarkdown(node, depth);
       return BLOCK_TAGS.has(tag) ? `${inner.trim()}\n\n` : inner;
     }
   }
 }
+
+/* Inline elements carry their markers (`**`, `[](...)`, `{c:red}`) in
+   `inlineNode`. `nodeToMarkdown` used to send everything it did not recognise
+   through `childrenToMarkdown`, which drops those markers: a link or a bold run
+   inside a list item came back as plain text and the href was lost on save. */
+const INLINE_TAGS = new Set([
+  "a", "strong", "b", "em", "i", "u", "s", "del", "code", "sup", "sub", "mark", "kbd", "span", "br", "img",
+]);
 
 const BLOCK_TAGS = new Set([
   "div", "p", "h1", "h2", "h3", "h4", "h5", "h6", "ul", "ol", "li",

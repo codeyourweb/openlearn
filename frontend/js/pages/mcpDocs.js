@@ -11,7 +11,6 @@
 import { api } from "../api.js";
 import { t } from "../i18n.js";
 import { markdownToHtml } from "../markdown.js";
-import { sanitizeHtml } from "../sanitize.js";
 import { escapeHtml } from "../ui.js";
 
 function _code(value) {
@@ -77,7 +76,9 @@ export async function renderMcpDocs() {
     if (!response.ok) throw new Error(String(response.status));
     const markdown = await response.text();
     // The guide starts with its own title, which the page already shows.
-    body.innerHTML = sanitizeHtml(markdownToHtml(markdown.replace(/^#\s+.*\n/, "")));
+    // Our own document, rendered by a renderer that escapes and restricts link
+    // schemes: the question-text sanitiser would strip every href.
+    body.innerHTML = markdownToHtml(markdown.replace(/^#\s+.*\n/, ""));
   } catch {
     body.innerHTML = `<p class="muted">${escapeHtml(t("docs.mcp_full"))} — ${_code(
       "docs/MCP.md",

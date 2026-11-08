@@ -30,6 +30,7 @@ from .routers import (
     evaluation,
     generate,
     instance,
+    legal,
     quizzes,
     sessions,
     sso_auth,
@@ -208,6 +209,7 @@ def create_app() -> FastAPI:
     app.include_router(sso_auth.router)
     app.include_router(admin_settings.router)
     app.include_router(instance.router)
+    app.include_router(legal.router)
     app.include_router(mcp_module.router)
 
     settings.media_dir.mkdir(parents=True, exist_ok=True)

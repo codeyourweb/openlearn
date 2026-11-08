@@ -214,7 +214,12 @@ def render_shell(request: Request, html: str, path: str) -> str:
 def sitemap(request: Request) -> Response:
     """Every public document, so search engines can find the catalogue."""
     origin = base_url(request)
-    urls: list[tuple[str, str | None]] = [("/", None), ("/quizzes", None), ("/wiki", None)]
+    urls: list[tuple[str, str | None]] = [
+        ("/", None),
+        ("/quizzes", None),
+        ("/wiki", None),
+        ("/legal", None),
+    ]
     try:
         with SessionLocal() as db:
             for quiz in db.scalars(select(Quiz).where(Quiz.status == "public").limit(5000)):

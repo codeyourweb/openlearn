@@ -622,6 +622,10 @@ PDF_LABELS: dict[str, dict[str, str]] = {
     "ru": {"contents": "Содержание", "pages": "Страниц: {n}", "exported": "экспортировано {date}", "empty": "Эта страница пуста."},
     "ja": {"contents": "目次", "pages": "{n} ページ", "exported": "{date} に書き出し", "empty": "このページは空です。"},
     "zh": {"contents": "目录", "pages": "{n} 页", "exported": "{date} 导出", "empty": "此页面为空。"},
+    "pt": {"contents": "Índice", "pages": "{n} página(s)", "exported": "exportado em {date}", "empty": "Esta página está vazia."},
+    "hi": {"contents": "विषय-सूची", "pages": "{n} पृष्ठ", "exported": "{date} को निर्यात", "empty": "यह पृष्ठ खाली है।"},
+    "bn": {"contents": "সূচিপত্র", "pages": "{n} পৃষ্ঠা", "exported": "{date} তারিখে রপ্তানি", "empty": "এই পৃষ্ঠাটি খালি।"},
+    "ar": {"contents": "المحتويات", "pages": "{n} صفحة", "exported": "تم التصدير في {date}", "empty": "هذه الصفحة فارغة."},
 }
 
 

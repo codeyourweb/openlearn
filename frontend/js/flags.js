@@ -39,6 +39,25 @@ const FLAGS = {
     <rect width="24" height="16" fill="#de2910"/>
     <polygon points="4.6,2.2 5.6,4.4 8,4.6 6.2,6.1 6.8,8.4 4.6,7.1 2.4,8.4 3,6.1 1.2,4.6 3.6,4.4"
              fill="#ffde00"/>`,
+  pt: `
+    <rect width="24" height="16" fill="#046a38"/>
+    <rect x="9.6" width="14.4" height="16" fill="#da291c"/>
+    <circle cx="9.6" cy="8" r="3.3" fill="#ffe000"/>
+    <circle cx="9.6" cy="8" r="2" fill="#da291c"/>`,
+  hi: `
+    <rect width="24" height="5.34" fill="#ff9933"/>
+    <rect y="5.34" width="24" height="5.33" fill="#ffffff"/>
+    <rect y="10.67" width="24" height="5.33" fill="#138808"/>
+    <circle cx="12" cy="8" r="1.9" fill="none" stroke="#000080" stroke-width="1"/>`,
+  bn: `
+    <rect width="24" height="16" fill="#006a4e"/>
+    <circle cx="10.2" cy="8" r="4.2" fill="#f42a41"/>`,
+  // Arabic is a language, not a country: no national flag stands for it, so
+  // the plate carries the letter that names it.
+  ar: `
+    <rect width="24" height="16" fill="#0f766e"/>
+    <text x="12" y="11.4" font-size="9.5" text-anchor="middle" fill="#ffffff"
+          font-family="serif">ع</text>`,
 };
 
 function escapeAttr(value) {

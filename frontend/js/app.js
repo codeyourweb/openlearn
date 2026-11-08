@@ -28,6 +28,7 @@ import { renderPlay } from "./pages/play.js";
 import { renderQuizDetail } from "./pages/quizDetail.js";
 import { renderResults } from "./pages/results.js";
 import { renderAbout } from "./pages/about.js";
+import { renderLegal } from "./pages/legal.js";
 import { renderWiki, renderWikiCreate, renderWikiHistory, renderWikiHome } from "./pages/wiki.js";
 import { renderWikiChat } from "./pages/wikiChat.js";
 import { renderWikiEditor } from "./pages/wikiEditor.js";
@@ -69,6 +70,7 @@ register("/admin", renderAdmin);
 register("/docs", renderDocs);
 register("/docs/mcp", renderMcpDocs);
 register("/about", renderAbout);
+register("/legal", renderLegal);
 /* Static wiki routes first: the router matches on segment count and order. */
 register("/wiki", renderWikiHome);
 register("/wiki/new", renderWikiCreate);

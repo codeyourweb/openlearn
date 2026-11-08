@@ -8,7 +8,7 @@
  * for reduced motion.
  */
 
-import { t } from "../i18n.js";
+import { LANGUAGES, t } from "../i18n.js";
 import { escapeHtml } from "../ui.js";
 import { state } from "../store.js";
 import { instance } from "../instance.js";
@@ -23,7 +23,7 @@ const SCENES = [
 ];
 
 const STATS = [
-  { value: 8, suffix: "", key: "about.stat_languages", icon: "globe" },
+  { value: LANGUAGES.length, suffix: "", key: "about.stat_languages", icon: "globe" },
   { value: 5, suffix: "", key: "about.stat_formats", icon: "layers" },
   { value: 100, suffix: "%", key: "about.stat_selfhosted", icon: "server" },
   { value: 0, suffix: "", key: "about.stat_tracking", icon: "shield" },

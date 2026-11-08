@@ -35,7 +35,7 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from .db import Base
 
 # Languages offered by the interface and by AI translation.
-SUPPORTED_LANGUAGES = ("en", "fr", "it", "es", "de", "ru", "zh", "ja")
+SUPPORTED_LANGUAGES = ("en", "fr", "it", "es", "de", "ru", "zh", "ja", "pt", "hi", "bn", "ar")
 
 QUIZ_STATUSES = ("draft", "private", "pending", "public", "rejected")
 QUIZ_MODES = ("qcm", "swipe", "adventure")

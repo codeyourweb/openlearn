@@ -33,6 +33,10 @@ LANGUAGE_NAMES = {
     "ru": "Russian",
     "zh": "Simplified Chinese",
     "ja": "Japanese",
+    "pt": "Portuguese",
+    "hi": "Hindi",
+    "bn": "Bengali",
+    "ar": "Arabic",
 }
 
 MAX_TEXT = 500
@@ -343,6 +347,51 @@ def _dedupe_options(options: list[dict]) -> list[dict]:
 # ---------------------------------------------------------------------------
 # Translation
 # ---------------------------------------------------------------------------
+def translate_markdown(text: str, target: str) -> str:
+    """Translate a markdown document, keeping its structure and its links.
+
+    Used for the instance legal notice, which is prose an administrator wrote
+    and may want in every interface language without retyping it.
+    """
+    if target not in SUPPORTED_LANGUAGES:
+        raise AiError(f"Unsupported target language: {target}")
+    body = str(text or "").strip()
+    if not body:
+        return ""
+    prompt = (
+        "Translate the following markdown document into "
+        f"{LANGUAGE_NAMES[target]} ({target}).\n"
+        "Rules:\n"
+        "- keep the markdown structure: the same headings, list items, tables, "
+        "emphasis and links, in the same order;\n"
+        "- translate the link text but never the URL, and never a mail address;\n"
+        "- keep proper nouns, product names and licence names as they are "
+        "(AGPL-3.0-only, OpenLearn, GDPR);\n"
+        "- do not add, remove or summarise anything, and do not wrap the answer "
+        "in a code fence;\n"
+        "- write plain markdown, the kind a person would type, with no HTML.\n\n"
+        f"Document:\n{body}"
+    )
+    answer = _chat(
+        [
+            {"role": "system", "content": "You are a professional legal translator."},
+            {"role": "user", "content": prompt},
+        ],
+        max_tokens=min(8000, 1200 + len(body)),
+        temperature=0.1,
+        operation="legal-translate",
+    )
+    cleaned = answer.strip()
+    # Models like to answer with a fenced block, which would then be stored as
+    # part of the notice and shown as a literal code block.
+    if cleaned.startswith("```"):
+        lines = [line for line in cleaned.splitlines() if not line.strip().startswith("```")]
+        cleaned = "\n".join(lines).strip()
+    if not cleaned:
+        raise AiError("The AI provider returned an empty translation.")
+    return cleaned
+
+
 def translate_quiz(quiz: dict, targets: list[str]) -> dict:
     """Translate a quiz payload into ``targets``. Returns ``{lang: translation}``."""
     targets = [lang for lang in targets if lang in SUPPORTED_LANGUAGES]

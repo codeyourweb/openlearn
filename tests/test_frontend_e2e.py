@@ -412,9 +412,14 @@ def test_language_switch_and_theme_toggle(browser):
         menu = page.locator("#language-menu")
         expect(menu).to_be_visible()
         options = page.locator("#language-menu .lang-option")
-        assert options.count() == 8
+        # The count comes from the instance, so adding a language does not need
+        # a test edit and a half-translated menu is what fails instead.
+        meta = page.request.get(f"{BASE_URL}/api/v1/meta").json()
+        expected = len(meta["languages"])
+        assert options.count() == expected
         assert any("Русский" in (option.inner_text() or "") for option in options.all())
-        assert page.locator("#language-menu .lang-option svg.flag").count() == 8
+        assert any("العربية" in (option.inner_text() or "") for option in options.all())
+        assert page.locator("#language-menu .lang-option svg.flag").count() == expected
 
         # Every option carries its own flag, so the language is recognisable
         # before the label is read.
@@ -1882,5 +1887,103 @@ def test_the_account_menu_lists_only_the_account_and_the_way_out(browser):
         assert labels[0] == "Account", labels
         assert labels[1] == "Sign out", labels
         assert recorder.errors == [], recorder.errors
+    finally:
+        context.close()
+
+
+def test_the_legal_notice_ships_with_the_interface(browser):
+    """The project notice is written once, in every language, and linked."""
+    context, page, recorder = new_page(browser)
+    try:
+        page.goto(f"{BASE_URL}/legal", wait_until="networkidle")
+        expect(page.locator(".legal-head h1")).to_be_visible()
+        expect(page.locator(".footer a[href=\"/legal\"]")).to_be_visible()
+
+        doc = page.locator(".legal-doc")
+        # Four project sections plus the instance block, always present.
+        expect(page.locator(".legal-section")).to_have_count(5)
+        expect(page.locator(".legal-instance")).to_be_visible()
+        text = doc.inner_text()
+        assert "AGPL-3.0-only" in text
+        assert "Contributions" in text
+
+        # Markdown was rendered, not printed: the notice carries real headings,
+        # emphasis and a clickable mail link, and no leftover asterisks.
+        assert page.locator(".legal-doc h2").count() >= 5
+        assert page.locator(".legal-body strong").count() >= 3
+        assert page.locator('.legal-body a[href^="mailto:"]').count() >= 1
+        assert "**" not in text
+
+        assert recorder.errors == [], f"frontend errors: {recorder.errors}"
+    finally:
+        context.close()
+
+
+def test_arabic_flips_the_document_and_every_language_reaches_the_page(browser):
+    context, page, recorder = new_page(browser, force_language=False)
+    try:
+        page.goto(f"{BASE_URL}/legal", wait_until="networkidle")
+        page.evaluate("() => localStorage.setItem('ol_language', 'ar')")
+        page.reload(wait_until="networkidle")
+
+        assert page.evaluate("() => document.documentElement.dir") == "rtl"
+        # A parking spot written with a physical side (`left: -999px`) used to
+        # widen the document by a thousand pixels in a right-to-left page.
+        width = page.evaluate("() => [document.documentElement.scrollWidth, document.documentElement.clientWidth]")
+        assert width[0] == width[1], f"the page scrolls sideways in Arabic: {width}"
+        assert page.evaluate("() => document.documentElement.lang") == "ar"
+        arabic = page.locator(".legal-doc").inner_text()
+        # A key that was never translated would be printed verbatim.
+        assert "legal." not in arabic
+        assert "العربية" in page.locator("#language-button").inner_text() or "ar" in page.evaluate(
+            "() => document.documentElement.lang"
+        )
+
+        # Hindi keeps the document left to right, and is translated too.
+        page.evaluate("() => localStorage.setItem('ol_language', 'hi')")
+        page.reload(wait_until="networkidle")
+        assert page.evaluate("() => document.documentElement.dir") == "ltr"
+        hindi = page.locator(".legal-doc").inner_text()
+        assert "legal." not in hindi
+        assert any("\u0900" <= char <= "\u097f" for char in hindi), hindi[:120]
+
+        assert recorder.errors == [], f"frontend errors: {recorder.errors}"
+    finally:
+        context.close()
+
+
+def test_a_link_inside_a_list_survives_the_rich_editor(browser):
+    """The rich surface serialises back to markdown; a bullet keeps its marks."""
+    context, page, recorder = new_page(browser)
+    try:
+        email = f"inline-{uuid.uuid4().hex[:8]}@example.com"
+        register_through_ui(page, email, "Inline Tester")
+
+        page.goto(f"{BASE_URL}/wiki/new", wait_until="networkidle")
+        page.fill('#wiki-create input[name="title"]', "Liens en liste")
+        page.fill('#wiki-create textarea[name="description"]', "Regression: marques en ligne dans une puce.")
+        page.click("#wiki-create button[type=submit]")
+        expect(page).to_have_url(re.compile(r".*/wiki/\d+/edit/\d+$"), timeout=15000)
+        wiki_url = re.sub(r"/edit/.*$", "", page.url)
+
+        page.click('[data-mode="markdown"]')
+        page.fill("#wiki-page-title", "Contact")
+        page.locator("#wiki-md").fill(
+            "- **Gras** puis [courriel](mailto:contact@example.org)\n- Un point sans marque\n"
+        )
+        # Through the rich surface and back: this is the serialiser a save uses.
+        page.click('[data-mode="wysiwyg"]')
+        expect(page.locator("#wiki-wysiwyg li strong")).to_have_count(1)
+        expect(page.locator('#wiki-wysiwyg li a[href="mailto:contact@example.org"]')).to_have_count(1)
+        page.click('[data-mode="markdown"]')
+        serialised = page.input_value("#wiki-md")
+        assert "**Gras**" in serialised, serialised
+        assert "](mailto:contact@example.org)" in serialised, serialised
+
+        page.click("#wiki-save")
+        page.goto(wiki_url, wait_until="networkidle")
+        expect(page.locator('.wiki-main li a[href="mailto:contact@example.org"]')).to_have_count(1)
+        expect(page.locator(".wiki-main li strong")).to_have_count(1)
+        assert recorder.errors == [], f"frontend errors: {recorder.errors}"
     finally:
         context.close()
