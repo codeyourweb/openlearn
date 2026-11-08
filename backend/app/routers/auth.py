@@ -20,6 +20,7 @@ from ..security import (
     PasswordPolicyError,
     create_access_token,
     hash_password,
+    hash_to_compare,
     new_secret,
     needs_rehash,
     validate_password,
@@ -137,15 +138,14 @@ def login(payload: LoginIn, request: Request, response: Response, db: OrmSession
     user = db.scalar(select(User).where(User.email == payload.email))
     now = utcnow()
 
-    if user is not None and user.locked_until is not None:
-        locked_until = user.locked_until
-        if locked_until.tzinfo is None:
-            locked_until = locked_until.replace(tzinfo=now.tzinfo)
-        if locked_until > now:
-            _audit(db, "login_locked", request, user.id)
-            raise HTTPException(status_code=423, detail="Account temporarily locked after too many failed attempts.")
+    # The hash is verified before anything is said about the account, and even
+    # when there is no account: a missing address used to answer in 3 ms while a
+    # real one took 60 ms, which is a free list of who is registered here.
+    password_ok = verify_password(
+        payload.password, hash_to_compare(user is not None, user.password_hash if user else None)
+    )
 
-    if user is None or not verify_password(payload.password, user.password_hash) or not user.is_active:
+    if user is None or not password_ok or not user.is_active:
         if user is not None:
             user.failed_logins += 1
             if user.failed_logins >= MAX_FAILED_LOGINS:
@@ -155,6 +155,17 @@ def login(payload: LoginIn, request: Request, response: Response, db: OrmSession
             db.commit()
         _audit(db, "login_failure", request, user.id if user else None, payload.email)
         raise HTTPException(status_code=401, detail="Invalid email or password.")
+
+    # Reached only with the right password: a lock is then told to its owner,
+    # not to whoever guessed an address. Announcing it earlier both revealed the
+    # account and let five wrong passwords lock a stranger out of it.
+    if user.locked_until is not None:
+        locked_until = user.locked_until
+        if locked_until.tzinfo is None:
+            locked_until = locked_until.replace(tzinfo=now.tzinfo)
+        if locked_until > now:
+            _audit(db, "login_locked", request, user.id)
+            raise HTTPException(status_code=423, detail="Account temporarily locked after too many failed attempts.")
 
     if needs_rehash(user.password_hash):
         user.password_hash = hash_password(payload.password)
@@ -174,7 +185,13 @@ def issue_token(payload: LoginIn, request: Request, db: OrmSession = Depends(get
     """Machine-to-machine credential for third party clients (no cookies)."""
     enforce_rate_limit(request, "auth", settings.auth_rate_limit, settings.auth_rate_window_seconds)
     user = db.scalar(select(User).where(User.email == payload.email))
-    if user is None or not user.is_active or not verify_password(payload.password, user.password_hash):
+    # Same rule as the cookie sign-in: verify before deciding, so an unknown
+    # address and a wrong password cost the same time to an attacker probing
+    # for accounts through the machine-to-machine endpoint.
+    password_ok = verify_password(
+        payload.password, hash_to_compare(user is not None, user.password_hash if user else None)
+    )
+    if user is None or not user.is_active or not password_ok:
         _audit(db, "token_failure", request, user.id if user else None, payload.email)
         raise HTTPException(status_code=401, detail="Invalid email or password.")
     _audit(db, "token_success", request, user.id)

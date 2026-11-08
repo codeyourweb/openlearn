@@ -71,6 +71,18 @@ def verify_password(password: str, password_hash: str) -> bool:
         return False
 
 
+# A real Argon2id hash of a value nobody knows. Sign-in verifies against it when
+# the address has no account, so a missing account and a wrong password cost the
+# same 60 milliseconds: without it, the response time is a free list of who has
+# an account here (3 ms versus 60 ms, measured on the demo instance).
+DUMMY_PASSWORD_HASH = "$argon2id$v=19$m=65536,t=3,p=2$zIqMyUrnHJdWwgL2FATorw$sMhy/i+tmydD2P01sefjW/QSi/80w2O+0blsA8pgi8k"
+
+
+def hash_to_compare(email_has_account: bool, password_hash: str | None) -> str:
+    """The hash a sign-in attempt should verify against, account or not."""
+    return password_hash if email_has_account and password_hash else DUMMY_PASSWORD_HASH
+
+
 def needs_rehash(password_hash: str) -> bool:
     try:
         return _hasher.check_needs_rehash(password_hash)

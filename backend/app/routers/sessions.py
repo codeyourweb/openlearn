@@ -119,9 +119,13 @@ async def create_game_session(
     if quiz.status != "public" and user is None:
         raise HTTPException(status_code=404, detail="Quiz not found.")
 
-    # A questionnaire used as an assessment allows a limited number of runs:
-    # a deferred run is refused here, before anything is written.
-    if payload.mode == "solo" and not payload.play_as_host:
+    # A questionnaire used as an assessment allows a limited number of runs.
+    # The rule is about the candidate, not about one way of playing: a live
+    # session the candidate joins and answers counts exactly like a deferred
+    # run, otherwise opening a live session would be a free extra attempt.
+    # Only a host who presents without answering keeps a full allowance.
+    plays_this_session = not (payload.mode == "live" and not payload.play_as_host)
+    if plays_this_session:
         ensure_attempt_left(db, quiz, user)
 
     session, host_token, join_url, participant, participant_token = create_session(
