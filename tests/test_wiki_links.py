@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-only
-# Copyright (C) 2026 OpenLearn
+# Copyright (C) 2026 Jean-Pierre GARNIER (@codeyourweb)
 """The wiki URL is a contract between the catalogue, the router and the server.
 
 A wiki lives at ``/wiki/<id>/<wiki slug>``. The catalogue used to build that

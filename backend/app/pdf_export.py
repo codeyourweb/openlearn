@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-only
-# Copyright (C) 2026 OpenLearn
+# Copyright (C) 2026 Jean-Pierre GARNIER (@codeyourweb)
 """Render a wiki page, or a whole wiki, as a PDF document.
 
 The PDF is produced on the server with ReportLab: the reader gets the same

@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-only
-# Copyright (C) 2026 OpenLearn
+# Copyright (C) 2026 Jean-Pierre GARNIER (@codeyourweb)
 """Attach the illustration set to the two demo quizzes through the public API.
 
 Runs inside the openlearn container (has httpx and the app's env). Every image

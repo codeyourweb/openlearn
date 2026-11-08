@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-only
-// Copyright (C) 2026 OpenLearn
+// Copyright (C) 2026 Jean-Pierre GARNIER (@codeyourweb)
 /*
  * Simplified Chinese interface strings.
  * Generated from the English dictionary; keys follow the English order.
@@ -1464,4 +1464,12 @@ export const zh = {
   "wiki.ref_add": "添加来源",
   "wiki.ref_added": "来源已添加。",
   "about.tagline": "知识因分享而增长",
+  "about.ch_access_title": "默认即可访问",
+  "about.ch_access_lead": "把读者抛在后面的平台，只能算半个平台。任何用户能打开的每个页面都以 WCAG 2.2 AA 级为目标，并且每次构建都会运行自动审核。",
+  "about.ch_access_b1": "仅用键盘：跳过链接、可见的焦点、把键盘焦点留在内部的对话框，以及在编辑器中用 Alt+方向键移动区块",
+  "about.ch_access_b2": "对比度靠测量而非估计，正确答案绝不只靠颜色传达",
+  "about.ch_access_b3": "十二种语言，包括从右到左书写的语言，并在 /accessibility 发布声明，说明我们还有哪些不足",
+  "about.mock_a11y_bar": "无障碍",
+  "about.mock_a11y_link": "跳到正文",
+  "about.mock_a11y_sr": "屏幕阅读器：“二级标题，一个你可以编辑的 wiki”",
 };

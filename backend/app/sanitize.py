@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-only
-# Copyright (C) 2026 OpenLearn
+# Copyright (C) 2026 Jean-Pierre GARNIER (@codeyourweb)
 """HTML sanitisation for WYSIWYG question text (OWASP A03).
 
 Allowed output is a very small subset of HTML: emphasis, lists, headings and

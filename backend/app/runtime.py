@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-only
-# Copyright (C) 2026 OpenLearn
+# Copyright (C) 2026 Jean-Pierre GARNIER (@codeyourweb)
 """Runtime configuration: administrator-editable settings on top of the environment.
 
 The ``OL_*`` environment stays the bootstrap and the fallback. Anything an

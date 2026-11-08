@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-only
-# Copyright (C) 2026 OpenLearn
+# Copyright (C) 2026 Jean-Pierre GARNIER (@codeyourweb)
 """Outgoing mail: SMTP delivery with a plain-text and HTML body.
 
 Mail is optional. When no SMTP server is configured the caller decides what to

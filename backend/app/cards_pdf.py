@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-only
-# Copyright (C) 2026 OpenLearn
+# Copyright (C) 2026 Jean-Pierre GARNIER (@codeyourweb)
 """Printable revision cards: an A4 sheet a teacher can cut up.
 
 Two cards per row, four rows per page, so one sheet holds eight cards. The

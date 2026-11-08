@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-only
-// Copyright (C) 2026 OpenLearn
+// Copyright (C) 2026 Jean-Pierre GARNIER (@codeyourweb)
 /*
  * Hindi interface strings.
  * Generated from the English dictionary; keys follow the English order.
@@ -1464,4 +1464,12 @@ export const hi = {
   "wiki.ref_add": "स्रोत जोड़ें",
   "wiki.ref_added": "स्रोत जोड़ा गया।",
   "about.tagline": "ज्ञान बाँटने से बढ़ता है"
+  "about.ch_access_title": "डिफ़ॉल्ट रूप से सुगम",
+  "about.ch_access_lead": "जो मंच पाठकों को पीछे छोड़ देता है, वह आधा ही मंच है। कोई भी व्यक्ति जो भी पृष्ठ खोल सकता है, वह WCAG 2.2 स्तर AA को लक्ष्य रखता है, और हर बिल्ड पर एक स्वचालित ऑडिट चलता है।",
+  "about.ch_access_b1": "केवल कीबोर्ड से: सामग्री पर जाने का लिंक, दिखाई देने वाला फ़ोकस, ऐसे संवाद जो कीबोर्ड को अंदर ही रखते हैं, और एडिटर में Alt+तीर कुंजियों से खिसकाए जाने वाले ब्लॉक",
+  "about.ch_access_b2": "कंट्रास्ट का अनुमान नहीं, मापन, और सही उत्तर कभी केवल रंग से नहीं बताया जाता",
+  "about.ch_access_b3": "बारह भाषाएँ, दाएँ से बाएँ लिखी जाने वाली भाषाएँ भी शामिल, और /accessibility पर प्रकाशित एक वक्तव्य जो बताता है कि हम अभी कहाँ कम पड़ रहे हैं",
+  "about.mock_a11y_bar": "सुगम्यता",
+  "about.mock_a11y_link": "सामग्री पर जाएँ",
+  "about.mock_a11y_sr": "स्क्रीन रीडर: “शीर्षक स्तर 2, एक विकी जिसे आप संपादित कर सकते हैं”",
 };

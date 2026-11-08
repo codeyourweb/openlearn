@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-only
-// Copyright (C) 2026 OpenLearn
+// Copyright (C) 2026 Jean-Pierre GARNIER (@codeyourweb)
 /*
  * Japanese interface strings.
  * Generated from the English dictionary; keys follow the English order.
@@ -1464,4 +1464,12 @@ export const ja = {
   "wiki.ref_add": "出典を追加",
   "wiki.ref_added": "出典を追加しました。",
   "about.tagline": "知識は分かち合うほど育つ",
+  "about.ch_access_title": "はじめからアクセシブル",
+  "about.ch_access_lead": "読者を置き去りにするプラットフォームは、まだ半分でしかありません。誰もが開けるすべてのページは WCAG 2.2 のレベル AA を目標とし、ビルドのたびに自動監査を実行しています。",
+  "about.ch_access_b1": "キーボードだけで操作：スキップリンク、見えるフォーカス、キーボードを内側に保つダイアログ、エディタで Alt+矢印キーにより移動できるブロック",
+  "about.ch_access_b2": "コントラストは推測ではなく計測し、正解を色だけで示すことはありません",
+  "about.ch_access_b3": "右から左へ書く言語を含む 12 言語に対応し、まだ届いていない点は /accessibility の公開声明に記しています",
+  "about.mock_a11y_bar": "アクセシビリティ",
+  "about.mock_a11y_link": "コンテンツへスキップ",
+  "about.mock_a11y_sr": "スクリーンリーダー：“見出しレベル 2、編集できるウィキ”",
 };

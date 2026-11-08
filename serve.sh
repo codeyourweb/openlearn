@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # SPDX-License-Identifier: AGPL-3.0-only
-# Copyright (C) 2026 OpenLearn
+# Copyright (C) 2026 Jean-Pierre GARNIER (@codeyourweb)
 # Single entry point for every deployment shape: bare server, container, or
 # behind a reverse proxy with or without TLS terminated elsewhere.
 #

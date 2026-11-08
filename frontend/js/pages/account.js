@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-only
-// Copyright (C) 2026 OpenLearn
+// Copyright (C) 2026 Jean-Pierre GARNIER (@codeyourweb)
 /* Account: five sections of its own — profile, my wikis, my questionnaires,
  * my game history and API keys.
  *

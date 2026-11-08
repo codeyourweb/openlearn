@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-only
-// Copyright (C) 2026 OpenLearn
+// Copyright (C) 2026 Jean-Pierre GARNIER (@codeyourweb)
 /* Quiz editor: metadata, mode, WYSIWYG questions, translations, publication and AI. */
 
 import { api, keepaliveRequest, uploadImage } from "../api.js";

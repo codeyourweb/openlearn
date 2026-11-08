@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-only
-# Copyright (C) 2026 OpenLearn
+# Copyright (C) 2026 Jean-Pierre GARNIER (@codeyourweb)
 """Revision cards: turning existing content into cards, and printing them.
 
 The point of the feature is that nobody fills a deck by hand. Two generators

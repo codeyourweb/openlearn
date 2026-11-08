@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-only
-// Copyright (C) 2026 OpenLearn
+// Copyright (C) 2026 Jean-Pierre GARNIER (@codeyourweb)
 /* Host view: lobby (PIN + share link), live control, reveal and scoreboard.
 
    The host can take part in their own session: joining from the lobby stores a

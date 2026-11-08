@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-only
-# Copyright (C) 2026 OpenLearn
+# Copyright (C) 2026 Jean-Pierre GARNIER (@codeyourweb)
 """Single sign-on endpoints: start, callback, SAML assertion consumer.
 
 The flow keeps its state in a short-lived signed cookie rather than in server

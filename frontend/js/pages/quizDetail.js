@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-only
-// Copyright (C) 2026 OpenLearn
+// Copyright (C) 2026 Jean-Pierre GARNIER (@codeyourweb)
 /* Quiz detail: hero, actions, and tabbed sections (overview, statistics,
    versions, AI reviews). The author also gets audience statistics; a visitor
    only sees what is needed to decide whether to play. */

@@ -1,6 +1,6 @@
 #!/bin/sh
 # SPDX-License-Identifier: AGPL-3.0-only
-# Copyright (C) 2026 OpenLearn
+# Copyright (C) 2026 Jean-Pierre GARNIER (@codeyourweb)
 # Install the demo catalogue into a running instance.
 #
 #   ./tools/demo-seed.sh                    # seed the container "openlearn"

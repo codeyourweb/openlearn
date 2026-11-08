@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-only
-# Copyright (C) 2026 OpenLearn
+# Copyright (C) 2026 Jean-Pierre GARNIER (@codeyourweb)
 """AI assistance for the wiki: sourced generation, reviews and RAG chat.
 
 Everything here is written for a *reasonable* model — a 30B-class model behind an

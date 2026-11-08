@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-only
-// Copyright (C) 2026 OpenLearn
+// Copyright (C) 2026 Jean-Pierre GARNIER (@codeyourweb)
 /*
  * Portuguese interface strings.
  * Translated from the French dictionary; keys follow the English order.
@@ -1464,4 +1464,12 @@ export const pt = {
   "wiki.ref_add": "Adicionar uma fonte",
   "wiki.ref_added": "Fonte adicionada.",
   "about.tagline": "O conhecimento cresce quando é partilhado"
+  "about.ch_access_title": "Acessível por predefinição",
+  "about.ch_access_lead": "Uma plataforma que deixa leitores para trás é apenas meia plataforma. Todas as páginas que qualquer pessoa pode abrir visam o nível AA das WCAG 2.2, e é executada uma auditoria automática em cada compilação.",
+  "about.ch_access_b1": "Apenas com teclado: uma ligação para saltar, foco visível, caixas de diálogo que mantêm o teclado dentro e blocos movidos com Alt+setas no editor",
+  "about.ch_access_b2": "Contraste medido em vez de estimado, e uma resposta certa nunca depende apenas da cor",
+  "about.ch_access_b3": "Doze idiomas, incluindo os que se escrevem da direita para a esquerda, e uma declaração publicada em /accessibility que indica onde ainda ficamos aquém",
+  "about.mock_a11y_bar": "Acessibilidade",
+  "about.mock_a11y_link": "Saltar para o conteúdo",
+  "about.mock_a11y_sr": "Leitor de ecrã: “Título de nível 2, um wiki que pode editar”",
 };

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-only
-// Copyright (C) 2026 OpenLearn
+// Copyright (C) 2026 Jean-Pierre GARNIER (@codeyourweb)
 /* Live co-editing client for one wiki page: one socket, one revision.
 
    The browser never decides what the document is: it sends the text it holds

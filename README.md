@@ -1,5 +1,9 @@
 # OpenLearn
 
+> **Live demo: <https://openlearnproject.org/>** — a seed catalogue of wikis,
+> questionnaires and adventures, in twelve languages, no account needed to read.
+> Sign up to write; the instance is reset from time to time.
+
 **Knowledge grows when it is shared.** Courses scatter across files, e-mail
 threads and closed platforms: learners lose the thread, teachers rebuild the same
 slides, and nothing can be reused or exported. OpenLearn puts it back in one

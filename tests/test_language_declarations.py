@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-only
-# Copyright (C) 2026 OpenLearn
+# Copyright (C) 2026 Jean-Pierre GARNIER (@codeyourweb)
 """The set of supported languages is declared in four places; they must agree.
 
 A language added to the interface but missing from the server's tuple is not

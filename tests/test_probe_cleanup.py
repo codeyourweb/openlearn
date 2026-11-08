@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-only
-# Copyright (C) 2026 OpenLearn
+# Copyright (C) 2026 Jean-Pierre GARNIER (@codeyourweb)
 """The cleanup script deletes accounts; it has to know what it must never touch.
 
 The demo catalogue is written by the seeder's own account, and that account's

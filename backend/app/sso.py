@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-only
-# Copyright (C) 2026 OpenLearn
+# Copyright (C) 2026 Jean-Pierre GARNIER (@codeyourweb)
 """Single sign-on: OpenID Connect and SAML 2.0 service provider.
 
 Two protocols, one idea: an administrator declares an identity provider in the

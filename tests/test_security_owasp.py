@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-only
-# Copyright (C) 2026 OpenLearn
+# Copyright (C) 2026 Jean-Pierre GARNIER (@codeyourweb)
 """OWASP Top 10 (2021) oriented security tests.
 
 Each test is mapped to the category it exercises so the traceability matrix in

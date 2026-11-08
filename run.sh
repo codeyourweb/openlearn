@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # SPDX-License-Identifier: AGPL-3.0-only
-# Copyright (C) 2026 OpenLearn
+# Copyright (C) 2026 Jean-Pierre GARNIER (@codeyourweb)
 # Start OpenLearn without Docker (self-hosted / development).
 #
 #   ./run.sh                 # serve on 0.0.0.0:8000

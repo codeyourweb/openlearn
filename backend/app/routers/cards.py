@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-only
-# Copyright (C) 2026 OpenLearn
+# Copyright (C) 2026 Jean-Pierre GARNIER (@codeyourweb)
 """Revision decks: a deck of cards, its cards, and the learner's three boxes.
 
 Everything here is derived from content the platform already holds — a wiki

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-only
-// Copyright (C) 2026 OpenLearn
+// Copyright (C) 2026 Jean-Pierre GARNIER (@codeyourweb)
 /*
  * German interface strings.
  * Generated from the English dictionary; keys follow the English order.
@@ -1464,4 +1464,12 @@ export const de = {
   "wiki.ref_add": "Quelle hinzufügen",
   "wiki.ref_added": "Quelle hinzugefügt.",
   "about.tagline": "Wissen wächst, wenn man es teilt",
+  "about.ch_access_title": "Barrierefrei von Anfang an",
+  "about.ch_access_lead": "Eine Plattform, die Leserinnen und Leser zurücklässt, ist nur eine halbe Plattform. Jede Seite, die irgendjemand öffnen kann, orientiert sich an WCAG 2.2 Stufe AA, und bei jedem Build läuft eine automatische Prüfung.",
+  "about.ch_access_b1": "Nur mit Tastatur: ein Sprunglink, ein sichtbarer Fokus, Dialoge, die die Tastatur innen halten, und Blöcke, die im Editor mit Alt+Pfeiltasten verschoben werden",
+  "about.ch_access_b2": "Kontrast gemessen statt geschätzt, und eine richtige Antwort hängt nie allein an der Farbe",
+  "about.ch_access_b3": "Zwölf Sprachen, einschließlich rechtsläufiger Schriften, und eine veröffentlichte Erklärung unter /accessibility, die sagt, wo wir noch zu kurz greifen",
+  "about.mock_a11y_bar": "Barrierefreiheit",
+  "about.mock_a11y_link": "Zum Inhalt springen",
+  "about.mock_a11y_sr": "Screenreader: “Überschrift Ebene 2, ein Wiki, das Sie bearbeiten können”",
 };

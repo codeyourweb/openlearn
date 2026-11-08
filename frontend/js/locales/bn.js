@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-only
-// Copyright (C) 2026 OpenLearn
+// Copyright (C) 2026 Jean-Pierre GARNIER (@codeyourweb)
 /*
  * Bengali interface strings.
  * Generated from the English dictionary; keys follow the English order.
@@ -1464,4 +1464,12 @@ export const bn = {
   "wiki.ref_add": "একটি উৎস যোগ করুন",
   "wiki.ref_added": "উৎস যোগ হয়েছে।",
   "about.tagline": "জ্ঞান ভাগ করলে বেড়ে ওঠে",
+  "about.ch_access_title": "ডিফল্টভাবেই প্রবেশযোগ্য",
+  "about.ch_access_lead": "যে প্ল্যাটফর্ম পাঠকদের পিছনে ফেলে যায়, তা অর্ধেক প্ল্যাটফর্ম মাত্র। যে পৃষ্ঠা যে কেউ খুলতে পারেন, তা WCAG 2.2 স্তর AA-কে লক্ষ্য করে, এবং প্রতিটি বিল্ডে একটি স্বয়ংক্রিয় অডিট চলে।",
+  "about.ch_access_b1": "শুধু কিবোর্ড দিয়ে: বিষয়বস্তুতে যাওয়ার লিংক, দৃশ্যমান ফোকাস, এমন ডায়ালগ যা কিবোর্ড ভেতরে রাখে, এবং এডিটরে Alt+তীর চিহ্ন দিয়ে সরানো যায় এমন ব্লক",
+  "about.ch_access_b2": "কনট্রাস্ট অনুমান নয়, মাপা হয়, এবং সঠিক উত্তর কখনো কেবল রং দিয়ে বোঝানো হয় না",
+  "about.ch_access_b3": "বারোটি ভাষা, ডান থেকে বাঁয়ে লেখা ভাষাসহ, এবং /accessibility-তে প্রকাশিত একটি বিবৃতি যা বলে দেয় কোথায় আমরা এখনো পিছিয়ে আছি",
+  "about.mock_a11y_bar": "প্রবেশযোগ্যতা",
+  "about.mock_a11y_link": "বিষয়বস্তুতে যান",
+  "about.mock_a11y_sr": "স্ক্রিন রিডার: “শিরোনাম স্তর ২, একটি উইকি যা আপনি সম্পাদনা করতে পারেন”",
 };

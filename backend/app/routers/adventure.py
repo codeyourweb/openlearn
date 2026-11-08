@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-only
-# Copyright (C) 2026 OpenLearn
+# Copyright (C) 2026 Jean-Pierre GARNIER (@codeyourweb)
 """Solo play-throughs of branching ("adventure") quizzes.
 
 A run is created from a published quiz (or from one's own draft), snapshots the

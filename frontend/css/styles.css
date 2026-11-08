@@ -1,5 +1,5 @@
 /* SPDX-License-Identifier: AGPL-3.0-only */
-/* Copyright (C) 2026 OpenLearn */
+/* Copyright (C) 2026 Jean-Pierre GARNIER (@codeyourweb) */
 /* OpenLearn - single stylesheet, no build step, no external assets. */
 
 :root {
@@ -4037,3 +4037,57 @@ html[data-demo="off"] [data-nav="about"] { display: none !important; }
 
 .a11y-list { margin: .2rem 0 1rem; padding-left: 1.1rem; display: grid; gap: .45rem; }
 .a11y-list li { line-height: 1.55; }
+
+/* Seventh about scene: a page reached without a mouse. */
+.ld-a11y-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.9rem;
+  padding: 1rem;
+  align-items: start;
+}
+.ld-a11y-doc { display: grid; gap: 0.55rem; }
+.ld-a11y-line {
+  height: 7px;
+  border-radius: 4px;
+  background: currentColor;
+  opacity: 0.16;
+  margin: 0;
+}
+.ld-a11y-line.long { width: 92%; }
+.ld-a11y-line.short { width: 58%; }
+.ld-a11y-link {
+  width: fit-content;
+  padding: 0.18rem 0.45rem;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+  color: var(--accent-text);
+  font-size: 0.74rem;
+}
+.ld-a11y-sr {
+  margin: 0;
+  padding-left: 0.5rem;
+  border-left: 2px solid var(--accent);
+  color: var(--muted);
+  font-size: 0.72rem;
+  line-height: 1.4;
+}
+.ld-a11y-side { display: grid; gap: 0.4rem; justify-items: center; align-content: start; }
+.ld-a11y-key {
+  border: 1px solid var(--border);
+  border-bottom-width: 3px;
+  border-radius: 6px;
+  padding: 0.12rem 0.45rem;
+  font-size: 0.72rem;
+  color: var(--text);
+}
+.ld-a11y-pos { font-size: 0.68rem; color: var(--muted); }
+.ld-a11y-pos.is-ok {
+  color: var(--ok-text);
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  padding: 0 0.4rem;
+  font-weight: 600;
+}

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-only
-// Copyright (C) 2026 OpenLearn
+// Copyright (C) 2026 Jean-Pierre GARNIER (@codeyourweb)
 /*
  * Arabic interface strings.
  * Generated from the English dictionary; keys follow the English order.
@@ -1464,4 +1464,12 @@ export const ar = {
   "wiki.ref_add": "إضافة مصدر",
   "wiki.ref_added": "تمت إضافة المصدر.",
   "about.tagline": "المعرفة تنمو عندما تُشارَك",
+  "about.ch_access_title": "متاح افتراضيًا للجميع",
+  "about.ch_access_lead": "المنصة التي تترك قرّاءها خلفها ليست إلا نصف منصة. كل صفحة يستطيع أي شخص فتحها تستهدف المستوى AA من WCAG 2.2، ويُجرى تدقيق آلي مع كل عملية بناء.",
+  "about.ch_access_b1": "بلوحة المفاتيح وحدها: رابط تخطٍّ، وتركيز مرئي، ونوافذ حوار تُبقي لوحة المفاتيح في داخلها، وكتل تُنقل بمفاتيح Alt مع الأسهم في المحرر",
+  "about.ch_access_b2": "تباين يُقاس لا يُخمَّن، والإجابة الصحيحة لا يعبّر عنها اللون وحده أبدًا",
+  "about.ch_access_b3": "اثنتا عشرة لغة، منها لغات تُكتب من اليمين إلى اليسار، وبيان منشور على /accessibility يوضح الجوانب التي ما زلنا نقصّر فيها",
+  "about.mock_a11y_bar": "إمكانية الوصول",
+  "about.mock_a11y_link": "تخطَّ إلى المحتوى",
+  "about.mock_a11y_sr": "قارئ الشاشة: “عنوان من المستوى 2، ويكي يمكنك تحريره”",
 };

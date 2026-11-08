@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-only
-// Copyright (C) 2026 OpenLearn
+// Copyright (C) 2026 Jean-Pierre GARNIER (@codeyourweb)
 /* Administration of the instance: AI provider, mail, sign-in, audit log.
  *
  * Each rubric is one form served by `/api/v1/admin/...`. Secrets are never

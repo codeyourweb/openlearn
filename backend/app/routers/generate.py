@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-only
-# Copyright (C) 2026 OpenLearn
+# Copyright (C) 2026 Jean-Pierre GARNIER (@codeyourweb)
 """AI quiz generation endpoint.
 
 A generated quiz is untrusted content: it is validated, sanitised and stored as

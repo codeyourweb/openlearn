@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-only
-# Copyright (C) 2026 OpenLearn
+# Copyright (C) 2026 Jean-Pierre GARNIER (@codeyourweb)
 """Every interface string exists in every language, and no language invents one.
 
 A missing key does not crash the interface: `t()` falls back to the key itself,
