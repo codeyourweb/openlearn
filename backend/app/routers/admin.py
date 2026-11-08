@@ -11,7 +11,7 @@ from sqlalchemy import func, or_, select
 from sqlalchemy.orm import Session as OrmSession
 
 from ..db import get_db
-from ..deps import require_admin
+from ..deps import require_admin, require_staff
 from ..models import (
     AdventureNode,
     AiReview,
@@ -68,7 +68,7 @@ def _quiz_row(db: OrmSession, quiz: Quiz) -> dict:
 
 
 @router.get("/stats")
-def stats(admin: User = Depends(require_admin), db: OrmSession = Depends(get_db)):
+def stats(staff: User = Depends(require_staff), db: OrmSession = Depends(get_db)):
     by_status = {
         row[0]: row[1]
         for row in db.execute(select(Quiz.status, func.count(Quiz.id)).group_by(Quiz.status)).all()
@@ -112,7 +112,7 @@ def list_quizzes(
     q: str | None = Query(default=None, max_length=100),
     limit: int = Query(default=50, ge=1, le=200),
     offset: int = Query(default=0, ge=0),
-    admin: User = Depends(require_admin),
+    staff: User = Depends(require_staff),
     db: OrmSession = Depends(get_db),
 ):
     stmt = select(Quiz)
@@ -132,7 +132,7 @@ def list_quizzes(
 
 
 @router.get("/quizzes/{quiz_id}")
-def get_quiz(quiz_id: int, admin: User = Depends(require_admin), db: OrmSession = Depends(get_db)):
+def get_quiz(quiz_id: int, staff: User = Depends(require_staff), db: OrmSession = Depends(get_db)):
     quiz = db.get(Quiz, quiz_id)
     if quiz is None:
         raise HTTPException(status_code=404, detail="Quiz not found.")
@@ -143,7 +143,7 @@ def get_quiz(quiz_id: int, admin: User = Depends(require_admin), db: OrmSession 
 def update_quiz(
     quiz_id: int,
     payload: QuizIn,
-    admin: User = Depends(require_admin),
+    staff: User = Depends(require_staff),
     db: OrmSession = Depends(get_db),
 ):
     quiz = db.get(Quiz, quiz_id)
@@ -154,7 +154,7 @@ def update_quiz(
 
 
 @router.delete("/quizzes/{quiz_id}", status_code=status.HTTP_204_NO_CONTENT)
-def delete_quiz(quiz_id: int, admin: User = Depends(require_admin), db: OrmSession = Depends(get_db)):
+def delete_quiz(quiz_id: int, staff: User = Depends(require_staff), db: OrmSession = Depends(get_db)):
     quiz = db.get(Quiz, quiz_id)
     if quiz is None:
         raise HTTPException(status_code=404, detail="Quiz not found.")
@@ -166,7 +166,7 @@ def delete_quiz(quiz_id: int, admin: User = Depends(require_admin), db: OrmSessi
 def approve_quiz(
     quiz_id: int,
     payload: ModerationIn,
-    admin: User = Depends(require_admin),
+    staff: User = Depends(require_staff),
     db: OrmSession = Depends(get_db),
 ):
     quiz = db.get(Quiz, quiz_id)
@@ -184,12 +184,12 @@ def approve_quiz(
     )
     if pending is not None:
         # Approving a version publishes exactly what the author submitted.
-        versions.publish_existing(db, quiz, pending, approver=admin)
+        versions.publish_existing(db, quiz, pending, approver=staff)
         quiz.moderation_note = payload.note
     else:
         quiz.status = "public"
         quiz.published_at = utcnow()
-        quiz.approved_by_id = admin.id
+        quiz.approved_by_id = staff.id
         quiz.moderation_note = payload.note
     _sync_public_flag(quiz)
     db.add(quiz)
@@ -202,7 +202,7 @@ def approve_quiz(
 def reject_quiz(
     quiz_id: int,
     payload: ModerationIn,
-    admin: User = Depends(require_admin),
+    staff: User = Depends(require_staff),
     db: OrmSession = Depends(get_db),
 ):
     quiz = db.get(Quiz, quiz_id)
@@ -229,7 +229,7 @@ def list_reviews(
     q: str | None = Query(default=None, max_length=100),
     limit: int = Query(default=100, ge=1, le=200),
     offset: int = Query(default=0, ge=0),
-    admin: User = Depends(require_admin),
+    staff: User = Depends(require_staff),
     db: OrmSession = Depends(get_db),
 ):
     stmt = select(AiReview)
@@ -271,7 +271,7 @@ def list_users(
     q: str | None = Query(default=None, max_length=100),
     limit: int = Query(default=25, ge=1, le=200),
     offset: int = Query(default=0, ge=0),
-    admin: User = Depends(require_admin),
+    staff: User = Depends(require_staff),
     db: OrmSession = Depends(get_db),
 ):
     where = []
@@ -289,6 +289,7 @@ def list_users(
                 email=user.email,
                 display_name=user.display_name,
                 is_admin=user.is_admin,
+                is_moderator=user.is_moderator,
                 is_trusted=user.is_trusted,
                 is_active=user.is_active,
                 created_at=user.created_at,
@@ -307,20 +308,40 @@ def list_users(
 def patch_user(
     user_id: int,
     payload: AdminUserPatch,
-    admin: User = Depends(require_admin),
+    staff: User = Depends(require_staff),
     db: OrmSession = Depends(get_db),
 ):
     user = db.get(User, user_id)
     if user is None:
         raise HTTPException(status_code=404, detail="User not found.")
-    if user.id == admin.id and payload.is_admin is False:
+
+    # A moderator only vouches for people ("trusted"). Roles and account
+    # suspension stay with the administrator, and no one below the
+    # administrator may touch another staff account.
+    if not staff.is_admin:
+        if payload.is_admin is not None or payload.is_moderator is not None or payload.is_active is not None:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="A moderator only grants or revokes the trusted flag.",
+            )
+        if user.is_staff:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="A moderator cannot change another moderator's account.",
+            )
+
+    if user.id == staff.id and payload.is_admin is False:
         raise HTTPException(status_code=409, detail="You cannot revoke your own admin rights.")
+    if user.id == staff.id and payload.is_moderator is False:
+        raise HTTPException(status_code=409, detail="You cannot revoke your own moderator rights.")
     if payload.is_admin is not None:
         user.is_admin = payload.is_admin
+    if payload.is_moderator is not None:
+        user.is_moderator = payload.is_moderator
     if payload.is_trusted is not None:
         user.is_trusted = payload.is_trusted
     if payload.is_active is not None:
-        if user.id == admin.id and payload.is_active is False:
+        if user.id == staff.id and payload.is_active is False:
             raise HTTPException(status_code=409, detail="You cannot disable your own account.")
         user.is_active = payload.is_active
     db.add(user)
@@ -332,6 +353,7 @@ def patch_user(
         email=user.email,
         display_name=user.display_name,
         is_admin=user.is_admin,
+        is_moderator=user.is_moderator,
         is_trusted=user.is_trusted,
         is_active=user.is_active,
         created_at=user.created_at,
@@ -341,11 +363,11 @@ def patch_user(
 
 
 @router.delete("/users/{user_id}", status_code=status.HTTP_204_NO_CONTENT)
-def delete_user(user_id: int, admin: User = Depends(require_admin), db: OrmSession = Depends(get_db)):
+def delete_user(user_id: int, staff: User = Depends(require_admin), db: OrmSession = Depends(get_db)):
     user = db.get(User, user_id)
     if user is None:
         raise HTTPException(status_code=404, detail="User not found.")
-    if user.id == admin.id:
+    if user.id == staff.id:
         raise HTTPException(status_code=409, detail="You cannot delete your own account.")
     db.delete(user)
     db.commit()
@@ -357,7 +379,7 @@ def recent_events(
     q: str | None = Query(default=None, max_length=100),
     limit: int = Query(default=100, ge=1, le=200),
     offset: int = Query(default=0, ge=0),
-    admin: User = Depends(require_admin),
+    staff: User = Depends(require_staff),
     db: OrmSession = Depends(get_db),
 ):
     """Authentication and moderation audit trail (OWASP A09)."""
@@ -414,7 +436,7 @@ def list_wikis_admin(
     q: str | None = Query(default=None, max_length=100),
     limit: int = Query(default=50, ge=1, le=200),
     offset: int = Query(default=0, ge=0),
-    admin: User = Depends(require_admin),
+    staff: User = Depends(require_staff),
     db: OrmSession = Depends(get_db),
 ):
     statement = select(Wiki)
@@ -430,7 +452,7 @@ def list_wikis_admin(
 def approve_wiki(
     wiki_id: int,
     payload: ModerationIn,
-    admin: User = Depends(require_admin),
+    staff: User = Depends(require_staff),
     db: OrmSession = Depends(get_db),
 ):
     wiki = db.get(Wiki, wiki_id)
@@ -439,7 +461,7 @@ def approve_wiki(
     wiki.status = "public"
     wiki.is_public = True
     wiki.published_at = utcnow()
-    wiki.approved_by_id = admin.id
+    wiki.approved_by_id = staff.id
     wiki.moderation_note = payload.note
     db.commit()
     db.refresh(wiki)
@@ -450,7 +472,7 @@ def approve_wiki(
 def reject_wiki(
     wiki_id: int,
     payload: ModerationIn,
-    admin: User = Depends(require_admin),
+    staff: User = Depends(require_staff),
     db: OrmSession = Depends(get_db),
 ):
     wiki = db.get(Wiki, wiki_id)

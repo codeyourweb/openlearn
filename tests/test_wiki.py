@@ -434,7 +434,10 @@ def test_the_side_by_side_diff_pairs_removals_and_additions(client):
         f"/api/v1/wiki/pages/{page['id']}",
         json={
             "title": "Ports",
-            "content_md": "# Ports\n\nLe resolver écoute sur le port 5353.\nLa zone est signée.\nUne ligne ajoutée.\n",
+            # A blank line before the new sentence: a paragraph of its own, so the
+            # diff can pair it as an addition. (Inside a paragraph, the reflow
+            # keeps one line and the addition shows up as word-level emphasis.)
+            "content_md": "# Ports\n\nLe resolver écoute sur le port 5353.\nLa zone est signée.\n\nUne ligne ajoutée.\n",
         },
         headers=csrf_headers(client),
     )
@@ -450,7 +453,9 @@ def test_the_side_by_side_diff_pairs_removals_and_additions(client):
     assert any(segment["kind"] == "chg" for segment in row["left"]["segments"])
     assert any(segment["kind"] == "chg" for segment in row["right"]["segments"])
 
-    added = [row for row in diff["side"] if row["kind"] == "add"]
+    # The blank line that separates the new paragraph is an addition too: skip
+    # the empty rows and read the first one that carries text.
+    added = [row for row in diff["side"] if row["kind"] == "add" and row["right"]["text"].strip()]
     assert added and added[0]["left"]["text"] == "" and "ajoutée" in added[0]["right"]["text"]
     assert added[0]["left"]["no"] is None
 

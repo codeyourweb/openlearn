@@ -2769,6 +2769,53 @@ a.tab .tab-count { font-size: .72rem; opacity: .8; }
 .ld-avatars .b { background: var(--ok-soft); color: var(--ok-text); }
 .ld-avatars .c { background: var(--warn-surface); color: var(--warn-text); }
 
+/* The opening window: a wiki being written, then the quiz it feeds. Both panels
+   share one fixed-height box, so alternating never moves the page. */
+.ld-studio-stage { position: relative; padding: 1rem; min-height: 258px; }
+.ld-studio-tabs { display: flex; align-items: center; gap: .3rem; padding: .4rem .6rem; border-bottom: 1px solid var(--border); }
+.ld-studio-tab {
+  border: 1px solid transparent; background: none; color: var(--muted); font: inherit;
+  font-size: .76rem; font-weight: 600; padding: .26rem .7rem; border-radius: 999px; cursor: pointer;
+}
+.ld-studio-tab:hover { color: var(--text); }
+.ld-studio-tab.is-active {
+  color: var(--accent-2); background: var(--accent-soft);
+  border-color: color-mix(in srgb, var(--accent) 28%, transparent);
+}
+.ld-studio-tab:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.ld-studio-live { margin-left: auto; display: inline-flex; align-items: center; gap: .4rem; font-size: .68rem; color: var(--muted); }
+.ld-studio-live i { width: 6px; height: 6px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 0 3px var(--ok-soft); }
+.ld-studio-panel {
+  position: absolute; inset: 1rem; display: grid; gap: .55rem; align-content: start;
+  opacity: 0; visibility: hidden; transform: translateY(6px);
+  transition: opacity .32s ease, transform .32s ease, visibility .32s;
+}
+.ld-studio-panel.is-on { opacity: 1; visibility: visible; transform: none; }
+.ld-studio-panel[data-studio-panel="wiki"] { grid-template-columns: 78px minmax(0, 1fr); gap: .9rem; }
+.ld-studio-nav { display: grid; gap: .45rem; align-content: start; }
+.ld-studio-nav span { display: block; height: 9px; border-radius: 3px; background: var(--surface-2); }
+.ld-studio-nav span.is-on { background: color-mix(in srgb, var(--accent) 45%, var(--surface-2)); }
+.ld-studio-nav span.is-sub { margin-left: .5rem; height: 7px; }
+.ld-studio-doc h4 {
+  height: 11px; width: 62%; margin: 0 0 .55rem; border-radius: 3px;
+  background: color-mix(in srgb, var(--text) 26%, transparent);
+}
+.ld-studio-doc p { position: relative; height: 8px; margin: 0 0 .4rem; border-radius: 3px; background: var(--surface-2); }
+.ld-studio-doc p.short { width: 74%; }
+.ld-studio-doc p.ld-studio-typed { width: 86%; height: 9px; background: color-mix(in srgb, var(--accent) 22%, var(--surface-2)); }
+.ld-studio-doc .ld-caret { top: -3px; height: 15px; }
+.ld-studio-doc .ld-diff { margin: .5rem 0 .1rem; }
+.ld-studio-options { display: grid; gap: .4rem; }
+.ld-studio-opt {
+  display: grid; grid-template-columns: 1.15rem 1fr; align-items: center; gap: .5rem;
+  padding: .38rem .55rem; border: 1px solid var(--border); border-radius: 8px; background: var(--surface);
+}
+.ld-studio-opt b { font-size: .68rem; color: var(--muted); font-weight: 700; }
+.ld-studio-opt i { display: block; height: 8px; border-radius: 3px; background: var(--surface-2); }
+.ld-studio-opt.is-picked { border-color: color-mix(in srgb, var(--accent) 55%, var(--border)); background: var(--accent-soft); }
+.ld-studio-opt.is-picked b { color: var(--accent-2); }
+.ld-studio-opt.is-picked i { background: color-mix(in srgb, var(--accent) 30%, var(--surface-2)); }
+
 .ld-chat { border: 1px solid rgba(139,92,246,.35); border-radius: 16px; padding: 1rem; background: var(--surface); box-shadow: var(--shadow); display: grid; gap: .55rem; }
 .ld-chat-head { font-size: .72rem; text-transform: uppercase; letter-spacing: .08em; color: var(--accent-2); font-weight: 700; }
 .ld-bubble { padding: .6rem .75rem; border-radius: 12px; font-size: .84rem; line-height: 1.45; max-width: 92%; }
@@ -3009,7 +3056,7 @@ a.tab .tab-count { font-size: .72rem; opacity: .8; }
 
 /* The two doors of the page: buttons, not tabs glued under the bar, and placed
    a few centimetres lower so the eye meets them after the header. */
-.ld-switch-wrap { display: flex; justify-content: center; padding: 2.6rem 1rem 0; }
+.ld-switch-wrap { display: flex; justify-content: center; padding: 2.6rem 1rem 3.4rem; }
 .ld-switch {
   display: flex; gap: 0.35rem; padding: 0.3rem;
   border: 1px solid var(--border); border-radius: 999px;
@@ -3334,7 +3381,7 @@ html { overflow-x: clip; }
   .wiki-content pre { max-width: 100%; }
   .wiki-article-head, .page-head { align-items: flex-start; }
   /* Sticky tabs under a two-row topbar only ever peeked out from under it. */
-  .ld-switch-wrap { padding-top: 1.6rem; }
+  .ld-switch-wrap { padding: 1.6rem 1rem 2.2rem; }
   .ld-switch-btn { padding: 0.5rem 0.9rem; font-size: 0.86rem; }
   .embed-deck .revision-card { max-width: 17rem; }
 }
@@ -3437,6 +3484,10 @@ html { overflow-x: clip; }
    read as a seam, and a run of them reads as a ledger. Each record keeps its
    own outline, a little air around it, and a shadow shallow enough to lift it
    off the page without turning it into a floating sticker. */
+/* The search bar is a control, the grid is its result set: without a gap the
+   two cards read as one block and the results look pasted under the field. */
+.wiki-toolbar { margin-bottom: 1.1rem; }
+
 .wiki-grid, .deck-grid { display: grid; gap: 0.65rem; }
 
 .wiki-grid > *, .deck-grid > * {

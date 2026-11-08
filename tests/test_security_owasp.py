@@ -47,7 +47,16 @@ def test_password_material_never_leaves_the_server(client):
     assert "password" not in json.dumps(user).lower()
     assert "hash" not in json.dumps(user).lower()
     me = client.get("/api/v1/auth/me").json()
-    assert set(me) == {"id", "email", "display_name", "created_at", "is_admin", "is_trusted"}
+    assert set(me) == {
+        "id",
+        "email",
+        "display_name",
+        "created_at",
+        "is_admin",
+        "is_moderator",
+        "is_staff",
+        "is_trusted",
+    }
     assert me["is_admin"] is False
 
 

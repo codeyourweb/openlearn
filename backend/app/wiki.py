@@ -27,6 +27,72 @@ from markdown_it import MarkdownIt
 MAX_PAGE_MD = 400_000
 MAX_TITLE = 200
 
+
+# --------------------------------------------------------------------------- #
+# Reflow                                                                       #
+# --------------------------------------------------------------------------- #
+
+# A line that starts a new block: heading, list item, quote, table row, fence,
+# rule, image or wikilink on its own line. Everything else is prose that may have
+# been wrapped at some fixed width by an editor, a language model or an import.
+_BLOCK_START = re.compile(
+    r"^\s{0,3}(?:#{1,6}\s|[-*+]\s|\d{1,3}[.)]\s|>|\||```|~~~|---|\*\*\*|___|!\[|\[\[)"
+)
+_FENCE = re.compile(r"^\s*(?:```|~~~)")
+
+
+def reflow_markdown(markdown: str) -> str:
+    """Join the wrapped lines of a paragraph, keep the paragraph breaks.
+
+    Text that arrives wrapped at 70 or 80 columns carries the wrapping forever:
+    it shows up in the editor and in every diff, and it re-wraps badly on a
+    phone. The reader's browser is what wraps text, so the source should only
+    carry the structure an author meant — blank lines between paragraphs, list
+    items on their own lines, code as it was written.
+
+    Idempotent: running it twice changes nothing, which is what lets it sit on
+    the save path as well as on the import path.
+    """
+    lines = (markdown or "").replace("\r\n", "\n").replace("\r", "\n").split("\n")
+    out: list[str] = []
+    buffer: list[str] = []
+    in_fence = False
+
+    def flush() -> None:
+        if buffer:
+            out.append(" ".join(buffer))
+            buffer.clear()
+
+    for line in lines:
+        stripped = line.strip()
+        if _FENCE.match(line):
+            flush()
+            in_fence = not in_fence
+            out.append(line.rstrip())
+            continue
+        if in_fence:
+            out.append(line.rstrip())
+            continue
+        if not stripped:
+            flush()
+            out.append("")
+            continue
+        # An indented line is a code block or a continuation of a list item as
+        # the author laid it out; leave it exactly as it is.
+        if line.startswith(("    ", "\t")):
+            flush()
+            out.append(line.rstrip())
+            continue
+        if _BLOCK_START.match(line):
+            flush()
+            out.append(line.rstrip())
+            continue
+        buffer.append(stripped)
+    flush()
+
+    text = "\n".join(out)
+    return re.sub(r"\n{3,}", "\n\n", text)
+
 # ---------------------------------------------------------------------------
 # Slugs
 # ---------------------------------------------------------------------------

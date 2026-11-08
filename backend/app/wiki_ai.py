@@ -36,6 +36,7 @@ from .db import SessionLocal
 from .models import AiJob, User, Wiki, WikiChat, WikiChatMessage, WikiPage, utcnow
 from .sanitize import sanitize_plain
 from .search import fts_any_query, fts_query, keywords
+from .wiki import reflow_markdown
 
 logger = logging.getLogger(__name__)
 
@@ -805,7 +806,7 @@ def _run_generate(db, job: AiJob, *, append: bool = False) -> dict:
             wiki_id=wiki.id,
             slug=unique_slug(slugify(title, fallback="page"), taken),
             title=title,
-            content_md=body.strip(),
+            content_md=reflow_markdown(body).strip(),
             tags=[topic.lower()[:40]],
             position=len(existing_titles),
             author_id=job.user_id,
@@ -867,7 +868,7 @@ def _run_fill(db, job: AiJob) -> dict:
             if f"[^{number}]" in body
         )
     _progress(db, job, 95, "Finished")
-    return {"title": title, "content_md": body.strip(), "sources": sources}
+    return {"title": title, "content_md": reflow_markdown(body).strip(), "sources": sources}
 
 
 def _run_review(db, job: AiJob) -> dict:

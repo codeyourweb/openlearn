@@ -57,7 +57,7 @@ def _owner_quiz(db: OrmSession, quiz_id: int, user: User) -> Quiz:
     quiz = db.get(Quiz, quiz_id)
     if quiz is None:
         raise HTTPException(status_code=404, detail="Quiz not found.")
-    if quiz.owner_id != user.id and not user.is_admin:
+    if quiz.owner_id != user.id and not user.is_staff:
         raise HTTPException(status_code=403, detail="Only the author can read these results.")
     return quiz
 

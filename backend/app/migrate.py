@@ -21,6 +21,7 @@ logger = logging.getLogger(__name__)
 _COLUMNS: dict[str, dict[str, str]] = {
     "users": {
         "is_admin": "BOOLEAN NOT NULL DEFAULT 0",
+        "is_moderator": "BOOLEAN NOT NULL DEFAULT 0",
         "is_trusted": "BOOLEAN NOT NULL DEFAULT 0",
         # Bumped when a password is reset: every token issued before carries the
         # old value and stops being accepted, without a session table.

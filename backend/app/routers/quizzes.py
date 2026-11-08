@@ -248,9 +248,9 @@ def serialise_quiz(
         "results_visibility": quiz.results_visibility or "respondents",
         "max_attempts": quiz.max_attempts or 0,
         # The private evaluation link is only meaningful to its author.
-        "share_token": quiz.share_token if (viewer and (viewer.id == quiz.owner_id or viewer.is_admin)) else None,
+        "share_token": quiz.share_token if (viewer and (viewer.id == quiz.owner_id or viewer.is_staff)) else None,
         # Drives the publish tab: a plain author may not go public on their own.
-        "can_publish_publicly": bool(viewer and (viewer.is_admin or viewer.is_trusted)),
+        "can_publish_publicly": bool(viewer and (viewer.is_staff or viewer.is_trusted)),
         "status": quiz.status,
         "is_public": quiz.is_public,
         "moderation_note": quiz.moderation_note,
@@ -588,11 +588,11 @@ def _can_view(quiz: Quiz, user: User | None) -> bool:
         return True
     if user is None:
         return False
-    return quiz.owner_id == user.id or user.is_admin
+    return quiz.owner_id == user.id or user.is_staff
 
 
 def _can_edit(quiz: Quiz, user: User) -> bool:
-    return quiz.owner_id == user.id or user.is_admin
+    return quiz.owner_id == user.id or user.is_staff
 
 
 def _get_quiz_or_404(db: OrmSession, quiz_id: int) -> Quiz:
@@ -1008,7 +1008,7 @@ def _publish_working_copy(
         user=user,
         payload=payload,
         publish=True,
-        auto_publish=bool(user.is_admin or user.is_trusted),
+        auto_publish=bool(user.is_staff or user.is_trusted),
         note=note,
         private=visibility == "private",
     )
@@ -1050,7 +1050,7 @@ def publish_quiz(
         "moderation_note": quiz.moderation_note,
         # A pending version on a live quiz still needs a moderator.
         "requires_moderation": version.status == "pending",
-        "can_publish_publicly": bool(user.is_admin or user.is_trusted),
+        "can_publish_publicly": bool(user.is_staff or user.is_trusted),
         "version": versions.version_summary(version),
         "published_version": quiz.published_version_number,
     }
@@ -1433,7 +1433,7 @@ def restore_version(
             user=user,
             payload=versions.snapshot_payload(quiz),
             publish=True,
-            auto_publish=bool(version.approved_at or user.is_admin or user.is_trusted),
+            auto_publish=bool(version.approved_at or user.is_staff or user.is_trusted),
             note=f"Rollback to version {number}",
         )
         _sync_public_flag(quiz)
@@ -1769,7 +1769,7 @@ def quiz_wikis(
     quiz = db.get(Quiz, quiz_id)
     if quiz is None:
         raise HTTPException(status_code=404, detail="Quiz not found.")
-    if quiz.status != "public" and (user is None or (quiz.owner_id != user.id and not user.is_admin)):
+    if quiz.status != "public" and (user is None or (quiz.owner_id != user.id and not user.is_staff)):
         raise HTTPException(status_code=404, detail="Quiz not found.")
     from .wiki import _member_role, _readable
 

@@ -231,7 +231,7 @@ function renderChrome() {
           signedIn
             ? `<a class="account-item" role="menuitem" href="/account" data-link>${t("nav.account")}</a>
                <a class="account-item" role="menuitem" href="/quizzes?tab=mine" data-link>${t("nav.dashboard")}</a>
-               ${state.user.is_admin ? `<a class="account-item" role="menuitem" href="/admin" data-link>${t("nav.admin")}</a>` : ""}
+               ${state.user.is_staff ? `<a class="account-item" role="menuitem" href="/admin" data-link>${t("nav.admin")}</a>` : ""}
                <button class="account-item account-signout" role="menuitem" type="button" id="logout-button">${t("nav.signout")}</button>`
             : `<a class="account-item" role="menuitem" href="/login" data-link>${t("nav.signin")}</a>
                <a class="account-item is-primary" role="menuitem" href="/register" data-link>${t("nav.signup")}</a>`

@@ -111,7 +111,7 @@ async def create_game_session(
     quiz = db.get(Quiz, quiz_id)
     if quiz is None:
         raise HTTPException(status_code=404, detail="Quiz not found.")
-    is_owner = user is not None and (quiz.owner_id == user.id or user.is_admin)
+    is_owner = user is not None and (quiz.owner_id == user.id or user.is_staff)
     if quiz.status != "public" and not is_owner:
         raise HTTPException(status_code=404, detail="Quiz not found.")
     # Anyone may host a live session of a published quiz, signed in or not;

@@ -53,8 +53,12 @@ class User(Base):
     password_hash: Mapped[str] = mapped_column(String(255))
     display_name: Mapped[str] = mapped_column(String(60))
     is_active: Mapped[bool] = mapped_column(Boolean, default=True)
-    # An administrator moderates quizzes and accounts.
+    # An administrator runs the instance, including its AI, mail and SSO
+    # configuration.
     is_admin: Mapped[bool] = mapped_column(Boolean, default=False)
+    # A moderator validates content like an administrator, but never reaches
+    # the instance configuration.
+    is_moderator: Mapped[bool] = mapped_column(Boolean, default=False)
     # A trusted author publishes without prior moderation.
     is_trusted: Mapped[bool] = mapped_column(Boolean, default=False)
     failed_logins: Mapped[int] = mapped_column(Integer, default=0)
@@ -71,6 +75,11 @@ class User(Base):
         foreign_keys="Quiz.owner_id",
     )
     api_keys: Mapped[list["ApiKey"]] = relationship(back_populates="user", cascade="all, delete-orphan")
+
+    @property
+    def is_staff(self) -> bool:
+        """True for anyone who validates content: an administrator or a moderator."""
+        return bool(self.is_admin or self.is_moderator)
 
 
 class ApiKey(Base):

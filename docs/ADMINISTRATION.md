@@ -7,6 +7,24 @@ Only accounts with the administrator role see them. The first administrator is
 created at boot from `OL_ADMIN_EMAIL` / `OL_ADMIN_PASSWORD`; afterwards another
 administrator can promote an account from the **Users** tab.
 
+## Roles
+
+| Role | May | May not |
+| --- | --- | --- |
+| Member | Write wikis and quizzes, ask for publication | Publish without moderation |
+| Trusted | Publish immediately, review others' content | Moderate accounts |
+| Moderator | Everything a member may, plus: validate and reject wikis and quizzes, delete a quiz, read the security log and the AI reviews, grant or revoke *trusted* on a member | Reach **Settings**, **Single sign-on** or the **AI error log**; promote anyone to moderator or administrator; suspend or delete an account; touch another staff account |
+| Administrator | Everything, including the instance configuration (AI, mail, SSO) and account deletion | — |
+
+Moderation is `require_staff` on the server: an administrator or a moderator.
+Configuration is `require_admin`: an administrator only. The interface hides the
+configuration tabs from a moderator, but the API refuses them anyway, which is
+the check that counts.
+
+The three flags are independent columns on the user (`is_admin`,
+`is_moderator`, `is_trusted`). Promoting to moderator does not grant
+administrator rights, and demoting does not silently remove *trusted*.
+
 ## How settings are stored
 
 Runtime settings live in the database (`app_settings`). The environment is the

@@ -111,6 +111,94 @@ function _finalCta() {
 /* Scene artwork: small app mocks, no images                                  */
 /* -------------------------------------------------------------------------- */
 
+/* The opening window used to be the quiz mock, and the same mock came back one
+   screen later. This one window carries both stories instead: a wiki page being
+   written by three people, then the questionnaire that page feeds. Tabs switch
+   on click, and the window alternates on its own so the first screen shows both
+   halves of the product without a scroll. */
+function _artStudio() {
+  return `
+    <div class="ld-window ld-studio" data-studio data-on="wiki">
+      <div class="ld-window-bar"><span></span><span></span><span></span><em data-studio-title>${escapeHtml(t("about.mock_wiki"))}</em></div>
+      <div class="ld-studio-tabs" role="tablist">
+        <button class="ld-studio-tab is-active" type="button" role="tab" aria-selected="true"
+                data-studio-tab="wiki">${escapeHtml(t("about.studio_tab_wiki"))}</button>
+        <button class="ld-studio-tab" type="button" role="tab" aria-selected="false"
+                data-studio-tab="quiz">${escapeHtml(t("about.studio_tab_quiz"))}</button>
+        <span class="ld-studio-live"><i></i>${escapeHtml(t("about.mock_live"))}</span>
+      </div>
+      <div class="ld-studio-stage">
+        <div class="ld-studio-panel is-on" data-studio-panel="wiki" role="tabpanel">
+          <aside class="ld-studio-nav"><span class="is-on"></span><span></span><span class="is-sub"></span><span></span></aside>
+          <div class="ld-studio-doc">
+            <h4></h4>
+            <p></p>
+            <p class="ld-studio-typed">${escapeHtml(t("about.mock_added"))}<span class="ld-caret c-one"></span></p>
+            <p class="short"><span class="ld-caret c-two"></span></p>
+            <div class="ld-diff">
+              <span class="add">+ ${escapeHtml(t("about.mock_added"))}</span>
+              <span class="del">− ${escapeHtml(t("about.mock_removed"))}</span>
+            </div>
+            <div class="ld-avatars">
+              <span class="a">AL</span><span class="b">MB</span><span class="c">JS</span>
+            </div>
+          </div>
+        </div>
+        <div class="ld-studio-panel" data-studio-panel="quiz" role="tabpanel">
+          <p class="ld-mock-question">${escapeHtml(t("about.mock_q1"))}</p>
+          <div class="ld-studio-options">
+            ${["A", "B", "C", "D"]
+              .map(
+                (letter, index) => `
+              <span class="ld-studio-opt ${index === 0 ? "is-picked" : ""}">
+                <b>${letter}</b><i></i>
+              </span>`,
+              )
+              .join("")}
+          </div>
+          <div class="ld-mock-foot"><span class="ld-dot"></span> <span>24</span> ${escapeHtml(t("about.mock_players"))}</div>
+        </div>
+      </div>
+    </div>`;
+}
+
+/** Switch the two acts by hand, and let them alternate when motion is allowed. */
+function _startStudio(root) {
+  const studio = root.querySelector("[data-studio]");
+  if (!studio) return;
+  const panels = studio.querySelectorAll("[data-studio-panel]");
+  const tabs = studio.querySelectorAll("[data-studio-tab]");
+  const title = studio.querySelector("[data-studio-title]");
+
+  const show = (act) => {
+    studio.dataset.on = act;
+    panels.forEach((panel) => panel.classList.toggle("is-on", panel.dataset.studioPanel === act));
+    tabs.forEach((tab) => {
+      const on = tab.dataset.studioTab === act;
+      tab.classList.toggle("is-active", on);
+      tab.setAttribute("aria-selected", String(on));
+    });
+    if (title) title.textContent = act === "wiki" ? t("about.mock_wiki") : t("about.studio_tab_quiz");
+  };
+
+  let timer = null;
+  const stop = () => {
+    if (timer) clearInterval(timer);
+    timer = null;
+  };
+  tabs.forEach((tab) =>
+    tab.addEventListener("click", () => {
+      stop();
+      show(tab.dataset.studioTab);
+    }),
+  );
+
+  show("wiki");
+  if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    timer = setInterval(() => show(studio.dataset.on === "wiki" ? "quiz" : "wiki"), 7000);
+  }
+}
+
 function _artQuiz() {
   const set = MOCK_SETS[0];
   return `
@@ -357,7 +445,7 @@ export function renderAbout() {
         ${/* Only shown on a phone, where the page clearly continues below. */""}
         <a class="ld-scroll-cue" href="#ld-start" aria-hidden="true" tabindex="-1"><span></span></a>
       </div>
-      <div class="ld-hero-art" data-reveal>${_artQuiz()}</div>
+      <div class="ld-hero-art" data-reveal>${_artStudio()}</div>
     </section>
 
     ${_switchHtml()}
@@ -407,6 +495,7 @@ export function renderAbout() {
   _animate(root);
   _startRotator(root);
   _startMockQuiz(root);
+  _startStudio(root);
   return root;
 }
 

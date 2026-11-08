@@ -77,6 +77,8 @@ class UserOut(BaseModel):
     email: str
     display_name: str
     is_admin: bool = False
+    is_moderator: bool = False
+    is_staff: bool = False
     is_trusted: bool = False
     created_at: datetime
 
@@ -645,6 +647,7 @@ class AdminUserOut(UserOut):
 
 class AdminUserPatch(BaseModel):
     is_admin: bool | None = None
+    is_moderator: bool | None = None
     is_trusted: bool | None = None
     is_active: bool | None = None
 

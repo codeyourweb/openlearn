@@ -6,7 +6,33 @@ import { api } from "../api.js";
 import { currentLanguage, t } from "../i18n.js";
 import { escapeHtml, toast } from "../ui.js";
 
-const SUGGESTIONS = ["wiki.chat_example_1", "wiki.chat_example_2", "wiki.chat_example_3"];
+const GENERIC_SUGGESTIONS = [
+  "wiki.chat_example_1",
+  "wiki.chat_example_2",
+  "wiki.chat_example_3",
+  "wiki.chat_example_4",
+  "wiki.chat_example_5",
+  "wiki.chat_example_6",
+];
+
+/** Three questions out of six: the same three every visit read like a fixture. */
+function pickGenericSuggestions(count = 3) {
+  const pool = [...GENERIC_SUGGESTIONS];
+  for (let index = pool.length - 1; index > 0; index -= 1) {
+    const swap = Math.floor(Math.random() * (index + 1));
+    [pool[index], pool[swap]] = [pool[swap], pool[index]];
+  }
+  return pool.slice(0, count).map((key) => t(key));
+}
+
+function suggestionButtons(questions) {
+  return questions
+    .map(
+      (question) =>
+        `<button type="button" class="gpt-suggestion" data-suggest="${escapeHtml(question)}">${escapeHtml(question)}</button>`,
+    )
+    .join("");
+}
 
 function paragraph(text) {
   return escapeHtml(text)
@@ -55,12 +81,8 @@ export async function renderWikiChat({ query }) {
     <div class="gpt-empty">
       <h1><span aria-hidden="true">✨</span> ${escapeHtml(t("wiki.chat_title"))}</h1>
       <p class="muted">${escapeHtml(t("wiki.chat_subtitle"))}</p>
-      <div class="gpt-suggestions">
-        ${SUGGESTIONS.map(
-          (key) =>
-            `<button type="button" class="gpt-suggestion" data-suggest="${escapeHtml(t(key))}">
-               ${escapeHtml(t(key))}</button>`,
-        ).join("")}
+      <div class="gpt-suggestions" id="gpt-suggestions">
+        ${suggestionButtons(pickGenericSuggestions())}
       </div>
       <p class="muted small">${escapeHtml(t("wiki.chat_scope"))}</p>
     </div>`;
@@ -168,6 +190,25 @@ export async function renderWikiChat({ query }) {
     const suggestion = event.target.closest("[data-suggest]");
     if (suggestion) ask(suggestion.dataset.suggest);
   });
+
+  // Scoped to a single wiki: ask that wiki what it talks about. The server reads
+  // the headings of its published pages, so the three buttons name real sections
+  // instead of questions that could belong to any other wiki.
+  const scopedWiki = chat.wikiIds[0];
+  if (scopedWiki) {
+    api
+      .get(
+        `/api/v1/wiki/ai/suggestions?wiki_id=${scopedWiki}&language=${encodeURIComponent(currentLanguage())}`,
+      )
+      .then((data) => {
+        const questions = (data.suggestions || []).slice(0, 4);
+        const holder = root.querySelector("#gpt-suggestions");
+        if (holder && questions.length && !chat.started) holder.innerHTML = suggestionButtons(questions);
+      })
+      .catch(() => {
+        /* the generic questions stay */
+      });
+  }
 
   input.focus();
   return root;

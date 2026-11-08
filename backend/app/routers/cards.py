@@ -108,11 +108,11 @@ def _readable(deck: RevisionDeck, user: User | None) -> bool:
         return True
     if user is None:
         return False
-    return deck.owner_id == user.id or bool(user.is_admin)
+    return deck.owner_id == user.id or bool(user.is_staff)
 
 
 def _writable(deck: RevisionDeck, user: User) -> bool:
-    return deck.owner_id == user.id or bool(user.is_admin)
+    return deck.owner_id == user.id or bool(user.is_staff)
 
 
 def _deck_or_404(db: OrmSession, deck_id: int, user: User | None) -> RevisionDeck:
@@ -131,7 +131,7 @@ def _deck_for_write(db: OrmSession, deck_id: int, user: User) -> RevisionDeck:
 
 
 def _wiki_readable(db: OrmSession, wiki: Wiki, user: User) -> bool:
-    if wiki.status == "public" or wiki.owner_id == user.id or user.is_admin:
+    if wiki.status == "public" or wiki.owner_id == user.id or user.is_staff:
         return True
     member = db.scalar(
         select(WikiMember).where(WikiMember.wiki_id == wiki.id, WikiMember.user_id == user.id)
@@ -488,7 +488,7 @@ def _accessible_quiz(db: OrmSession, quiz_id: int, user: User) -> Quiz:
     quiz = db.get(Quiz, quiz_id)
     if quiz is None:
         raise HTTPException(status_code=404, detail="Quiz not found.")
-    if not (quiz.is_public or quiz.owner_id == user.id or user.is_admin):
+    if not (quiz.is_public or quiz.owner_id == user.id or user.is_staff):
         raise HTTPException(status_code=404, detail="Quiz not found.")
     return quiz
 

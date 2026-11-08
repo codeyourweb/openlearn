@@ -120,10 +120,10 @@ function _profileHtml() {
         <p>${escapeHtml(state.user.display_name)}</p>
         <p class="muted small">${t("common.created")}</p>
         <p>${formatDate(state.user.created_at)}</p>
-        ${state.user.is_admin ? `<p><span class="pill ai">${t("admin.admin")}</span></p>` : ""}
+        ${state.user.is_staff ? `<p><span class="pill ai">${state.user.is_admin ? t("admin.admin") : t("admin.moderator")}</span></p>` : ""}
         <div class="row-wrap mt-2">
           <a class="btn btn-sm" href="/quizzes?tab=mine" data-link>${t("nav.dashboard")}</a>
-          ${state.user.is_admin ? `<a class="btn btn-sm" href="/admin" data-link>${t("nav.admin")}</a>` : ""}
+          ${state.user.is_staff ? `<a class="btn btn-sm" href="/admin" data-link>${t("nav.admin")}</a>` : ""}
         </div>
       </section>
 
