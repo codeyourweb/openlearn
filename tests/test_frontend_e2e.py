@@ -2109,3 +2109,100 @@ def test_a_table_column_is_added_and_removed_where_the_caret_stands(browser):
         assert recorder.errors == [], recorder.errors
     finally:
         context.close()
+
+
+def test_a_revision_deck_is_not_rewritten_into_a_stranger_s_quiz(browser):
+    """A deck embedded in a page came back as `{quiz:<same id>}`.
+
+    The editor kept two of the three kinds of embed, so a page holding `{deck:19}`
+    was saved as `{quiz:19}` — another author's questionnaire, in another
+    language, in place of the author's own revision cards.
+    """
+    context, page, recorder = new_page(browser, viewport=(1440, 900))
+    try:
+        email = f"wiki-deck-{uuid.uuid4().hex[:8]}@example.com"
+        register_through_ui(page, email, "Nadia Fiches")
+        csrf = next(cookie["value"] for cookie in context.cookies() if cookie["name"] == "ol_csrf")
+        headers = {"X-CSRF-Token": csrf, "Content-Type": "application/json"}
+
+        wiki = page.request.post(
+            f"{BASE_URL}/api/v1/wiki",
+            headers=headers,
+            data=json.dumps({"title": "Wiki des fiches", "description": ""}),
+        ).json()
+        detail = page.request.get(f"{BASE_URL}/api/v1/wiki/{wiki['id']}").json()
+        page_id = detail["pages"][0]["id"]
+        deck = page.request.post(
+            f"{BASE_URL}/api/v1/decks",
+            headers=headers,
+            data=json.dumps({"title": "Fiches du wiki", "wiki_id": wiki["id"]}),
+        ).json()
+        page.request.put(
+            f"{BASE_URL}/api/v1/wiki/pages/{page_id}",
+            headers=headers,
+            data=json.dumps({"title": "Le cheval", "content_md": f"# Le cheval\n\n{{deck:{deck['id']}}}\n"}),
+        )
+
+        page.goto(f"{BASE_URL}/wiki/{wiki['id']}/edit/{page_id}", wait_until="networkidle")
+        surface = page.locator("#wiki-wysiwyg")
+        expect(surface).to_be_visible(timeout=15000)
+        expect(surface.locator('.wiki-embed[data-embed="deck"]')).to_have_count(1)
+
+        # Touching the page is enough: saving rewrites every embed it holds.
+        surface.click()
+        page.keyboard.press("End")
+        page.keyboard.type(" ")
+        page.click("#wiki-save")
+        expect(page).to_have_url(re.compile(r".*/p/.+$"), timeout=15000)
+
+        saved = page.request.get(f"{BASE_URL}/api/v1/wiki/{wiki['id']}").json()
+        markdown = next(item for item in saved["pages"] if item["id"] == page_id)["content_md"]
+        assert f"{{deck:{deck['id']}}}" in markdown, markdown
+        assert f"{{quiz:{deck['id']}}}" not in markdown, markdown
+        assert recorder.errors == [], recorder.errors
+    finally:
+        context.close()
+
+
+def test_the_lobby_shows_a_code_a_phone_can_scan(browser):
+    """A host projecting the lobby needs more than a PIN read aloud: a student
+    points a camera at the screen. The code carries the join link itself, so a
+    scan lands on the same page the URL opens, and it can be shown large."""
+    context, page, recorder = new_page(browser, viewport=(1440, 900))
+    try:
+        email = f"qr-{uuid.uuid4().hex[:8]}@example.com"
+        register_through_ui(page, email, "Hôte Projection")
+        quiz_id = create_quiz_through_editor(page, "Partie projetée")
+
+        page.goto(f"{BASE_URL}/quizzes/{quiz_id}", wait_until="networkidle")
+        page.locator('[data-act="live"]').click()
+        expect(page).to_have_url(re.compile(r".*/host/[A-Z0-9]+$"), timeout=20000)
+
+        code = page.url.rsplit("/", 1)[-1]
+        join_url = page.locator("#join-url").input_value()
+        # The code carries the invitation link, not the four-letter PIN: a scan
+        # must land on the page that asks for a nickname, without typing.
+        assert join_url.startswith("http") and "/join/" in join_url, join_url
+
+        qr = page.locator(".lobby-qr svg")
+        expect(qr).to_be_visible(timeout=15000)
+        viewbox = qr.get_attribute("viewBox").split()
+        assert viewbox[0] == "0" and viewbox[1] == "0" and viewbox[2] == viewbox[3]
+        # Quiet zone of four modules on each side around a real QR matrix.
+        modules = int(viewbox[2]) - 8
+        assert modules >= 21 and (modules - 21) % 4 == 0, viewbox
+        # A scanner needs contrast: the code draws its own white field.
+        assert qr.locator("rect[fill='#ffffff']").count() == 1
+
+        page.click('[data-act="qr-big"]')
+        overlay = page.locator(".qr-overlay")
+        expect(overlay).to_be_visible(timeout=10000)
+        expect(overlay.locator(".qr-overlay-code")).to_have_text(code)
+        expect(overlay.locator("svg")).to_be_visible()
+
+        page.keyboard.press("Escape")
+        expect(page.locator(".qr-overlay")).to_have_count(0)
+        expect(page.locator(".lobby-qr svg")).to_be_visible()
+        assert recorder.errors == [], recorder.errors
+    finally:
+        context.close()

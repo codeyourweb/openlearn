@@ -137,6 +137,18 @@ export function markdownToHtml(markdown, options = {}) {
       );
       continue;
     }
+    // An embedded questionnaire, adventure or deck is one block, not a line of
+    // text: the editor renders it as the same box the insert menu creates, so
+    // reopening a page shows what it holds instead of a raw marker.
+    const embed = /^\{(quiz|adventure|deck):(\d{1,9})\}$/.exec(line.trim());
+    if (embed) {
+      const marker = `{${embed[1]}:${embed[2]}}`;
+      html.push(
+        `<div class="wiki-embed" data-embed="${embed[1]}" data-id="${embed[2]}" contenteditable="false">${marker}</div>`,
+      );
+      index += 1;
+      continue;
+    }
     const heading = /^(#{1,6})\s+(.*)$/.exec(line);
     if (heading) {
       const level = heading[1].length;
@@ -368,8 +380,11 @@ function nodeToMarkdown(node, depth = 0) {
     case "div":
       if (node.classList.contains("wiki-embed")) {
         // An embedded questionnaire is a marker, not content: keep it on its
-        // own block so the server can rebuild the container.
-        const kind = node.dataset.embed === "adventure" ? "adventure" : "quiz";
+        // own block so the server can rebuild the container. The kind travels
+        // with the id — a deck of revision cards written back as `{quiz:12}`
+        // would show a stranger's questionnaire under the author's hands.
+        const KINDS = ["quiz", "adventure", "deck"];
+        const kind = KINDS.includes(node.dataset.embed) ? node.dataset.embed : "quiz";
         const id = node.dataset.id || "";
         return /^\d{1,9}$/.test(id) ? `{${kind}:${id}}\n\n` : "";
       }

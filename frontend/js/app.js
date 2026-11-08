@@ -127,8 +127,11 @@ function applyTranslations(scope = document) {
  * the two an upset user forgets. Everything else stays in their hands.
  */
 function wireReportLink() {
-  const link = document.getElementById("report-problem");
-  if (!link) return;
+  // Two links carry the same form: the discreet one in the footer and the
+  // labelled pill that floats over the page for people who never scroll that
+  // far. Both describe the page the reporter is actually looking at.
+  const links = document.querySelectorAll("[data-report]");
+  if (!links.length) return;
   const build = () => {
     const params = new URLSearchParams({
       template: "bug_report.yml",
@@ -137,11 +140,16 @@ function wireReportLink() {
       browser: navigator.userAgent,
       language: document.documentElement.lang || "",
     });
-    link.href = `https://github.com/codeyourweb/openlearn/issues/new?${params.toString()}`;
+    const href = `https://github.com/codeyourweb/openlearn/issues/new?${params.toString()}`;
+    links.forEach((link) => {
+      link.href = href;
+    });
   };
   build();
-  link.addEventListener("click", build);
-  link.addEventListener("focus", build);
+  links.forEach((link) => {
+    link.addEventListener("click", build);
+    link.addEventListener("focus", build);
+  });
 }
 
 function buildLanguagePicker() {

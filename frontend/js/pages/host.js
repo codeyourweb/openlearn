@@ -11,6 +11,7 @@
 import { api } from "../api.js";
 import { t, tp } from "../i18n.js";
 import { LiveConnection } from "../live.js";
+import { qrSvg } from "../qr.js";
 import { navigate } from "../router.js";
 import {
   hostToken,
@@ -265,6 +266,16 @@ export async function renderHost({ code }) {
       </div>`;
   };
 
+  // A room joins by scanning: the PIN stays, because a code is still the
+  // fastest thing to say out loud when a phone is flat.
+  const qrBlock = () => `
+    <div class="lobby-qr-block">
+      <div class="lobby-qr" data-qr="${escapeHtml(joinUrl)}" role="img"
+           aria-label="${escapeHtml(t("host.qr_label"))}"></div>
+      <p class="muted small">${escapeHtml(t("host.qr_hint"))}</p>
+      <button class="btn btn-sm btn-ghost" data-act="qr-big">${t("host.qr_full")}</button>
+    </div>`;
+
   const shareBlock = () => `
     <div class="share-box">
       <p class="muted small">${t("host.join_link")}</p>
@@ -277,6 +288,48 @@ export async function renderHost({ code }) {
         <button class="btn btn-sm btn-ghost" data-act="copy-code">${t("host.copy_code")}</button>
       </div>
     </div>`;
+
+  // The matrix is computed in the page, not fetched: the lobby must draw its
+  // code even on a conference network that drops image requests.
+  const paintQr = () => {
+    root.querySelectorAll("[data-qr]").forEach((slot) => {
+      const value = slot.getAttribute("data-qr");
+      if (!value || slot.dataset.qrDrawn === value) return;
+      slot.innerHTML = qrSvg(value);
+      slot.dataset.qrDrawn = value;
+    });
+  };
+
+  let overlay = null;
+  const closeQrOverlay = () => {
+    if (!overlay) return;
+    overlay.remove();
+    overlay = null;
+    const opener = root.querySelector('[data-act="qr-big"]');
+    if (opener) opener.focus();
+  };
+
+  const openQrOverlay = () => {
+    if (overlay) return;
+    overlay = document.createElement("div");
+    overlay.className = "qr-overlay";
+    overlay.setAttribute("role", "dialog");
+    overlay.setAttribute("aria-modal", "true");
+    overlay.setAttribute("aria-label", t("host.qr_label"));
+    overlay.innerHTML = `
+      <div class="qr-overlay-card">
+        <p class="muted small">${escapeHtml(state.session.quiz_title)}</p>
+        <div class="qr-overlay-code">${escapeHtml(state.session.code)}</div>
+        <div class="qr-overlay-qr">${qrSvg(joinUrl)}</div>
+        <p class="hint">${escapeHtml(t("host.qr_hint"))}</p>
+        <button class="btn" type="button" data-act="qr-close">${t("host.qr_close")}</button>
+      </div>`;
+    overlay.addEventListener("click", (event) => {
+      if (event.target === overlay || event.target.closest('[data-act="qr-close"]')) closeQrOverlay();
+    });
+    document.body.appendChild(overlay);
+    overlay.querySelector('[data-act="qr-close"]').focus();
+  };
 
   const paintLobby = () => {
     stopTimer();
@@ -295,6 +348,7 @@ export async function renderHost({ code }) {
         <div class="card center">
           <p class="muted">${t("host.pin")}</p>
           <div class="pin-display" aria-label="${t("host.pin")}">${escapeHtml(state.session.code)}</div>
+          ${qrBlock()}
           ${shareBlock()}
           <p class="hint mt-2">${t("host.waiting")}</p>
           <button class="btn btn-primary btn-block mt-2" data-act="start">${t("host.start")}</button>
@@ -341,6 +395,7 @@ export async function renderHost({ code }) {
           </div>
         </div>
       </div>`;
+    paintQr();
   };
 
   const paintQuestion = () => {
@@ -466,6 +521,8 @@ export async function renderHost({ code }) {
   const paint = () => {
     stopTimer();
     const session = state.session;
+    // A code left on screen over the first question would hide it from the room.
+    if (session.status !== "lobby" && overlay) closeQrOverlay();
     if (session.status === "lobby") return paintLobby();
     if (session.status === "finished" || session.status === "cancelled") return paintFinished();
     if (session.phase === "reveal") return paintReveal();
@@ -577,6 +634,10 @@ export async function renderHost({ code }) {
       await copyToClipboard(state.session.code);
       return;
     }
+    if (action === "qr-big") {
+      openQrOverlay();
+      return;
+    }
     if (action === "share") {
       const ok = await shareLink({
         title: state.session.quiz_title,
@@ -622,6 +683,15 @@ export async function renderHost({ code }) {
     } catch (error) {
       button.disabled = false;
       toast(error.detail || t("common.error"), "error");
+    }
+  });
+
+  // The overlay sits above a screen that keeps repainting itself, so it is
+  // removed whenever the lobby is left, and Escape always closes it.
+  window.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && overlay) {
+      event.preventDefault();
+      closeQrOverlay();
     }
   });
 
