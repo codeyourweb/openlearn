@@ -38,6 +38,18 @@ if git rev-parse --git-dir >/dev/null 2>&1; then
   echo "commit : $(git log -1 --format='%h %s')"
 fi
 
+# 0b. Refuse to build a stack the running container does not belong to.
+#     Compose names its project after the file's directory, so a compose file
+#     sitting elsewhere creates a second container and collides on the name.
+if docker inspect "$CONTAINER" >/dev/null 2>&1 || $SSH "docker inspect $CONTAINER >/dev/null 2>&1"; then
+  owner=$($SSH "docker inspect -f '{{index .Config.Labels \"com.docker.compose.project.config_files\"}}' $CONTAINER 2>/dev/null" || true)
+  if [[ -n $owner && $owner != "$COMPOSE" ]]; then
+    echo "arrêt : $CONTAINER appartient à $owner, pas à $COMPOSE" >&2
+    echo "relancer avec OL_COMPOSE=$owner" >&2
+    exit 1
+  fi
+fi
+
 # 1. Rotate the previous copy out of the way, keeping only one.
 STAMP=$(date +%Y%m%d-%H%M%S)
 $SSH "set -e
