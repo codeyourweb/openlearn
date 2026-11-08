@@ -1,0 +1,51 @@
+{
+  "kind": "wikis",
+  "items": [
+    {
+      "slug": "demo-geography-rivers",
+      "title": "Rivers of the World",
+      "language": "en",
+      "description": "How rivers shape landscapes, cities and borders, with the longest and most powerful rivers on each continent.",
+      "pages": [
+        {
+          "slug": "overview",
+          "title": "Why rivers matter",
+          "tags": ["geography", "water"],
+          "markdown": "## The shape of the land\n\nA river is a **moving landscape**. It carries water, sediment and nutrients from the highlands to the sea, and it does so at a speed that changes everything it touches: a slow river deposits, a fast one cuts.\n\n- **Erosion** carves gorges in hard rock and widens valleys in soft rock.\n- **Deposition** builds floodplains, deltas and the fertile soil that made early agriculture possible.\n- **Transport** moves goods: most of the world's largest cities sit on a navigable river.\n\n## A river is a system\n\nUpstream, a river is a torrent of stones and oxygen. Downstream, it is a wide, slow body of water where fine sediment settles. Between the two lie the floodplain, the wetlands and the aquifer that refill every year.\n\n> Change one part — a dam, a levee, a drained marsh — and the effects appear hundreds of kilometres away."
+        },
+        {
+          "slug": "longest-rivers",
+          "title": "The longest rivers",
+          "tags": ["geography", "records"],
+          "markdown": "## Top five by length\n\n| River | Length | Continent | Mouth |\n|---|---|---|---|\n| Nile | ~6,650 km | Africa | Mediterranean Sea |\n| Amazon | ~6,400 km | South America | Atlantic Ocean |\n| Yangtze | ~6,300 km | Asia | East China Sea |\n| Mississippi–Missouri | ~6,275 km | North America | Gulf of Mexico |\n| Yenisei | ~5,539 km | Asia | Kara Sea |\n\nLengths are approximate: the source of a river can move, and the measurement depends on where the main channel is said to end.\n\n## The Amazon, by volume\n\nThe Amazon carries more water than the next seven rivers combined. Its discharge is so large that the sea stays fresh for tens of kilometres offshore."
+        },
+        {
+          "slug": "rivers-and-cities",
+          "title": "Rivers and cities",
+          "tags": ["geography", "cities"],
+          "markdown": "## Why the first cities sat on rivers\n\nFresh water, flat land, fertile silt and a transport route: four reasons that explain almost every ancient city. Uruk on the Euphrates, Memphis on the Nile, Mohenjo-daro on the Indus, Xi'an on the Wei.\n\n## The modern river city\n\nIndustrial cities turned their backs on the river, then turned back. London, Paris, Lyon and Seoul all rebuilt their banks as public space once the docks and the factories moved away.\n\n- Flood control is now a design problem, not only an engineering one: green roofs, floodable parks and restored marshes absorb what a single concrete wall cannot.\n- A river is a corridor: species, heat and pollution all travel along it."
+        }
+      ]
+    },
+    {
+      "slug": "demo-geographie-fleuves",
+      "title": "Fleuves et rivières",
+      "language": "fr",
+      "description": "Comprendre comment un fleuve façonne un territoire, et pourquoi les villes se sont installées sur leurs rives.",
+      "pages": [
+        {
+          "slug": "introduction",
+          "title": "Un fleuve, c'est un système",
+          "tags": ["géographie"],
+          "markdown": "## Trois zones, trois comportements\n\nUn fleuve se lit de l'amont vers l'aval :\n\n1. **Le cours supérieur** descend vite, transporte des galets et creuse une vallée étroite.\n2. **Le cours moyen** ralentit, dépose ses alluvions et dessine des méandres.\n3. **Le cours inférieur** s'étale, forme un delta ou un estuaire et se jette dans la mer.\n\n## Le bassin versant\n\nTout ce qui tombe dans un bassin versant finit dans le même fleuve. C'est pourquoi la qualité de l'eau se décide parfois à des centaines de kilomètres de la ville qui la boit."
+        },
+        {
+          "slug": "france",
+          "title": "Les fleuves français",
+          "tags": ["géographie", "france"],
+          "markdown": "## Cinq grands bassins\n\n| Fleuve | Longueur | Se jette dans |\n|---|---|---|\n| Loire | 1 006 km | Atlantique |\n| Rhône | 812 km (en France) | Méditerranée |\n| Seine | 777 km | Manche |\n| Garonne | 647 km | Atlantique (estuaire de la Gironde) |\n| Meuse | 486 km (en France) | Mer du Nord |\n\nLa Loire est le plus long fleuve entièrement français ; le Rhône est le plus puissant, alimenté par les Alpes et le Léman."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,461 @@
+{
+  "kind": "quizzes",
+  "items": [
+    {
+      "title": "Sport: A Century of Olympic Games",
+      "description": "Nine questions on the modern Games: their origins, their rituals and the records that made them famous.",
+      "mode": "qcm",
+      "wrong_answer_policy": "zero",
+      "default_language": "en",
+      "title_translations": {
+        "fr": "Sport : un siècle de Jeux olympiques",
+        "de": "Sport: Ein Jahrhundert Olympische Spiele",
+        "es": "Deporte: un siglo de Juegos Olímpicos"
+      },
+      "description_translations": {
+        "fr": "Neuf questions sur les Jeux modernes : leurs origines, leurs rituels et les exploits qui les ont marqués.",
+        "de": "Neun Fragen zu den modernen Spielen: ihre Ursprünge, ihre Rituale und die Rekorde, die sie geprägt haben.",
+        "es": "Nueve preguntas sobre los Juegos modernos: sus orígenes, sus rituales y las hazañas que los marcaron."
+      },
+      "timer_mode": "per_question",
+      "questions": [
+        {
+          "text_html": "<p>Where were the first modern Olympic Games held in 1896?</p>",
+          "time_limit_seconds": 20,
+          "points": 100,
+          "options": [
+            {
+              "text": "Athens",
+              "is_correct": true
+            },
+            {
+              "text": "Paris",
+              "is_correct": false
+            },
+            {
+              "text": "London",
+              "is_correct": false
+            },
+            {
+              "text": "Rome",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>How often are the Summer Olympic Games normally held?</p>",
+          "time_limit_seconds": 20,
+          "points": 100,
+          "options": [
+            {
+              "text": "Every four years",
+              "is_correct": true
+            },
+            {
+              "text": "Every two years",
+              "is_correct": false
+            },
+            {
+              "text": "Every three years",
+              "is_correct": false
+            },
+            {
+              "text": "Every five years",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>Select <b>all</b> sports that were on the programme of the 1896 Athens Games.</p>",
+          "time_limit_seconds": 35,
+          "points": 100,
+          "allow_multiple": true,
+          "options": [
+            {
+              "text": "Athletics",
+              "is_correct": true
+            },
+            {
+              "text": "Swimming",
+              "is_correct": true
+            },
+            {
+              "text": "Fencing",
+              "is_correct": true
+            },
+            {
+              "text": "Basketball",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>Which city hosted the Summer Games in 1908, 1948 and 2012?</p>",
+          "time_limit_seconds": 25,
+          "points": 100,
+          "options": [
+            {
+              "text": "London",
+              "is_correct": true
+            },
+            {
+              "text": "Paris",
+              "is_correct": false
+            },
+            {
+              "text": "Los Angeles",
+              "is_correct": false
+            },
+            {
+              "text": "Rome",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>What do the five Olympic rings represent?</p>",
+          "time_limit_seconds": 25,
+          "points": 100,
+          "options": [
+            {
+              "text": "The five inhabited continents united by the Games",
+              "is_correct": true
+            },
+            {
+              "text": "The five founding nations of the modern Games",
+              "is_correct": false
+            },
+            {
+              "text": "The five original sports",
+              "is_correct": false
+            },
+            {
+              "text": "The five Olympic values",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>How long is an Olympic swimming pool?</p>",
+          "time_limit_seconds": 20,
+          "points": 100,
+          "options": [
+            {
+              "text": "50 metres",
+              "is_correct": true
+            },
+            {
+              "text": "25 metres",
+              "is_correct": false
+            },
+            {
+              "text": "33 metres",
+              "is_correct": false
+            },
+            {
+              "text": "100 metres",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>The marathon distance of 42.195 km was fixed after which Games?</p>",
+          "time_limit_seconds": 35,
+          "points": 100,
+          "options": [
+            {
+              "text": "London 1908",
+              "is_correct": true
+            },
+            {
+              "text": "Athens 1896",
+              "is_correct": false
+            },
+            {
+              "text": "Paris 1900",
+              "is_correct": false
+            },
+            {
+              "text": "Berlin 1936",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>In tennis, winning all four major singles titles in the same calendar year is called...</p>",
+          "time_limit_seconds": 30,
+          "points": 100,
+          "options": [
+            {
+              "text": "a Grand Slam",
+              "is_correct": true
+            },
+            {
+              "text": "a golden set",
+              "is_correct": false
+            },
+            {
+              "text": "a career Masters",
+              "is_correct": false
+            },
+            {
+              "text": "a triple crown",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>In which sport is the Thomas Cup contested?</p>",
+          "time_limit_seconds": 30,
+          "points": 100,
+          "options": [
+            {
+              "text": "Badminton",
+              "is_correct": true
+            },
+            {
+              "text": "Table tennis",
+              "is_correct": false
+            },
+            {
+              "text": "Squash",
+              "is_correct": false
+            },
+            {
+              "text": "Tennis",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Cinema: Great Directors and Their Films",
+      "description": "Nine questions on the filmmakers who shaped the language of cinema, and on the vocabulary we use to talk about their work.",
+      "mode": "qcm",
+      "wrong_answer_policy": "penalty",
+      "default_language": "en",
+      "title_translations": {
+        "fr": "Cinéma : grands réalisateurs et leurs films",
+        "de": "Kino: Große Regisseure und ihre Filme",
+        "es": "Cine: grandes directores y sus películas"
+      },
+      "description_translations": {
+        "fr": "Neuf questions sur les cinéastes qui ont façonné le langage du cinéma, et sur le vocabulaire employé pour en parler.",
+        "de": "Neun Fragen zu den Filmemachern, die die Sprache des Kinos geprägt haben, und zum Vokabular, mit dem wir über ihre Arbeit sprechen.",
+        "es": "Nueve preguntas sobre los cineastas que dieron forma al lenguaje del cine y sobre el vocabulario con el que hablamos de su obra."
+      },
+      "timer_mode": "per_question",
+      "questions": [
+        {
+          "text_html": "<p>Who directed <i>Psycho</i> (1960)?</p>",
+          "time_limit_seconds": 25,
+          "points": 100,
+          "options": [
+            {
+              "text": "Alfred Hitchcock",
+              "is_correct": true
+            },
+            {
+              "text": "Billy Wilder",
+              "is_correct": false
+            },
+            {
+              "text": "Orson Welles",
+              "is_correct": false
+            },
+            {
+              "text": "Fritz Lang",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>Who directed <i>Seven Samurai</i> (1954)?</p>",
+          "time_limit_seconds": 25,
+          "points": 100,
+          "options": [
+            {
+              "text": "Akira Kurosawa",
+              "is_correct": true
+            },
+            {
+              "text": "Yasujirō Ozu",
+              "is_correct": false
+            },
+            {
+              "text": "Kenji Mizoguchi",
+              "is_correct": false
+            },
+            {
+              "text": "Satoshi Kon",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>Select <b>all</b> films directed by Stanley Kubrick.</p>",
+          "time_limit_seconds": 35,
+          "points": 100,
+          "allow_multiple": true,
+          "options": [
+            {
+              "text": "2001: A Space Odyssey",
+              "is_correct": true
+            },
+            {
+              "text": "The Shining",
+              "is_correct": true
+            },
+            {
+              "text": "Barry Lyndon",
+              "is_correct": true
+            },
+            {
+              "text": "Apocalypse Now",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p><i>Battleship Potemkin</i> (1925) is celebrated above all for...</p>",
+          "time_limit_seconds": 35,
+          "points": 100,
+          "options": [
+            {
+              "text": "Its montage editing, especially the Odessa Steps sequence",
+              "is_correct": true
+            },
+            {
+              "text": "Its early use of colour film",
+              "is_correct": false
+            },
+            {
+              "text": "Its entirely improvised dialogue",
+              "is_correct": false
+            },
+            {
+              "text": "Its handheld documentary footage",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>Which director made the <i>Dollars</i> trilogy of spaghetti westerns?</p>",
+          "time_limit_seconds": 30,
+          "points": 100,
+          "options": [
+            {
+              "text": "Sergio Leone",
+              "is_correct": true
+            },
+            {
+              "text": "John Ford",
+              "is_correct": false
+            },
+            {
+              "text": "Sam Peckinpah",
+              "is_correct": false
+            },
+            {
+              "text": "Sergio Corbucci",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p><i>Cinema Paradiso</i> (1988) won the Oscar for Best Foreign Language Film for which country?</p>",
+          "time_limit_seconds": 30,
+          "points": 100,
+          "options": [
+            {
+              "text": "Italy",
+              "is_correct": true
+            },
+            {
+              "text": "France",
+              "is_correct": false
+            },
+            {
+              "text": "Spain",
+              "is_correct": false
+            },
+            {
+              "text": "Brazil",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>What does <b>mise en scène</b> refer to?</p>",
+          "time_limit_seconds": 30,
+          "points": 100,
+          "options": [
+            {
+              "text": "The arrangement of everything visible within the frame",
+              "is_correct": true
+            },
+            {
+              "text": "The rhythm created by the editing",
+              "is_correct": false
+            },
+            {
+              "text": "The mixing of dialogue and music",
+              "is_correct": false
+            },
+            {
+              "text": "The way a film is marketed",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>Who composed the score for <i>Jaws</i> (1975)?</p>",
+          "time_limit_seconds": 25,
+          "points": 100,
+          "options": [
+            {
+              "text": "John Williams",
+              "is_correct": true
+            },
+            {
+              "text": "Ennio Morricone",
+              "is_correct": false
+            },
+            {
+              "text": "Bernard Herrmann",
+              "is_correct": false
+            },
+            {
+              "text": "Hans Zimmer",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>Which award did <i>Parasite</i> (2019) become the first non-English-language film to win?</p>",
+          "time_limit_seconds": 35,
+          "points": 100,
+          "options": [
+            {
+              "text": "The Oscar for Best Picture",
+              "is_correct": true
+            },
+            {
+              "text": "The Oscar for Best Director",
+              "is_correct": false
+            },
+            {
+              "text": "The Golden Lion in Venice",
+              "is_correct": false
+            },
+            {
+              "text": "The BAFTA for Best Film",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

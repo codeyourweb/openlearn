@@ -1,0 +1,20 @@
+{
+  "kind": "decks",
+  "items": [
+    {
+      "title": "World Capitals — Europe",
+      "description": "Twenty European capitals, front and back, for a five-minute review.",
+      "aspect": "2:3",
+      "cards": [
+        { "front": "**France**", "back": "Paris" },
+        { "front": "**Germany**", "back": "Berlin" },
+        { "front": "**Spain**", "back": "Madrid" },
+        { "front": "**Italy**", "back": "Rome" },
+        { "front": "**Portugal**", "back": "Lisbon" },
+        { "front": "**Netherlands**", "back": "Amsterdam" },
+        { "front": "**Belgium**", "back": "Brussels" },
+        { "front": "**Austria**", "back": "Vienna" }
+      ]
+    }
+  ]
+}

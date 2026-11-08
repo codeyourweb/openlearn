@@ -1,0 +1,12 @@
+data/
+.venv/
+__pycache__/
+*.pyc
+.env
+.pytest_cache/
+htmlcov/
+node_modules/
+*.db
+
+# Scratch: local probes, screenshots and one-off scripts
+tmp/

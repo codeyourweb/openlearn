@@ -1,0 +1,133 @@
+{
+  "kind": "wikis",
+  "items": [
+    {
+      "slug": "demo-industrial-revolution",
+      "title": "The Industrial Revolution",
+      "language": "en",
+      "description": "How coal, cotton and steam turned an agricultural island into the first industrial economy, and what that change cost the people who lived through it.",
+      "pages": [
+        {
+          "slug": "origins",
+          "title": "Why Britain first",
+          "tags": [
+            "history",
+            "economy"
+          ],
+          "markdown": "## An island with coal under it\n\nBritain had three advantages that no one had combined before: coal close to the surface and close to the sea, capital accumulated from trade, and a political system that protected property and patents. Coal was the decisive one. Wood had grown scarce and expensive; coal seams did not run out in the same way, and coal burned hotter.\n\n## Agriculture came first\n\nThe revolution began in the fields, not the workshops. Parliamentary enclosure consolidated common land into private farms, and the Norfolk four-course rotation replaced the fallow year with turnips and clover. Yields rose and fewer hands could feed more people. That surplus mattered twice: it fed the growing towns, and it released labour for the mills.\n\n## A market large enough to justify machines\n\nMachines are expensive, and they pay only when someone will buy thousands of near-identical pieces. Britain had a domestic market without internal tolls, a navy that protected shipping, and colonies that supplied raw cotton and bought finished cloth. Demand for cheap cotton was the pull; the machines were the response.\n\n- **Cotton** was the test case: imported raw, spun and woven in Lancashire, sold worldwide.\n- **Iron** was the material: coke smelting at Coalbrookdale, pioneered by Abraham Darby in the early eighteenth century, made cheap iron available.\n- **Canals** were the transport: the Bridgewater Canal reached Manchester in 1761 and sharply cut the price of coal there.\n\n## What made it a revolution\n\nThe word is contested. Output grew slowly by modern standards and the first factories were small. But the direction of change was irreversible: growth now came from machinery and energy rather than from more land or more people. Once one industry mechanised, it demanded machines, and machine-making became an industry in its own right.\n\n> The Industrial Revolution was not a single invention. It was a system in which every solution created demand for the next.\n"
+        },
+        {
+          "slug": "steam-power",
+          "title": "Steam, the new prime mover",
+          "tags": [
+            "history",
+            "technology"
+          ],
+          "markdown": "## From pumping water to turning wheels\n\nThe first practical steam engine was not built to move anything. Thomas Newcomen's engine of 1712 pumped water out of mines, using atmospheric pressure after condensing steam in a cylinder. It was inefficient, but it worked where no water wheel could, and coal mines had fuel lying at the surface.\n\nJames Watt's improvement, patented in 1769, added a separate condenser, so the cylinder no longer had to be heated and cooled on every stroke. Fuel consumption fell dramatically, and the engine could now be placed anywhere and drive a rotating shaft rather than a pump rod.\n\n## What steam changed\n\n| Date | Machine | Effect |\n|---|---|---|\n| 1712 | Newcomen engine | Drains deep mines |\n| 1769 | Watt's separate condenser | Cuts fuel use sharply |\n| 1785 | Cartwright power loom | Weaving moves into factories |\n| 1829 | Stephenson's *Rocket* | Fast, reliable locomotive |\n| 1830 | Liverpool–Manchester line | First inter-city railway |\n\nOnce a factory could be sited away from a river, the geography of industry changed. Mills clustered on coalfields instead of valleys, and towns grew around them without any plan.\n\n## Power without a river\n\nWater power had one hard limit: the stream. Steam removed it. A mill could be built beside a canal, in a city, next to its market and its workers. The price was dependence on coal, and coal needed transport — which is why the same century built canals first and railways second.\n\n## The cost of the first engines\n\nEarly steam engines were dangerous. Boilers had no reliable pressure gauge or safety valve in the modern sense, and explosions were common enough to be reported regularly in the press. The technology that made industrial growth possible was, for the people tending it, a machine that could kill.\n"
+        },
+        {
+          "slug": "factories-and-cities",
+          "title": "Factories, mills and the new cities",
+          "tags": [
+            "history",
+            "urbanism"
+          ],
+          "parent": "origins",
+          "markdown": "## The mill as a machine for people\n\nA factory is not just a building with machines in it. It is a way of organising time. The water frame and the power loom set the pace, bells marked the shift, and fines punished lateness. Work that had been done at home, in bursts and around other tasks, moved into a single room under a single clock.\n\n## Towns built in a decade\n\nManchester's population grew from roughly 25,000 in 1770 to over 300,000 by the 1850s. Nothing in the town's structure was designed for that. Houses were built back to back around courtyards, often without running water or sewers, and the same stream that powered a mill carried its waste to the next town downstream.\n\n- **Overcrowding**: several families to a cellar was normal in the worst districts.\n- **Water**: supply came from wells and standpipes, close to cesspits.\n- **Air**: coal smoke from domestic fires and factory chimneys hung over the valleys.\n\n## Cholera as an argument\n\nCholera arrived in Britain in 1831 and killed tens of thousands over the following decades. The outbreaks made the connection between dirty water and disease impossible to ignore, even before the mechanism was understood. Sanitary reform — sewers, piped water, street cleaning — became the great public works of the later nineteenth century, and it saved more lives than any medical discovery of the period.\n\n## A new kind of city\n\nThe industrial city was dense, polluted and unhealthy, and it was also enormously productive. That contradiction shaped the next hundred years of urban policy: everything from public parks to building codes to suburban railways can be read as an attempt to fix the city the factory built.\n"
+        },
+        {
+          "slug": "railways",
+          "title": "Railways and the shrinking of distance",
+          "tags": [
+            "history",
+            "transport"
+          ],
+          "markdown": "## The first inter-city line\n\nThe Liverpool and Manchester Railway opened in 1830 to carry cotton and coal between the port and the mills. It also carried passengers, and that turned out to be the larger business. Within twenty years Britain had thousands of miles of track, and within fifty the network reached almost every market town.\n\n## What a railway actually changes\n\n- **Freight costs fell** and perishable goods could travel: fresh milk into cities, fish inland.\n- **Time became standard**: towns kept their own local time until the railways made timetables impossible. Railway time, and then Greenwich Mean Time, was adopted across Britain in the 1840s.\n- **Markets widened**: a manufacturer could sell nationally without a network of agents.\n- **Mobility increased**: cheap excursions moved people who had never travelled beyond their county.\n\n## Building it\n\nRailways required sums of money that no single family could raise. The answer was the joint-stock company and the stock exchange, and the result was a speculative bubble: the \"railway mania\" of the mid-1840s saw hundreds of schemes promoted, many of them never built. Investors lost heavily; the country gained a network.\n\n> The railway was the first industry that needed capital markets as much as it needed engineers.\n\n## A template for the world\n\nBritish engineers exported the model — track gauge, locomotives, station design, and the companies that ran them — to Europe, India, the Americas and beyond. Where the British built, they also fixed the gauge, and that choice still constrains train speeds today in places where the loading gauge is narrower than modern trains would like.\n"
+        },
+        {
+          "slug": "work-and-protest",
+          "title": "Work, childhood and protest",
+          "tags": [
+            "history",
+            "society"
+          ],
+          "parent": "factories-and-cities",
+          "markdown": "## The factory acts\n\nParliament intervened slowly. The Factory Act of 1833 limited the hours of children in textile mills and created a small corps of inspectors to enforce it — the first real factory inspection anywhere. Later acts lowered hours for adults, set minimum ages, and required guards on machinery.\n\n| Year | Measure | Main provision |\n|---|---|---|\n| 1802 | Health and Morals of Apprentices Act | Limits apprentice hours in cotton mills |\n| 1833 | Factory Act | Inspectors; limits on child labour |\n| 1842 | Mines Act | Women and children out of underground work |\n| 1847 | Ten Hours Act | Shorter standard day for women and youths |\n| 1878 | Factory and Workshop Act | Consolidates and extends safety rules |\n\nEnforcement was uneven and often resisted, but the principle was established: the state could set conditions of employment.\n\n## Organisation\n\nSkilled workers organised first, through friendly societies and trade clubs that provided sickness and funeral benefits as well as bargaining. The Tolpuddle Martyrs were transported in 1834 for swearing a secret oath in a farm workers' union, and the public outcry helped make union membership respectable.\n\n## Chartism and the political route\n\nThe Chartists, active from 1838, demanded universal male suffrage, a secret ballot, paid members of parliament, equal constituencies, no property qualification and annual elections. Their petition was rejected three times, and the movement collapsed. Five of the six demands were law within seventy years.\n\n## The Luddites\n\nMachine-breaking in 1811–1816 was not a fear of technology as such. The frames being destroyed were producing cheap, unskilled goods that undercut the wages of skilled craftsmen whose trade had taken years to learn. The Luddites wanted a negotiated place in the new economy, and they were answered with troops and, in 1813, with executions.\n"
+        },
+        {
+          "slug": "legacy",
+          "title": "The second revolution and the legacy",
+          "tags": [
+            "history",
+            "industry"
+          ],
+          "markdown": "## Steel, chemicals, electricity\n\nThe first industrial revolution ran on coal, iron and cotton. The second, from roughly the 1870s, ran on steel, chemicals, electricity and oil. The Bessemer process, patented in 1856, made steel cheap enough for rails, ships and buildings. Synthetic dyes, fertilisers and pharmaceuticals created entirely new industries rooted in laboratory chemistry.\n\n## New leaders\n\nBritain's head start did not last. Germany and the United States industrialised later with newer plants and larger home markets, and by 1900 both had overtaken Britain in steel and in several branches of chemicals. The lesson was repeated everywhere afterwards: the first mover builds the oldest factories.\n\n## What the revolution left behind\n\n- **A world of fossil energy**: the coal economy set the pattern that oil and gas extended, and the atmospheric carbon dioxide it released is still in the air.\n- **The growth idea**: the assumption that output should rise every year is an industrial-era inheritance.\n- **The clock**: standard hours, the weekend, the commute.\n- **The shape of cities**: industrial districts, rail corridors, and suburbs built along them.\n- **The welfare state**: factory inspection, public health and compulsory schooling all began as responses to industrial conditions.\n\n## Two readings\n\nOne reading sees the Industrial Revolution as the moment living standards began their long climb, and the evidence for sustained growth in real wages after the 1840s is strong. The other notes that the first two generations paid for it in health, housing and childhood, and that gains were distributed very unevenly.\n\nBoth readings can be true. The disagreement is not about the facts but about how to weigh a century of transition against the economy it produced.\n"
+        }
+      ]
+    },
+    {
+      "slug": "demo-revolution-francaise",
+      "title": "La Révolution française",
+      "language": "fr",
+      "description": "De la crise financière de 1788 à l'Empire napoléonien : dix ans qui ont inventé la citoyenneté, la nation et la politique moderne.",
+      "pages": [
+        {
+          "slug": "crise-ancien-regime",
+          "title": "Une monarchie au bord de la faillite",
+          "tags": [
+            "histoire",
+            "politique"
+          ],
+          "markdown": "## Un royaume riche, un État pauvre\n\nÀ la fin du XVIIIe siècle, la France est le pays le plus peuplé d'Europe occidentale — environ 28 millions d'habitants — et l'un des plus prospères. L'État, lui, est endetté. Les guerres, en particulier l'engagement aux côtés des insurgés américains, ont creusé un déficit que les ministres successifs ne parviennent pas à combler.\n\nLe problème n'est pas l'absence d'impôts mais leur répartition. La noblesse et le clergé bénéficient d'exemptions larges ; la charge retombe sur le tiers état, et surtout sur les paysans, qui forment la grande majorité de la population.\n\n## Trois ordres, une société bloquée\n\n| Ordre | Part de la population | Statut fiscal |\n|---|---|---|\n| Clergé | moins de 1 % | Exemptions, dîme |\n| Noblesse | 1 à 2 % | Exemptions, droits seigneuriaux |\n| Tiers état | plus de 97 % | Porte l'essentiel de l'impôt |\n\nCette société n'est pas seulement inégalitaire : elle est rigide. L'accès aux charges, aux grades militaires et aux honneurs dépend de la naissance, et une bourgeoisie enrichie par le commerce se voit fermer les portes qu'elle pourrait acheter.\n\n## La crise de 1788\n\nUne récolte catastrophique en 1788 fait monter le prix du pain, qui absorbe déjà l'essentiel du budget d'un ouvrier. Les caisses de l'État sont vides. Louis XVI convoque les états généraux pour mai 1789 — une assemblée qui n'avait pas siégé depuis 1614.\n\n> La convocation des états généraux est un aveu : le roi ne peut plus réformer seul, et il doit demander l'accord de la nation.\n\n## L'étincelle\n\nLa campagne électorale pour les états généraux ouvre un espace de parole inédit. Les cahiers de doléances recueillent les plaintes du royaume, et l'idée que la nation est distincte du roi cesse d'être une théorie de salon pour devenir une revendication politique.\n"
+        },
+        {
+          "slug": "ete-1789",
+          "title": "L'été 1789",
+          "tags": [
+            "histoire",
+            "1789"
+          ],
+          "markdown": "## Le serment du Jeu de paume\n\nLes états généraux s'ouvrent à Versailles le 5 mai 1789. La question procédurale — vote par ordre ou par tête — bloque tout. Le 17 juin, les députés du tiers état se proclament Assemblée nationale : ils ne représentent plus un ordre, mais la nation.\n\nLe 20 juin, trouvant leur salle fermée, ils se réunissent dans un jeu de paume et jurent de ne pas se séparer avant d'avoir donné une constitution à la France. Le roi cède, puis semble se raviser en concentrant des troupes autour de Paris.\n\n## La Bastille\n\nLe 14 juillet, la foule parisienne cherche de la poudre et des armes. La forteresse de la Bastille, symbole de l'arbitraire royal, est prise après quelques heures de combat. Elle ne contenait que sept prisonniers, mais l'événement compte pour autre chose : la monarchie absolue vient de perdre le monopole de la force à Paris.\n\n- **14 juillet** : prise de la Bastille.\n- **nuit du 4 août** : abolition des privilèges féodaux par acclamation.\n- **26 août** : adoption de la Déclaration des droits de l'homme et du citoyen.\n- **5-6 octobre** : la foule ramène le roi de Versailles à Paris.\n\n## La Déclaration\n\nSes dix-sept articles posent des principes qui n'ont pas vieilli : les hommes naissent libres et égaux en droits ; la souveraineté réside dans la nation ; la loi est l'expression de la volonté générale ; nul ne peut être accusé, arrêté ni détenu que dans les cas déterminés par la loi.\n\n> Article premier : « Les hommes naissent et demeurent libres et égaux en droits. »\n\n## Ce que 1789 ne fait pas\n\nLa déclaration parle des hommes, pas des femmes ; Olympe de Gouges paiera de sa vie, en 1793, d'avoir écrit une Déclaration des droits de la femme et de la citoyenne. L'esclavage dans les colonies n'est pas aboli, malgré les débats de la Société des amis des Noirs. La révolution est universaliste dans ses principes et sélective dans son application : c'est cette tension qui nourrira les combats du siècle suivant.\n"
+        },
+        {
+          "slug": "republique",
+          "title": "De la monarchie constitutionnelle à la République",
+          "tags": [
+            "histoire",
+            "politique"
+          ],
+          "parent": "ete-1789",
+          "markdown": "## Une monarchie qui ne tient pas\n\nLa Constitution de 1791 fait de la France une monarchie constitutionnelle : le roi conserve un veto suspensif, mais la souveraineté appartient à l'Assemblée. L'équilibre ne fonctionne pas. Louis XVI, opposé aux réformes, tente de fuir en juin 1791 et est arrêté à Varennes. Sa popularité ne s'en relèvera pas : un roi qui abandonne son peuple ne peut plus être cru.\n\n## La guerre\n\nEn avril 1792, l'Assemblée déclare la guerre à l'Autriche, puis à la Prusse. Les révolutionnaires espèrent exporter leurs idées ; les monarchies européennes veulent restaurer l'ordre ancien. La guerre durera, sous des formes diverses, plus de vingt ans.\n\nLa patrie en danger, la levée en masse, la bataille de Valmy le 20 septembre 1792 : la jeune armée improvisée tient tête à une armée prussienne réputée. Goethe, présent ce jour-là, aurait dit que commence là une nouvelle époque de l'histoire du monde.\n\n## La République\n\nLe 21 septembre 1792, la Convention abolit la royauté. Le lendemain, elle proclame la République. Louis XVI est jugé, condamné à mort et exécuté le 21 janvier 1793. L'Europe des rois répond par la coalition, et la France par la Terreur.\n\n| Date | Événement |\n|---|---|\n| 21 sept. 1792 | Abolition de la royauté, République |\n| 21 janv. 1793 | Exécution de Louis XVI |\n| févr. 1794 | Abolition de l'esclavage dans les colonies |\n| 1793-1794 | Gouvernement révolutionnaire, Terreur |\n| 27 juil. 1794 | Chute de Robespierre (9 thermidor) |\n\n## L'abolition de l'esclavage\n\nLe décret du 16 pluviôse an II (4 février 1794) abolit l'esclavage dans les colonies françaises, sous la pression de la Convention montagnarde et des députés de couleur. Il sera rétabli par Bonaparte en 1802. Il faudra attendre 1848 pour une abolition définitive.\n"
+        },
+        {
+          "slug": "terreur",
+          "title": "La Terreur et ses rouages",
+          "tags": [
+            "histoire",
+            "violence"
+          ],
+          "parent": "republique",
+          "markdown": "## Un gouvernement d'exception\n\nFace à la guerre extérieure, aux révoltes intérieures — Vendée, Lyon, Toulon — et à la pénurie, la Convention confie en 1793 le pouvoir exécutif au Comité de salut public. Robespierre en devient la figure dominante sans jamais en être le président unique.\n\nLa Terreur n'est pas une institution mais un ensemble de pratiques : tribunaux révolutionnaires, loi des suspects, représentants en mission dotés de pouvoirs illimités, exécutions rapides. Elle fonctionne sur un paradoxe : elle se justifie par la nécessité de sauver la liberté, et elle la supprime.\n\n## Le calendrier\n\n| Période | Trait |\n|---|---|\n| mars 1793 | Création du Tribunal révolutionnaire |\n| sept. 1793 | Loi des suspects |\n| oct. 1793 | Exécution des Girondins |\n| mars 1794 | Exécution des hébertistes puis des dantonistes |\n| juin 1794 | Loi de prairial : la procédure se réduit |\n| 27 juil. 1794 | 9 thermidor, chute de Robespierre |\n\n## Le bilan humain\n\nLe nombre de condamnés à mort par les tribunaux révolutionnaires est estimé à environ 17 000, et les victimes de la guerre de Vendée et des massacres de prisonniers portent le total bien plus haut. Les chiffres exacts restent discutés par les historiens, en particulier pour la Vendée.\n\n> La Terreur a été menée au nom du peuple, par des hommes qui se réclamaient de sa volonté. C'est en cela qu'elle est devenue un problème politique durable, et non seulement une tragédie.\n\n## Thermidor\n\nEn juillet 1794, la peur de la guillotine gagne la Convention elle-même. Robespierre, isolé, est arrêté le 9 thermidor et exécuté le lendemain avec ses proches. Le mot « thermidorien » désignera ensuite tous ceux qui mettent fin à une révolution au nom de l'ordre.\n"
+        },
+        {
+          "slug": "directoire-empire",
+          "title": "Du Directoire à l'Empire",
+          "tags": [
+            "histoire",
+            "empire"
+          ],
+          "markdown": "## Une république fragile\n\nLe Directoire (1795-1799) gouverne avec deux chambres et cinq directeurs, dans un équilibre instable entre royalistes et jacobins. Il survit par les coups d'État et par les victoires militaires : la campagne d'Italie de Bonaparte en 1796-1797 impose la paix à l'Autriche et fait du général un personnage politique.\n\n## Brumaire\n\nLe 9 novembre 1799 (18 brumaire an VIII), Bonaparte renverse le Directoire avec l'appui de l'armée et d'une partie des directeurs. Le Consulat remplace le Directoire. En 1802, il devient consul à vie ; en 1804, empereur.\n\nLe passage se fait sans rupture formelle avec la Révolution : un plébiscite approuve la nouvelle constitution, et le régime conserve l'égalité civile devant la loi, la propriété issue de la vente des biens du clergé, et une administration centralisée.\n\n## Ce que l'Empire conserve\n\n- **Le Code civil** (1804), qui unifie le droit, garantit la propriété et l'égalité civile, mais rétablit l'autorité du mari sur la femme et du père sur les enfants.\n- **L'administration** : préfets, lycées, Banque de France, Cour des comptes.\n- **Le système métrique**, rendu obligatoire, même s'il mettra des décennies à s'imposer dans les campagnes.\n\n## Ce que l'Empire abandonne\n\nLa liberté politique, la presse, les assemblées élues. L'abolition de l'esclavage est annulée en 1802. La guerre, enfin, ne s'arrête plus : les conquêtes alimentent la coalition suivante, jusqu'à la campagne de Russie de 1812 et à l'abdication de 1814.\n\n> Napoléon a stabilisé la Révolution en la privant de sa part démocratique. C'est pourquoi les héritages de 1789 et de 1799 ne se recouvrent jamais complètement.\n"
+        },
+        {
+          "slug": "heritage",
+          "title": "L'héritage",
+          "tags": [
+            "histoire",
+            "société"
+          ],
+          "markdown": "## Un vocabulaire politique\n\nLa Révolution a inventé ou imposé un lexique qui structure encore le débat public : citoyen, nation, constitution, droite et gauche (les députés siégeaient à droite ou à gauche du président), parti, réaction, révolution, préfet, département.\n\n## Des institutions durables\n\n- **La division départementale**, conçue en 1790 pour être parcourable à cheval depuis son chef-lieu, est toujours en place.\n- **Le cadastre et l'état civil laïque** remplacent les registres paroissiaux.\n- **L'école publique** est posée en principe, même si sa réalisation attendra les lois Ferry.\n- **Le système métrique** et le découpage décimal du temps et de l'espace.\n\n## Trois idées qui restent\n\n**L'égalité civile.** Devant la loi, plus de privilèges de naissance. C'est l'acquis le plus solide et le plus exporté.\n\n**La souveraineté nationale.** Le pouvoir ne vient plus de Dieu mais du peuple — même si, pendant longtemps, « le peuple » se limite aux hommes propriétaires.\n\n**La nation en armes.** La levée en masse de 1793 crée l'idée d'une armée de citoyens, qui façonnera le service militaire obligatoire jusqu'au XXe siècle.\n\n## Les dettes\n\nLa Révolution a aussi légué la Terreur comme modèle de la politique qui s'exempte de ses propres règles, l'épuration comme méthode, et une guerre civile européenne dont les mémoires — Vendée, chouannerie — restent vives.\n\n> 1789 a posé une promesse universelle et l'a mise en œuvre de façon incomplète. L'histoire des deux siècles suivants peut se lire comme la liste des groupes qui ont demandé à en bénéficier : les femmes, les esclaves, les colonisés, les sans-propriété.\n"
+        }
+      ]
+    }
+  ]
+}

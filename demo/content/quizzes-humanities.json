@@ -1,0 +1,438 @@
+{
+  "kind": "quizzes",
+  "items": [
+    {
+      "title": "Geography: Rivers, Mountains and Coastlines",
+      "description": "Nine questions on the physical map of the world: the rivers that carved it, the ranges that cross it and the seas that border it.",
+      "mode": "qcm",
+      "wrong_answer_policy": "penalty",
+      "default_language": "en",
+      "title_translations": {
+        "fr": "Géographie : fleuves, montagnes et littoraux",
+        "de": "Geografie: Flüsse, Berge und Küsten",
+        "es": "Geografía: ríos, montañas y costas"
+      },
+      "description_translations": {
+        "fr": "Neuf questions sur la carte physique du monde : les fleuves qui l'ont creusée, les chaînes qui le traversent et les mers qui le bordent.",
+        "de": "Neun Fragen zur physischen Weltkarte: die Flüsse, die sie geformt haben, die Gebirgszüge, die sie durchziehen, und die Meere an ihren Küsten.",
+        "es": "Nueve preguntas sobre el mapa físico del mundo: los ríos que lo han excavado, las cordilleras que lo cruzan y los mares que lo bordean."
+      },
+      "timer_mode": "per_question",
+      "questions": [
+        {
+          "text_html": "<p>Which river carved the Grand Canyon?</p>",
+          "time_limit_seconds": 25,
+          "points": 100,
+          "options": [
+            {
+              "text": "The Colorado",
+              "is_correct": true
+            },
+            {
+              "text": "The Rio Grande",
+              "is_correct": false
+            },
+            {
+              "text": "The Columbia",
+              "is_correct": false
+            },
+            {
+              "text": "The Missouri",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>Select <b>all</b> countries that have a coastline on the Mediterranean Sea.</p>",
+          "time_limit_seconds": 35,
+          "points": 100,
+          "allow_multiple": true,
+          "options": [
+            {
+              "text": "Spain",
+              "is_correct": true
+            },
+            {
+              "text": "Egypt",
+              "is_correct": true
+            },
+            {
+              "text": "Turkey",
+              "is_correct": true
+            },
+            {
+              "text": "Portugal",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>Which is the longest mountain range on land?</p>",
+          "time_limit_seconds": 25,
+          "points": 100,
+          "options": [
+            {
+              "text": "The Andes",
+              "is_correct": true
+            },
+            {
+              "text": "The Himalayas",
+              "is_correct": false
+            },
+            {
+              "text": "The Rocky Mountains",
+              "is_correct": false
+            },
+            {
+              "text": "The Alps",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>What is a <b>fjord</b>?</p>",
+          "time_limit_seconds": 30,
+          "points": 100,
+          "options": [
+            {
+              "text": "A deep valley carved by a glacier and flooded by the sea",
+              "is_correct": true
+            },
+            {
+              "text": "A shallow lagoon enclosed by a coral reef",
+              "is_correct": false
+            },
+            {
+              "text": "A fan of sediment where a river reaches the sea",
+              "is_correct": false
+            },
+            {
+              "text": "A lake formed in the crater of a volcano",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>Which is the largest lake in Africa by surface area?</p>",
+          "time_limit_seconds": 25,
+          "points": 100,
+          "options": [
+            {
+              "text": "Lake Victoria",
+              "is_correct": true
+            },
+            {
+              "text": "Lake Tanganyika",
+              "is_correct": false
+            },
+            {
+              "text": "Lake Malawi",
+              "is_correct": false
+            },
+            {
+              "text": "Lake Chad",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>The Danube flows into which sea?</p>",
+          "time_limit_seconds": 25,
+          "points": 100,
+          "options": [
+            {
+              "text": "The Black Sea",
+              "is_correct": true
+            },
+            {
+              "text": "The Baltic Sea",
+              "is_correct": false
+            },
+            {
+              "text": "The Caspian Sea",
+              "is_correct": false
+            },
+            {
+              "text": "The Adriatic Sea",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>Which line of latitude crosses Kenya, Indonesia and Brazil?</p>",
+          "time_limit_seconds": 30,
+          "points": 100,
+          "options": [
+            {
+              "text": "The Equator",
+              "is_correct": true
+            },
+            {
+              "text": "The Tropic of Cancer",
+              "is_correct": false
+            },
+            {
+              "text": "The Tropic of Capricorn",
+              "is_correct": false
+            },
+            {
+              "text": "The Prime Meridian",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>Which strait separates Europe from Africa?</p>",
+          "time_limit_seconds": 25,
+          "points": 100,
+          "options": [
+            {
+              "text": "The Strait of Gibraltar",
+              "is_correct": true
+            },
+            {
+              "text": "The Bosphorus",
+              "is_correct": false
+            },
+            {
+              "text": "The Strait of Messina",
+              "is_correct": false
+            },
+            {
+              "text": "The Strait of Otranto",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>Mount Kilimanjaro, the highest peak in Africa, rises in which country?</p>",
+          "time_limit_seconds": 25,
+          "points": 100,
+          "options": [
+            {
+              "text": "Tanzania",
+              "is_correct": true
+            },
+            {
+              "text": "Kenya",
+              "is_correct": false
+            },
+            {
+              "text": "Uganda",
+              "is_correct": false
+            },
+            {
+              "text": "Ethiopia",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "History: The Italian Renaissance",
+      "description": "Eight questions on the painters, bankers and thinkers who turned Florence into the workshop of Europe between the fourteenth and sixteenth centuries.",
+      "mode": "qcm",
+      "wrong_answer_policy": "zero",
+      "default_language": "en",
+      "title_translations": {
+        "fr": "Histoire : la Renaissance italienne",
+        "de": "Geschichte: Die italienische Renaissance",
+        "es": "Historia: el Renacimiento italiano"
+      },
+      "description_translations": {
+        "fr": "Huit questions sur les peintres, banquiers et penseurs qui ont fait de Florence l'atelier de l'Europe entre le XIVe et le XVIe siècle.",
+        "de": "Acht Fragen zu den Malern, Bankiers und Denkern, die Florenz zwischen dem 14. und 16. Jahrhundert zur Werkstatt Europas machten.",
+        "es": "Ocho preguntas sobre los pintores, banqueros y pensadores que convirtieron Florencia en el taller de Europa entre los siglos XIV y XVI."
+      },
+      "timer_mode": "per_question",
+      "questions": [
+        {
+          "text_html": "<p>In which city did the Italian Renaissance begin?</p>",
+          "time_limit_seconds": 25,
+          "points": 100,
+          "options": [
+            {
+              "text": "Florence",
+              "is_correct": true
+            },
+            {
+              "text": "Venice",
+              "is_correct": false
+            },
+            {
+              "text": "Rome",
+              "is_correct": false
+            },
+            {
+              "text": "Milan",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>Who painted the ceiling of the Sistine Chapel?</p>",
+          "time_limit_seconds": 25,
+          "points": 100,
+          "options": [
+            {
+              "text": "Michelangelo",
+              "is_correct": true
+            },
+            {
+              "text": "Raphael",
+              "is_correct": false
+            },
+            {
+              "text": "Leonardo da Vinci",
+              "is_correct": false
+            },
+            {
+              "text": "Sandro Botticelli",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>Select <b>all</b> paintings created by Leonardo da Vinci.</p>",
+          "time_limit_seconds": 35,
+          "points": 100,
+          "allow_multiple": true,
+          "options": [
+            {
+              "text": "The Last Supper",
+              "is_correct": true
+            },
+            {
+              "text": "Mona Lisa",
+              "is_correct": true
+            },
+            {
+              "text": "The Virgin of the Rocks",
+              "is_correct": true
+            },
+            {
+              "text": "The School of Athens",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>What did Johannes Gutenberg's press introduce in Europe around 1450?</p>",
+          "time_limit_seconds": 30,
+          "points": 100,
+          "options": [
+            {
+              "text": "Printing with movable metal type",
+              "is_correct": true
+            },
+            {
+              "text": "The first paper mill north of the Alps",
+              "is_correct": false
+            },
+            {
+              "text": "Woodblock printing carved on single planks",
+              "is_correct": false
+            },
+            {
+              "text": "The first public library",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>Who wrote <i>The Prince</i> in 1513?</p>",
+          "time_limit_seconds": 30,
+          "points": 100,
+          "options": [
+            {
+              "text": "Niccolò Machiavelli",
+              "is_correct": true
+            },
+            {
+              "text": "Dante Alighieri",
+              "is_correct": false
+            },
+            {
+              "text": "Francesco Petrarca",
+              "is_correct": false
+            },
+            {
+              "text": "Baldassare Castiglione",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>The Medici family of Florence is best remembered as...</p>",
+          "time_limit_seconds": 30,
+          "points": 100,
+          "options": [
+            {
+              "text": "Bankers who funded artists and architects",
+              "is_correct": true
+            },
+            {
+              "text": "A dynasty of Venetian doges",
+              "is_correct": false
+            },
+            {
+              "text": "Mercenary captains in the pay of Milan",
+              "is_correct": false
+            },
+            {
+              "text": "Printers who exported books to Germany",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>Which dome, completed in 1436, crowns Florence Cathedral?</p>",
+          "time_limit_seconds": 30,
+          "points": 100,
+          "options": [
+            {
+              "text": "Brunelleschi's dome",
+              "is_correct": true
+            },
+            {
+              "text": "Michelangelo's dome for St Peter's",
+              "is_correct": false
+            },
+            {
+              "text": "The dome of the Pantheon",
+              "is_correct": false
+            },
+            {
+              "text": "The dome of Hagia Sophia",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>Renaissance <b>humanism</b> placed its emphasis on...</p>",
+          "time_limit_seconds": 30,
+          "points": 100,
+          "options": [
+            {
+              "text": "The study of classical texts and human potential",
+              "is_correct": true
+            },
+            {
+              "text": "The rejection of all religious belief",
+              "is_correct": false
+            },
+            {
+              "text": "The exclusive use of Latin in every discipline",
+              "is_correct": false
+            },
+            {
+              "text": "Military training above letters",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

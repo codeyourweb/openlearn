@@ -1,0 +1,134 @@
+{
+  "kind": "wikis",
+  "items": [
+    {
+      "slug": "demo-how-the-internet-works",
+      "title": "How the Internet Works",
+      "language": "en",
+      "description": "The layers, packets, names and cables that carry a request from your keyboard to a server and back.",
+      "pages": [
+        {
+          "slug": "overview",
+          "title": "A network of networks",
+          "tags": [
+            "networking",
+            "overview"
+          ],
+          "markdown": "## No centre, no owner\n\nThe internet is not a single network. It is a set of agreements that let thousands of independently owned networks exchange traffic. No company owns it, no government runs it, and there is no master switch — a fact that is both its strength and the reason it is so hard to regulate.\n\nWhat holds it together is a small number of shared protocols. Any device that speaks them can join, whether it is a phone on a train, a server in a data centre or a sensor in a field.\n\n## A short history in four dates\n\n- **1969** — ARPANET connects four university computers in the United States.\n- **1983** — the network switches to TCP/IP, the protocol suite still in use.\n- **1983–1984** — the domain name system replaces a single hand-maintained hosts file.\n- **1989–1991** — Tim Berners-Lee, at CERN, builds the World Wide Web on top of the internet. The web is an application, not the network itself.\n\n## The hourglass\n\nNetwork design is often drawn as an hourglass. Many physical carriers at the bottom — copper, fibre, radio, satellite. Many applications at the top — mail, video, chat, the web. In the middle, a thin waist: the Internet Protocol.\n\nThat narrow waist is the central design decision. IP does one thing — move a packet of data towards an address — and it does it over anything. Because everything above and below depends only on that one interface, new carriers and new applications can be added without redesigning the middle.\n\n> The internet is a stupid network with intelligent ends. The intelligence lives in the devices, not in the wires.\n\n## What this buys you\n\nA dumb, general-purpose network is cheap to extend and hard to control. Anyone can build a new application without asking permission, and anyone can route around damage. The same properties make censorship, filtering and quality guarantees awkward: the network does not know what it is carrying, and that is deliberate.\n"
+        },
+        {
+          "slug": "packets",
+          "title": "Packets, addresses and the hourglass",
+          "tags": [
+            "networking",
+            "protocols"
+          ],
+          "parent": "overview",
+          "markdown": "## Cut it into pieces\n\nData is not sent as a continuous stream. It is cut into packets, each with a header carrying a source and destination address, and each routed independently. Packets from the same file may take different paths and arrive out of order. Reassembly is the receiver's job.\n\nPacket switching was the founding idea, developed independently by Paul Baran and Donald Davies in the 1960s. It beats the alternative — reserving a circuit for each conversation — because it shares capacity: a link is only occupied while a packet is crossing it.\n\n## The four layers\n\n| Layer | Job | Examples |\n|---|---|---|\n| Link | Move frames over one physical hop | Ethernet, Wi-Fi, 4G |\n| Internet | Address and route packets across networks | IP (v4, v6) |\n| Transport | Deliver to the right process, reliably or not | TCP, UDP |\n| Application | Speak the actual language | HTTP, DNS, SMTP |\n\n## IP: best effort\n\nIP delivers a packet and hopes. It does not guarantee arrival, order or even that a packet will not be duplicated. That sounds like a flaw and is a design choice: keeping the network simple makes it fast and cheap, and leaves reliability to the ends that need it.\n\nIPv4 addresses are 32 bits, about 4.3 billion, which ran out at the allocation level years ago. IPv6 uses 128 bits and enough addresses to give every grain of sand several. Adoption is gradual because both protocols must coexist for decades.\n\n## TCP and UDP\n\n**TCP** adds a connection, sequence numbers, acknowledgements, retransmission and flow control. The three-way handshake — SYN, SYN-ACK, ACK — establishes that both sides can send and receive. TCP is what makes a file download arrive intact.\n\n**UDP** adds almost nothing: a port number and a checksum. It is used for video, voice and games, where a late packet is worthless and waiting for a retransmission would make things worse.\n\n## Ports\n\nAn address identifies a machine; a port identifies a program on it. The combination is a socket. Port 443 is HTTPS, 80 is HTTP, 53 is DNS. Without ports, one computer could run only one service at a time.\n"
+        },
+        {
+          "slug": "dns",
+          "title": "Turning names into numbers",
+          "tags": [
+            "networking",
+            "dns"
+          ],
+          "markdown": "## The phone book, distributed\n\nHumans remember names; routers need addresses. The Domain Name System is a globally distributed database that maps one to the other. It is hierarchical, cached at every level, and — crucially — designed so that no single machine has to know every name.\n\n## The lookup\n\n1. Your device asks a **recursive resolver**, usually operated by your ISP or a public service.\n2. The resolver asks a **root server**, which points to the servers for the top-level domain — `.com`, `.fr`, `.org`.\n3. That server points to the **authoritative name server** for the domain.\n4. The answer comes back, and every step caches it for a period set by the record's time to live.\n\nA cold lookup involves several round trips; a cached one is nearly instant. Because caching is what makes the system usable, a change of address propagates slowly — the old value survives until its TTL expires.\n\n## Record types\n\n- **A** and **AAAA** map a name to an IPv4 or IPv6 address.\n- **CNAME** aliases one name to another.\n- **MX** names the mail servers for a domain.\n- **TXT** holds arbitrary text, used for domain verification and, importantly, for email authentication records.\n- **NS** delegates a zone to its authoritative servers.\n\n## Why it matters politically\n\nDNS is a chokepoint. Blocking a name is easier than blocking an address, and control of a domain can take a site offline without touching its servers. The root zone is coordinated by ICANN under contract with the United States government historically, an arrangement that has been contested internationally for decades.\n\n> DNSSEC adds cryptographic signatures so a resolver can verify that an answer is genuine. It protects integrity, not privacy: anyone on the path can still see which names you ask for. That is what DNS over HTTPS and DNS over TLS address.\n"
+        },
+        {
+          "slug": "routing",
+          "title": "Routers, exchanges and undersea cables",
+          "tags": [
+            "networking",
+            "infrastructure"
+          ],
+          "parent": "packets",
+          "markdown": "## Two kinds of routing\n\n**Inside a network**, an operator runs an interior protocol such as OSPF, which computes shortest paths through a known topology. The operator decides the policy.\n\n**Between networks**, the protocol is BGP. It is not a shortest-path algorithm; it is a negotiation in which each network announces the address blocks it can reach. Routing follows business relationships: a network prefers to send traffic to a customer, then to a peer it exchanges traffic with for free, and only then to a provider it pays.\n\n## The consequence\n\nBGP trusts announcements. A network that announces someone else's address block can attract their traffic — a route hijack — and the mistake has happened repeatedly by accident, when a configuration change leaked a large prefix. The fix, RPKI, cryptographically certifies which network is allowed to announce which block. Adoption is incomplete, and that incompleteness is itself a security problem.\n\n## Exchanges\n\nNetworks meet at internet exchange points, usually inside a data centre where dozens or hundreds of operators place a switch and connect to it. An IXP keeps local traffic local: two networks in the same city can exchange data without paying for a trip across the world.\n\n## Cables\n\nAlmost all intercontinental traffic runs through submarine fibre-optic cables — a few hundred of them, laid on the seabed, each carrying many terabits per second. Satellites handle remote and mobile cases; they cannot compete on capacity or latency. The cables are private infrastructure with public consequences, and their landing points are strategic assets.\n\n> A packet from London to Singapore crosses perhaps fifteen networks, two continents and one ocean, in under a second, and no one is in charge of the whole path.\n"
+        },
+        {
+          "slug": "http-and-tls",
+          "title": "The web on top: HTTP and TLS",
+          "tags": [
+            "web",
+            "security"
+          ],
+          "parent": "overview",
+          "markdown": "## A request and a response\n\nHTTP is a text protocol with a simple shape: the client sends a method, a path and headers; the server replies with a status code, headers and a body. That is almost the whole design, and it is why the web was easy to implement and easy to extend.\n\n- **GET** retrieves a resource. It should be safe and idempotent.\n- **POST** submits data and may change state.\n- **PUT** and **DELETE** replace or remove a resource.\n- **Status codes** group into families: 2xx success, 3xx redirection, 4xx client error, 5xx server error.\n\nHTTP is stateless. Anything that must persist between requests — a login session — is carried explicitly, usually in a cookie or a token.\n\n## What TLS adds\n\nTransport Layer Security sits between TCP and HTTP and provides three things: confidentiality, integrity, and authentication of the server. The handshake agrees on a cipher suite, verifies the server's certificate against a trusted authority, and derives session keys. Modern TLS uses ephemeral key exchange, so a stolen private key cannot decrypt past sessions.\n\nHTTPS is simply HTTP over TLS, conventionally on port 443. It is now the default for essentially all web traffic, and browsers mark plain HTTP as insecure.\n\n## HTTP/2 and HTTP/3\n\nHTTP/1.1 sends one request at a time per connection, which wastes capacity. HTTP/2 multiplexes many streams over one connection and compresses headers. HTTP/3 goes further and runs over QUIC, a transport built on UDP that reduces connection setup and handles packet loss better on mobile networks.\n\n> Encryption on the web solved eavesdropping and did nothing about lying. A padlock means the connection is private and the certificate matches the domain — not that the site is honest.\n"
+        },
+        {
+          "slug": "governance",
+          "title": "Who actually runs it",
+          "tags": [
+            "internet",
+            "governance"
+          ],
+          "markdown": "## Nobody, and several bodies\n\nThere is no internet government. There are organisations with narrow mandates, and a great deal of informal coordination.\n\n| Body | Role |\n|---|---|\n| IETF | Publishes the technical standards (RFCs) |\n| ICANN | Coordinates names and addresses globally |\n| Regional registries | Allocate address blocks to operators |\n| W3C | Standards for the web |\n| IXP associations | Local interconnection |\n\nThe IETF is deliberately unglamorous: open mailing lists, rough consensus, running code. Its standards are called Requests for Comments, a name that stuck from the first documents in 1969 and now describes specifications that are entirely mandatory.\n\n## Addresses as a scarce resource\n\nIPv4 addresses were handed out in blocks by five regional registries. When the pool ran dry, the registries began recovering and transferring addresses, and a secondary market emerged: addresses became property with a price. This is an odd outcome for a technical identifier, and it explains why IPv6 adoption accelerates where addresses are expensive.\n\n## The pressure points\n\n- **Interconnection**: when two large networks cannot agree on terms, traffic degrades for everyone in between.\n- **Concentration**: a handful of companies now carry a large share of traffic and run much of the infrastructure, which recreates the centralisation the design tried to avoid.\n- **Filtering and shutdowns**: states block at the national gateway, where all traffic must pass.\n- **Naming**: control of a domain is a single point of failure for an organisation.\n\n> The internet's architecture assumes no one is in charge. Its politics assumes someone must be, and the tension between the two is where most internet policy lives.\n"
+        }
+      ]
+    },
+    {
+      "slug": "demo-bases-de-datos-relacionales",
+      "title": "Bases de datos relacionales",
+      "language": "es",
+      "description": "Del modelo de Codd a las transacciones y los índices: cómo se guardan datos sin contradecirse y por qué el SQL sigue siendo el idioma común.",
+      "pages": [
+        {
+          "slug": "modelo-relacional",
+          "title": "El modelo relacional",
+          "tags": [
+            "datos",
+            "teoría"
+          ],
+          "markdown": "## Una idea de 1970\n\nEn 1970, Edgar F. Codd, ingeniero de IBM, publicó un artículo con un título poco prometedor: *A Relational Model of Data for Large Shared Data Banks*. La propuesta era radical para la época. En lugar de guardar los datos en estructuras físicas dictadas por el programador — punteros, listas enlazadas, jerarquías — Codd los describió como relaciones matemáticas: conjuntos de tuplas.\n\nLa consecuencia práctica es enorme: la forma de guardar los datos y la forma de consultarlos se separan. El usuario describe **qué** quiere y el sistema decide **cómo** obtenerlo.\n\n## Tablas, no jerarquías\n\nUna relación se materializa como una tabla: filas (tuplas) y columnas (atributos). Cada columna tiene un dominio, es decir, un tipo de valor permitido. Una fila representa un hecho completo: un cliente, un pedido, una línea de factura.\n\n| Concepto formal | En la práctica |\n|---|---|\n| Relación | Tabla |\n| Tupla | Fila o registro |\n| Atributo | Columna |\n| Grado | Número de columnas |\n| Cardinalidad | Número de filas |\n\n## El orden no existe\n\nEn el modelo relacional una tabla es un conjunto, y un conjunto no tiene orden. Esto sorprende a quien viene de una hoja de cálculo: la fila 7 no significa nada, y sin una cláusula `ORDER BY` el motor puede devolver las filas en cualquier orden. Si el orden importa, hay que pedirlo explícitamente.\n\n## Por qué ganó\n\nEl modelo sobrevivió porque permite cambiar el almacenamiento sin reescribir las consultas. Los primeros sistemas comerciales aparecieron a finales de los setenta, y hoy el lenguaje que los acompaña se enseña en cualquier facultad de informática.\n"
+        },
+        {
+          "slug": "tablas-y-claves",
+          "title": "Tablas, claves y relaciones",
+          "tags": [
+            "datos",
+            "diseño"
+          ],
+          "markdown": "## La clave primaria\n\nCada fila necesita una identidad. La **clave primaria** es la columna o combinación de columnas que identifica la fila de forma única, y el motor garantiza que no se repita ni sea nula.\n\nHay dos escuelas. La clave **natural** usa un dato del mundo real — el número de documento, el ISBN de un libro. La clave **subrogada** es un número inventado sin significado, generado por el sistema. La subrogada es más robusta: los datos reales cambian, y una clave que cambia obliga a actualizar todas las referencias.\n\n## La clave foránea\n\nUna clave foránea es una columna que apunta a la clave primaria de otra tabla. Su función no es solo documental: es una **restricción** que el motor verifica. No se puede insertar un pedido para un cliente que no existe, y no se puede borrar un cliente que tiene pedidos, salvo que se defina qué hacer en cascada.\n\n> Una base de datos sin claves foráneas es un conjunto de archivos de texto que se parecen a una base de datos.\n\n## Los tres tipos de relación\n\n- **Uno a muchos**: un cliente tiene muchos pedidos. La clave foránea vive en el lado «muchos».\n- **Muchos a muchos**: un libro tiene varios autores y un autor escribe varios libros. Requiere una tabla intermedia con dos claves foráneas.\n- **Uno a uno**: poco frecuente; se usa para separar datos opcionales o sensibles en otra tabla.\n\n## Un ejemplo mínimo\n\n```sql\nCREATE TABLE cliente (\n  id        INTEGER PRIMARY KEY,\n  nombre    TEXT NOT NULL,\n  email     TEXT UNIQUE\n);\n\nCREATE TABLE pedido (\n  id          INTEGER PRIMARY KEY,\n  cliente_id  INTEGER NOT NULL REFERENCES cliente(id),\n  fecha       DATE NOT NULL\n);\n```\n\nLa restricción `UNIQUE` en el correo impide duplicados, y `REFERENCES` impide pedidos huérfanos. Son reglas del motor, no buenas intenciones del programador.\n"
+        },
+        {
+          "slug": "sql",
+          "title": "SQL: consultar y modificar",
+          "tags": [
+            "datos",
+            "sql"
+          ],
+          "parent": "tablas-y-claves",
+          "markdown": "## Un idioma declarativo\n\nSQL nació en IBM a mediados de los setenta con el nombre de SEQUEL, y se estandarizó en 1986. Su rasgo definitorio es que describe el resultado, no el procedimiento. El optimizador del motor decide qué índices usar, en qué orden unir las tablas y cómo filtrar.\n\n## Las cuatro operaciones\n\n| Verbo | Función |\n|---|---|\n| `SELECT` | Leer filas |\n| `INSERT` | Añadir filas |\n| `UPDATE` | Modificar filas existentes |\n| `DELETE` | Borrar filas |\n\nJunto a ellos están las instrucciones de definición (`CREATE`, `ALTER`, `DROP`) y las de control de permisos (`GRANT`, `REVOKE`).\n\n## Una consulta completa\n\n```sql\nSELECT c.nombre, COUNT(p.id) AS pedidos\nFROM cliente c\nLEFT JOIN pedido p ON p.cliente_id = c.id\nWHERE p.fecha >= DATE '2024-01-01'\nGROUP BY c.nombre\nHAVING COUNT(p.id) > 3\nORDER BY pedidos DESC;\n```\n\nEl orden lógico de evaluación no coincide con el orden en que se escribe: primero `FROM`, luego `WHERE`, después `GROUP BY`, `HAVING`, `SELECT` y por último `ORDER BY`. Entender ese orden explica por qué un alias definido en `SELECT` no siempre está disponible en `WHERE`.\n\n## JOIN, la parte que se estudia dos veces\n\n- **INNER JOIN**: solo las filas que coinciden en ambas tablas.\n- **LEFT JOIN**: todas las de la izquierda, con nulos donde no hay coincidencia.\n- **RIGHT JOIN**: lo simétrico.\n- **FULL JOIN**: todas las de ambas.\n\nUn `LEFT JOIN` con una condición mal colocada en el `WHERE` se convierte en un `INNER JOIN` sin avisar. Es el error más común al escribir consultas con agregados.\n"
+        },
+        {
+          "slug": "normalizacion",
+          "title": "Normalización",
+          "tags": [
+            "datos",
+            "diseño"
+          ],
+          "markdown": "## El objetivo\n\nNormalizar es organizar las tablas para que cada hecho se guarde una sola vez. Si el teléfono de un cliente aparece en tres filas, tarde o temprano dos de ellas dirán cosas distintas y nadie sabrá cuál es la buena. Ese fenómeno se llama anomalía de actualización, y es la razón de ser de la normalización.\n\n## Las formas normales\n\n| Forma | Elimina |\n|---|---|\n| 1FN | Valores repetidos en una celda; exige atomicidad |\n| 2FN | Dependencias parciales de parte de la clave |\n| 3FN | Dependencias transitivas entre columnas no clave |\n| BCNF | Anomalías que la 3FN deja pasar en casos con varias claves |\n\nEn la práctica, la tercera forma normal es el objetivo razonable para un sistema transaccional. La BCNF se aplica en diseños con claves compuestas complejas.\n\n## Un ejemplo\n\nSupongamos una tabla `pedido` con las columnas `pedido_id`, `cliente_nombre`, `cliente_telefono`, `producto`, `precio`.\n\n- El nombre y el teléfono dependen del cliente, no del pedido: hay una dependencia transitiva. Van a una tabla `cliente`.\n- El precio depende del producto, no del pedido. Van a una tabla `producto`, y el precio acordado se guarda aparte, en la línea de pedido.\n\nResultado: tres tablas en lugar de una, y ninguna contradicción posible.\n\n## Cuándo no normalizar\n\nLa normalización tiene un coste: más tablas significan más uniones al consultar. En un almacén de datos analítico se hace lo contrario — se desnormaliza a propósito, en esquemas de estrella, para que las consultas agregadas lean menos tablas. La regla no es «normaliza siempre», sino «normaliza para escribir, desnormaliza para leer, y sabe por qué lo haces».\n"
+        },
+        {
+          "slug": "transacciones",
+          "title": "Transacciones y ACID",
+          "tags": [
+            "datos",
+            "transacciones"
+          ],
+          "parent": "sql",
+          "markdown": "## Todo o nada\n\nUna transferencia bancaria son dos operaciones: restar de una cuenta y sumar a otra. Si el sistema falla entre las dos, el dinero desaparece. Una transacción agrupa operaciones para que se apliquen todas o ninguna.\n\nLas siglas ACID resumen las garantías: **atomicidad**, **consistencia**, **aislamiento** y **durabilidad**. El término lo acuñaron Härder y Reuter en 1983, y sigue siendo la descripción estándar.\n\n## Aislamiento: el problema difícil\n\nLa atomicidad y la durabilidad son relativamente fáciles. El aislamiento es el que obliga a elegir. Si dos transacciones tocan los mismos datos a la vez, ¿qué debe ver cada una?\n\n| Nivel | Permite |\n|---|---|\n| Read uncommitted | Leer datos no confirmados |\n| Read committed | Solo datos confirmados |\n| Repeatable read | La misma fila leída dos veces da el mismo valor |\n| Serializable | El resultado equivale a una ejecución en serie |\n\nCuanto más estricto el nivel, menos concurrencia. La mayoría de los sistemas usan *read committed* por defecto, porque es un compromiso razonable entre corrección y rendimiento.\n\n## Los fenómenos\n\n- **Lectura sucia**: leer un valor que otra transacción aún no ha confirmado.\n- **Lectura no repetible**: el mismo `SELECT` devuelve valores distintos dentro de una transacción.\n- **Lectura fantasma**: aparece una fila nueva que cumple la condición entre dos consultas.\n\n> Una transacción no elimina la concurrencia: la hace predecible. La diferencia entre un sistema correcto y uno que falla solo bajo carga es casi siempre esta.\n\n## Bloqueos y versiones\n\nLos motores implementan el aislamiento con bloqueos o con control de versiones. PostgreSQL y otros usan MVCC: cada transacción ve una fotografía del estado, y las escrituras no bloquean las lecturas. El precio son versiones antiguas que hay que limpiar.\n"
+        },
+        {
+          "slug": "indices",
+          "title": "Índices, planes y límites",
+          "tags": [
+            "datos",
+            "rendimiento"
+          ],
+          "markdown": "## Por qué un índice acelera\n\nSin índice, encontrar una fila obliga a leer la tabla entera: un recorrido secuencial. Con un índice, el motor salta directamente a la zona donde están los valores buscados. Es la diferencia entre buscar una palabra en un libro hojeándolo y buscarla en el índice alfabético.\n\nCasi todos los índices de un sistema relacional son árboles B, estructuras que mantienen los datos ordenados y permiten búsquedas, inserciones y borrados en tiempo logarítmico. Un índice sobre `email` convierte una búsqueda por correo en unas pocas lecturas de página.\n\n## El coste\n\nUn índice no es gratis:\n\n- Ocupa espacio en disco.\n- Hay que actualizarlo en cada `INSERT`, `UPDATE` y `DELETE`.\n- Solo se usa si la consulta puede aprovecharlo.\n\nPor eso no se indexa todo. Se indexan las columnas que aparecen en condiciones de búsqueda, en uniones y en ordenaciones frecuentes.\n\n## El orden de las columnas importa\n\nEn un índice compuesto sobre `(cliente_id, fecha)`, el motor puede buscar por `cliente_id`, o por `cliente_id` y `fecha`, pero no solo por `fecha`. Es como una guía telefónica ordenada por apellido y luego por nombre: sirve para buscar «García, Ana», no para buscar todas las «Ana».\n\n## Leer el plan\n\nTodo motor serio permite ver el plan de ejecución: `EXPLAIN` en PostgreSQL, MySQL y SQLite, `EXPLAIN PLAN` en Oracle. El plan dice si se usó un índice, cuántas filas se estimaron y dónde está el cuello de botella. Optimizar sin leer el plan es adivinar.\n\n> Un índice mal elegido no hace que la consulta sea lenta. Hace que las escrituras sean lentas y la consulta siga siendo lenta.\n"
+        }
+      ]
+    }
+  ]
+}

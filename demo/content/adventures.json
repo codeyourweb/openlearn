@@ -1,0 +1,250 @@
+{
+  "kind": "adventures",
+  "items": [
+    {
+      "title": "The Cartographer's Last Map",
+      "description": "A short branching story: cross a mountain pass with a limited supply of daylight and courage, and decide what the map is really for.",
+      "mode": "adventure",
+      "wrong_answer_policy": "zero",
+      "default_language": "en",
+      "timer_mode": "per_question",
+      "title_translations": {
+        "fr": "La dernière carte du cartographe"
+      },
+      "questions": [],
+      "adventure": {
+        "start": "camp",
+        "death_text_html": "<p>The cold takes the last of your strength. The map stays unfinished — but someone else will come.</p>",
+        "victory_text_html": "<p>You reach the pass at dusk and see the valley open below. The map is finished, and so is the journey.</p>",
+        "attributes": [
+          {
+            "key": "daylight",
+            "label": "Daylight",
+            "initial_value": 6,
+            "min_value": 0,
+            "max_value": 10,
+            "death_at_or_below": 0
+          },
+          {
+            "key": "courage",
+            "label": "Courage",
+            "initial_value": 2,
+            "min_value": 0,
+            "max_value": 10
+          }
+        ],
+        "nodes": [
+          {
+            "key": "camp",
+            "kind": "question",
+            "text_html": "<p>The camp is quiet. Two routes lead to the pass: the old smugglers' path, shorter but exposed, or the river gorge, longer but sheltered.</p>",
+            "pos_x": 0,
+            "pos_y": 0,
+            "choices": [
+              {
+                "key": "path",
+                "text": "Take the smugglers' path",
+                "target": "ridge",
+                "effects": [
+                  {
+                    "attribute": "daylight",
+                    "delta": -2
+                  },
+                  {
+                    "attribute": "courage",
+                    "delta": 1
+                  }
+                ]
+              },
+              {
+                "key": "gorge",
+                "text": "Follow the river gorge",
+                "target": "gorge",
+                "effects": [
+                  {
+                    "attribute": "daylight",
+                    "delta": -3
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "key": "ridge",
+            "kind": "question",
+            "text_html": "<p>On the ridge the wind is brutal. A stone shelter offers rest; the summit is two hours away.</p>",
+            "pos_x": 260,
+            "pos_y": -80,
+            "choices": [
+              {
+                "key": "rest",
+                "text": "Rest in the shelter",
+                "target": "shelter",
+                "effects": [
+                  {
+                    "attribute": "daylight",
+                    "delta": -1
+                  },
+                  {
+                    "attribute": "courage",
+                    "delta": -1
+                  }
+                ]
+              },
+              {
+                "key": "push",
+                "text": "Push for the summit",
+                "target": "summit_attempt",
+                "effects": [
+                  {
+                    "attribute": "daylight",
+                    "delta": -2
+                  },
+                  {
+                    "attribute": "courage",
+                    "delta": 1
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "key": "gorge",
+            "kind": "question",
+            "text_html": "<p>The gorge is calm and cold. An old rope bridge crosses the water; the ford below looks shallow.</p>",
+            "pos_x": 260,
+            "pos_y": 120,
+            "choices": [
+              {
+                "key": "bridge",
+                "text": "Cross the rope bridge",
+                "target": "summit_attempt",
+                "effects": [
+                  {
+                    "attribute": "daylight",
+                    "delta": -1
+                  },
+                  {
+                    "attribute": "courage",
+                    "delta": 1
+                  }
+                ]
+              },
+              {
+                "key": "ford",
+                "text": "Wade through the ford",
+                "target": "summit_attempt",
+                "effects": [
+                  {
+                    "attribute": "daylight",
+                    "delta": -2
+                  },
+                  {
+                    "attribute": "courage",
+                    "delta": -1
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "key": "shelter",
+            "kind": "question",
+            "text_html": "<p>In the shelter you find dry wood and a note from the previous cartographer: <i>“The pass is east of the cairn, not west.”</i></p>",
+            "pos_x": 520,
+            "pos_y": -120,
+            "choices": [
+              {
+                "key": "east",
+                "text": "Head east of the cairn",
+                "target": "summit",
+                "effects": [
+                  {
+                    "attribute": "daylight",
+                    "delta": -1
+                  }
+                ]
+              },
+              {
+                "key": "west",
+                "text": "Trust your own map and go west",
+                "target": "wrong_pass",
+                "effects": [
+                  {
+                    "attribute": "daylight",
+                    "delta": -3
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "key": "summit_attempt",
+            "kind": "question",
+            "text_html": "<p>The slope steepens. The cairn is visible in the last light.</p>",
+            "pos_x": 520,
+            "pos_y": 60,
+            "choices": [
+              {
+                "key": "climb",
+                "text": "Climb straight to the cairn",
+                "target": "summit",
+                "effects": [
+                  {
+                    "attribute": "daylight",
+                    "delta": -2
+                  },
+                  {
+                    "attribute": "courage",
+                    "delta": 1
+                  }
+                ]
+              },
+              {
+                "key": "trace",
+                "text": "Trace the contour lines instead",
+                "target": "wrong_pass",
+                "effects": [
+                  {
+                    "attribute": "daylight",
+                    "delta": -1
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "key": "summit",
+            "kind": "ending",
+            "text_html": "<p>The cairn marks the pass. Below, the valley opens and the river shines like a thread of metal.</p>",
+            "pos_x": 780,
+            "pos_y": 0,
+            "choices": [],
+            "outcomes": [
+              {
+                "kind": "default",
+                "text_html": "<p>The cairn marks the pass. Below, the valley opens and the river shines like a thread of metal.</p>",
+                "priority": 0
+              }
+            ]
+          },
+          {
+            "key": "wrong_pass",
+            "kind": "ending",
+            "text_html": "<p>The path fades into scree. You turn back, and the light is gone.</p>",
+            "pos_x": 780,
+            "pos_y": 160,
+            "choices": [],
+            "outcomes": [
+              {
+                "kind": "default",
+                "text_html": "<p>The path fades into scree. You turn back, and the light is gone.</p>",
+                "priority": 0
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

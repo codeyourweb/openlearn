@@ -1,0 +1,20 @@
+# TLS terminated by the application itself — no reverse proxy.
+#
+#   mkdir -p certs && cp fullchain.pem privkey.pem certs/
+#   docker compose -f docker-compose.yml -f docker-compose.tls.yml up -d
+#
+# The server listens on 8443 (override with OL_TLS_PORT). Certificates are
+# mounted read-only and reloaded on restart: renew them, then
+# `docker compose ... restart app`.
+
+services:
+  app:
+    environment:
+      OL_TLS_CERT_FILE: /certs/fullchain.pem
+      OL_TLS_KEY_FILE: /certs/privkey.pem
+      OL_TLS_PORT: ${OL_TLS_PORT:-8443}
+      OL_COOKIE_SECURE: "true"
+      OL_PUBLIC_BASE_URL: ${OL_PUBLIC_BASE_URL:-}
+    # Ports come from the base file: set PORT=8443 and APP_PORT=8443 in .env.
+    volumes:
+      - ./certs:/certs:ro

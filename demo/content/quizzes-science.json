@@ -1,0 +1,484 @@
+{
+  "kind": "quizzes",
+  "items": [
+    {
+      "title": "Biology: The Human Cell and Its Organelles",
+      "description": "Nine questions on the machinery inside a human cell: what each organelle does and how a cell copies and divides itself.",
+      "mode": "qcm",
+      "wrong_answer_policy": "zero",
+      "default_language": "en",
+      "title_translations": {
+        "fr": "Biologie : la cellule humaine et ses organites",
+        "de": "Biologie: Die menschliche Zelle und ihre Organellen",
+        "es": "Biología: la célula humana y sus orgánulos"
+      },
+      "description_translations": {
+        "fr": "Neuf questions sur la machinerie d'une cellule humaine : le rôle de chaque organite, la copie de l'ADN et la division cellulaire.",
+        "de": "Neun Fragen zur Maschinerie einer menschlichen Zelle: die Aufgabe jeder Organelle, das Kopieren der DNA und die Zellteilung.",
+        "es": "Nueve preguntas sobre la maquinaria de una célula humana: la función de cada orgánulo, la copia del ADN y la división celular."
+      },
+      "timer_mode": "per_question",
+      "questions": [
+        {
+          "text_html": "<p>Which organelle produces most of a cell's ATP?</p>",
+          "time_limit_seconds": 25,
+          "points": 100,
+          "options": [
+            {
+              "text": "The mitochondrion",
+              "is_correct": true
+            },
+            {
+              "text": "The ribosome",
+              "is_correct": false
+            },
+            {
+              "text": "The Golgi apparatus",
+              "is_correct": false
+            },
+            {
+              "text": "The lysosome",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>Select <b>all</b> structures found in a human cell but <i>not</i> in a bacterium.</p>",
+          "time_limit_seconds": 35,
+          "points": 100,
+          "allow_multiple": true,
+          "options": [
+            {
+              "text": "A nucleus",
+              "is_correct": true
+            },
+            {
+              "text": "Mitochondria",
+              "is_correct": true
+            },
+            {
+              "text": "The endoplasmic reticulum",
+              "is_correct": true
+            },
+            {
+              "text": "Ribosomes",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>What is the main job of a ribosome?</p>",
+          "time_limit_seconds": 25,
+          "points": 100,
+          "options": [
+            {
+              "text": "Assembling proteins from amino acids",
+              "is_correct": true
+            },
+            {
+              "text": "Breaking down fatty acids",
+              "is_correct": false
+            },
+            {
+              "text": "Storing genetic information",
+              "is_correct": false
+            },
+            {
+              "text": "Sorting molecules for transport",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>Which molecule carries a gene's instructions from the nucleus to a ribosome?</p>",
+          "time_limit_seconds": 30,
+          "points": 100,
+          "options": [
+            {
+              "text": "Messenger RNA",
+              "is_correct": true
+            },
+            {
+              "text": "Transfer RNA",
+              "is_correct": false
+            },
+            {
+              "text": "DNA polymerase",
+              "is_correct": false
+            },
+            {
+              "text": "ATP",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>The cell membrane is mainly made of...</p>",
+          "time_limit_seconds": 30,
+          "points": 100,
+          "options": [
+            {
+              "text": "A phospholipid bilayer studded with proteins",
+              "is_correct": true
+            },
+            {
+              "text": "A wall of cellulose",
+              "is_correct": false
+            },
+            {
+              "text": "A single layer of cholesterol",
+              "is_correct": false
+            },
+            {
+              "text": "A mesh of chitin fibres",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>Which organelle packages proteins into vesicles for secretion?</p>",
+          "time_limit_seconds": 30,
+          "points": 100,
+          "options": [
+            {
+              "text": "The Golgi apparatus",
+              "is_correct": true
+            },
+            {
+              "text": "The smooth endoplasmic reticulum",
+              "is_correct": false
+            },
+            {
+              "text": "The nucleolus",
+              "is_correct": false
+            },
+            {
+              "text": "The peroxisome",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>During mitosis, chromosomes line up along the cell's equator in which phase?</p>",
+          "time_limit_seconds": 30,
+          "points": 100,
+          "options": [
+            {
+              "text": "Metaphase",
+              "is_correct": true
+            },
+            {
+              "text": "Prophase",
+              "is_correct": false
+            },
+            {
+              "text": "Anaphase",
+              "is_correct": false
+            },
+            {
+              "text": "Telophase",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>What do lysosomes do?</p>",
+          "time_limit_seconds": 25,
+          "points": 100,
+          "options": [
+            {
+              "text": "Digest waste and worn-out cell components with enzymes",
+              "is_correct": true
+            },
+            {
+              "text": "Synthesise lipids and steroids",
+              "is_correct": false
+            },
+            {
+              "text": "Copy DNA before division",
+              "is_correct": false
+            },
+            {
+              "text": "Anchor the cell to its neighbours",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>Mature human red blood cells lack which of the following?</p>",
+          "time_limit_seconds": 30,
+          "points": 100,
+          "options": [
+            {
+              "text": "A nucleus",
+              "is_correct": true
+            },
+            {
+              "text": "A cell membrane",
+              "is_correct": false
+            },
+            {
+              "text": "Haemoglobin",
+              "is_correct": false
+            },
+            {
+              "text": "Cytoplasm",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Physics: Forces, Motion and Energy",
+      "description": "Ten questions on Newton's laws, vectors and the conservation of energy, with a little arithmetic and no calculus.",
+      "mode": "qcm",
+      "wrong_answer_policy": "penalty",
+      "default_language": "en",
+      "title_translations": {
+        "fr": "Physique : forces, mouvement et énergie",
+        "de": "Physik: Kräfte, Bewegung und Energie",
+        "es": "Física: fuerzas, movimiento y energía"
+      },
+      "description_translations": {
+        "fr": "Dix questions sur les lois de Newton, les vecteurs et la conservation de l'énergie, avec un peu de calcul et sans dérivées.",
+        "de": "Zehn Fragen zu den newtonschen Gesetzen, Vektoren und der Energieerhaltung – mit etwas Rechnen, aber ohne Analysis.",
+        "es": "Diez preguntas sobre las leyes de Newton, los vectores y la conservación de la energía, con algo de cálculo y sin derivadas."
+      },
+      "timer_mode": "per_question",
+      "questions": [
+        {
+          "text_html": "<p>What is the SI unit of force?</p>",
+          "time_limit_seconds": 20,
+          "points": 100,
+          "options": [
+            {
+              "text": "The newton",
+              "is_correct": true
+            },
+            {
+              "text": "The joule",
+              "is_correct": false
+            },
+            {
+              "text": "The watt",
+              "is_correct": false
+            },
+            {
+              "text": "The pascal",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>An object moves at constant velocity. What is the net force acting on it?</p>",
+          "time_limit_seconds": 30,
+          "points": 100,
+          "options": [
+            {
+              "text": "Zero",
+              "is_correct": true
+            },
+            {
+              "text": "A constant force in the direction of motion",
+              "is_correct": false
+            },
+            {
+              "text": "A force equal to its weight",
+              "is_correct": false
+            },
+            {
+              "text": "A force that grows with its speed",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>Select <b>all</b> vector quantities.</p>",
+          "time_limit_seconds": 30,
+          "points": 100,
+          "allow_multiple": true,
+          "options": [
+            {
+              "text": "Velocity",
+              "is_correct": true
+            },
+            {
+              "text": "Acceleration",
+              "is_correct": true
+            },
+            {
+              "text": "Force",
+              "is_correct": true
+            },
+            {
+              "text": "Speed",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>Newton's third law states that...</p>",
+          "time_limit_seconds": 25,
+          "points": 100,
+          "options": [
+            {
+              "text": "Every action has an equal and opposite reaction",
+              "is_correct": true
+            },
+            {
+              "text": "Force equals mass times acceleration",
+              "is_correct": false
+            },
+            {
+              "text": "An object stays at rest unless pushed",
+              "is_correct": false
+            },
+            {
+              "text": "Energy is always conserved",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>A 2 kg object accelerates at 3 m/s². What net force acts on it?</p>",
+          "time_limit_seconds": 30,
+          "points": 100,
+          "options": [
+            {
+              "text": "6 N",
+              "is_correct": true
+            },
+            {
+              "text": "1.5 N",
+              "is_correct": false
+            },
+            {
+              "text": "5 N",
+              "is_correct": false
+            },
+            {
+              "text": "9 N",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>What energy is stored in a stretched spring?</p>",
+          "time_limit_seconds": 25,
+          "points": 100,
+          "options": [
+            {
+              "text": "Elastic potential energy",
+              "is_correct": true
+            },
+            {
+              "text": "Kinetic energy",
+              "is_correct": false
+            },
+            {
+              "text": "Chemical energy",
+              "is_correct": false
+            },
+            {
+              "text": "Thermal energy",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>On the Moon, how do an astronaut's mass and weight compare with Earth?</p>",
+          "time_limit_seconds": 30,
+          "points": 100,
+          "options": [
+            {
+              "text": "Mass is unchanged and weight is lower",
+              "is_correct": true
+            },
+            {
+              "text": "Both are lower",
+              "is_correct": false
+            },
+            {
+              "text": "Both are unchanged",
+              "is_correct": false
+            },
+            {
+              "text": "Mass is lower and weight is unchanged",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>What does the conservation of energy state?</p>",
+          "time_limit_seconds": 25,
+          "points": 100,
+          "options": [
+            {
+              "text": "Energy can change form but cannot be created or destroyed",
+              "is_correct": true
+            },
+            {
+              "text": "Energy always decreases in a closed system",
+              "is_correct": false
+            },
+            {
+              "text": "Energy can be created by doing work",
+              "is_correct": false
+            },
+            {
+              "text": "Energy is another name for force",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>A ball thrown straight up has reached the top of its flight. What are its velocity and acceleration at that instant?</p>",
+          "time_limit_seconds": 35,
+          "points": 100,
+          "options": [
+            {
+              "text": "Velocity is zero and acceleration points downwards",
+              "is_correct": true
+            },
+            {
+              "text": "Both are zero",
+              "is_correct": false
+            },
+            {
+              "text": "Velocity points downwards and acceleration is zero",
+              "is_correct": false
+            },
+            {
+              "text": "Both point upwards",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>In a vacuum, why does a heavy object not fall faster than a light one?</p>",
+          "time_limit_seconds": 35,
+          "points": 100,
+          "options": [
+            {
+              "text": "Both fall with the same acceleration, since there is no air resistance",
+              "is_correct": true
+            },
+            {
+              "text": "Gravity pulls harder on lighter objects",
+              "is_correct": false
+            },
+            {
+              "text": "Heavier objects have more inertia and therefore fall more slowly",
+              "is_correct": false
+            },
+            {
+              "text": "The vacuum removes gravity",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

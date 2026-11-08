@@ -1,0 +1,27 @@
+# syntax=docker/dockerfile:1
+# Test image: pytest (backend, API, OWASP) + Playwright (frontend end-to-end).
+# The Playwright base image ships Chromium and all of its system libraries.
+FROM mcr.microsoft.com/playwright/python:v1.49.1-noble
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PIP_NO_CACHE_DIR=1
+
+WORKDIR /app
+
+COPY backend/requirements.txt /app/backend/requirements.txt
+COPY backend/requirements-dev.txt /app/backend/requirements-dev.txt
+RUN pip install --no-cache-dir -r /app/backend/requirements.txt -r /app/backend/requirements-dev.txt
+
+COPY backend /app/backend
+COPY frontend /app/frontend
+COPY tests /app/tests
+COPY demo /app/demo
+COPY tools /app/tools
+COPY pytest.ini /app/pytest.ini
+RUN chmod -R a+rX /app/backend /app/frontend /app/tests /app/demo /app/tools
+
+ENV PYTHONPATH=/app/backend \
+    OL_TEST_BASE_URL=http://openlearn:8000
+
+CMD ["pytest", "-ra", "tests"]

@@ -1,0 +1,461 @@
+{
+  "kind": "quizzes",
+  "items": [
+    {
+      "title": "Web Security: Passwords, HTTPS and Phishing",
+      "description": "Nine practical questions on how accounts get stolen and what actually protects them, from password managers to two-factor authentication.",
+      "mode": "qcm",
+      "wrong_answer_policy": "penalty",
+      "default_language": "en",
+      "title_translations": {
+        "fr": "Sécurité web : mots de passe, HTTPS et hameçonnage",
+        "de": "Websicherheit: Passwörter, HTTPS und Phishing",
+        "es": "Seguridad web: contraseñas, HTTPS y phishing"
+      },
+      "description_translations": {
+        "fr": "Neuf questions concrètes sur le vol de comptes et sur ce qui les protège vraiment, du gestionnaire de mots de passe à la double authentification.",
+        "de": "Neun praktische Fragen dazu, wie Konten gestohlen werden und was sie wirklich schützt – vom Passwortmanager bis zur Zwei-Faktor-Authentifizierung.",
+        "es": "Nueve preguntas prácticas sobre cómo se roban las cuentas y qué las protege de verdad, desde el gestor de contraseñas hasta la doble autenticación."
+      },
+      "timer_mode": "per_question",
+      "questions": [
+        {
+          "text_html": "<p>What does the <b>S</b> in HTTPS indicate?</p>",
+          "time_limit_seconds": 25,
+          "points": 100,
+          "options": [
+            {
+              "text": "The traffic is encrypted with TLS",
+              "is_correct": true
+            },
+            {
+              "text": "The site has been audited and contains no malware",
+              "is_correct": false
+            },
+            {
+              "text": "The site is hosted on a private server",
+              "is_correct": false
+            },
+            {
+              "text": "The page is static and cannot be modified",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>Select <b>all</b> sound password practices.</p>",
+          "time_limit_seconds": 35,
+          "points": 100,
+          "allow_multiple": true,
+          "options": [
+            {
+              "text": "Use a different password for every account",
+              "is_correct": true
+            },
+            {
+              "text": "Store passwords in a password manager",
+              "is_correct": true
+            },
+            {
+              "text": "Turn on two-factor authentication",
+              "is_correct": true
+            },
+            {
+              "text": "Reuse one very strong password everywhere",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>What is <b>phishing</b>?</p>",
+          "time_limit_seconds": 25,
+          "points": 100,
+          "options": [
+            {
+              "text": "A message impersonating a trusted party to steal credentials",
+              "is_correct": true
+            },
+            {
+              "text": "A flood of traffic that overwhelms a server",
+              "is_correct": false
+            },
+            {
+              "text": "A program that encrypts files for ransom",
+              "is_correct": false
+            },
+            {
+              "text": "A weakness in an outdated software library",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>What does two-factor authentication add to a login?</p>",
+          "time_limit_seconds": 30,
+          "points": 100,
+          "options": [
+            {
+              "text": "A second proof of identity from an independent source",
+              "is_correct": true
+            },
+            {
+              "text": "A longer password",
+              "is_correct": false
+            },
+            {
+              "text": "A backup email address",
+              "is_correct": false
+            },
+            {
+              "text": "Encryption of the hard drive",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>Which detail should most make you doubt an email asking you to log in?</p>",
+          "time_limit_seconds": 35,
+          "points": 100,
+          "options": [
+            {
+              "text": "A link whose domain is not the organisation's real domain",
+              "is_correct": true
+            },
+            {
+              "text": "A plain-text signature that includes a phone number",
+              "is_correct": false
+            },
+            {
+              "text": "A message also sent to several colleagues",
+              "is_correct": false
+            },
+            {
+              "text": "A subject line written in capitals",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>What is a brute-force attack?</p>",
+          "time_limit_seconds": 25,
+          "points": 100,
+          "options": [
+            {
+              "text": "Trying many password guesses until one works",
+              "is_correct": true
+            },
+            {
+              "text": "Guessing a password from a social media profile",
+              "is_correct": false
+            },
+            {
+              "text": "Intercepting traffic on a public network",
+              "is_correct": false
+            },
+            {
+              "text": "Talking an employee into reading out a code",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>Why is an unencrypted public Wi-Fi network risky?</p>",
+          "time_limit_seconds": 30,
+          "points": 100,
+          "options": [
+            {
+              "text": "Other users on the network may intercept your traffic",
+              "is_correct": true
+            },
+            {
+              "text": "It always installs malware as soon as you connect",
+              "is_correct": false
+            },
+            {
+              "text": "It disables HTTPS in your browser",
+              "is_correct": false
+            },
+            {
+              "text": "It stores your password on the router",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>How does a password manager protect your credentials?</p>",
+          "time_limit_seconds": 30,
+          "points": 100,
+          "options": [
+            {
+              "text": "It stores them encrypted and unlocks them with one master password",
+              "is_correct": true
+            },
+            {
+              "text": "It writes them to a text file in your home folder",
+              "is_correct": false
+            },
+            {
+              "text": "It emails them to you as a backup",
+              "is_correct": false
+            },
+            {
+              "text": "It reuses a single password across sites",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>Which of these is the strongest password?</p>",
+          "time_limit_seconds": 25,
+          "points": 100,
+          "options": [
+            {
+              "text": "kR7#vQ2$mZ9!pL4x",
+              "is_correct": true
+            },
+            {
+              "text": "P@ssw0rd2024",
+              "is_correct": false
+            },
+            {
+              "text": "Fluffy2009",
+              "is_correct": false
+            },
+            {
+              "text": "qwerty123456",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Artificial Intelligence: From Perceptrons to Transformers",
+      "description": "Nine questions on the ideas behind modern machine learning: perceptrons, attention, tokens and the training loop.",
+      "mode": "qcm",
+      "wrong_answer_policy": "zero",
+      "default_language": "en",
+      "title_translations": {
+        "fr": "Intelligence artificielle : du perceptron aux transformeurs",
+        "de": "Künstliche Intelligenz: Vom Perzeptron zu den Transformern",
+        "es": "Inteligencia artificial: del perceptrón a los transformadores"
+      },
+      "description_translations": {
+        "fr": "Neuf questions sur les idées qui portent l'apprentissage automatique moderne : perceptrons, attention, jetons et boucle d'entraînement.",
+        "de": "Neun Fragen zu den Ideen hinter modernem maschinellem Lernen: Perzeptronen, Attention, Token und die Trainingsschleife.",
+        "es": "Nueve preguntas sobre las ideas que sostienen el aprendizaje automático moderno: perceptrones, atención, tokens y el bucle de entrenamiento."
+      },
+      "timer_mode": "per_question",
+      "questions": [
+        {
+          "text_html": "<p>What could Rosenblatt's perceptron (1958) actually do?</p>",
+          "time_limit_seconds": 30,
+          "points": 100,
+          "options": [
+            {
+              "text": "Learn a linear decision boundary from labelled examples",
+              "is_correct": true
+            },
+            {
+              "text": "Translate between languages",
+              "is_correct": false
+            },
+            {
+              "text": "Generate photorealistic images",
+              "is_correct": false
+            },
+            {
+              "text": "Play world-class chess",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>What is a <b>hidden layer</b> in a neural network?</p>",
+          "time_limit_seconds": 30,
+          "points": 100,
+          "options": [
+            {
+              "text": "A layer of units between the input and the output",
+              "is_correct": true
+            },
+            {
+              "text": "A layer that is discarded after training",
+              "is_correct": false
+            },
+            {
+              "text": "The layer that stores the training data",
+              "is_correct": false
+            },
+            {
+              "text": "A cached copy of the model weights",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>Select <b>all</b> components of the Transformer architecture introduced in 2017.</p>",
+          "time_limit_seconds": 35,
+          "points": 100,
+          "allow_multiple": true,
+          "options": [
+            {
+              "text": "Self-attention",
+              "is_correct": true
+            },
+            {
+              "text": "Positional encodings",
+              "is_correct": true
+            },
+            {
+              "text": "Feed-forward layers",
+              "is_correct": true
+            },
+            {
+              "text": "Convolutional pooling",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>What does an attention mechanism let a model do?</p>",
+          "time_limit_seconds": 30,
+          "points": 100,
+          "options": [
+            {
+              "text": "Weigh how relevant each token is to every other token",
+              "is_correct": true
+            },
+            {
+              "text": "Compress the whole input into a single number",
+              "is_correct": false
+            },
+            {
+              "text": "Skip training for words it already knows",
+              "is_correct": false
+            },
+            {
+              "text": "Retrieve documents from the internet",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>What is a <b>token</b> for a large language model?</p>",
+          "time_limit_seconds": 30,
+          "points": 100,
+          "options": [
+            {
+              "text": "A sub-word unit of text that the model reads and predicts",
+              "is_correct": true
+            },
+            {
+              "text": "A whole word, in every case",
+              "is_correct": false
+            },
+            {
+              "text": "One line of the training file",
+              "is_correct": false
+            },
+            {
+              "text": "A byte of the model's weights",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>What is overfitting?</p>",
+          "time_limit_seconds": 30,
+          "points": 100,
+          "options": [
+            {
+              "text": "The model memorises its training data and generalises poorly",
+              "is_correct": true
+            },
+            {
+              "text": "The model is too small to learn anything",
+              "is_correct": false
+            },
+            {
+              "text": "The training set contains too many languages",
+              "is_correct": false
+            },
+            {
+              "text": "The model answers too slowly",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>What does the <b>temperature</b> setting change during generation?</p>",
+          "time_limit_seconds": 25,
+          "points": 100,
+          "options": [
+            {
+              "text": "How random the choice of the next token is",
+              "is_correct": true
+            },
+            {
+              "text": "How many tokens the model can read at once",
+              "is_correct": false
+            },
+            {
+              "text": "How long the model trains for",
+              "is_correct": false
+            },
+            {
+              "text": "How much each call costs",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>What is the role of a loss function in training?</p>",
+          "time_limit_seconds": 30,
+          "points": 100,
+          "options": [
+            {
+              "text": "It measures the error that the optimiser tries to reduce",
+              "is_correct": true
+            },
+            {
+              "text": "It stores the model's parameters",
+              "is_correct": false
+            },
+            {
+              "text": "It cleans and deduplicates the training data",
+              "is_correct": false
+            },
+            {
+              "text": "It limits the length of the output",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>Why does a language model have a context window?</p>",
+          "time_limit_seconds": 30,
+          "points": 100,
+          "options": [
+            {
+              "text": "It can only attend to a fixed number of tokens at once",
+              "is_correct": true
+            },
+            {
+              "text": "It forgets everything as soon as it answers",
+              "is_correct": false
+            },
+            {
+              "text": "It cannot read text longer than a sentence",
+              "is_correct": false
+            },
+            {
+              "text": "It keeps its memory on disk",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,1111 @@
+{
+  "kind": "adventures",
+  "items": [
+    {
+      "title": "The Lighthouse at Low Tide",
+      "description": "A keeper has vanished from a Brittany island and the tide is turning. Spend your daylight, earn the village's trust, and decide what the truth is worth.",
+      "mode": "adventure",
+      "wrong_answer_policy": "zero",
+      "default_language": "en",
+      "timer_mode": "none",
+      "title_translations": {
+        "fr": "Le phare de la basse mer"
+      },
+      "questions": [],
+      "adventure": {
+        "start": "harbour",
+        "death_text_html": "<p>The tide comes back over the causeway while you are still searching. The lighthouse stays dark, and by morning the island has other things to talk about.</p>",
+        "victory_text_html": "<p>The lamp turns, the village has its keeper back, and the truth is written down where nobody can tear the page out.</p>",
+        "attributes": [
+          {
+            "key": "time",
+            "label": "Daylight left",
+            "translations": { "fr": "Lumière restante" },
+            "initial_value": 11,
+            "min_value": 0,
+            "max_value": 12,
+            "death_at_or_below": 0
+          },
+          {
+            "key": "trust",
+            "label": "Village trust",
+            "translations": { "fr": "Confiance du village" },
+            "initial_value": 2,
+            "min_value": 0,
+            "max_value": 8
+          },
+          {
+            "key": "clues",
+            "label": "Clues gathered",
+            "translations": { "fr": "Indices rassemblés" },
+            "initial_value": 0,
+            "min_value": 0,
+            "max_value": 6
+          }
+        ],
+        "nodes": [
+          {
+            "key": "harbour",
+            "kind": "question",
+            "text_html": "<p>The ferry drops you on the quay of Enez-Vraz at low tide. The lighthouse on the point has been dark for two nights, and Erwan Le Goff, its keeper, has not been seen since Tuesday. The harbourmaster is mending nets by the slipway; the tower road climbs to your left.</p>",
+            "pos_x": 0,
+            "pos_y": 0,
+            "choices": [
+              {
+                "key": "harbourmaster",
+                "text": "Ask the harbourmaster what happened",
+                "target": "harbour_master",
+                "effects": [
+                  { "attribute": "time", "delta": -1 },
+                  { "attribute": "trust", "delta": 1 },
+                  { "attribute": "clues", "delta": 1 }
+                ]
+              },
+              {
+                "key": "straight",
+                "text": "Walk straight up to the lighthouse",
+                "target": "lamp_room",
+                "effects": [
+                  { "attribute": "time", "delta": -1 }
+                ]
+              }
+            ]
+          },
+          {
+            "key": "harbour_master",
+            "kind": "question",
+            "text_html": "<p>She does not look up from her net. <i>“Erwan's boat is still moored. Whatever took him went by land.”</i> She nods at the grey cottage on the hill, then at the tower. <i>“And there was a man here from the lighthouse authority. New coat. Too clean.”</i></p>",
+            "pos_x": 240,
+            "pos_y": -160,
+            "choices": [
+              {
+                "key": "logbook",
+                "text": "Ask to see the harbour logbook",
+                "target": "logbook",
+                "effects": [
+                  { "attribute": "time", "delta": -1 },
+                  { "attribute": "trust", "delta": 1 },
+                  { "attribute": "clues", "delta": 1 }
+                ]
+              },
+              {
+                "key": "ask_inspector",
+                "text": "Ask about the man from the lighthouse authority",
+                "target": "inspector",
+                "effects": [
+                  { "attribute": "time", "delta": -1 },
+                  { "attribute": "clues", "delta": 1 }
+                ]
+              },
+              {
+                "key": "to_cottage",
+                "text": "Take the cliff path to the keeper's cottage",
+                "target": "cottage",
+                "effects": [
+                  { "attribute": "time", "delta": -1 }
+                ]
+              }
+            ]
+          },
+          {
+            "key": "logbook",
+            "kind": "question",
+            "text_html": "<p>The harbour logbook lies open at Tuesday. The last line is in Erwan's hand: <i>“Lamp jammed again. If the inspector comes back with his contract, do not sign.”</i> The page after it has been torn out.</p>",
+            "pos_x": 480,
+            "pos_y": -240,
+            "choices": [
+              {
+                "key": "take_up",
+                "text": "Take the logbook up to the lamp room",
+                "target": "lamp_room",
+                "effects": [
+                  { "attribute": "time", "delta": -1 },
+                  { "attribute": "clues", "delta": 1 }
+                ]
+              },
+              {
+                "key": "show_page",
+                "text": "Find the inspector and show him the torn page",
+                "target": "inspector",
+                "effects": [
+                  { "attribute": "time", "delta": -1 },
+                  { "attribute": "trust", "delta": 1 },
+                  { "attribute": "clues", "delta": 1 }
+                ]
+              }
+            ]
+          },
+          {
+            "key": "inspector",
+            "kind": "question",
+            "text_html": "<p>A man waits by the slipway in a new oilskin coat. His papers say <i>Direction des Phares</i>, but the ink is still tacky and the date on them is tomorrow's. He smiles at the dark tower. <i>“A sad business. Automation was always going to come.”</i></p>",
+            "pos_x": 480,
+            "pos_y": -60,
+            "choices": [
+              {
+                "key": "press",
+                "text": "Ask him to name the keeper's daughter",
+                "target": "inspector_pressed",
+                "effects": [
+                  { "attribute": "time", "delta": -1 },
+                  { "attribute": "clues", "delta": 1 }
+                ]
+              },
+              {
+                "key": "follow",
+                "text": "Say nothing and let him follow you to the tower",
+                "target": "lamp_room",
+                "effects": [
+                  { "attribute": "time", "delta": -2 },
+                  { "attribute": "trust", "delta": -1 }
+                ]
+              }
+            ]
+          },
+          {
+            "key": "inspector_pressed",
+            "kind": "question",
+            "text_html": "<p>He gives the wrong name, then corrects himself far too quickly. <i>“The contract needs a signature by the evening tide,”</i> he says. <i>“That is all.”</i> His boat, the <i>Sterenn</i>, sits on the sand with a crate in the stern.</p>",
+            "pos_x": 720,
+            "pos_y": -160,
+            "choices": [
+              {
+                "key": "search_boat",
+                "text": "Search his boat while he protests",
+                "target": "boat",
+                "effects": [
+                  { "attribute": "time", "delta": -1 },
+                  { "attribute": "trust", "delta": -1 },
+                  { "attribute": "clues", "delta": 1 }
+                ]
+              },
+              {
+                "key": "walk_with",
+                "text": "Walk with him to the lamp room and watch him",
+                "target": "lamp_room",
+                "effects": [
+                  { "attribute": "time", "delta": -1 },
+                  { "attribute": "trust", "delta": 1 }
+                ]
+              }
+            ]
+          },
+          {
+            "key": "boat",
+            "kind": "question",
+            "text_html": "<p>Under the tarpaulin: a brass wedge, a new lock for the lamp-room door, and a letter from a company in Brest offering a <i>“decommissioning bonus”</i> for any lighthouse taken out of service before winter.</p>",
+            "pos_x": 960,
+            "pos_y": -240,
+            "choices": [
+              {
+                "key": "take_letter",
+                "text": "Take the letter to the village",
+                "target": "village",
+                "effects": [
+                  { "attribute": "time", "delta": -1 },
+                  { "attribute": "trust", "delta": 1 },
+                  { "attribute": "clues", "delta": 1 }
+                ]
+              },
+              {
+                "key": "climb_first",
+                "text": "Climb to the lamp room before he does",
+                "target": "lamp_room",
+                "effects": [
+                  { "attribute": "time", "delta": -1 },
+                  { "attribute": "clues", "delta": 1 }
+                ]
+              }
+            ]
+          },
+          {
+            "key": "cottage",
+            "kind": "question",
+            "text_html": "<p>The cottage door stands open. Two cups on the table, one still warm. A chair on its side, and a trail of wet sand dragged out towards the cliff path.</p>",
+            "pos_x": 480,
+            "pos_y": 140,
+            "choices": [
+              {
+                "key": "marks",
+                "text": "Follow the drag marks to the cliff",
+                "target": "cliff",
+                "effects": [
+                  { "attribute": "time", "delta": -1 },
+                  { "attribute": "clues", "delta": 1 }
+                ]
+              },
+              {
+                "key": "bicycle",
+                "text": "Take the keeper's bicycle and ride to the village",
+                "target": "village",
+                "effects": [
+                  { "attribute": "time", "delta": 1 },
+                  { "attribute": "clues", "delta": 1 }
+                ]
+              },
+              {
+                "key": "tower_first",
+                "text": "Climb the tower first — the lamp matters more",
+                "target": "lamp_room",
+                "effects": [
+                  { "attribute": "time", "delta": -1 }
+                ]
+              }
+            ]
+          },
+          {
+            "key": "lamp_room",
+            "kind": "question",
+            "text_html": "<p>The great lens is dark. A brass wedge has been hammered between the gear teeth and the mechanism strains against it. From the gallery windows you can see the whole island — and a rope disappearing over the cliff edge.</p>",
+            "pos_x": 720,
+            "pos_y": 40,
+            "choices": [
+              {
+                "key": "gallery",
+                "text": "Step out onto the gallery",
+                "target": "gallery",
+                "effects": [
+                  { "attribute": "time", "delta": -1 },
+                  { "attribute": "clues", "delta": 1 }
+                ]
+              },
+              {
+                "key": "free_gear",
+                "text": "Hammer the wedge out and light the lamp",
+                "target": "lamp_lit",
+                "effects": [
+                  { "attribute": "time", "delta": -2 },
+                  { "attribute": "clues", "delta": 1 }
+                ]
+              },
+              {
+                "key": "run_village",
+                "text": "Run down to the village for help",
+                "target": "village",
+                "effects": [
+                  { "attribute": "time", "delta": -1 },
+                  { "attribute": "trust", "delta": 1 }
+                ]
+              },
+              {
+                "key": "over_edge",
+                "text": "Follow the rope over the cliff edge",
+                "target": "cliff",
+                "effects": [
+                  { "attribute": "time", "delta": -1 },
+                  { "attribute": "clues", "delta": 1 }
+                ]
+              }
+            ]
+          },
+          {
+            "key": "gallery",
+            "kind": "question",
+            "text_html": "<p>The gallery is wet with spray. The rope is new, tied to the rail with a sailor's knot, and there is a fresh scrape in the paint where something heavy went over. Below, the tide has already turned.</p>",
+            "pos_x": 960,
+            "pos_y": -60,
+            "choices": [
+              {
+                "key": "haul",
+                "text": "Haul the rope up and see what it is tied to",
+                "target": "cliff",
+                "effects": [
+                  { "attribute": "time", "delta": -1 },
+                  { "attribute": "clues", "delta": 1 }
+                ]
+              },
+              {
+                "key": "shout",
+                "text": "Shout down to the village for help",
+                "target": "village",
+                "effects": [
+                  { "attribute": "time", "delta": -1 },
+                  { "attribute": "trust", "delta": 1 }
+                ]
+              }
+            ]
+          },
+          {
+            "key": "cliff",
+            "kind": "question",
+            "text_html": "<p>The path ends above a cave mouth that only shows at low water, and the drag marks go down to it. You have perhaps an hour before the sea covers the entrance.</p>",
+            "pos_x": 960,
+            "pos_y": 240,
+            "choices": [
+              {
+                "key": "descend",
+                "text": "Climb down to the cave now",
+                "target": "cave",
+                "effects": [
+                  { "attribute": "time", "delta": -2 },
+                  { "attribute": "clues", "delta": 1 }
+                ]
+              },
+              {
+                "key": "get_help",
+                "text": "Go back for the village and a boat",
+                "target": "village",
+                "effects": [
+                  { "attribute": "time", "delta": -1 },
+                  { "attribute": "trust", "delta": 1 }
+                ]
+              }
+            ]
+          },
+          {
+            "key": "village",
+            "kind": "question",
+            "text_html": "<p>The square smells of tar and cold smoke. The fishermen listen with their hands still. The inspector's version reached them first: a keeper who drank, a lamp that failed, a village that should be grateful for automation.</p>",
+            "pos_x": 720,
+            "pos_y": 320,
+            "choices": [
+              {
+                "key": "tell_all",
+                "text": "Put everything you have on the table",
+                "target": "village_trust",
+                "effects": [
+                  { "attribute": "time", "delta": -1 },
+                  { "attribute": "trust", "delta": 2 }
+                ]
+              },
+              {
+                "key": "go_alone",
+                "text": "Ask only for a lantern and go alone",
+                "target": "cave",
+                "effects": [
+                  { "attribute": "time", "delta": -1 },
+                  { "attribute": "clues", "delta": 1 }
+                ]
+              }
+            ]
+          },
+          {
+            "key": "village_trust",
+            "kind": "question",
+            "text_html": "<p>Silence, then the harbourmaster reaches for her coat. <i>“Take the boat,”</i> she says. <i>“We'll follow the path.”</i> Three men are already at the slipway, and one of them is carrying a lamp.</p>",
+            "pos_x": 960,
+            "pos_y": 380,
+            "choices": [
+              {
+                "key": "lead_boat",
+                "text": "Take the boat round to the cave",
+                "target": "cave_rescue",
+                "effects": [
+                  { "attribute": "time", "delta": -1 },
+                  { "attribute": "trust", "delta": 1 },
+                  { "attribute": "clues", "delta": 1 }
+                ]
+              },
+              {
+                "key": "light_first",
+                "text": "Send them to the cave while you light the lamp",
+                "target": "lamp_lit",
+                "effects": [
+                  { "attribute": "time", "delta": -1 },
+                  { "attribute": "trust", "delta": 1 }
+                ]
+              }
+            ]
+          },
+          {
+            "key": "lamp_lit",
+            "kind": "question",
+            "text_html": "<p>The wedge gives way and the lens begins to turn. The beam sweeps the water, and for a moment it picks out the cave mouth — and a hand, waving.</p>",
+            "pos_x": 960,
+            "pos_y": 100,
+            "choices": [
+              {
+                "key": "with_crew",
+                "text": "Fetch the harbourmaster's crew and go together",
+                "target": "cave_rescue",
+                "effects": [
+                  { "attribute": "time", "delta": -1 },
+                  { "attribute": "trust", "delta": 1 }
+                ]
+              },
+              {
+                "key": "row_alone",
+                "text": "Row out to the cave mouth alone",
+                "target": "cave",
+                "effects": [
+                  { "attribute": "time", "delta": -1 },
+                  { "attribute": "clues", "delta": 1 }
+                ]
+              }
+            ]
+          },
+          {
+            "key": "cave",
+            "kind": "question",
+            "text_html": "<p>Erwan is alive, wedged on a ledge above the water with a broken ankle and a satchel strapped to his chest. <i>“The contract,”</i> he says. <i>“He needed my signature. I wouldn't give it.”</i> The sea is already at the cave mouth.</p>",
+            "pos_x": 1200,
+            "pos_y": 240,
+            "choices": [
+              {
+                "key": "carry_him",
+                "text": "Carry him out yourself, slowly, before the water rises",
+                "target": "ending_alone",
+                "effects": [
+                  { "attribute": "time", "delta": -2 },
+                  { "attribute": "trust", "delta": 1 }
+                ]
+              },
+              {
+                "key": "take_satchel",
+                "text": "Take the satchel and swim for the slipway",
+                "target": "ending_documents",
+                "effects": [
+                  { "attribute": "time", "delta": -1 },
+                  { "attribute": "trust", "delta": -1 }
+                ]
+              }
+            ]
+          },
+          {
+            "key": "cave_rescue",
+            "kind": "question",
+            "text_html": "<p>You come into the cave with the harbourmaster's boat and two lanterns. Erwan is on the ledge. Above, on the cliff path, the inspector is running for the slipway with a coil of rope over his shoulder.</p>",
+            "pos_x": 1200,
+            "pos_y": 100,
+            "choices": [
+              {
+                "key": "keeper_first",
+                "text": "Get the keeper into the boat first",
+                "target": "ending_saved",
+                "effects": [
+                  { "attribute": "time", "delta": -1 },
+                  { "attribute": "trust", "delta": 1 }
+                ]
+              },
+              {
+                "key": "send_crew",
+                "text": "Leave the crew with Erwan and cut the inspector off",
+                "target": "ending_saved",
+                "effects": [
+                  { "attribute": "time", "delta": -1 },
+                  { "attribute": "trust", "delta": 1 },
+                  { "attribute": "clues", "delta": 1 }
+                ]
+              }
+            ]
+          },
+          {
+            "key": "ending_saved",
+            "kind": "ending",
+            "text_html": "<p>Erwan comes up the cliff path on a stretcher of oars, and behind him the lighthouse begins to turn for the first time in three nights.</p>",
+            "pos_x": 1440,
+            "pos_y": 100,
+            "choices": [],
+            "outcomes": [
+              {
+                "kind": "range",
+                "attribute": "clues",
+                "range_min": 4,
+                "range_max": 6,
+                "priority": 0,
+                "text_html": "<p>Erwan comes up the cliff path on a stretcher of oars. The letter, the torn page and the brass wedge are enough: the company in Brest drops its contract before the week is out, and the harbourmaster pins the page to the wall of the harbour office. <i>“Some things are not for sale.”</i></p>"
+              },
+              {
+                "kind": "range",
+                "attribute": "clues",
+                "range_min": 0,
+                "range_max": 3,
+                "priority": 1,
+                "text_html": "<p>Erwan comes up the cliff path on a stretcher of oars. The inspector's boat is already a mile out, and you have only your own word for what happened. The village has its keeper back; the men in Brest will try again in the spring.</p>"
+              },
+              {
+                "kind": "default",
+                "priority": 9,
+                "text_html": "<p>Erwan comes up the cliff path on a stretcher of oars. Behind him, the lighthouse begins to turn for the first time in three nights.</p>"
+              }
+            ]
+          },
+          {
+            "key": "ending_alone",
+            "kind": "ending",
+            "text_html": "<p>You carry him yourself, half-dragging, with the sea at your knees. He lives.</p>",
+            "pos_x": 1440,
+            "pos_y": 240,
+            "choices": [],
+            "outcomes": [
+              {
+                "kind": "default",
+                "priority": 0,
+                "text_html": "<p>You carry him yourself, half-dragging, with the sea at your knees. He lives, and the doctor says another ten minutes would have been the end of it. The <i>Sterenn</i> is gone by dusk; the village never hears the whole of it, and Erwan never signs anything again.</p>"
+              }
+            ]
+          },
+          {
+            "key": "ending_documents",
+            "kind": "ending",
+            "text_html": "<p>You take the satchel and swim for the slipway.</p>",
+            "pos_x": 1440,
+            "pos_y": 380,
+            "choices": [],
+            "outcomes": [
+              {
+                "kind": "default",
+                "priority": 0,
+                "text_html": "<p>You take the satchel and swim for the slipway. The letter is dry and the truth will be told in Brest, in the newspapers, in a courtroom. Behind you the cave mouth fills with water, and Erwan does not come out.</p>"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "title": "Mission: Orbital Station",
+      "description": "The station is losing air and its solar array is turned off the sun. Spend oxygen, hold the hull together, and decide who gets the last two seats.",
+      "mode": "adventure",
+      "wrong_answer_policy": "zero",
+      "default_language": "en",
+      "timer_mode": "none",
+      "title_translations": {
+        "fr": "Mission : station orbitale"
+      },
+      "description_translations": {
+        "fr": "La station perd son air et son panneau solaire n'est plus tourné vers le soleil. Dépensez votre oxygène, tenez la coque, et décidez qui occupera les deux dernières places."
+      },
+      "questions": [],
+      "adventure": {
+        "start": "airlock",
+        "death_text_html": "<p>The gauge reaches zero while you are still working. The last thing you hear is your own breath, then the station's fans, then nothing at all.</p>",
+        "death_translations": {
+          "fr": "<p>La jauge atteint zéro alors que vous travaillez encore. La dernière chose que vous entendez, c'est votre propre souffle, puis les ventilateurs de la station, puis plus rien.</p>"
+        },
+        "victory_text_html": "<p>The station turns with the sun again, and everyone aboard is alive to argue about the repairs.</p>",
+        "victory_translations": {
+          "fr": "<p>La station tourne de nouveau avec le soleil, et tous ceux qui sont à bord sont vivants pour se disputer sur les réparations.</p>"
+        },
+        "attributes": [
+          {
+            "key": "oxygen",
+            "label": "Oxygen",
+            "translations": { "fr": "Oxygène" },
+            "initial_value": 13,
+            "min_value": 0,
+            "max_value": 14,
+            "death_at_or_below": 0
+          },
+          {
+            "key": "integrity",
+            "label": "Hull integrity",
+            "translations": { "fr": "Intégrité de la coque" },
+            "initial_value": 5,
+            "min_value": 0,
+            "max_value": 10
+          },
+          {
+            "key": "crew",
+            "label": "Crew with you",
+            "translations": { "fr": "Équipage avec vous" },
+            "initial_value": 1,
+            "min_value": 0,
+            "max_value": 4
+          }
+        ],
+        "nodes": [
+          {
+            "key": "airlock",
+            "kind": "question",
+            "text_html": "<p>You wake in the airlock with your suit half on and the station screaming. <i>Depressurisation, ring two.</i> Through the inner door the command deck glows red, and somewhere below, something is tearing itself loose.</p>",
+            "translations": {
+              "fr": "<p>Vous vous réveillez dans le sas, la combinaison à moitié enfilée, et la station hurle. <i>Dépressurisation, anneau deux.</i> Derrière la porte intérieure, le pont de commandement rougeoie, et plus bas, quelque chose est en train de s'arracher.</p>"
+            },
+            "pos_x": 0,
+            "pos_y": 0,
+            "choices": [
+              {
+                "key": "seal_bay",
+                "text": "Go down and seal the breach in bay two",
+                "target": "bay_two",
+                "effects": [
+                  { "attribute": "oxygen", "delta": -1 }
+                ]
+              },
+              {
+                "key": "command_deck",
+                "text": "Get to the command deck and read the status board",
+                "target": "command",
+                "effects": [
+                  { "attribute": "oxygen", "delta": -1 }
+                ]
+              }
+            ]
+          },
+          {
+            "key": "bay_two",
+            "kind": "question",
+            "text_html": "<p>Bay two is open to the sky. A cargo pod hangs half-ejected from its cradle and the hull plate behind it is peeled back like paper. The wind of escaping air pulls at your suit.</p>",
+            "translations": {
+              "fr": "<p>La soute deux est ouverte sur le vide. Une capsule de fret pend à demi éjectée de son berceau et la plaque de coque derrière elle est retroussée comme du papier. Le souffle de l'air qui s'échappe tire sur votre combinaison.</p>"
+            },
+            "pos_x": 240,
+            "pos_y": -200,
+            "choices": [
+              {
+                "key": "weld_plate",
+                "text": "Weld the plate back into place",
+                "target": "weld",
+                "effects": [
+                  { "attribute": "oxygen", "delta": -2 },
+                  { "attribute": "integrity", "delta": 2 }
+                ]
+              },
+              {
+                "key": "blow_cradle",
+                "text": "Blow the cradle and seal the bay from outside",
+                "target": "vent",
+                "effects": [
+                  { "attribute": "oxygen", "delta": -1 },
+                  { "attribute": "integrity", "delta": 1 }
+                ]
+              }
+            ]
+          },
+          {
+            "key": "weld",
+            "kind": "question",
+            "text_html": "<p>Sparks drift past the visor and die in the vacuum. The plate holds at the first pass, but the seam still weeps air and your gauge is dropping faster than the torch can work.</p>",
+            "translations": {
+              "fr": "<p>Des étincelles passent devant la visière et s'éteignent dans le vide. La plaque tient à la première passe, mais la soudure fuit encore et votre jauge baisse plus vite que le chalumeau ne travaille.</p>"
+            },
+            "pos_x": 480,
+            "pos_y": -280,
+            "choices": [
+              {
+                "key": "finish_seam",
+                "text": "Stay on the seam until it is airtight",
+                "target": "command",
+                "effects": [
+                  { "attribute": "oxygen", "delta": -2 },
+                  { "attribute": "integrity", "delta": 2 }
+                ]
+              },
+              {
+                "key": "abandon_seam",
+                "text": "Abandon the seam and get to the command deck",
+                "target": "command",
+                "effects": [
+                  { "attribute": "oxygen", "delta": -1 },
+                  { "attribute": "integrity", "delta": -1 }
+                ]
+              }
+            ]
+          },
+          {
+            "key": "vent",
+            "kind": "question",
+            "text_html": "<p>You release the cradle and the pod tumbles away with a shriek of metal. The bay seals behind it. From the outer truss you can see the solar array, canted fifteen degrees off the sun.</p>",
+            "translations": {
+              "fr": "<p>Vous larguez le berceau et la capsule part en tournoyant dans un hurlement de métal. La soute se referme derrière elle. Depuis la poutre extérieure, vous voyez le panneau solaire, incliné de quinze degrés par rapport au soleil.</p>"
+            },
+            "pos_x": 480,
+            "pos_y": -120,
+            "choices": [
+              {
+                "key": "climb_truss",
+                "text": "Climb the truss to the array now",
+                "target": "array",
+                "effects": [
+                  { "attribute": "oxygen", "delta": -2 },
+                  { "attribute": "integrity", "delta": 1 }
+                ]
+              },
+              {
+                "key": "service_hatch",
+                "text": "Go back in through the service hatch",
+                "target": "command",
+                "effects": [
+                  { "attribute": "oxygen", "delta": -1 }
+                ]
+              }
+            ]
+          },
+          {
+            "key": "command",
+            "kind": "question",
+            "text_html": "<p>The command deck smells of burnt plastic. Commander Vasseur's last log is still on the screen: <i>“Scrubber cartridge spent. Reserve in the cargo ring. If the array is off-axis we have forty minutes, not four hours.”</i></p>",
+            "translations": {
+              "fr": "<p>Le pont de commandement sent le plastique brûlé. Le dernier journal de la commandante Vasseur est encore à l'écran : <i>« Cartouche du purificateur épuisée. Réserve dans l'anneau de fret. Si le panneau est désaxé, nous avons quarante minutes, pas quatre heures. »</i></p>"
+            },
+            "pos_x": 240,
+            "pos_y": 100,
+            "choices": [
+              {
+                "key": "cargo_ring",
+                "text": "Fetch the reserve cartridge from the cargo ring",
+                "target": "cargo",
+                "effects": [
+                  { "attribute": "oxygen", "delta": -1 }
+                ]
+              },
+              {
+                "key": "wake_engineer",
+                "text": "Wake Mira, the engineer, before you touch anything",
+                "target": "engineer",
+                "effects": [
+                  { "attribute": "oxygen", "delta": -1 },
+                  { "attribute": "crew", "delta": 1 }
+                ]
+              },
+              {
+                "key": "jury_rig",
+                "text": "Jury-rig the scrubber from the spare filters",
+                "target": "scrubber",
+                "effects": [
+                  { "attribute": "oxygen", "delta": -1 },
+                  { "attribute": "integrity", "delta": 1 }
+                ]
+              }
+            ]
+          },
+          {
+            "key": "cargo",
+            "kind": "question",
+            "text_html": "<p>The cargo ring is dark and cold, and the reserve cartridge sits in its bracket behind a jammed hatch. A pressure warning stutters on the wall: the ring is losing atmosphere, slowly.</p>",
+            "translations": {
+              "fr": "<p>L'anneau de fret est sombre et froid, et la cartouche de réserve est dans son support, derrière une trappe bloquée. Une alerte de pression clignote sur la cloison : l'anneau perd son atmosphère, lentement.</p>"
+            },
+            "pos_x": 480,
+            "pos_y": 40,
+            "choices": [
+              {
+                "key": "grab_run",
+                "text": "Rip the cartridge out and run for the scrubber",
+                "target": "scrubber",
+                "effects": [
+                  { "attribute": "oxygen", "delta": -2 },
+                  { "attribute": "integrity", "delta": 1 }
+                ]
+              },
+              {
+                "key": "seal_ring",
+                "text": "Seal the ring first, then work calmly",
+                "target": "seal",
+                "effects": [
+                  { "attribute": "oxygen", "delta": -1 },
+                  { "attribute": "integrity", "delta": 2 }
+                ]
+              }
+            ]
+          },
+          {
+            "key": "seal",
+            "kind": "question",
+            "text_html": "<p>You seal the ring from the outside and the warning stops. The cartridge is still behind the hatch, and the hatch has no handle left — only a slot where one used to be.</p>",
+            "translations": {
+              "fr": "<p>Vous refermez l'anneau depuis l'extérieur et l'alerte s'arrête. La cartouche est toujours derrière la trappe, et la trappe n'a plus de poignée — seulement une fente là où il y en avait une.</p>"
+            },
+            "pos_x": 720,
+            "pos_y": -40,
+            "choices": [
+              {
+                "key": "force_hatch",
+                "text": "Force the hatch with a crowbar",
+                "target": "scrubber",
+                "effects": [
+                  { "attribute": "oxygen", "delta": -1 },
+                  { "attribute": "integrity", "delta": 1 }
+                ]
+              },
+              {
+                "key": "call_engineer",
+                "text": "Call Mira on the intercom and let her do it",
+                "target": "engineer",
+                "effects": [
+                  { "attribute": "oxygen", "delta": -1 },
+                  { "attribute": "crew", "delta": 1 }
+                ]
+              }
+            ]
+          },
+          {
+            "key": "engineer",
+            "kind": "question",
+            "text_html": "<p>Mira comes out of cryo swearing in three languages. She listens for ten seconds, then: <i>“The array is off-axis. Someone turned it. Align it by hand and we live; run the scrubber and we suffocate politely.”</i></p>",
+            "translations": {
+              "fr": "<p>Mira sort de cryogénie en jurant dans trois langues. Elle écoute dix secondes, puis : <i>« Le panneau est désaxé. Quelqu'un l'a tourné. Aligne-le à la main et on vit ; lance le purificateur et on suffoque poliment. »</i></p>"
+            },
+            "pos_x": 480,
+            "pos_y": 180,
+            "choices": [
+              {
+                "key": "take_plan",
+                "text": "Take her plan and go out to the array",
+                "target": "array",
+                "effects": [
+                  { "attribute": "oxygen", "delta": -1 },
+                  { "attribute": "crew", "delta": 1 }
+                ]
+              },
+              {
+                "key": "split_work",
+                "text": "Send her to the scrubber while you hold the deck",
+                "target": "scrubber",
+                "effects": [
+                  { "attribute": "oxygen", "delta": -1 },
+                  { "attribute": "crew", "delta": 1 },
+                  { "attribute": "integrity", "delta": 1 }
+                ]
+              }
+            ]
+          },
+          {
+            "key": "scrubber",
+            "kind": "question",
+            "text_html": "<p>The scrubber coughs, then breathes, and the gauge climbs back into the green. On the wall screen the orbit trace bends towards the atmosphere: the array is still the real problem.</p>",
+            "translations": {
+              "fr": "<p>Le purificateur tousse, puis respire, et la jauge remonte dans le vert. Sur l'écran mural, la trace de l'orbite s'incurve vers l'atmosphère : le panneau reste le vrai problème.</p>"
+            },
+            "pos_x": 720,
+            "pos_y": 140,
+            "choices": [
+              {
+                "key": "eva_now",
+                "text": "Take two minutes of clean air, then go EVA",
+                "target": "array",
+                "effects": [
+                  { "attribute": "oxygen", "delta": -1 },
+                  { "attribute": "integrity", "delta": 1 }
+                ]
+              },
+              {
+                "key": "lab_power",
+                "text": "Reroute power from the lab first",
+                "target": "lab",
+                "effects": [
+                  { "attribute": "oxygen", "delta": -1 },
+                  { "attribute": "integrity", "delta": 1 }
+                ]
+              }
+            ]
+          },
+          {
+            "key": "lab",
+            "kind": "question",
+            "text_html": "<p>The lab is intact, which is its own kind of suspicious. A fuel cell sits charged in its cradle, and beside it a sealed sample locker carries someone's name on the tag — not yours.</p>",
+            "translations": {
+              "fr": "<p>Le laboratoire est intact, ce qui est en soi suspect. Une pile à combustible chargée repose dans son support, et à côté, une armoire d'échantillons scellée porte un nom sur l'étiquette — pas le vôtre.</p>"
+            },
+            "pos_x": 720,
+            "pos_y": 260,
+            "choices": [
+              {
+                "key": "take_cell",
+                "text": "Take the fuel cell to the array",
+                "target": "array",
+                "effects": [
+                  { "attribute": "oxygen", "delta": -1 },
+                  { "attribute": "integrity", "delta": 2 }
+                ]
+              },
+              {
+                "key": "vent_lab",
+                "text": "Vent the lab into the reserve tanks",
+                "target": "array",
+                "effects": [
+                  { "attribute": "oxygen", "delta": 2 },
+                  { "attribute": "integrity", "delta": -1 }
+                ]
+              }
+            ]
+          },
+          {
+            "key": "array",
+            "kind": "question",
+            "text_html": "<p>Outside, the Earth turns under your boots and the array is a black wing against it. The drive motor is dead. You will have to crank the panel round by hand, and the suit's fan is already labouring.</p>",
+            "translations": {
+              "fr": "<p>Dehors, la Terre tourne sous vos bottes et le panneau est une aile noire découpée dessus. Le moteur d'orientation est mort. Il faudra faire pivoter le panneau à la main, et le ventilateur de la combinaison peine déjà.</p>"
+            },
+            "pos_x": 960,
+            "pos_y": 80,
+            "choices": [
+              {
+                "key": "crank_hand",
+                "text": "Crank the panel round by hand, whatever it costs",
+                "target": "aligned",
+                "effects": [
+                  { "attribute": "oxygen", "delta": -2 },
+                  { "attribute": "integrity", "delta": 2 }
+                ]
+              },
+              {
+                "key": "cut_panel",
+                "text": "Cut the damaged panel loose and limp home on the rest",
+                "target": "aligned",
+                "effects": [
+                  { "attribute": "oxygen", "delta": -1 },
+                  { "attribute": "integrity", "delta": 1 },
+                  { "attribute": "crew", "delta": -1 }
+                ]
+              }
+            ]
+          },
+          {
+            "key": "aligned",
+            "kind": "question",
+            "text_html": "<p>The panel catches the sun and the station lights up section by section. Then the orbit plot updates: the burn that would raise you clear needs fuel you do not have, and the escape pod holds two.</p>",
+            "translations": {
+              "fr": "<p>Le panneau accroche le soleil et la station s'éclaire section par section. Puis le tracé d'orbite se met à jour : la poussée qui vous remettrait sur orbite exige un carburant que vous n'avez pas, et la capsule de sauvetage compte deux places.</p>"
+            },
+            "pos_x": 1200,
+            "pos_y": 80,
+            "choices": [
+              {
+                "key": "to_pod",
+                "text": "Call the others to the pod hatch",
+                "target": "pod",
+                "effects": [
+                  { "attribute": "oxygen", "delta": -1 },
+                  { "attribute": "crew", "delta": 1 }
+                ]
+              },
+              {
+                "key": "to_burn",
+                "text": "Rig the last fuel for one long burn",
+                "target": "burn",
+                "effects": [
+                  { "attribute": "oxygen", "delta": -2 },
+                  { "attribute": "integrity", "delta": 2 }
+                ]
+              }
+            ]
+          },
+          {
+            "key": "pod",
+            "kind": "question",
+            "text_html": "<p>Three of you at the pod hatch. Two seats. Mira is already strapping the youngest in, and the station groans as the orbit decays another kilometre.</p>",
+            "translations": {
+              "fr": "<p>Vous êtes trois devant l'écoutille de la capsule. Deux places. Mira est déjà en train de sangler la plus jeune, et la station gémit tandis que l'orbite perd encore un kilomètre.</p>"
+            },
+            "pos_x": 1440,
+            "pos_y": 0,
+            "choices": [
+              {
+                "key": "draw_lots",
+                "text": "Draw lots, and take the seat if you win it",
+                "target": "ending_lots",
+                "effects": [
+                  { "attribute": "oxygen", "delta": -1 }
+                ]
+              },
+              {
+                "key": "stay_behind",
+                "text": "Put them both in and fly it down by radio",
+                "target": "ending_stay",
+                "effects": [
+                  { "attribute": "oxygen", "delta": -2 },
+                  { "attribute": "crew", "delta": 1 }
+                ]
+              }
+            ]
+          },
+          {
+            "key": "burn",
+            "kind": "question",
+            "text_html": "<p>The burn lights and holds. The station climbs. Then a fuel line splits in the service tunnel and the pressure alarm starts counting down from ninety seconds.</p>",
+            "translations": {
+              "fr": "<p>La poussée s'allume et tient. La station remonte. Puis une conduite de carburant éclate dans le tunnel de service et l'alarme de pression commence à décompter depuis quatre-vingt-dix secondes.</p>"
+            },
+            "pos_x": 1440,
+            "pos_y": 160,
+            "choices": [
+              {
+                "key": "hold_burn",
+                "text": "Hold the burn and patch the line as it goes",
+                "target": "ending_rescue",
+                "effects": [
+                  { "attribute": "oxygen", "delta": -2 },
+                  { "attribute": "integrity", "delta": 2 }
+                ]
+              },
+              {
+                "key": "abort_burn",
+                "text": "Cut the burn and run for the pod",
+                "target": "pod",
+                "effects": [
+                  { "attribute": "oxygen", "delta": -1 }
+                ]
+              }
+            ]
+          },
+          {
+            "key": "ending_lots",
+            "kind": "ending",
+            "text_html": "<p>You draw the long strip of tape, and the long strip of tape means the seat.</p>",
+            "translations": {
+              "fr": "<p>Vous tirez la longue bande de ruban, et la longue bande de ruban veut dire « place ».</p>"
+            },
+            "pos_x": 1680,
+            "pos_y": -40,
+            "choices": [],
+            "outcomes": [
+              {
+                "kind": "default",
+                "priority": 0,
+                "text_html": "<p>You draw the long strip of tape, and the long strip of tape means the seat. The hatch closes on Mira's face — calm, already talking the youngest through the checklist. The pod falls away towards the atmosphere, and the station turns slowly behind it.</p>",
+                "translations": {
+                  "fr": "<p>Vous tirez la longue bande de ruban, et la longue bande de ruban veut dire « place ». L'écoutille se referme sur le visage de Mira — calme, déjà en train d'expliquer la check-list à la plus jeune. La capsule tombe vers l'atmosphère et la station tourne lentement derrière elle.</p>"
+                }
+              }
+            ]
+          },
+          {
+            "key": "ending_stay",
+            "kind": "ending",
+            "text_html": "<p>You put them both in the pod and close the hatch from outside.</p>",
+            "translations": {
+              "fr": "<p>Vous les installez toutes les deux dans la capsule et refermez l'écoutille de l'extérieur.</p>"
+            },
+            "pos_x": 1680,
+            "pos_y": 80,
+            "choices": [],
+            "outcomes": [
+              {
+                "kind": "default",
+                "priority": 0,
+                "text_html": "<p>You put them both in the pod and close the hatch from outside. From the command deck you fly it down by radio, one correction at a time, until the chute opens over the steppe. Then you sit down in the commander's chair with eleven minutes of air and a very good view.</p>",
+                "translations": {
+                  "fr": "<p>Vous les installez toutes les deux dans la capsule et refermez l'écoutille de l'extérieur. Depuis le pont de commandement, vous la faites descendre par radio, correction après correction, jusqu'à l'ouverture du parachute au-dessus de la steppe. Puis vous vous asseyez dans le fauteuil de la commandante avec onze minutes d'air et une très belle vue.</p>"
+                }
+              }
+            ]
+          },
+          {
+            "key": "ending_rescue",
+            "kind": "ending",
+            "text_html": "<p>The line holds, the burn completes, and the station climbs clear.</p>",
+            "translations": {
+              "fr": "<p>La conduite tient, la poussée s'achève et la station sort de l'atmosphère.</p>"
+            },
+            "pos_x": 1680,
+            "pos_y": 200,
+            "choices": [],
+            "outcomes": [
+              {
+                "kind": "range",
+                "attribute": "crew",
+                "range_min": 0,
+                "range_max": 1,
+                "priority": 0,
+                "text_html": "<p>The line holds, the burn completes, and the station climbs out of the atmosphere with forty seconds of fuel to spare. It is only the two of you on the deck to hear the alarm stop, and neither of you says anything for a while.</p>",
+                "translations": {
+                  "fr": "<p>La conduite tient, la poussée s'achève et la station sort de l'atmosphère avec quarante secondes de carburant en réserve. Vous n'êtes que deux sur le pont à entendre l'alarme s'arrêter, et aucun de vous ne dit rien pendant un moment.</p>"
+                }
+              },
+              {
+                "kind": "default",
+                "priority": 9,
+                "text_html": "<p>The line holds, the burn completes, and the station climbs out of the atmosphere with forty seconds of fuel to spare. By the time the relay answers your call, the hull is patched, the array is turning, and someone has made coffee.</p>",
+                "translations": {
+                  "fr": "<p>La conduite tient, la poussée s'achève et la station sort de l'atmosphère avec quarante secondes de carburant en réserve. Quand le relais répond enfin à votre appel, la coque est réparée, le panneau tourne, et quelqu'un a fait du café.</p>"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
