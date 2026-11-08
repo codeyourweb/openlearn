@@ -1,0 +1,27 @@
+# SPDX-License-Identifier: AGPL-3.0-only
+# Copyright (C) 2026 Jean-Pierre GARNIER (@codeyourweb)
+#
+# Lint configuration lives here rather than in the CI command line so that a
+# ruff upgrade cannot silently change what "green" means. The rule set is chosen
+# for defects, not for taste: syntax errors, undefined and unused names, real
+# bug patterns, modern-Python idioms, import order.
+
+[tool.ruff]
+target-version = "py312"
+line-length = 120
+extend-exclude = ["frontend", "tools/axe", "data", ".git"]
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I", "UP", "B"]
+ignore = [
+  # FastAPI's whole idiom is a call in a default argument: Depends(), Query(),
+  # Header(), Form(). Flagging it would ask for a rewrite of every route.
+  "B008",
+]
+
+[tool.ruff.lint.per-file-ignores]
+# A test asserts; that is what it is for.
+"tests/*" = ["B011"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["app", "tests"]

@@ -43,7 +43,7 @@ def provider(monkeypatch):
             self.answers = answers
             self.calls = calls
 
-        def __enter__(self) -> "Client":
+        def __enter__(self) -> Client:
             return self
 
         def __exit__(self, *_exc) -> None:

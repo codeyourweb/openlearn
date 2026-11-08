@@ -4,6 +4,8 @@
 
 from __future__ import annotations
 
+import json
+
 from fastapi import APIRouter, Depends, HTTPException, Query, Request, Response, status
 from pydantic import BaseModel, Field, field_validator
 from sqlalchemy import func, select
@@ -12,17 +14,15 @@ from sqlalchemy.orm import Session as OrmSession
 from ..db import get_db
 from ..deps import client_ip, enforce_rate_limit, require_user
 from ..models import ApiKey, GameSession, Participant, SecurityEvent, SessionQuestion, User, utcnow
+from ..sanitize import sanitize_plain
 from ..schemas import ApiKeyCreatedOut, ApiKeyIn, ApiKeyOut, SessionSummaryOut
-import json
 from ..security import (
     PasswordPolicyError,
     generate_api_key,
     hash_password,
-    sha256,
     validate_password,
     verify_password,
 )
-from ..sanitize import sanitize_plain
 
 router = APIRouter(prefix="/api/v1/me", tags=["account"])
 

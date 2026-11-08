@@ -7,8 +7,8 @@ from __future__ import annotations
 from fastapi.testclient import TestClient
 
 from tests.conftest import (
-    csrf_headers,
     create_quiz,
+    csrf_headers,
     publish_quiz,
     question_payload,
     quiz_payload,

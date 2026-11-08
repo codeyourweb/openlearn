@@ -5,7 +5,6 @@
 from __future__ import annotations
 
 import pytest
-
 from conftest import csrf_headers, register_user
 
 PAGE_MD = """# Le cheval

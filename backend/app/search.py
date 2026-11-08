@@ -140,7 +140,7 @@ _STOPWORDS = {
     "le", "la", "les", "un", "une", "des", "du", "de", "au", "aux", "et", "ou", "est",
     "sont", "que", "qui", "quoi", "quel", "quelle", "quels", "quelles", "comment",
     "pourquoi", "dans", "sur", "pour", "avec", "par", "ce", "cette", "ces", "il",
-    "elle", "on", "se", "sa", "son", "ses", "à", "a", "en", "y",
+    "elle", "se", "sa", "son", "ses", "à", "en", "y",
 }
 
 

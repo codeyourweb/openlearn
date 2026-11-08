@@ -15,23 +15,24 @@ download into an outbound request from this instance.
 from __future__ import annotations
 
 import io
-import os
 import re
 from datetime import date
 from pathlib import Path
 from xml.sax.saxutils import escape
 
+from markdown_it import MarkdownIt
 from reportlab.lib import colors
 from reportlab.lib.enums import TA_LEFT
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
 from reportlab.lib.units import mm
+from reportlab.pdfbase import pdfmetrics
+from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.platypus import (
     BaseDocTemplate,
     Frame,
     HRFlowable,
     Image,
-    KeepTogether,
     ListFlowable,
     ListItem,
     PageBreak,
@@ -42,10 +43,7 @@ from reportlab.platypus import (
     Table,
     TableStyle,
 )
-from reportlab.pdfbase import pdfmetrics
-from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.platypus.tableofcontents import TableOfContents
-from markdown_it import MarkdownIt
 
 from .config import settings
 from .wiki import _apply_image_sizes

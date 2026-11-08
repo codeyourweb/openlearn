@@ -22,73 +22,66 @@ from __future__ import annotations
 import json
 import logging
 import re
-import zipfile
 from html import escape
-from io import BytesIO
 
 from fastapi import APIRouter, Depends, File, HTTPException, Query, Request, Response, UploadFile
 from fastapi.responses import PlainTextResponse
 from sqlalchemy import delete, func, or_, select, update
 from sqlalchemy.orm import Session as OrmSession
 
-from .. import pdf_export, search
+from .. import collab, pdf_export, search, wiki_ai
 from ..config import settings
 from ..db import get_db
-from ..deps import get_optional_user, require_user
-from .. import collab
+from ..deps import enforce_ai_interval, get_optional_user, require_user
 from ..models import (
     Option,
-    WikiPageDraft,
     Question,
     Quiz,
     User,
     Wiki,
     WikiLink,
-    WikiQuizLink,
     WikiMember,
     WikiPage,
+    WikiPageDraft,
     WikiPageVersion,
     WikiProposal,
+    WikiQuizLink,
     WikiReference,
     WikiTemplate,
     utcnow,
 )
 from ..schemas import (
     WikiCanvasIn,
-    WikiQuizGenerateIn,
-    WikiQuizLinkIn,
     WikiIn,
     WikiMemberIn,
     WikiPageIn,
     WikiProposalIn,
     WikiPublishIn,
+    WikiQuizGenerateIn,
+    WikiQuizLinkIn,
     WikiReferenceIn,
     WikiReviewIn,
     WikiTemplateIn,
     WikiTreeIn,
 )
-from ..wiki_import import ImportedPage, parse_markdown_file, read_archive
-from .. import wiki_ai
-from ..deps import enforce_ai_interval
-
 from ..wiki import (
     build_zip,
-    descendants,
     diff_stats,
+    excerpt,
     extract_external_links,
     host_of,
+    outline,
     page_breadcrumb,
     rebuild_links,
-    side_by_side_diff,
-    excerpt,
-    outline,
     reflow_markdown,
     render_markdown,
     rewrite_links_for_export,
+    side_by_side_diff,
     slugify,
     unified_diff,
     unique_slug,
 )
+from ..wiki_import import ImportedPage, parse_markdown_file, read_archive
 
 logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/api/v1/wiki", tags=["wiki"])
@@ -764,7 +757,7 @@ def save_canvas(
     user: User = Depends(require_user),
 ):
     wiki = _get_wiki(db, wiki_id)
-    role = _require_write(db, wiki, user)
+    _require_write(db, wiki, user)  # raises when the caller may not edit
     canvas = payload.canvas if isinstance(payload.canvas, dict) else {}
     nodes = canvas.get("nodes") if isinstance(canvas.get("nodes"), list) else []
     edges = canvas.get("edges") if isinstance(canvas.get("edges"), list) else []
@@ -786,7 +779,7 @@ def create_page(
     user: User = Depends(require_user),
 ):
     wiki = _get_wiki(db, wiki_id)
-    role = _require_write(db, wiki, user)
+    _require_write(db, wiki, user)  # raises when the caller may not edit
     total = db.scalar(select(func.count(WikiPage.id)).where(WikiPage.wiki_id == wiki.id)) or 0
     if total >= MAX_WIKI_PAGES:
         raise HTTPException(status_code=422, detail="This wiki has reached its page limit.")

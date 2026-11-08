@@ -5,19 +5,17 @@
 from __future__ import annotations
 
 import logging
+import mimetypes
 from pathlib import Path
 
-import mimetypes
-
-from fastapi import FastAPI
-from fastapi import HTTPException, Request, status
-from fastapi.responses import RedirectResponse
+from fastapi import FastAPI, HTTPException, Request, status
 from fastapi.middleware.gzip import GZipMiddleware
-from fastapi.responses import FileResponse, JSONResponse, Response
+from fastapi.responses import FileResponse, JSONResponse, RedirectResponse, Response
 from fastapi.staticfiles import StaticFiles
 from sqlalchemy import select
 
 from . import collab
+from . import mcp as mcp_module
 from .config import BASE_DIR, settings
 from .db import SessionLocal, init_db
 from .routers import (
@@ -41,9 +39,8 @@ from .routers import (
     wiki_collab,
 )
 from .search import ensure_index, ensure_wiki_index
-from .seo import render_shell, router as seo_router
-
-from . import mcp as mcp_module
+from .seo import render_shell
+from .seo import router as seo_router
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s %(message)s")
 logger = logging.getLogger("openlearn")

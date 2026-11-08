@@ -5,8 +5,8 @@
 from __future__ import annotations
 
 from tests.conftest import (
-    csrf_headers,
     create_quiz,
+    csrf_headers,
     make_admin,
     make_trusted,
     quiz_payload,

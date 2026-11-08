@@ -13,7 +13,7 @@ from pydantic import ValidationError
 from sqlalchemy import delete, func, or_, select
 from sqlalchemy.orm import Session as OrmSession
 
-from .. import ai, runtime
+from .. import ai, runtime, search, versions
 from ..adventure import AdventureError, validate_adventure_graph
 from ..config import settings
 from ..content import (
@@ -46,15 +46,13 @@ from ..models import (
 from ..sanitize import html_to_text, sanitize_html
 from ..schemas import (
     AiTranslateIn,
-    ModerationIn,
     QuizDraftIn,
     QuizIn,
+    QuizPublishIn,
     QuizSummaryOut,
     QuizVersionOut,
-    QuizPublishIn,
     QuizVisibilityIn,
 )
-from .. import search, versions
 from ..search import search_ids
 
 router = APIRouter(prefix="/api/v1/quizzes", tags=["quizzes"])
@@ -125,7 +123,7 @@ def serialise_quiz(
     *,
     include_answers: bool,
     language: str | None = None,
-    viewer: "User | None" = None,
+    viewer: User | None = None,
 ) -> dict:
     language = language if valid_language(language) else None
     questions = []

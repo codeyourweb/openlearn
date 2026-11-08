@@ -13,13 +13,14 @@ from __future__ import annotations
 import logging
 import secrets
 from datetime import timedelta
+
 import jwt
 from fastapi import APIRouter, Depends, HTTPException, Request, status
 from fastapi.responses import RedirectResponse, Response
 from sqlalchemy import select
 from sqlalchemy.orm import Session as OrmSession
 
-from .. import runtime, sso
+from .. import sso
 from ..config import settings
 from ..db import get_db
 from ..deps import client_ip

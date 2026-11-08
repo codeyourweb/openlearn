@@ -16,7 +16,7 @@ from __future__ import annotations
 
 import json
 import re
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from html import escape
 
 from fastapi import APIRouter, Request
@@ -159,7 +159,7 @@ def _wiki_meta(
 
 def _date(value) -> str | None:
     if isinstance(value, datetime):
-        moment = value if value.tzinfo else value.replace(tzinfo=timezone.utc)
+        moment = value if value.tzinfo else value.replace(tzinfo=UTC)
         return moment.date().isoformat()
     return None
 

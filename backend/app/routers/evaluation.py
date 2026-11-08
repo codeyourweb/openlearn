@@ -25,6 +25,11 @@ from sqlalchemy.orm import Session as OrmSession
 
 from ..db import get_db
 from ..deps import enforce_rate_limit, external_base_url, get_optional_user, require_user, verify_csrf
+from ..evaluation import (
+    ensure_attempt_left,
+    grants_given,
+    remaining_attempts,
+)
 from ..game import create_session
 from ..models import (
     Answer,
@@ -39,15 +44,6 @@ from ..models import (
 from ..schemas import AttemptPolicyIn, SessionCreateIn
 
 router = APIRouter(prefix="/api/v1", tags=["assessment"])
-
-
-from ..evaluation import (
-    allowed_attempts,
-    attempts_used,
-    ensure_attempt_left,
-    grants_given,
-    remaining_attempts,
-)
 
 
 # ---------------------------------------------------------------------------
@@ -250,7 +246,7 @@ def list_attempts(
             bucket["last_participant_id"] = participant.id
 
     candidates = []
-    for key, bucket in totals.items():
+    for _key, bucket in totals.items():
         user_id = bucket["user_id"]
         candidates.append(
             {

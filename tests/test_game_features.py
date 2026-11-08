@@ -11,8 +11,8 @@ from sqlalchemy import text
 from app.db import SessionLocal
 from app.models import GameSession, utcnow
 from tests.conftest import (
-    csrf_headers,
     create_quiz,
+    csrf_headers,
     publish_quiz,
     question_payload,
     quiz_payload,

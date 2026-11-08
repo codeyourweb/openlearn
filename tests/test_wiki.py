@@ -389,8 +389,8 @@ def test_a_natural_question_finds_the_page_that_mentions_it(client):
     "À quoi sert un résolveur récursif ?" required the page to contain "à",
     "quoi", "sert" and "un" as well: the chat always answered "I found nothing".
     """
-    from app.db import SessionLocal
     from app import wiki_ai
+    from app.db import SessionLocal
 
     register_user(client, email="rag@example.com")
     wiki = _create(client, title="Réseau")

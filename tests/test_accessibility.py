@@ -21,6 +21,12 @@ from playwright.sync_api import expect, sync_playwright
 
 from tests.test_frontend_e2e import BASE_URL, ConsoleRecorder
 
+# These audits drive a browser against a running instance, exactly like the
+# end-to-end suite: they carry the same marker so that a unit-test run can skip
+# them without naming this file, and they say so instead of failing on an empty
+# base URL.
+pytestmark = pytest.mark.e2e
+
 AXE = pathlib.Path(__file__).resolve().parents[1] / "tools" / "axe" / "axe.min.js"
 
 # Paths anyone can open without an account. "/" is the presentation page on a
@@ -28,6 +34,12 @@ AXE = pathlib.Path(__file__).resolve().parents[1] / "tools" / "axe" / "axe.min.j
 READ_PATHS = ["/", "/quizzes", "/wiki", "/about", "/legal", "/docs", "/docs/mcp", "/login", "/register", "/accessibility" ]
 
 BLOCKING = {"serious", "critical"}
+
+
+@pytest.fixture(scope="session", autouse=True)
+def _require_instance():
+    if not BASE_URL:
+        pytest.skip("OL_TEST_BASE_URL is not set: accessibility audits need a running instance.")
 
 
 @pytest.fixture(scope="module")
@@ -49,8 +61,8 @@ def open_page(browser, viewport=(1280, 900), theme="dark"):
         viewport={"width": viewport[0], "height": viewport[1]}, bypass_csp=True
     )
     context.add_init_script(
-        "try { localStorage.setItem('ol_language', 'en'); localStorage.setItem('ol_theme', '%s'); }"
-        " catch (e) {}" % theme
+        f"try {{ localStorage.setItem('ol_language', 'en'); localStorage.setItem('ol_theme', '{theme}'); }}"
+        " catch (e) {}"
     )
     page = context.new_page()
     return context, page, ConsoleRecorder(page)

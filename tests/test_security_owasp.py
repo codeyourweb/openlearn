@@ -17,7 +17,7 @@ from sqlalchemy import select
 
 from app.db import SessionLocal
 from app.models import SecurityEvent
-from tests.conftest import csrf_headers, create_quiz, question_payload, quiz_payload, register_user
+from tests.conftest import create_quiz, csrf_headers, question_payload, quiz_payload, register_user
 
 
 # A01 ---------------------------------------------------------------- access control

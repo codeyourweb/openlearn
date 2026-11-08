@@ -34,7 +34,9 @@ jobs:
       - name: Install linters
         run: |
           python -m pip install --upgrade pip
-          pip install ruff==0.8.4 shellcheck-py==0.10.0.1
+          # The rule set lives in pyproject.toml, not here: bump the pin
+          # deliberately, then run `ruff check backend tests` before pushing.
+          pip install ruff==0.17.4 shellcheck-py==0.10.0.1
 
       - name: Python lint
         run: ruff check backend tests
@@ -84,7 +86,7 @@ jobs:
           OL_DATABASE_URL: sqlite:///./data/ci.db
         run: |
           mkdir -p data
-          pytest tests -q --ignore=tests/test_frontend_e2e.py \
+          pytest tests -q -m "not e2e" \
             --cov=backend/app --cov-report=term-missing --cov-report=xml
       - uses: actions/upload-artifact@v4
         if: always()
@@ -125,7 +127,7 @@ jobs:
         env:
           PYTHONPATH: backend
           OL_DATABASE_URL: postgresql+psycopg://openlearn:openlearn@127.0.0.1:5432/openlearn
-        run: pytest tests -q --ignore=tests/test_frontend_e2e.py
+        run: pytest tests -q -m "not e2e"
 
   tests-mysql:
     name: Tests (MariaDB)
@@ -161,7 +163,7 @@ jobs:
         env:
           PYTHONPATH: backend
           OL_DATABASE_URL: mysql+pymysql://openlearn:openlearn@127.0.0.1:3306/openlearn?charset=utf8mb4
-        run: pytest tests -q --ignore=tests/test_frontend_e2e.py
+        run: pytest tests -q -m "not e2e"
 
   # The browser suite drives the real interface against a built image: the bugs
   # it catches are exactly the ones a unit test cannot see.
@@ -192,7 +194,7 @@ jobs:
           docker compose build tests
           docker compose run --rm -e OL_TEST_BASE_URL=http://app:8000 tests
       - name: Accessibility audit (axe-core)
-        run: docker compose run --rm tests pytest -q tests/test_accessibility.py
+        run: docker compose run --rm -e OL_TEST_BASE_URL=http://app:8000 tests pytest -q tests/test_accessibility.py
       - name: Logs on failure
         if: failure()
         run: docker compose logs --tail 200

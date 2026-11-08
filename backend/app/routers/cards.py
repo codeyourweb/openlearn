@@ -13,12 +13,11 @@ from __future__ import annotations
 from fastapi import APIRouter, Depends, HTTPException, Query, Request, Response, status
 from pydantic import BaseModel, Field
 from sqlalchemy import func, select
+from sqlalchemy.orm import Session as OrmSession
 
 from ..cards import pairs_from_markdown, pairs_from_questionnaire
 from ..cards_pdf import sheet_pdf
 from ..config import settings
-from sqlalchemy.orm import Session as OrmSession
-
 from ..deps import get_db, get_optional_user, require_user
 from ..models import (
     Question,

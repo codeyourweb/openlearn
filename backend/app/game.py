@@ -7,12 +7,11 @@ from __future__ import annotations
 import asyncio
 import logging
 import secrets
-import string
 import time
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 from typing import Any
 
-from fastapi import HTTPException, status
+from fastapi import HTTPException
 from sqlalchemy import func, select
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session as OrmSession
@@ -43,7 +42,7 @@ def aware(value: datetime | None) -> datetime | None:
     """SQLite drops timezone information; treat stored values as UTC."""
     if value is None:
         return None
-    return value if value.tzinfo else value.replace(tzinfo=timezone.utc)
+    return value if value.tzinfo else value.replace(tzinfo=UTC)
 
 
 def remaining_ms(session: GameSession) -> int:
@@ -94,8 +93,8 @@ def create_session(
     """
     import random
 
-    from .content import resolve_text, valid_language
     from . import versions as version_store
+    from .content import resolve_text, valid_language
 
     language = language if valid_language(language) else (quiz.default_language or "en")
 

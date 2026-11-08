@@ -14,7 +14,7 @@ import hashlib
 import json
 from typing import Any
 
-from .models import SUPPORTED_LANGUAGES, Option, Quiz, Question
+from .models import SUPPORTED_LANGUAGES, Option, Question, Quiz
 from .sanitize import html_to_text
 
 FALLBACK_LANGUAGE = "en"

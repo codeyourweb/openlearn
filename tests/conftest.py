@@ -7,7 +7,6 @@ from __future__ import annotations
 import os
 import shutil
 import tempfile
-import time
 from pathlib import Path
 
 # Environment must be configured before the application package is imported.
@@ -30,8 +29,8 @@ import pytest  # noqa: E402
 from fastapi.testclient import TestClient  # noqa: E402
 from sqlalchemy.exc import OperationalError  # noqa: E402
 
-from app.db import Base, engine  # noqa: E402
 from app.config import settings  # noqa: E402
+from app.db import Base, engine  # noqa: E402
 from app.main import app  # noqa: E402
 from app.security import rate_limiter  # noqa: E402
 

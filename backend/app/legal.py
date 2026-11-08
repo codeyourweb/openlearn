@@ -23,7 +23,7 @@ from typing import Any
 from sqlalchemy import select
 from sqlalchemy.orm import Session as OrmSession
 
-from .models import AppSetting, SUPPORTED_LANGUAGES
+from .models import SUPPORTED_LANGUAGES, AppSetting
 from .wiki import reflow_markdown, render_markdown
 
 PREFIX = "legal.instance."

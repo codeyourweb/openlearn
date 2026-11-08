@@ -1131,9 +1131,9 @@ def test_the_wiki_diff_is_side_by_side_and_a_markdown_file_imports(browser):
                 "name": "journal.md",
                 "mimeType": "text/markdown",
                 "buffer": (
-                    "---\ntitle: Journal de bord\ntags: [incident]\n---\n\n"
-                    "# Journal de bord\n\nLa zone a cesse de repondre a 9 h.\n"
-                ).encode("utf-8"),
+                    b"---\ntitle: Journal de bord\ntags: [incident]\n---\n\n"
+                    b"# Journal de bord\n\nLa zone a cesse de repondre a 9 h.\n"
+                ),
             },
         )
         expect(page).to_have_url(re.compile(r".*/wiki/\d+/p/journal-de-bord(\?.*)?$"), timeout=20000)

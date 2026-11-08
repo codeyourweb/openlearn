@@ -17,8 +17,8 @@ from app.config import settings
 from app.db import SessionLocal
 from app.models import AiReview, Quiz
 from tests.conftest import (
-    csrf_headers,
     create_quiz,
+    csrf_headers,
     make_trusted,
     publish_quiz,
     quiz_payload,
@@ -458,7 +458,6 @@ def test_a_grammar_pass_works_on_a_page_whose_id_is_not_the_wiki_id(client, fake
     """
     from app import wiki_ai as wiki_ai_module
 
-    fake_ai  # provider enabled; the answer below is what it returns
     monkeypatch.setattr(
         wiki_ai_module,
         "_chat",
@@ -528,7 +527,6 @@ def test_a_grammar_pass_never_translates_the_page(fake_ai, monkeypatch):
     """
     from app import wiki_ai as wiki_ai_module
 
-    fake_ai
     captured = {}
 
     def capture(messages, **kwargs):
@@ -552,7 +550,6 @@ def test_a_review_job_refuses_a_page_from_another_wiki(client, fake_ai, monkeypa
     """The check it replaced was wrong, but some check has to remain."""
     from app import wiki_ai as wiki_ai_module
 
-    fake_ai
     monkeypatch.setattr(wiki_ai_module, "_chat", lambda *a, **k: json.dumps({"status": "ok"}))
 
     register_user(client)
@@ -593,7 +590,6 @@ def test_a_fill_job_hands_back_the_body_and_writes_nothing(client, fake_ai, monk
     """The editor asks for a draft of the page it is working on."""
     from app import wiki_ai as wiki_ai_module
 
-    fake_ai  # the provider is enabled by the fixture; the answer is plain markdown
     monkeypatch.setattr(
         wiki_ai_module,
         "_chat",
