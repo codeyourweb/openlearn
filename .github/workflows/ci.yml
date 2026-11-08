@@ -45,7 +45,11 @@ jobs:
         run: shellcheck run.sh serve.sh
 
       - name: Install runtime dependencies
-        run: pip install -r backend/requirements.txt
+        run: |
+          # pytest lives in requirements-dev.txt, like everywhere else in this
+          # repository: the static suites below need it, and a second pin here
+          # would be a second thing to keep true.
+          pip install -r backend/requirements.txt -r backend/requirements-dev.txt
 
       - name: Static suites (locales, language declarations, frontend imports)
         env:
@@ -171,6 +175,11 @@ jobs:
     name: End-to-end (Playwright)
     runs-on: ubuntu-latest
     env:
+      # The `tests` service lives in the dev override and behind a profile:
+      # without these two lines `docker compose run ... tests` answers
+      # "no such service: tests", which is exactly what the first run did.
+      COMPOSE_FILE: docker-compose.yml:docker-compose.dev.yml
+      COMPOSE_PROFILES: test
       OL_ADMIN_EMAIL: admin@example.com
       OL_ADMIN_PASSWORD: ChangeMe123!
       OL_DEMO_PASSWORD: DemoPassw0rd!
@@ -178,7 +187,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Build and start the stack
-        run: docker compose -f docker-compose.yml -f docker-compose.dev.yml up -d --build
+        run: docker compose up -d --build
       - name: Wait for health
         run: |
           for i in $(seq 1 45); do
@@ -200,7 +209,7 @@ jobs:
         run: docker compose logs --tail 200
       - name: Tear down
         if: always()
-        run: docker compose -f docker-compose.yml -f docker-compose.dev.yml down -v
+        run: docker compose down -v
 
   image:
     name: Container image
