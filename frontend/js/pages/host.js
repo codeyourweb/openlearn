@@ -20,7 +20,7 @@ import {
   saveSessionCredentials,
   state as appState,
 } from "../store.js";
-import { copyToClipboard, escapeHtml, shareLink, toast } from "../ui.js";
+import { confirmDialog, copyToClipboard, escapeHtml, shareLink, toast } from "../ui.js";
 
 export async function renderHost({ code }) {
   const normalized = String(code).toUpperCase();
@@ -104,11 +104,51 @@ export async function renderHost({ code }) {
         if (answerButton) answerButton.disabled = true;
         const revealButton = root.querySelector('[data-act="reveal"]');
         if (revealButton) revealButton.hidden = false;
+        const advance = root.querySelector("[data-advance]");
+        if (advance) {
+          advance.classList.add("is-ready");
+          const hint = advance.querySelector("[data-advance-hint]");
+          if (hint) hint.textContent = t("host.time_up_ready");
+          const nextButton = advance.querySelector('[data-act="next"]');
+          if (nextButton) nextButton.dataset.gated = "0";
+        }
         // Ask the server what happened: it reveals the expired question, which
         // is what turns "next" into an actual advance.
         refreshState();
       }
     }, 120);
+  };
+
+  /** Players who have not answered the question on screen. */
+  const pendingPlayers = (question) => {
+    const answeredIds = new Set(question.answered_ids || []);
+    return (state.participants || []).filter((participant) => !answeredIds.has(participant.id));
+  };
+
+  /** The advance controls, at the bottom of the page and away from "submit".
+   *
+   * A hosting player used to have "next question" right under the answer grid,
+   * where a thumb looks for the submit button. It now sits below the player
+   * list, says why it is armed, and only fires without a question when everyone
+   * has answered or the countdown is over.
+   */
+  const advanceBar = (question) => {
+    const pending = pendingPlayers(question);
+    const timeUp = closed || remainingMs() <= 0;
+    const ready = timeUp || pending.length === 0;
+    const hint = timeUp
+      ? t("host.time_up_ready")
+      : pending.length === 0
+        ? t("host.all_answered")
+        : tp("host.pending_one", "host.pending_many", pending.length);
+    return `
+      <section class="host-advance${ready ? " is-ready" : ""}" data-advance>
+        <p class="host-advance-hint" data-advance-hint>${escapeHtml(hint)}</p>
+        <div class="row end">
+          <button class="btn" data-act="reveal" ${closed ? "" : "hidden"}>${t("host.reveal")}</button>
+          <button class="btn btn-primary" data-act="next" data-gated="${ready ? "0" : "1"}">${t("host.next")}</button>
+        </div>
+      </section>`;
   };
 
   /** The answer grid, shared by the host view and the host-as-player view.
@@ -327,10 +367,6 @@ export async function renderHost({ code }) {
         <div class="question-text">${question.text_html}</div>
         ${question.image_path ? `<img class="question-image" src="${escapeHtml(question.image_path)}" alt="" />` : ""}
         ${optionsBlock(question, null)}
-        <div class="row end mt-3">
-          <button class="btn" data-act="reveal" ${closed ? "" : "hidden"}>${t("host.reveal")}</button>
-          <button class="btn btn-primary" data-act="next">${t("host.next")}</button>
-        </div>
       </div>
       ${answered ? "" : hostPlayBlock(question)}
       <section class="card mt-2">
@@ -346,7 +382,8 @@ export async function renderHost({ code }) {
             )
             .join("")}
         </div>
-      </section>`;
+      </section>
+      ${advanceBar(question)}`;
     ensureTimer();
   };
 
@@ -376,17 +413,19 @@ export async function renderHost({ code }) {
               : `<div class="feedback wait">${t("results.no_answer")}</div>`
             : ""
         }
-        <div class="row end mt-3">
+      </div>
+      <section class="card mt-2">
+        <h3>${t("common.score")}</h3>
+        ${scoreboardBlock()}
+      </section>
+      <section class="host-advance is-ready">
+        <div class="row end">
           <button class="btn btn-primary" data-act="${
             question.position + 1 >= state.session.question_count ? "finish" : "next"
           }">
             ${question.position + 1 >= state.session.question_count ? t("host.finish") : t("host.next")}
           </button>
         </div>
-      </div>
-      <section class="card mt-2">
-        <h3>${t("common.score")}</h3>
-        ${scoreboardBlock()}
       </section>`;
   };
 
@@ -538,6 +577,11 @@ export async function renderHost({ code }) {
       if (!selection.size) return;
       await sendAnswer([...selection]);
       return;
+    }
+
+    if (action === "next" && button.dataset.gated === "1") {
+      const goOn = await confirmDialog(t("host.skip_title"), t("host.skip_body"), t("host.skip_confirm"));
+      if (!goOn) return;
     }
 
     button.disabled = true;

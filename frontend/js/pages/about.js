@@ -117,6 +117,8 @@ function _finalCta() {
    on click, and the window alternates on its own so the first screen shows both
    halves of the product without a scroll. */
 function _artStudio() {
+  // Two acts, one window: a wiki three people are writing, then the quiz it
+  // produces. The AI review card sits beside the text, never on top of it.
   return `
     <div class="ld-window ld-studio" data-studio data-on="wiki">
       <div class="ld-window-bar"><span></span><span></span><span></span><em data-studio-title>${escapeHtml(t("about.mock_wiki"))}</em></div>
@@ -129,33 +131,44 @@ function _artStudio() {
       </div>
       <div class="ld-studio-stage">
         <div class="ld-studio-panel is-on" data-studio-panel="wiki" role="tabpanel">
-          <aside class="ld-studio-nav"><span class="is-on"></span><span></span><span class="is-sub"></span><span></span></aside>
+          <aside class="ld-studio-nav" aria-hidden="true">
+            <span class="is-on"></span><span></span><span class="is-sub"></span><span></span><span></span>
+          </aside>
           <div class="ld-studio-doc">
-            <h4></h4>
-            <p></p>
-            <p class="ld-studio-typed">${escapeHtml(t("about.mock_added"))}<span class="ld-caret c-one"></span></p>
-            <p class="short"><span class="ld-caret c-two"></span></p>
+            <h4>${escapeHtml(t("about.studio_doc_title"))}</h4>
+            <p>${escapeHtml(t("about.studio_doc_p1"))}<span class="ld-caret c-one"></span></p>
+            <p>${escapeHtml(t("about.studio_doc_p2"))}<span class="ld-caret c-two"></span></p>
+            <p class="ld-studio-typed">${escapeHtml(t("about.studio_doc_typed"))}<span class="ld-caret c-three"></span></p>
             <div class="ld-diff">
-              <span class="add">+ ${escapeHtml(t("about.mock_added"))}</span>
-              <span class="del">− ${escapeHtml(t("about.mock_removed"))}</span>
+              <span class="add">${escapeHtml(t("about.studio_diff_add"))}</span>
+              <span class="del">${escapeHtml(t("about.studio_diff_del"))}</span>
             </div>
             <div class="ld-avatars">
               <span class="a">AL</span><span class="b">MB</span><span class="c">JS</span>
             </div>
           </div>
+          <aside class="ld-studio-ai">
+            <p class="ld-studio-ai-badge">✨ ${escapeHtml(t("about.studio_ai_badge"))}</p>
+            <p class="ld-studio-ai-text">${escapeHtml(t("about.studio_ai_text"))}</p>
+            <div class="ld-studio-ai-actions">
+              <button type="button" class="ld-studio-ai-yes">${escapeHtml(t("about.studio_ai_accept"))}</button>
+              <button type="button" class="ld-studio-ai-no">${escapeHtml(t("about.studio_ai_dismiss"))}</button>
+            </div>
+          </aside>
         </div>
         <div class="ld-studio-panel" data-studio-panel="quiz" role="tabpanel">
           <p class="ld-mock-question">${escapeHtml(t("about.mock_q1"))}</p>
           <div class="ld-studio-options">
-            ${["A", "B", "C", "D"]
+            ${["a", "b", "c", "d"]
               .map(
-                (letter, index) => `
+                (key, index) => `
               <span class="ld-studio-opt ${index === 0 ? "is-picked" : ""}">
-                <b>${letter}</b><i></i>
+                <b>${"ABCD"[index]}</b><span>${escapeHtml(t(`about.studio_opt_${key}`))}</span>
               </span>`,
               )
               .join("")}
           </div>
+          <p class="ld-studio-from">✨ ${escapeHtml(t("about.studio_quiz_from"))}</p>
           <div class="ld-mock-foot"><span class="ld-dot"></span> <span>24</span> ${escapeHtml(t("about.mock_players"))}</div>
         </div>
       </div>
@@ -178,7 +191,8 @@ function _startStudio(root) {
       tab.classList.toggle("is-active", on);
       tab.setAttribute("aria-selected", String(on));
     });
-    if (title) title.textContent = act === "wiki" ? t("about.mock_wiki") : t("about.studio_tab_quiz");
+    // The window keeps the wiki name in both acts: the quiz is drawn from it.
+    if (title) title.textContent = t("about.mock_wiki");
   };
 
   let timer = null;

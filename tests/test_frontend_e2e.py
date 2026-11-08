@@ -698,14 +698,13 @@ def test_host_plays_and_the_run_shows_in_history_and_stats(browser):
         expect(page.locator(".question-card")).to_be_visible(timeout=15000)
 
         def answer_as_host():
-            panel = page.locator(".host-play")
-            picks = panel.locator("[data-pick]")
-            # The host panel renders with the question; wait for its options.
+            # The grid is the answer surface when the host plays: the panel below
+            # only carries the submit button, so the question is not shown twice.
+            picks = page.locator(".options-grid [data-pick]")
             expect(picks.first).to_be_visible(timeout=20000)
             picks.first.click()
-            submit = panel.locator('[data-act="send-answer"]')
-            if submit.is_disabled():
-                picks.nth(1).click()
+            submit = page.locator('[data-act="send-answer"]')
+            expect(submit).to_be_enabled(timeout=10000)
             submit.click()
             expect(page.locator(".toast.success").first).to_be_visible(timeout=15000)
 
@@ -1771,6 +1770,91 @@ def test_the_footer_offers_a_way_to_write_to_the_project(browser):
         page.wait_for_selector("footer", timeout=20000)
         hrefs = page.evaluate("[...document.querySelectorAll('footer a')].map(a => a.getAttribute('href') || '')")
         assert any(href.startswith("mailto:developper@openlearnproject.org") for href in hrefs), hrefs
+        assert recorder.errors == [], recorder.errors
+    finally:
+        context.close()
+
+
+def test_the_advance_button_sits_under_the_room_and_asks_before_skipping(browser):
+    """A host cannot skip a question by accident, and the control is out of reach.
+
+    The button used to sit right under the answer grid, where a hosting player
+    looks for "submit". It now lives below the player list and only fires
+    without a question once everyone has answered or the countdown is over.
+    """
+    host_context, host_page, host_errors = new_page(browser)
+    guest_context, guest_page, guest_errors = new_page(browser, (900, 800))
+    try:
+        host_email = f"advance-{uuid.uuid4().hex[:8]}@example.com"
+        register_through_ui(host_page, host_email, "Advance Host")
+        create_quiz_through_editor(host_page, "Advance button quiz")
+
+        host_page.goto(f"{BASE_URL}/dashboard", wait_until="networkidle")
+        host_page.locator('button[data-act="host"]').first.click()
+        expect(host_page).to_have_url(re.compile(r".*/host/[A-Z0-9]+$"), timeout=15000)
+        pin = read_pin(host_page)
+
+        guest_page.goto(f"{BASE_URL}/play/{pin}", wait_until="networkidle")
+        guest_page.fill("#nickname", "Slow Guest")
+        guest_page.click("#join-form button[type=submit]")
+        expect(host_page.locator(".participant-chip")).to_contain_text("Slow Guest", timeout=15000)
+
+        host_page.locator('[data-act="start"]').click()
+        expect(host_page.locator(".question-card")).to_be_visible(timeout=15000)
+
+        next_button = host_page.locator('[data-act="next"]')
+        expect(next_button).to_be_visible(timeout=15000)
+        # Armed only in the sense that it asks first.
+        assert next_button.get_attribute("data-gated") == "1"
+        expect(host_page.locator("[data-advance-hint]")).to_contain_text(
+            "1 player has not answered yet", timeout=15000
+        )
+
+        # Below the room: the player list ends above the control's box.
+        room = host_page.locator("section.card").last
+        assert next_button.bounding_box()["y"] > room.bounding_box()["y"] + room.bounding_box()["height"] - 8
+
+        next_button.click()
+        modal = host_page.locator("#modal-root .modal")
+        expect(modal).to_be_visible(timeout=5000)
+        assert "Move to the next question?" in modal.inner_text()
+
+        # Backing out leaves the question where it was.
+        modal.locator('[data-action="cancel"]').click()
+        expect(modal).to_be_hidden(timeout=5000)
+        expect(host_page.locator(".question-card")).to_be_visible(timeout=5000)
+        assert "Question 1" in host_page.locator(".badge").first.inner_text()
+
+        # Everyone answers: the server reveals, and the control stops asking.
+        answer_current_question(guest_page)
+        expect(host_page.locator(".option-btn.correct").first).to_be_visible(timeout=15000)
+        finish = host_page.locator('[data-act="next"], [data-act="finish"]').last
+        expect(finish).to_be_visible(timeout=15000)
+        assert finish.get_attribute("data-gated") in (None, "0")
+
+        assert host_errors.errors == [], f"host errors: {host_errors.errors}"
+        assert guest_errors.errors == [], f"guest errors: {guest_errors.errors}"
+    finally:
+        host_context.close()
+        guest_context.close()
+
+
+def test_the_account_menu_lists_only_the_account_and_the_way_out(browser):
+    """Questionnaires have their own section in the account page.
+
+    The popover kept a "My questionnaires" entry after the account page grew a
+    dedicated section, so the same link appeared twice in two different shapes.
+    """
+    context, page, recorder = new_page(browser, viewport=(1280, 900))
+    try:
+        register_through_ui(page, f"menu-{uuid.uuid4().hex[:8]}@example.com", "Menu Tester")
+        page.click("#account-button")
+        expect(page.locator("#account-popover")).to_be_visible(timeout=5000)
+        items = page.locator("#account-popover .account-item")
+        labels = [item.inner_text().strip() for item in items.all()]
+        assert len(labels) == 2, labels
+        assert labels[0] == "Account", labels
+        assert labels[1] == "Sign out", labels
         assert recorder.errors == [], recorder.errors
     finally:
         context.close()
