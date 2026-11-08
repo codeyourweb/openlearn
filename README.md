@@ -3,6 +3,10 @@
 > **Live demo: <https://openlearnproject.org/>** — a seed catalogue of wikis,
 > questionnaires and adventures, in twelve languages, no account needed to read.
 > Sign up to write; the instance is reset from time to time.
+>
+> **Documentation site: <https://codeyourweb.github.io/openlearn/>** — what the
+> product does, the philosophy behind it, and a user guide that walks through
+> every screen.
 
 **Knowledge grows when it is shared.** Courses scatter across files, e-mail
 threads and closed platforms: learners lose the thread, teachers rebuild the same
@@ -373,6 +377,11 @@ run.sh           bare-metal launcher (creates the virtual environment)
 
 ## Documentation
 
+- **The project site** — <https://codeyourweb.github.io/openlearn/>: what the
+  product does, why it is built this way, and a user guide covering every
+  screen (account, wiki, quizzes, revision, moderation, API, troubleshooting).
+  The sources live in [docs/](docs/) and are published by
+  `.github/workflows/pages.yml` on every push to `main`.
 - `/docs` — a reference rendered by the application itself, straight from its
   own `/api/openapi.json`. It replaces Swagger UI, which needs inline scripts
   and therefore cannot run under this project's strict CSP; `/api/docs` and
