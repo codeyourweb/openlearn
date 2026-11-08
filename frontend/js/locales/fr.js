@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-only
-// Copyright (C) 2026 OpenLearn
+// Copyright (C) 2026 Jean-Pierre GARNIER (@codeyourweb)
 /*
  * French interface strings.
  * Generated from the English dictionary; keys follow the English order.
@@ -1304,6 +1304,14 @@ export const fr = {
   "about.ch_host_b1": "Docker Compose et nginx avec votre propre certificat",
   "about.ch_host_b2": "Comptes, rôles et modération inclus ; aucun frais d'achat",
   "about.ch_host_b3": "Exportez tout en markdown quand vous souhaitez quitter la plateforme",
+  "about.ch_access_title": "Accessible par défaut",
+  "about.ch_access_lead": "Une plateforme qui laisse des lecteurs au bord du chemin n'est qu'une moitié de plateforme. Chaque page ouvrable vise le niveau AA de WCAG 2.2, et un audit automatisé tourne à chaque construction.",
+  "about.ch_access_b1": "Clavier seul : lien d'évitement, focus visible, fenêtres qui gardent le clavier à l'intérieur, et blocs déplacés avec Alt+flèches dans l'éditeur",
+  "about.ch_access_b2": "Contrastes mesurés plutôt que devinés, et une réponse juste jamais portée par la couleur seule",
+  "about.ch_access_b3": "Douze langues, écriture de droite à gauche comprise, et une déclaration publiée sur /accessibility qui dit où nous restons en défaut",
+  "about.mock_a11y_bar": "Accessibilité",
+  "about.mock_a11y_link": "Aller au contenu",
+  "about.mock_a11y_sr": "Lecteur d'écran : « Titre de niveau 2, un wiki que vous pouvez modifier »",
   "about.mock_question": "Quel grain donne au risotto son onctuosité ?",
   "about.mock_q1": "Quel océan est le plus profond ?",
   "about.studio_opt_a": "Pacifique",

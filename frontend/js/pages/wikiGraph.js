@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-only
-// Copyright (C) 2026 OpenLearn
+// Copyright (C) 2026 Jean-Pierre GARNIER (@codeyourweb)
 /* Wiki map: an animated force graph, and an Obsidian-style canvas.
  *
  * Graph — nodes are laid out by a small force simulation drawn on a 2D canvas:

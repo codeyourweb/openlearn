@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-only
-# Copyright (C) 2026 OpenLearn
+# Copyright (C) 2026 Jean-Pierre GARNIER (@codeyourweb)
 """Demo content: a 20 question Splunk Power User practice quiz.
 
 Seeded once, on an empty database. Set ``OL_SEED_DEMO_DATA=false`` to disable

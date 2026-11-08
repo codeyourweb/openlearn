@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-only
-# Copyright (C) 2026 OpenLearn
+# Copyright (C) 2026 Jean-Pierre GARNIER (@codeyourweb)
 """Wiki API: wikis, pages, versions, diffs, proposals, members and exports.
 
 Access control (OWASP A01) is central here: a wiki is a shared document tree with

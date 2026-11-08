@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-only
-# Copyright (C) 2026 OpenLearn
+# Copyright (C) 2026 Jean-Pierre GARNIER (@codeyourweb)
 """Attempt quotas for a questionnaire used as an assessment.
 
 A ceiling is counted from the sessions themselves, so nothing in the history is

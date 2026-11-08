@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-only
-# Copyright (C) 2026 OpenLearn
+# Copyright (C) 2026 Jean-Pierre GARNIER (@codeyourweb)
 """Crawlable metadata: the shell, the sitemap and robots.txt.
 
 Search engines and chat previews read the first HTML response, not the SPA that

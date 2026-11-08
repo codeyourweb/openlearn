@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-only
-# Copyright (C) 2026 OpenLearn
+# Copyright (C) 2026 Jean-Pierre GARNIER (@codeyourweb)
 """SQL that has to run on SQLite, PostgreSQL and MariaDB alike.
 
 Each engine has its own dialect, and two of them reject syntax that the third

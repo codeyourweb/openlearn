@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-only
-// Copyright (C) 2026 OpenLearn
+// Copyright (C) 2026 Jean-Pierre GARNIER (@codeyourweb)
 /* Adventure editor: a node canvas plus a contextual inspector.
  *
  * Editing model: the whole story is one document. The canvas is a plain DOM +

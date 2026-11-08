@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-only
-// Copyright (C) 2026 OpenLearn
+// Copyright (C) 2026 Jean-Pierre GARNIER (@codeyourweb)
 /* Assessment: one run per candidate, and the result book the author reads.
  *
  * The section only exists for the author of a multiple-choice, swipe or poll

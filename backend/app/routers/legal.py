@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-only
-# Copyright (C) 2026 OpenLearn
+# Copyright (C) 2026 Jean-Pierre GARNIER (@codeyourweb)
 """Legal notices: a public page, and the administrator form behind it.
 
 The default notice belongs to the project and ships with the interface, so it

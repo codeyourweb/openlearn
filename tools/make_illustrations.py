@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-only
-# Copyright (C) 2026 OpenLearn
+# Copyright (C) 2026 Jean-Pierre GARNIER (@codeyourweb)
 """Flat illustration set for the showcase quizzes.
 
 No diffusion backend is reachable on this host, so the scenes are drawn from

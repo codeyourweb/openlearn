@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-only
-# Copyright (C) 2026 OpenLearn
+# Copyright (C) 2026 Jean-Pierre GARNIER (@codeyourweb)
 """Administration of the instance itself: AI provider, mail, SSO, audit log.
 
 Everything here is behind :func:`require_admin`. Secrets are write-only: the

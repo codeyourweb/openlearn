@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-only
-# Copyright (C) 2026 OpenLearn
+# Copyright (C) 2026 Jean-Pierre GARNIER (@codeyourweb)
 """Read paths: reachable by keyboard, understandable by a screen reader.
 
 The scope agreed with the operator: everything that can be *read* targets

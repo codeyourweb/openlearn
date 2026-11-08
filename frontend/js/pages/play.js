@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-only
-// Copyright (C) 2026 OpenLearn
+// Copyright (C) 2026 Jean-Pierre GARNIER (@codeyourweb)
 /* Player view: join, answer (QCM or swipe), live feedback, final score.
 
    The countdown is derived from the server deadline every tick, and selecting

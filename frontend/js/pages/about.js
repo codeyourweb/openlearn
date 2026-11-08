@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-only
-// Copyright (C) 2026 OpenLearn
+// Copyright (C) 2026 Jean-Pierre GARNIER (@codeyourweb)
 /* About: the platform explained as a scroll story.
  *
  * Every scene is a CSS mock rather than a screenshot, so the page stays sharp
@@ -20,6 +20,7 @@ const SCENES = [
   { key: "collab", side: "right", art: "collab" },
   { key: "ai", side: "left", art: "chat", highlight: true },
   { key: "host", side: "right", art: "host" },
+  { key: "access", side: "left", art: "access" },
 ];
 
 const STATS = [
@@ -372,12 +373,38 @@ function _artHost() {
     </div>`;
 }
 
+/* The seventh scene: a page read by something other than a pair of eyes.
+   A focus ring on a link, the keys that got there, and the announcement a
+   screen reader makes — the three things an accessibility statement promises. */
+function _artAccess() {
+  return `
+    <div class="ld-window ld-window-a11y">
+      <div class="ld-window-bar"><span></span><span></span><span></span><em>${escapeHtml(t("about.mock_a11y_bar"))}</em></div>
+      <div class="ld-window-body ld-a11y-body">
+        <div class="ld-a11y-doc">
+          <p class="ld-a11y-line long"></p>
+          <p class="ld-a11y-line"></p>
+          <span class="ld-a11y-link">${escapeHtml(t("about.mock_a11y_link"))}</span>
+          <p class="ld-a11y-line short"></p>
+          <p class="ld-a11y-sr"><span aria-hidden="true">🔊</span> ${escapeHtml(t("about.mock_a11y_sr"))}</p>
+        </div>
+        <div class="ld-a11y-side">
+          <span class="ld-a11y-key">Tab</span>
+          <span class="ld-a11y-key">⏎</span>
+          <span class="ld-a11y-pos is-ok">AA</span>
+          <span class="ld-a11y-pos">4.9:1</span>
+        </div>
+      </div>
+    </div>`;
+}
+
 function _art(kind) {
   if (kind === "quiz") return _artQuiz();
   if (kind === "formats") return _artFormats();
   if (kind === "wiki") return _artWiki();
   if (kind === "collab") return _artCollab();
   if (kind === "chat") return _artChat();
+  if (kind === "access") return _artAccess();
   return _artHost();
 }
 

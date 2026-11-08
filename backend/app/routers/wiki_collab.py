@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-only
-# Copyright (C) 2026 OpenLearn
+# Copyright (C) 2026 Jean-Pierre GARNIER (@codeyourweb)
 """WebSocket feed for live co-editing of one wiki page.
 
 A client sends splices and cursors; the server rebases them and fans them out.

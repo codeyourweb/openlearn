@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-only
-// Copyright (C) 2026 OpenLearn
+// Copyright (C) 2026 Jean-Pierre GARNIER (@codeyourweb)
 /* Browser-side HTML sanitiser: mirrors the server allowlist.
 
    The server is authoritative; this only keeps the editor and the renderer

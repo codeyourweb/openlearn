@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-only
-// Copyright (C) 2026 OpenLearn
+// Copyright (C) 2026 Jean-Pierre GARNIER (@codeyourweb)
 /*
  * Interface translations.
  *
@@ -27,12 +27,12 @@ export const LANGUAGES = [
   { code: "es", label: "Español", flag: "ES" },
   { code: "de", label: "Deutsch", flag: "DE" },
   { code: "ru", label: "Русский", flag: "RU" },
-  { code: "zh", label: "中文", flag: "ZH" },
-  { code: "ja", label: "日本語", flag: "JA" },
   { code: "pt", label: "Português", flag: "PT" },
   { code: "hi", label: "हिन्दी", flag: "HI" },
   { code: "bn", label: "বাংলা", flag: "BN" },
   { code: "ar", label: "العربية", flag: "AR" },
+  { code: "zh", label: "中文", flag: "ZH" },
+  { code: "ja", label: "日本語", flag: "JA" },
 ];
 
 /** Languages written right to left: the whole document flips. */
@@ -1361,6 +1361,14 @@ export const en = {
   "about.ch_host_b1": "Docker Compose and nginx with your certificate",
   "about.ch_host_b2": "Accounts, roles and moderation included; nothing to buy",
   "about.ch_host_b3": "Export everything as markdown whenever you want to leave",
+  "about.ch_access_title": "Accessible by default",
+  "about.ch_access_lead": "A platform that leaves readers behind is only half a platform. Every page anyone can open aims at WCAG 2.2 level AA, and an automated audit runs on every build.",
+  "about.ch_access_b1": "Keyboard only: a skip link, a visible focus, dialogs that keep the keyboard inside, and blocks moved with Alt+arrows in the editor",
+  "about.ch_access_b2": "Contrast measured rather than guessed, and a right answer never carried by colour alone",
+  "about.ch_access_b3": "Twelve languages, right-to-left included, and a published statement at /accessibility that says where we still fall short",
+  "about.mock_a11y_bar": "Accessibility",
+  "about.mock_a11y_link": "Skip to the content",
+  "about.mock_a11y_sr": "Screen reader: “Heading level 2, a wiki you can edit”",
   "about.mock_question": "Which grain gives risotto its creaminess?",
   "about.mock_q1": "Which ocean is the deepest?",
   "about.studio_opt_a": "Pacific",

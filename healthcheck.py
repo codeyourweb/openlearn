@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-only
-# Copyright (C) 2026 OpenLearn
+# Copyright (C) 2026 Jean-Pierre GARNIER (@codeyourweb)
 """Container health probe: HTTP on 8000, or HTTPS on the TLS port.
 
 The same image serves both shapes, so the probe cannot hardcode a scheme.

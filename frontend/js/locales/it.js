@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-only
-// Copyright (C) 2026 OpenLearn
+// Copyright (C) 2026 Jean-Pierre GARNIER (@codeyourweb)
 /*
  * Italian interface strings.
  * Generated from the English dictionary; keys follow the English order.
@@ -1464,4 +1464,12 @@ export const it = {
   "wiki.ref_add": "Aggiungi fonte",
   "wiki.ref_added": "Fonte aggiunta.",
   "about.tagline": "La conoscenza cresce quando si condivide",
+  "about.ch_access_title": "Accessibile fin dall'inizio",
+  "about.ch_access_lead": "Una piattaforma che lascia indietro chi legge è solo mezza piattaforma. Ogni pagina che chiunque può aprire punta al livello AA di WCAG 2.2, e a ogni build viene eseguito un controllo automatico.",
+  "about.ch_access_b1": "Solo da tastiera: un link di salto, un focus visibile, finestre di dialogo che tengono la tastiera all'interno e blocchi spostati con Alt+frecce nell'editor",
+  "about.ch_access_b2": "Contrasto misurato invece che stimato, e una risposta corretta non affidata mai solo al colore",
+  "about.ch_access_b3": "Dodici lingue, comprese quelle da destra a sinistra, e una dichiarazione pubblicata su /accessibility che dice dove siamo ancora carenti",
+  "about.mock_a11y_bar": "Accessibilità",
+  "about.mock_a11y_link": "Vai al contenuto",
+  "about.mock_a11y_sr": "Lettore di schermo: “Titolo di livello 2, un wiki che puoi modificare”",
 };

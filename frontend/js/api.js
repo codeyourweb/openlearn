@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-only
-// Copyright (C) 2026 OpenLearn
+// Copyright (C) 2026 Jean-Pierre GARNIER (@codeyourweb)
 /* Thin fetch wrapper: CSRF header, JSON handling, typed errors. */
 
 const CSRF_COOKIE = "ol_csrf";

@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-only
-# Copyright (C) 2026 OpenLearn
+# Copyright (C) 2026 Jean-Pierre GARNIER (@codeyourweb)
 """Image upload for question media and wiki illustrations.
 
 Uploads are treated as hostile input: size capped, decoded by Pillow, checked

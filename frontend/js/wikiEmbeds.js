@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-only
-// Copyright (C) 2026 OpenLearn
+// Copyright (C) 2026 Jean-Pierre GARNIER (@codeyourweb)
 /* Questionnaire, adventure and deck embeds inside a wiki page.
 
    A page carries a bare marker, `{quiz:12}`, `{adventure:12}` or `{deck:12}`,

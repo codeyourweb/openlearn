@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-only
-// Copyright (C) 2026 OpenLearn
+// Copyright (C) 2026 Jean-Pierre GARNIER (@codeyourweb)
 /* Application bootstrap: routes, chrome (nav/session box), language and theme. */
 
 import { api, ensureCsrf } from "./api.js";

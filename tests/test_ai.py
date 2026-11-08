@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-only
-# Copyright (C) 2026 OpenLearn
+# Copyright (C) 2026 Jean-Pierre GARNIER (@codeyourweb)
 """AI assistance: generation, translation and moderation.
 
 The provider is faked at the ``_chat`` boundary so the tests exercise our own

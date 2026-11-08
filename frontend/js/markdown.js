@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-only
-// Copyright (C) 2026 OpenLearn
+// Copyright (C) 2026 Jean-Pierre GARNIER (@codeyourweb)
 /* Markdown <-> HTML for the wiki editor.
  *
  * The server owns the canonical rendering (`backend/app/wiki.py`): this module

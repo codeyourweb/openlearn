@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-only
-// Copyright (C) 2026 OpenLearn
+// Copyright (C) 2026 Jean-Pierre GARNIER (@codeyourweb)
 /* One deck: its cards, the editor, and the study mode.
  *
  * Study mode deliberately looks like the swipe mode of the questionnaires: one

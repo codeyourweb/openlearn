@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-only
-// Copyright (C) 2026 OpenLearn
+// Copyright (C) 2026 Jean-Pierre GARNIER (@codeyourweb)
 /* Caret geometry shared by the editor, the live carets and drag-and-drop.
 
    A character offset means the same thing in markdown and in the WYSIWYG view:

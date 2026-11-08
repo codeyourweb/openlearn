@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-only
-# Copyright (C) 2026 OpenLearn
+# Copyright (C) 2026 Jean-Pierre GARNIER (@codeyourweb)
 """Remove every account and quiz created by the probe and E2E runs.
 
 Only accounts the probes created themselves are deleted: their addresses are
