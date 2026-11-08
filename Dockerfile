@@ -19,7 +19,11 @@ WORKDIR /app
 COPY backend/requirements.txt /app/backend/requirements.txt
 # DejaVu keeps Cyrillic, Greek and Hebrew glyphs in exported PDFs; ReportLab's
 # built-in fonts stop at Latin-1.
+# The base tag floats, but it is rebuilt upstream on its own schedule: take the
+# security updates Debian has published since, so the image does not ship a
+# library the tag was built before.
 RUN apt-get update \
+    && apt-get upgrade -y \
     && apt-get install -y --no-install-recommends fonts-dejavu-core fonts-dejavu-extra \
     && rm -rf /var/lib/apt/lists/* \
     && python -m pip install --no-cache-dir --upgrade "pip==26.3" \
