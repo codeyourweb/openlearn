@@ -54,6 +54,12 @@ services:
       OL_MAIL_FROM_ADDRESS: ${OL_MAIL_FROM_ADDRESS:-}
       OL_SSO_ENABLED: ${OL_SSO_ENABLED:-true}
       OL_MCP_ENABLED: ${OL_MCP_ENABLED:-true}
+      # Sign-in ceiling. Forwarded explicitly: this file lists every variable
+      # the container receives, and an unlisted one is silently dropped — which
+      # is exactly how a continuous-integration run kept hitting 429 after the
+      # limit had been raised in the workflow.
+      OL_AUTH_RATE_LIMIT: ${OL_AUTH_RATE_LIMIT:-10}
+      OL_AUTH_RATE_WINDOW_SECONDS: ${OL_AUTH_RATE_WINDOW_SECONDS:-60}
     ports:
       # APP_PORT is the port inside the container: 8000 for HTTP, 8443 with the
       # TLS overlay. PORT is the host port.
