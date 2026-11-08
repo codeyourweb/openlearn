@@ -13,6 +13,7 @@ import { navigate } from "../router.js";
 import { state } from "../store.js";
 import { bindPager, confirmDialog, escapeHtml, pagerHtml, toast } from "../ui.js";
 import { aiLogView, settingsView, ssoView } from "./adminSettings.js";
+import { legalEditorView } from "./legalEditor.js";
 
 const PAGE_SIZE = 25;
 
@@ -64,7 +65,7 @@ export async function renderAdmin({ query }) {
   }
 
   const root = document.createElement("div");
-  const ADMIN_ONLY_TABS = ["settings", "sso", "ailog"];
+  const ADMIN_ONLY_TABS = ["settings", "sso", "ailog", "legal"];
   let tab = (query && query.tab) || "queue";
   if (!state.user.is_admin && ADMIN_ONLY_TABS.includes(tab)) tab = "queue";
 
@@ -105,7 +106,8 @@ export async function renderAdmin({ query }) {
           state.user.is_admin
             ? `<button class="tab ${tab === "settings" ? "is-active" : ""}" data-tab="settings">${t("admin.tab_settings")}</button>
         <button class="tab ${tab === "sso" ? "is-active" : ""}" data-tab="sso">${t("admin.tab_sso")}</button>
-        <button class="tab ${tab === "ailog" ? "is-active" : ""}" data-tab="ailog">${t("admin.tab_ai_log")}</button>`
+        <button class="tab ${tab === "ailog" ? "is-active" : ""}" data-tab="ailog">${t("admin.tab_ai_log")}</button>
+        <button class="tab ${tab === "legal" ? "is-active" : ""}" data-tab="legal">${t("admin.tab_legal")}</button>`
             : ""
         }
       </div>
@@ -130,6 +132,7 @@ export async function renderAdmin({ query }) {
       settings: settingsView,
       sso: ssoView,
       ailog: aiLogView,
+      legal: legalEditorView,
     };
     await (views[tab] || queueView)(panel, "", 0);
   };

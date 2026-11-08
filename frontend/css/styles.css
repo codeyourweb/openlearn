@@ -88,11 +88,14 @@ h2 { font-size: 1.3rem; }
 h3 { font-size: 1.05rem; }
 p { margin: 0 0 1em; }
 
+/* Logical inset: `left: -999px` parked the link outside the document, which in
+   a right-to-left page lands 999 px of overflow on the other side and widened
+   the whole document (4878 px for a 1440 px viewport in Arabic). */
 .skip-link {
-  position: absolute; left: -999px; top: 0; padding: 0.6rem 1rem;
+  position: absolute; inset-inline-start: -999px; top: 0; padding: 0.6rem 1rem;
   background: var(--accent); color: #fff; z-index: 100;
 }
-.skip-link:focus { left: 0; }
+.skip-link:focus { inset-inline-start: 0; }
 
 /* ---------- Chrome ---------- */
 .topbar {
@@ -2912,11 +2915,19 @@ a.tab .tab-count { font-size: .72rem; opacity: .8; }
 .ld-scene-right .ld-scene-art > * { transform: translateY(var(--ldy, 0)); }
 .ld-scene-art .ld-window { transform: perspective(1400px) rotateY(4deg) rotateX(2deg); }
 
-.ld-scene-ai { position: relative; }
+/* The AI chapter is the only one with a backdrop. It used to bleed 6% past the
+   column on each side, which left a visible seam where the gradient was cut and
+   pushed the prose against its edge; the panel now ends exactly on the column
+   and the text keeps a margin inside it. */
+.ld-scene-ai {
+  position: relative;
+  padding-inline: clamp(1.1rem, 2.4vw, 2rem);
+}
 .ld-scene-ai::before {
-  content: ""; position: absolute; inset: 4% -6%; border-radius: 32px;
-  background: radial-gradient(ellipse at 25% 30%, rgba(139,92,246,.16), transparent 62%),
-              radial-gradient(ellipse at 78% 70%, rgba(34,211,238,.12), transparent 60%);
+  content: ""; position: absolute; inset: 0; border-radius: 26px;
+  background: radial-gradient(ellipse at 22% 18%, rgba(139,92,246,.13), transparent 62%),
+              radial-gradient(ellipse at 80% 82%, rgba(34,211,238,.09), transparent 58%);
+  border: 1px solid color-mix(in srgb, var(--accent) 16%, transparent);
   pointer-events: none;
 }
 .ld-ai-badge {
@@ -3855,3 +3866,106 @@ html[data-demo="off"] [data-nav="about"] { display: none !important; }
 .mcp-docs .prose h2 { margin-top: 1.6rem; }
 .mcp-docs .prose table { width: 100%; border-collapse: collapse; font-size: .84rem; }
 .mcp-docs .prose th, .mcp-docs .prose td { padding: .4rem .6rem; border-bottom: 1px solid var(--border); text-align: left; }
+
+
+/* --------------------------------------------------------------------------
+   Legal notice: the public page and the administrator's editor
+   -------------------------------------------------------------------------- */
+
+.legal { padding-block: clamp(1.4rem, 4vw, 2.6rem); }
+.legal-head h1 { margin-bottom: .4rem; }
+.legal-head .muted { max-width: 62ch; }
+/* Long paragraphs read better in a column than edge to edge. Centred, so the
+   page is symmetric in both directions: a block with a max-width and no auto
+   margins hugs the start edge, which leaves the other half empty in Arabic. */
+.legal-head, .legal-doc { max-width: 78ch; margin-inline: auto; }
+.legal-doc { margin-top: 1.6rem; display: grid; gap: 1.5rem; }
+.legal-section { border-top: 1px solid var(--border); padding-top: 1.2rem; }
+.legal-doc .legal-section:first-child { border-top: 0; padding-top: 0; }
+.legal-section h2 { font-size: 1.12rem; margin-bottom: .45rem; letter-spacing: -.005em; }
+.legal-body { line-height: 1.68; }
+.legal-body p + p, .legal-body p + ul, .legal-body ul + p { margin-top: .7rem; }
+.legal-body ul, .legal-body ol { margin: .5rem 0 .5rem 1.2rem; }
+.legal-body a { color: var(--accent-2); text-decoration: underline; text-underline-offset: 2px; }
+.legal-instance {
+  border: 1px solid var(--border); border-radius: 16px;
+  padding: 1.1rem 1.2rem; background: var(--surface);
+}
+.legal-instance.is-empty { border-style: dashed; }
+.legal-instance h2 { margin-top: 0; }
+.legal-stamp, .legal-footnote { font-size: .82rem; }
+.legal-footnote { border-top: 1px solid var(--border); padding-top: .9rem; }
+.legal-loading { opacity: .45; }
+
+.legal-admin { display: grid; gap: .9rem; }
+.legal-langs { display: flex; flex-wrap: wrap; gap: .3rem; }
+.legal-lang {
+  display: inline-flex; align-items: center; gap: .35rem; cursor: pointer;
+  padding: .28rem .55rem; border: 1px solid var(--border); border-radius: 999px;
+  background: var(--surface); color: var(--muted); font-size: .72rem; font-weight: 600;
+}
+.legal-lang .flag { width: 17px; height: 11px; border-radius: 2px; }
+.legal-lang.is-filled { color: var(--text); }
+.legal-lang.is-filled::after { content: "✓"; color: var(--ok); font-size: .68rem; line-height: 1; }
+.legal-lang.is-active {
+  border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent-soft); color: var(--text);
+}
+.legal-editor {
+  border: 1px solid var(--border); border-radius: 14px; overflow: hidden;
+  background: var(--surface);
+}
+.legal-toolbar {
+  display: flex; align-items: center; gap: .2rem; flex-wrap: wrap;
+  padding: .35rem .45rem; border-bottom: 1px solid var(--border);
+}
+.legal-tool {
+  min-width: 30px; height: 28px; padding: 0 .5rem; border-radius: 8px;
+  border: 1px solid transparent; background: transparent; color: var(--text);
+  font-weight: 600; font-size: .82rem; cursor: pointer;
+}
+.legal-tool:hover { background: var(--accent-soft); }
+.legal-modes {
+  margin-inline-start: auto; display: inline-flex; overflow: hidden;
+  border: 1px solid var(--border); border-radius: 999px;
+}
+.legal-mode {
+  padding: .24rem .6rem; font-size: .72rem; cursor: pointer;
+  background: transparent; color: var(--muted); border: 0;
+}
+.legal-mode.is-active { background: var(--accent-soft); color: var(--accent-2); font-weight: 600; }
+.legal-surface, .legal-source {
+  min-height: 320px; margin: 0; padding: 1rem 1.1rem;
+  line-height: 1.68; outline: none; border: 0; width: 100%;
+}
+.legal-surface:focus, .legal-source:focus { box-shadow: inset 0 0 0 2px var(--accent-soft); }
+.legal-source {
+  background: transparent; color: var(--text); resize: vertical;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .86rem;
+}
+.legal-surface:empty::before,
+.legal-source:placeholder-shown::before { color: var(--muted); }
+.legal-hint { padding: 0 1.1rem .8rem; }
+/* The save bar follows the page: a form whose only action sits below a 320 px
+   surface is a form whose action nobody sees. */
+.legal-bar {
+  position: sticky; bottom: 0; z-index: 2;
+  display: flex; align-items: center; gap: .45rem; flex-wrap: wrap;
+  padding: .6rem 0 .3rem;
+  background: linear-gradient(180deg, transparent, var(--bg) 42%);
+}
+.legal-translate { display: inline-flex; align-items: center; gap: .4rem; }
+.legal-bar .legal-from { max-width: 180px; }
+.legal-count { margin-inline-end: auto; }
+.legal-dirty { color: var(--warn-text, var(--muted)); }
+
+@media (max-width: 620px) {
+  .legal-surface, .legal-source { min-height: 240px; padding: .8rem .85rem; }
+  .legal-bar .legal-from { max-width: 100%; flex: 1 1 140px; }
+  .legal-modes { margin-inline-start: 0; }
+}
+
+/* Right-to-left: the document flips by itself; the few rules that were written
+   with physical sides are mirrored here. */
+[dir="rtl"] .ld-points li { padding-left: 0; padding-right: 1.35rem; }
+[dir="rtl"] .ld-points li::before { left: auto; right: 0; }
+[dir="rtl"] .legal-body ul, [dir="rtl"] .legal-body ol { margin: .5rem 1.2rem .5rem 0; }

@@ -658,6 +658,22 @@ the two routes above.
 
 ---
 
+### 8.2 Legal notice
+
+| Method | Path | Description |
+| --- | --- | --- |
+| `GET` | `/legal?lang=fr` | **Public.** The instance's own notice: `{language, markdown, html, updated_at, has_notice, languages}`. `html` is already rendered and sanitised; an empty language falls back to English, then French |
+| `GET` | `/admin/legal` | Every stored notice, `{values, updated_at, languages, max_length}` |
+| `PUT` | `/admin/legal` | Body `{"values": {"fr": "## Éditeur…"}}`. An empty string clears that language. `422` on an unknown language or a document over 24 000 characters |
+| `POST` | `/admin/legal/translate` | Body `{"target": "hi", "source": "fr", "text": "…"}`. Returns `{target, markdown}`; nothing is stored, so the administrator can read it first. `503` when no model is configured, `502` when the provider fails |
+
+The notice is markdown, rendered through the same pipeline as a wiki page:
+`nh3` keeps the wiki allowlist and drops scripts, frames, event handlers and
+`javascript:` links, so an administrator cannot turn the page into a way to run
+code. Raw HTML in the document is shown as text rather than interpreted.
+
+---
+
 ## 9. Wiki endpoints
 
 A wiki is a set of markdown pages with history, links and moderation. Reading is

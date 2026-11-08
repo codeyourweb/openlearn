@@ -15,6 +15,10 @@ import { de } from "./locales/de.js";
 import { ru } from "./locales/ru.js";
 import { zh } from "./locales/zh.js";
 import { ja } from "./locales/ja.js";
+import { pt } from "./locales/pt.js";
+import { hi } from "./locales/hi.js";
+import { bn } from "./locales/bn.js";
+import { ar } from "./locales/ar.js";
 
 export const LANGUAGES = [
   { code: "fr", label: "Français", flag: "FR" },
@@ -25,7 +29,18 @@ export const LANGUAGES = [
   { code: "ru", label: "Русский", flag: "RU" },
   { code: "zh", label: "中文", flag: "ZH" },
   { code: "ja", label: "日本語", flag: "JA" },
+  { code: "pt", label: "Português", flag: "PT" },
+  { code: "hi", label: "हिन्दी", flag: "HI" },
+  { code: "bn", label: "বাংলা", flag: "BN" },
+  { code: "ar", label: "العربية", flag: "AR" },
 ];
+
+/** Languages written right to left: the whole document flips. */
+export const RTL_LANGUAGES = ["ar"];
+
+export function isRtl(code) {
+  return RTL_LANGUAGES.includes(code);
+}
 
 export const DEFAULT_LANGUAGE = "fr";
 const STORAGE_KEY = "ol_language";
@@ -34,6 +49,7 @@ export const en = {
   "admin.tab_settings": "Settings",
   "admin.tab_sso": "Single sign-on",
   "admin.tab_ai_log": "AI error log",
+  "admin.tab_legal": "Legal notice",
   "admin.set_ai_title": "Model provider",
   "admin.set_ai_lead": "Any OpenAI-compatible endpoint. Leave the key empty to keep the stored one.",
   "admin.set_mail_title": "E-mail",
@@ -245,6 +261,7 @@ export const en = {
   "footer.source": "Source code",
 
   "footer.contact": "Contact us",
+  "footer.legal": "Legal notice",
   "action.save": "Save",
   "action.saved": "Saved",
   "action.cancel": "Cancel",
@@ -1249,6 +1266,39 @@ export const en = {
   "about.scroll_hint": "Scroll to see what it does",
   "about.ai_badge": "Powered by AI",
   "about.stat_languages": "interface languages",
+  "legal.title": "Legal notice",
+  "legal.lead": "What this site is, who publishes it, and what you may do with it.",
+  "legal.publisher_title": "The project",
+  "legal.publisher_body": "**OpenLearn** is an independent, non-commercial project: free software for questionnaires and shared knowledge that anyone can host.\n\nIt is not affiliated with, endorsed by or connected to The Open University (United Kingdom), which runs a separate free-learning site under a similar name.\n\nContact: [developper@openlearnproject.org](mailto:developper@openlearnproject.org)",
+  "legal.license_title": "Licence",
+  "legal.license_body": "The source code is published under the **GNU Affero General Public License, version 3 only** (AGPL-3.0-only). You may run it, study it, modify it and redistribute it. If you offer a modified version over a network, you must also publish its source.\n\nThe software comes with **no warranty**. Whoever runs an instance is responsible for it: its content, its availability and its compliance with the law that applies to it.\n\nSource code: [github.com/codeyourweb/openlearn](https://github.com/codeyourweb/openlearn)",
+  "legal.contributions_title": "Contributions",
+  "legal.contributions_body": "Contributions are welcome under the project rules: a signed Contributor Licence Agreement, respectful exchanges, and a test for anything that changes behaviour. `CONTRIBUTING.md` and `CLA.md` in the repository describe the procedure.\n\nThe name **OpenLearn** and the visual identity are covered by a separate trademark policy. Reusing the code is free; presenting a modified instance as the official project is not.",
+  "legal.data_title": "Your data",
+  "legal.data_body": "An instance stores the account you create, the content you publish and the answers you give. Nothing is sold, and nothing is sent to a third party for advertising.\n\nYour account page exports your data and deletes your account. The session cookie is strictly necessary; language and theme stay in your browser, not on the server.",
+  "legal.instance_title": "This instance",
+  "legal.instance_empty": "The people running this instance have published no additional notice. Only the project notice above applies.",
+  "legal.updated": "Instance notice updated on {date}.",
+  "legal.footnote": "This page describes the software and the project. It is not legal advice.",
+  "legal.admin_title": "Legal notice",
+  "legal.admin_lead": "The project notice appears on every instance. Write here what only your instance can state: publisher, host, contact, retention. Markdown, one document per language; an empty language falls back to English.",
+  "legal.admin_view": "See the public page",
+  "legal.admin_language": "Language",
+  "legal.admin_edit": "Rich text",
+  "legal.admin_source": "Markdown",
+  "legal.admin_help": "Formatting only: no HTML, no script, no embedded frame. Anything else is shown as text.",
+  "legal.admin_save": "Save",
+  "legal.admin_saved": "Legal notice saved.",
+  "legal.admin_empty": "Nothing written in this language.",
+  "legal.admin_characters": "{n} / {max} characters",
+  "legal.admin_translate": "Translate",
+  "legal.admin_translating": "Translating…",
+  "legal.admin_translate_source": "Translate from",
+  "legal.admin_translate_done": "Translation inserted. Read it before saving: a model can mistranslate a legal term.",
+  "legal.admin_translate_failed": "The model did not answer. See the AI error log.",
+  "legal.admin_clear": "Clear this language",
+  "legal.admin_unsaved": "Unsaved changes",
+  "legal.admin_need_text": "Write the notice in one language before translating it.",
   "about.stat_formats": "questionnaire formats",
   "about.stat_selfhosted": "self-hosted, your server",
   "about.stat_tracking": "trackers, ads, third parties",
@@ -1445,7 +1495,7 @@ export const en = {
 
 
 
-export const dictionaries = { en, fr, it, es, de, ru, zh, ja };
+export const dictionaries = { en, fr, it, es, de, ru, zh, ja, pt, hi, bn, ar };
 
 function readStoredLanguage() {
   try {
@@ -1463,6 +1513,11 @@ export const i18n = {
   listeners: [],
 };
 
+// Applied before the first render: an Arabic reader gets the document flipped
+// without watching the page turn around once.
+document.documentElement.lang = i18n.language;
+document.documentElement.dir = isRtl(i18n.language) ? "rtl" : "ltr";
+
 export function currentLanguage() {
   return i18n.language;
 }
@@ -1476,6 +1531,7 @@ export function setLanguage(code) {
     /* ignore */
   }
   document.documentElement.lang = code;
+  document.documentElement.dir = isRtl(code) ? "rtl" : "ltr";
   i18n.listeners.forEach((listener) => listener(code));
 }
 

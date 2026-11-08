@@ -13,7 +13,7 @@ from pydantic import BaseModel, ConfigDict, EmailStr, Field, field_validator, mo
 from .models import SUPPORTED_LANGUAGES
 from .sanitize import html_to_text, sanitize_html, sanitize_plain
 
-LanguageCode = Literal["en", "fr", "it", "es", "de", "ru", "zh", "ja"]
+LanguageCode = Literal["en", "fr", "it", "es", "de", "ru", "zh", "ja", "pt", "hi", "bn", "ar"]
 
 
 def _clean_translation_map(value: dict | None, *, html: bool, max_length: int) -> dict[str, str]:
