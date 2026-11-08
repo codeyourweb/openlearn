@@ -34,6 +34,7 @@ const ICONS = {
   wikilink: "[[ ]]",
   image: "🖼",
   embed: '<svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="12" height="10" rx="1.6"/><path d="M6.6 6.8 4.4 8l2.2 1.2M9.4 6.8 11.6 8l-2.2 1.2"/></svg>',
+  chevron: '<svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6.5L8 10.5l4-4"/></svg>',
   table: '<svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="2" y="3" width="12" height="10" rx="1.4"/><path d="M2 6.6h12M2 9.6h12M6.4 3v10M10.4 3v10"/></svg>',
   color: "🎨",
 };
@@ -163,7 +164,18 @@ async function _wikiEditor(root, params) {
         <span class="ed-sep" aria-hidden="true"></span>
         ${tool("link", "link", t("wiki.insert_link"))}
         ${tool("wikilink", "wikilink", t("wiki.insert_wikilink"))}
-        ${tool("table", "table", t("wiki.insert_table"))}
+        <span class="ed-table" role="group" aria-label="${escapeHtml(t("wiki.table_edit"))}">
+          ${tool("table", "table", t("wiki.insert_table"))}
+          <button type="button" class="ed-tool ed-table-toggle" data-table-menu aria-expanded="false"
+                  aria-haspopup="true" title="${escapeHtml(t("wiki.table_edit"))}"
+                  aria-label="${escapeHtml(t("wiki.table_edit"))}"
+                  >${ICONS.chevron}</button>
+          <span class="ed-table-menu" id="wiki-table-menu" hidden>
+            <button type="button" data-table-act="column-before">${escapeHtml(t("wiki.table_col_before"))}</button>
+            <button type="button" data-table-act="column-after">${escapeHtml(t("wiki.table_col_after"))}</button>
+            <button type="button" data-table-act="column-delete">${escapeHtml(t("wiki.table_col_delete"))}</button>
+          </span>
+        </span>
         ${tool("embed", "embed", t("wiki.insert_quiz"))}
         <span class="ed-sep" aria-hidden="true"></span>
         <span class="ed-align" role="group" aria-label="${escapeHtml(t("wiki.fmt_align"))}">
@@ -949,6 +961,107 @@ async function _wikiEditor(root, params) {
     event.target.value = "sans";
   });
 
+  /* --------------------------------------------------------------------- */
+  /* Tables: add or remove a column where the caret stands                  */
+  /* --------------------------------------------------------------------- */
+  const tableMenu = root.querySelector("#wiki-table-menu");
+  const tableToggle = root.querySelector("[data-table-menu]");
+
+  const currentCell = () => {
+    const selection = window.getSelection();
+    if (!selection || !selection.rangeCount) return null;
+    const range = selection.getRangeAt(0);
+    if (!wysiwyg.contains(range.commonAncestorContainer)) return null;
+    let node = range.startContainer;
+    if (node.nodeType !== Node.ELEMENT_NODE) node = node.parentNode;
+    const cell = node && node.closest ? node.closest("th, td") : null;
+    return cell && wysiwyg.contains(cell) ? cell : null;
+  };
+
+  const closeTableMenu = () => {
+    if (!tableMenu) return;
+    tableMenu.hidden = true;
+    if (tableToggle) tableToggle.setAttribute("aria-expanded", "false");
+  };
+
+  const cellInRow = (row, index) => row.children[Math.max(0, index)] || row.children[row.children.length - 1];
+
+  const tableAction = (action) => {
+    // Opening the menu moved the focus to its button, and the cell is the only
+    // thing that says which column to act on.
+    restoreRichSelection();
+    const cell = currentCell();
+    if (!cell) {
+      toast(t("wiki.table_need_cell"), "error");
+      return;
+    }
+    const row = cell.parentElement;
+    const table = cell.closest("table");
+    const index = Array.prototype.indexOf.call(row.children, cell);
+    let target = cell;
+
+    if (action === "column-before" || action === "column-after") {
+      const at = action === "column-before" ? index : index + 1;
+      for (const line of Array.from(table.rows)) {
+        const header = line.parentElement && line.parentElement.tagName === "THEAD";
+        const fresh = document.createElement(header ? "th" : "td");
+        fresh.appendChild(document.createElement("br"));
+        line.insertBefore(fresh, line.children[at] || null);
+        if (line === row) target = fresh;
+      }
+    } else if (action === "column-delete") {
+      if (row.children.length <= 1) {
+        toast(t("wiki.table_last_column"), "error");
+        return;
+      }
+      for (const line of Array.from(table.rows)) {
+        const doomed = line.children[index];
+        if (doomed) doomed.remove();
+      }
+      target = cellInRow(row, index);
+    }
+
+    if (target && target.firstChild) {
+      wysiwyg.focus();
+      const range = document.createRange();
+      range.setStart(target.firstChild, 0);
+      range.collapse(true);
+      const selection = window.getSelection();
+      selection.removeAllRanges();
+      selection.addRange(range);
+    }
+    wysiwyg.dispatchEvent(new Event("input", { bubbles: true }));
+  };
+
+  // A toolbar button takes the focus away from the document, and the toolbar
+  // must act on the text the author had selected, not on what is left after the
+  // click. Keeping the last selection inside the surface covers every button.
+  document.addEventListener("selectionchange", () => saveRichSelection());
+
+  if (tableToggle && tableMenu) {
+    tableToggle.addEventListener("click", () => {
+      saveRichSelection();
+      const open = tableMenu.hidden;
+      tableMenu.hidden = !open;
+      tableToggle.setAttribute("aria-expanded", open ? "true" : "false");
+    });
+    tableMenu.querySelectorAll("[data-table-act]").forEach((button) => {
+      // mousedown, not click: pressing a button takes the selection away from the
+      // cell, and the cell is the only thing that says which column to change.
+      button.addEventListener("mousedown", (event) => {
+        event.preventDefault();
+        tableAction(button.dataset.tableAct);
+        closeTableMenu();
+      });
+    });
+    document.addEventListener("click", (event) => {
+      // The click lands on the icon inside the button, not on the button.
+      if (!tableMenu.hidden && !tableMenu.contains(event.target) && !tableToggle.contains(event.target)) {
+        closeTableMenu();
+      }
+    });
+  }
+
   root.querySelectorAll("[data-cmd]").forEach((button) => {
     button.addEventListener("click", () => {
       const command = button.dataset.cmd;
@@ -1058,8 +1171,23 @@ async function _wikiEditor(root, params) {
     markDirty();
     notifyChange();
   });
+  /* A page opens on "# Untitled". Select everything, delete, and the heading
+   * shell stays behind: everything typed next goes *inside a title*, where a
+   * line break cannot exist. The author writes three lines and gets one, then
+   * saves a title that was never a title. An emptied heading is not a title. */
+  const escapeEmptyTitle = () => {
+    const only = wysiwyg.children.length === 1 ? wysiwyg.firstElementChild : null;
+    if (!only || only.tagName !== "H1" || only.textContent.trim()) return false;
+    const paragraph = document.createElement("p");
+    paragraph.appendChild(document.createElement("br"));
+    wysiwyg.replaceChildren(paragraph);
+    placeCaretAtStart(paragraph);
+    return true;
+  };
+
   wysiwyg.addEventListener("input", () => {
     touchedByAuthor = true;
+    escapeEmptyTitle();
     paintCounter();
     markDirty();
     notifyChange();

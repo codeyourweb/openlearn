@@ -2007,3 +2007,105 @@ def test_a_link_inside_a_list_survives_the_rich_editor(browser):
         assert recorder.errors == [], f"frontend errors: {recorder.errors}"
     finally:
         context.close()
+
+
+def test_a_page_emptied_to_its_title_still_takes_a_line_break(browser):
+    """A new page opens on "# Untitled". Clearing it left the heading behind, so
+    everything typed next went *into a title*: Shift+Enter wrote a <br> inside an
+    h1, the author saw three lines in one block, and the page was saved as a
+    heading made of prose. An emptied heading is not a title."""
+    context, page, recorder = new_page(browser, viewport=(1440, 900))
+    try:
+        email = f"wiki-empty-{uuid.uuid4().hex[:8]}@example.com"
+        register_through_ui(page, email, "Camille Vide")
+
+        page.goto(f"{BASE_URL}/wiki/new", wait_until="networkidle")
+        page.fill('#wiki-create input[name="title"]', "Page vide")
+        page.click("#wiki-create button[type=submit]")
+        expect(page).to_have_url(re.compile(r".*/wiki/\d+/edit/\d+$"), timeout=15000)
+
+        surface = page.locator("#wiki-wysiwyg")
+        expect(surface).to_be_visible(timeout=15000)
+        surface.click()
+        page.keyboard.press("Control+a")
+        page.keyboard.press("Delete")
+        # The cleared page is a paragraph again, not a heading waiting for text.
+        expect(surface.locator("h1")).to_have_count(0)
+
+        page.keyboard.type("premiere ligne")
+        page.keyboard.press("Shift+Enter")
+        page.keyboard.type("deuxieme ligne")
+        markup = page.evaluate("document.querySelector('#wiki-wysiwyg').innerHTML")
+        assert "<h1" not in markup, markup
+        assert "premiere ligne<br>deuxieme ligne" in markup, markup
+
+        page.click("#wiki-save")
+        expect(page).to_have_url(re.compile(r".*/p/.+$"), timeout=15000)
+        text = page.locator("#wiki-content").inner_text()
+        assert "premiere ligne" in text and "deuxieme ligne" in text, text
+        assert text.count("\n") >= 1, text
+        assert recorder.errors == [], recorder.errors
+    finally:
+        context.close()
+
+
+def test_a_table_column_is_added_and_removed_where_the_caret_stands(browser):
+    """A table could only be inserted whole: adding or dropping a column meant
+    rewriting the markdown by hand. The menu acts on the cell holding the caret,
+    on every row at once, and refuses to empty the table of its last column."""
+    context, page, recorder = new_page(browser, viewport=(1440, 900))
+    try:
+        email = f"wiki-table-{uuid.uuid4().hex[:8]}@example.com"
+        register_through_ui(page, email, "Yann Tableau")
+
+        page.goto(f"{BASE_URL}/wiki/new", wait_until="networkidle")
+        page.fill('#wiki-create input[name="title"]', "Tableau")
+        page.click("#wiki-create button[type=submit]")
+        expect(page).to_have_url(re.compile(r".*/wiki/\d+/edit/\d+$"), timeout=15000)
+        wiki_id = int(re.search(r"/wiki/(\d+)/edit", page.url).group(1))
+
+        surface = page.locator("#wiki-wysiwyg")
+        expect(surface).to_be_visible(timeout=15000)
+        surface.click()
+        page.click('[data-cmd="table"]')
+        widths = lambda: page.evaluate(  # noqa: E731 - a one-line reader
+            "() => Array.from(document.querySelectorAll('#wiki-wysiwyg table tr')).map((r) => r.children.length)"
+        )
+        first = widths()
+        assert first and len(set(first)) == 1, first
+        columns = first[0]
+
+        def column_action(action: str) -> None:
+            page.click("[data-table-menu]")
+            expect(page.locator("#wiki-table-menu")).to_be_visible(timeout=5000)
+            page.click(f'[data-table-act="{action}"]')
+
+        # A body cell, because that is where an author writes.
+        page.click("#wiki-wysiwyg tbody tr:nth-child(1) td:nth-child(1)")
+        column_action("column-after")
+        grown = widths()
+        assert set(grown) == {columns + 1}, grown
+
+        # The caret now stands in the inserted cell: remove that same column.
+        column_action("column-delete")
+        assert set(widths()) == {columns}, widths()
+
+        # And the last column cannot be removed: the table would stop being one.
+        while widths()[0] > 1:
+            page.click("#wiki-wysiwyg tbody tr:nth-child(1) td:nth-child(1)")
+            column_action("column-delete")
+        assert set(widths()) == {1}, widths()
+        page.click("#wiki-wysiwyg tbody tr:nth-child(1) td:nth-child(1)")
+        column_action("column-delete")
+        assert set(widths()) == {1}, widths()
+
+        page.click("#wiki-save")
+        expect(page).to_have_url(re.compile(r".*/p/.+$"), timeout=15000)
+        detail = page.request.get(f"{BASE_URL}/api/v1/wiki/{wiki_id}").json()
+        markdown = detail["pages"][0]["content_md"]
+        table_lines = [line for line in markdown.splitlines() if line.strip().startswith("|")]
+        assert table_lines, markdown
+        assert len({line.count("|") for line in table_lines}) == 1, markdown
+        assert recorder.errors == [], recorder.errors
+    finally:
+        context.close()

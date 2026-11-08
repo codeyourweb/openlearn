@@ -1513,5 +1513,11 @@ export const fr = {
   "wiki.ref_label": "Nom de la référence",
   "wiki.ref_add": "Ajouter une source",
   "wiki.ref_added": "Source ajoutée.",
+  "wiki.table_edit": "Modifier ce tableau",
+  "wiki.table_col_before": "Insérer une colonne avant",
+  "wiki.table_col_after": "Insérer une colonne après",
+  "wiki.table_col_delete": "Supprimer cette colonne",
+  "wiki.table_last_column": "Un tableau doit garder au moins une colonne.",
+  "wiki.table_need_cell": "Placez d'abord le curseur dans une cellule du tableau.",
   "about.tagline": "Le savoir grandit quand il est partagé",
 };

@@ -1569,6 +1569,12 @@ export const en = {
   "wiki.ref_label": "What to call it",
   "wiki.ref_add": "Add a source",
   "wiki.ref_added": "Source added.",
+  "wiki.table_edit": "Edit this table",
+  "wiki.table_col_before": "Insert a column before",
+  "wiki.table_col_after": "Insert a column after",
+  "wiki.table_col_delete": "Delete this column",
+  "wiki.table_last_column": "A table needs at least one column.",
+  "wiki.table_need_cell": "Place the cursor in a table cell first.",
   "about.tagline": "Knowledge grows when it is shared",
 };
 

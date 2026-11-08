@@ -252,8 +252,13 @@ def create_app() -> FastAPI:
         if full_path.startswith(("api/", "media/")):
             raise HTTPException(status_code=404, detail="Not found.")
         candidate = _safe_frontend_path(full_path)
-        if candidate is not None and candidate.is_file():
-            return FileResponse(candidate)
+        # An unreadable path is not a file either. Without this the whole shell
+        # answers 500 because one directory denies stat to the application user.
+        try:
+            if candidate is not None and candidate.is_file():
+                return FileResponse(candidate)
+        except OSError:
+            pass
         index = FRONTEND_DIR / "index.html"
         if not index.is_file():
             raise HTTPException(status_code=404, detail="Frontend not built.")
