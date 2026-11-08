@@ -7,24 +7,38 @@
 #
 #   OL_SSH="ssh deploy@example.com" tools/deploy.sh
 #   OL_SSH="ssh deploy@example.com" tools/deploy.sh --no-build
+#   OL_SSH="ssh deploy@example.com" tools/deploy.sh --rollback
 #
 # Environment:
 #   OL_SSH         how to reach the server (required) — any ssh command
 #   OL_REMOTE_DIR  where the copy lives       (default: /srv/openlearn)
 #   OL_COMPOSE     compose file that runs it  (default: $OL_REMOTE_DIR/docker-compose.yml)
+#   OL_ENV_FILE    compose --env-file, when the stack needs one
 #   OL_IMAGE       image tag to build         (default: openlearn:latest)
 #   OL_CONTAINER   container to wait for      (default: openlearn)
 #   OL_HEALTH_URL  checked from the server when the container has no healthcheck
+#   OL_PRE_DEPLOY  command run on the server before the swap (backup, baseline)
+#
+# The image serving right now is kept as $OL_IMAGE-previous, so --rollback needs
+# nothing but this script and a few seconds of restart.
 set -euo pipefail
 
 SSH=${OL_SSH:?set OL_SSH, e.g. OL_SSH="ssh deploy@example.com"}
 REMOTE_DIR=${OL_REMOTE_DIR:-/srv/openlearn}
 COMPOSE=${OL_COMPOSE:-$REMOTE_DIR/docker-compose.yml}
+ENV_FILE=${OL_ENV_FILE:-}
 IMAGE=${OL_IMAGE:-openlearn:latest}
 CONTAINER=${OL_CONTAINER:-openlearn}
 HEALTH_URL=${OL_HEALTH_URL:-}
+PRE_DEPLOY=${OL_PRE_DEPLOY:-}
+COMPOSE_ARGS="-f $COMPOSE"
+[[ -n $ENV_FILE ]] && COMPOSE_ARGS="$COMPOSE_ARGS --env-file $ENV_FILE"
 SKIP_BUILD=0
-[[ ${1:-} == --no-build ]] && SKIP_BUILD=1
+ROLLBACK=0
+case ${1:-} in
+  --no-build) SKIP_BUILD=1 ;;
+  --rollback) ROLLBACK=1 ;;
+esac
 
 cd "$(dirname "$0")/.."
 ROOT=$(pwd)
@@ -49,6 +63,8 @@ if docker inspect "$CONTAINER" >/dev/null 2>&1 || $SSH "docker inspect $CONTAINE
     exit 1
   fi
 fi
+
+if [[ $ROLLBACK -eq 0 ]]; then
 
 # 1. Rotate the previous copy out of the way, keeping only one.
 STAMP=$(date +%Y%m%d-%H%M%S)
@@ -78,28 +94,50 @@ if [[ "$LOCAL_COUNT" != "$REMOTE_COUNT" ]]; then
   exit 1
 fi
 
-# 4. Rebuild and restart.
-if [[ $SKIP_BUILD -eq 1 ]]; then
+fi  # fin de la synchronisation
+
+# 4. Build and swap.
+if [[ $SKIP_BUILD -eq 1 && $ROLLBACK -eq 0 ]]; then
   echo "synchro seule, image non reconstruite"
   exit 0
 fi
 
-$SSH "set -e
-  docker build -q -t $IMAGE $REMOTE_DIR >/dev/null
-  docker compose -f $COMPOSE up -d --force-recreate >/dev/null
-  printf 'image : %s\n' \"\$(docker image inspect -f '{{.Id}}' $IMAGE | cut -c8-19)\""
+BLIND_START=$SECONDS
+if [[ $ROLLBACK -eq 1 ]]; then
+  echo "retour arrière vers $IMAGE-previous"
+  $SSH "set -e
+    docker image inspect $IMAGE-previous >/dev/null
+    docker tag $IMAGE-previous $IMAGE
+    docker compose $COMPOSE_ARGS up -d --force-recreate --no-build >/dev/null"
+else
+  # 4a. Keep what is serving now: a bad build is then one retag away.
+  $SSH "docker image inspect $IMAGE >/dev/null 2>&1 && docker tag $IMAGE $IMAGE-previous || true"
+  # 4b. Host hook, before anything is rebuilt: snapshot, baseline counts.
+  [[ -n $PRE_DEPLOY ]] && $SSH "set -e; $PRE_DEPLOY"
+  # 4c. Build while the old container keeps serving, then swap.
+  $SSH "docker build -q -t $IMAGE $REMOTE_DIR >/dev/null"
+  $SSH "docker compose $COMPOSE_ARGS up -d --force-recreate --no-build >/dev/null"
+fi
+$SSH "printf 'image : %s\n' \"\$(docker image inspect -f '{{.Id}}' $IMAGE | cut -c8-19)\""
 
 # 5. Wait for the container to report healthy, or for the URL to answer 200.
 for _ in $(seq 1 30); do
   state=$($SSH "docker inspect -f '{{if .State.Health}}{{.State.Health.Status}}{{else}}none{{end}}' $CONTAINER 2>/dev/null || echo missing")
-  [[ "$state" == "healthy" ]] && { echo "santé : healthy"; exit 0; }
+  if [[ "$state" == "healthy" ]]; then
+    echo "santé : healthy, interruption : $((SECONDS - BLIND_START)) s"
+    exit 0
+  fi
   if [[ "$state" == "none" && -n "$HEALTH_URL" ]]; then
     code=$($SSH "curl -fsS -o /dev/null -w '%{http_code}' --max-time 4 '$HEALTH_URL' || true")
-    [[ "$code" == "200" ]] && { echo "santé : 200"; exit 0; }
+    if [[ "$code" == "200" ]]; then
+      echo "santé : 200, interruption : $((SECONDS - BLIND_START)) s"
+      exit 0
+    fi
   fi
   sleep 2
 done
 
 $SSH "docker logs --tail 40 $CONTAINER" >&2 || true
 echo "le conteneur ne devient pas sain après 60 s" >&2
+echo "l'image précédente est conservée : relancer avec --rollback" >&2
 exit 1
