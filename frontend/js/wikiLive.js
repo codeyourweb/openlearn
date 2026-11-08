@@ -29,17 +29,23 @@ export function connectLive(pageId, handlers = {}) {
       flush();
     },
     sendCursor(anchor, head) {
-      if (!client.connected) return;
+      if (!ready()) return;
       client.socket.send(JSON.stringify({ type: "cursor", anchor, head }));
     },
     close() {
       client.closed = true;
-      if (client.socket) client.socket.close();
+      if (client.socket && client.socket.readyState <= WebSocket.OPEN) client.socket.close();
     },
   };
 
+  // The browser throws if send() meets a socket that is closing: `connected`
+  // only turns false when the close event arrives, which is a tick too late.
+  function ready() {
+    return client.socket !== null && client.socket.readyState === WebSocket.OPEN;
+  }
+
   function flush() {
-    if (!client.connected || client.pending === null) return;
+    if (!ready() || client.pending === null) return;
     const text = client.pending;
     client.pending = null;
     client.socket.send(JSON.stringify({ type: "op", rev: client.rev, text }));

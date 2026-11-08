@@ -79,7 +79,7 @@ export class LiveConnection {
   close() {
     this.closedByUser = true;
     this.stopPing();
-    if (this.socket) this.socket.close();
+    if (this.socket && this.socket.readyState <= WebSocket.OPEN) this.socket.close();
   }
 }
 
