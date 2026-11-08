@@ -667,6 +667,14 @@ async function _wikiEditor(root, params) {
     textarea.dispatchEvent(new Event("input", { bubbles: true }));
   };
 
+  /** The direct child of the rich surface that holds a node, if there is one. */
+  const blockChild = (node) => {
+    if (!node || !wysiwyg.contains(node)) return null;
+    let current = node;
+    while (current && current.parentNode !== wysiwyg) current = current.parentNode;
+    return current === wysiwyg ? null : current;
+  };
+
   const insertTable = () => {
     const columns = 3;
     if (model.mode === "wysiwyg") {
@@ -692,9 +700,14 @@ async function _wikiEditor(root, params) {
       table.append(head, body);
       const selection = window.getSelection();
       const range = selection && selection.rangeCount ? selection.getRangeAt(0) : null;
-      if (range && wysiwyg.contains(range.commonAncestorContainer)) {
-        range.deleteContents();
-        range.insertNode(table);
+      if (range && !range.collapsed) range.deleteContents();
+      // A table is a block. Inserting it where the caret stands nests <table> in
+      // <p> when the caret is inside a paragraph, and no parser can rebuild that
+      // the way the author meant: the saved page then drops the table. Anchor it
+      // after the block that holds the caret instead.
+      const block = blockChild(range && range.commonAncestorContainer);
+      if (block) {
+        block.after(table);
       } else {
         wysiwyg.appendChild(table);
       }

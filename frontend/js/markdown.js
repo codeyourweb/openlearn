@@ -501,10 +501,14 @@ function stripLayoutWhitespace(node) {
 
 /** WYSIWYG -> markdown. Inverse of `markdownToHtml`, for the save path. */
 export function htmlToMarkdown(html) {
-  // An inert document: it parses markup without running a script, fetching an
-  // image or firing a handler, which a detached div does not promise.
-  const container = new DOMParser().parseFromString(html || "", "text/html").body;
-  if (!container) return "\n";
+  // `<template>` parses its content without a browsing context: no script runs,
+  // no image is fetched, no handler fires. It also keeps the parser's repair
+  // rules — DOMParser does not, and it nests a table inside the paragraph the
+  // editor inserted it into, which used to drop the table from the saved page.
+  const template = document.createElement("template");
+  template.innerHTML = html || "";
+  const container = document.createElement("div");
+  container.append(template.content);
   stripLayoutWhitespace(container);
   return childrenToMarkdown(container)
     .replace(/\n{3,}/g, "\n\n")
