@@ -22,6 +22,7 @@ jobs:
   lint:
     name: Lint and static checks
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v7
 
@@ -71,6 +72,7 @@ jobs:
   tests-sqlite:
     name: Tests (SQLite)
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-python@v7
@@ -101,6 +103,7 @@ jobs:
   tests-postgres:
     name: Tests (PostgreSQL)
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     services:
       db:
         image: postgres:16-alpine
@@ -136,6 +139,7 @@ jobs:
   tests-mysql:
     name: Tests (MariaDB)
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     services:
       db:
         image: mariadb:11
@@ -174,6 +178,7 @@ jobs:
   e2e:
     name: End-to-end (Playwright)
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     env:
       # The `tests` service lives in the dev override and behind a profile:
       # without these two lines `docker compose run ... tests` answers
@@ -207,6 +212,14 @@ jobs:
       # The image already points the suite at http://127.0.0.1:8000 and the
       # service shares the application's network namespace: a loopback address is
       # the only plain-http origin Chromium still trusts.
+      # A stall on the browser image used to look exactly like a hung suite: the
+      # step sat for forty minutes without printing a line. Pull it on its own,
+      # under a deadline, so a registry problem says so.
+      - name: Fetch the browser image
+        run: |
+          base=$(awk '/^FROM/ {print $2; exit}' Dockerfile.test)
+          echo "base image: $base"
+          timeout 480 docker pull "$base" || { echo "could not fetch $base"; exit 1; }
       - name: Browser tests
         run: |
           docker compose build tests
@@ -223,6 +236,7 @@ jobs:
   image:
     name: Container image
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v7
       - uses: docker/setup-buildx-action@v4
@@ -250,6 +264,7 @@ jobs:
   security:
     name: Security
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-python@v7
