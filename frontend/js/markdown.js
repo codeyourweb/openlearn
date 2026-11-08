@@ -501,8 +501,10 @@ function stripLayoutWhitespace(node) {
 
 /** WYSIWYG -> markdown. Inverse of `markdownToHtml`, for the save path. */
 export function htmlToMarkdown(html) {
-  const container = document.createElement("div");
-  container.innerHTML = html || "";
+  // An inert document: it parses markup without running a script, fetching an
+  // image or firing a handler, which a detached div does not promise.
+  const container = new DOMParser().parseFromString(html || "", "text/html").body;
+  if (!container) return "\n";
   stripLayoutWhitespace(container);
   return childrenToMarkdown(container)
     .replace(/\n{3,}/g, "\n\n")

@@ -291,7 +291,10 @@ def ping(slug: str, db: OrmSession = Depends(get_db)) -> dict[str, object]:
     try:
         document = sso.discovery(provider)
     except sso.SsoError as exc:
-        return {"kind": "oidc", "ready": False, "detail": str(exc)}
+        # The message quotes the discovery URL and the transport failure, and
+        # this endpoint answers whoever asks: keep the detail in the log.
+        logger.warning("SSO discovery failed for %s: %s", slug, exc)
+        return {"kind": "oidc", "ready": False, "detail": "Discovery failed."}
     return {
         "kind": "oidc",
         "ready": True,

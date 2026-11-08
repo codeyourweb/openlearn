@@ -4,6 +4,7 @@
 
 from __future__ import annotations
 
+import re
 from datetime import timedelta
 
 from fastapi import APIRouter, Depends, HTTPException, Request, Response, status
@@ -87,21 +88,29 @@ def clear_auth_cookies(response: Response) -> None:
     response.delete_cookie(settings.csrf_cookie_name, path="/", domain=settings.cookie_domain)
 
 
+# What `new_secret(24)` produces: 32 URL-safe characters.
+_CSRF_SHAPE = re.compile(r"[A-Za-z0-9_-]{20,64}")
+
+
 @router.get("/csrf")
 def issue_csrf(response: Response, request: Request) -> dict[str, str]:
-    existing = request.cookies.get(settings.csrf_cookie_name)
-    token = existing or new_secret(24)
-    if not existing:
-        response.set_cookie(
-            key=settings.csrf_cookie_name,
-            value=token,
-            max_age=settings.access_token_ttl_minutes * 60,
-            httponly=False,
-            secure=is_secure_request(request),
-            samesite="lax",
-            path="/",
-            domain=settings.cookie_domain,
-        )
+    # A cookie the browser sends back is still caller-controlled: anyone can set
+    # one before the first visit. Reissuing it verbatim put that value into our
+    # own Set-Cookie header, so only a well-formed token is kept.
+    existing = request.cookies.get(settings.csrf_cookie_name) or ""
+    if _CSRF_SHAPE.fullmatch(existing):
+        return {"csrf_token": existing}
+    token = new_secret(24)
+    response.set_cookie(
+        key=settings.csrf_cookie_name,
+        value=token,
+        max_age=settings.access_token_ttl_minutes * 60,
+        httponly=False,
+        secure=is_secure_request(request),
+        samesite="lax",
+        path="/",
+        domain=settings.cookie_domain,
+    )
     return {"csrf_token": token}
 
 

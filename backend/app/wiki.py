@@ -197,8 +197,11 @@ _FONT_BLOCK = re.compile(r"<p(?P<attrs>[^>]*)>\s*\{f:(serif|sans|mono|script)\}(
 _CODE_BLOCK = re.compile(r"(<pre.*?</pre>|<code.*?</code>)", re.S)
 
 # `![alt](/media/x.webp){width=320}` — a size the author dragged in the editor.
-_IMAGE_SIZE = re.compile(r"(!\[[^\]]*\]\([^)\s]+)\)\{width=(\d{1,4})(%?)\}")
-_IMAGE_SIZED = re.compile(r'<img\b([^>]*?)title="=w(\d{1,4})(%?)"([^>]*?)>')
+# Every gap is bounded: a page body may be 400 000 characters long, and an
+# unbounded gap followed by a literal is quadratic on a page that never closes
+# the bracket. The limits are far above what alt text or a URL can be.
+_IMAGE_SIZE = re.compile(r"(!\[[^\]]{0,400}\]\([^)\s]{0,800})\)\{width=(\d{1,4})(%?)\}")
+_IMAGE_SIZED = re.compile(r'<img\b([^>]{0,800}?)title="=w(\d{1,4})(%?)"([^>]{0,800}?)>')
 
 
 def _apply_image_sizes(text: str) -> str:
@@ -377,15 +380,18 @@ def outline(markdown: str) -> list[dict[str, object]]:
     """Headings of a page, for the table of contents of the reader."""
     items: list[dict[str, object]] = []
     for line in (markdown or "").splitlines():
-        match = re.match(r"^(#{1,4})\s+(.*)$", line.strip())
-        if not match:
+        # Counting the hashes walks the line once; `^(#{1,4})\s+(.*)$` made the
+        # engine retry the whitespace run against the rest of the line at every
+        # position, which a page of spaces turns into minutes of CPU.
+        stripped = line.strip()
+        depth = len(stripped) - len(stripped.lstrip("#"))
+        if not 1 <= depth <= 4 or len(stripped) <= depth or stripped[depth] not in " \t":
             continue
-        depth = len(match.group(1))
         if depth == 1:
             # The level-1 heading repeats the page title shown above the article:
             # a one-line table of contents saying the same thing is noise.
             continue
-        title = re.sub(r"[`*_]", "", match.group(2)).strip()
+        title = re.sub(r"[`*_]", "", stripped[depth:]).strip()
         items.append({"depth": depth, "text": title, "anchor": slugify(title, fallback="section")})
     return items
 
@@ -393,9 +399,11 @@ def outline(markdown: str) -> list[dict[str, object]]:
 def excerpt(markdown: str, limit: int = 180) -> str:
     """First meaningful sentence of a page, for lists and search results."""
     text = re.sub(r"```.*?```", " ", markdown or "", flags=re.DOTALL)
-    text = re.sub(r"!\[[^\]]*\]\([^)]*\)", " ", text)
-    text = re.sub(r"\[\[([^\]\|]+)(\|[^\]]+)?\]\]", r"\1", text)
-    text = re.sub(r"\[([^\]]+)\]\([^)]*\)", r"\1", text)
+    # Same reason as the image-size pattern: a bounded gap keeps these linear on
+    # a hostile body, and these limits are well past a real caption or URL.
+    text = re.sub(r"!\[[^\]]{0,400}\]\([^)]{0,800}\)", " ", text)
+    text = re.sub(r"\[\[([^\]|]{0,300})(\|[^\]]{0,300})?\]\]", r"\1", text)
+    text = re.sub(r"\[([^\]]{0,300})\]\([^)]{0,800}\)", r"\1", text)
     text = re.sub(r"[#>*_`]", "", text)
     text = " ".join(text.split())
     return text[:limit] + ("…" if len(text) > limit else "")
