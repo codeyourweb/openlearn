@@ -53,7 +53,7 @@ async function page_(endpoint, params, page) {
 }
 
 export async function renderAdmin({ query }) {
-  if (!state.user || !state.user.is_admin) {
+  if (!state.user || !state.user.is_staff) {
     const root = document.createElement("div");
     root.innerHTML = `
       <div class="empty">
@@ -64,7 +64,9 @@ export async function renderAdmin({ query }) {
   }
 
   const root = document.createElement("div");
+  const ADMIN_ONLY_TABS = ["settings", "sso", "ailog"];
   let tab = (query && query.tab) || "queue";
+  if (!state.user.is_admin && ADMIN_ONLY_TABS.includes(tab)) tab = "queue";
 
   const render = async () => {
     root.innerHTML = `<div class="loading">${t("common.loading")}</div>`;
@@ -97,9 +99,15 @@ export async function renderAdmin({ query }) {
         <button class="tab ${tab === "users" ? "is-active" : ""}" data-tab="users">${t("admin.tab_users")}</button>
         <button class="tab ${tab === "reviews" ? "is-active" : ""}" data-tab="reviews">${t("admin.tab_reviews")}</button>
         <button class="tab ${tab === "events" ? "is-active" : ""}" data-tab="events">${t("admin.tab_events")}</button>
-        <button class="tab ${tab === "settings" ? "is-active" : ""}" data-tab="settings">${t("admin.tab_settings")}</button>
+        ${
+          // AI, mail and SSO configuration stay with the administrator; a
+          // moderator only validates content.
+          state.user.is_admin
+            ? `<button class="tab ${tab === "settings" ? "is-active" : ""}" data-tab="settings">${t("admin.tab_settings")}</button>
         <button class="tab ${tab === "sso" ? "is-active" : ""}" data-tab="sso">${t("admin.tab_sso")}</button>
-        <button class="tab ${tab === "ailog" ? "is-active" : ""}" data-tab="ailog">${t("admin.tab_ai_log")}</button>
+        <button class="tab ${tab === "ailog" ? "is-active" : ""}" data-tab="ailog">${t("admin.tab_ai_log")}</button>`
+            : ""
+        }
       </div>
       <div id="tab-panel"></div>`;
 
@@ -311,6 +319,7 @@ export async function renderAdmin({ query }) {
               .map(
                 (row) => `
               <tr data-user="${row.id}" data-is-admin="${row.is_admin ? 1 : 0}"
+                  data-is-moderator="${row.is_moderator ? 1 : 0}"
                   data-is-trusted="${row.is_trusted ? 1 : 0}" data-is-active="${row.is_active ? 1 : 0}">
                 <td>
                   <strong>${escapeHtml(row.display_name)}</strong>
@@ -318,11 +327,12 @@ export async function renderAdmin({ query }) {
                 </td>
                 <td>
                   ${row.is_admin ? `<span class="pill ai">${t("admin.admin")}</span>` : ""}
+                  ${row.is_moderator ? `<span class="pill ai">${t("admin.moderator")}</span>` : ""}
                   ${row.is_trusted ? `<span class="pill public">${t("admin.trusted")}</span>` : ""}
                   ${row.is_active ? "" : `<span class="pill rejected">${t("admin.disable")}</span>`}
                   ${
                     // A blank role cell is ambiguous: say "member" rather than nothing.
-                    row.is_admin || row.is_trusted || !row.is_active
+                    row.is_admin || row.is_moderator || row.is_trusted || !row.is_active
                       ? ""
                       : `<span class="pill">${escapeHtml(t("admin.member"))}</span>`
                   }
@@ -331,10 +341,19 @@ export async function renderAdmin({ query }) {
                 <td class="small-note">${row.last_login_at ? new Date(row.last_login_at).toLocaleString() : "—"}</td>
                 <td class="right">
                   <div class="row-wrap end">
-                    <button class="btn btn-sm" data-act="toggle-admin">${row.is_admin ? t("admin.revoke_admin") : t("admin.grant_admin")}</button>
+                    ${
+                      // A moderator only vouches for members; roles, suspension
+                      // and deletion belong to the administrator.
+                      state.user.is_admin
+                        ? `<button class="btn btn-sm" data-act="toggle-admin">${row.is_admin ? t("admin.revoke_admin") : t("admin.grant_admin")}</button>
+                    <button class="btn btn-sm" data-act="toggle-moderator">${row.is_moderator ? t("admin.revoke_moderator") : t("admin.grant_moderator")}</button>
                     <button class="btn btn-sm" data-act="toggle-trusted">${row.is_trusted ? t("admin.revoke_trusted") : t("admin.grant_trusted")}</button>
                     <button class="btn btn-sm" data-act="toggle-active">${row.is_active ? t("admin.disable") : t("admin.enable")}</button>
-                    <button class="btn btn-sm btn-danger" data-act="delete-user">${t("action.delete")}</button>
+                    <button class="btn btn-sm btn-danger" data-act="delete-user">${t("action.delete")}</button>`
+                        : row.is_admin || row.is_moderator
+                          ? `<span class="small-note">—</span>`
+                          : `<button class="btn btn-sm" data-act="toggle-trusted">${row.is_trusted ? t("admin.revoke_trusted") : t("admin.grant_trusted")}</button>`
+                    }
                   </div>
                 </td>
               </tr>`,
@@ -483,6 +502,7 @@ export async function renderAdmin({ query }) {
       // what the row already says was a wasted round trip.
       const user = {
         is_admin: userRow.dataset.isAdmin === "1",
+        is_moderator: userRow.dataset.isModerator === "1",
         is_trusted: userRow.dataset.isTrusted === "1",
         is_active: userRow.dataset.isActive === "1",
       };
@@ -490,6 +510,8 @@ export async function renderAdmin({ query }) {
       try {
         if (action === "toggle-admin") {
           await api.patch(`/api/v1/admin/users/${userId}`, { is_admin: !user.is_admin });
+        } else if (action === "toggle-moderator") {
+          await api.patch(`/api/v1/admin/users/${userId}`, { is_moderator: !user.is_moderator });
         } else if (action === "toggle-trusted") {
           await api.patch(`/api/v1/admin/users/${userId}`, { is_trusted: !user.is_trusted });
         } else if (action === "toggle-active") {

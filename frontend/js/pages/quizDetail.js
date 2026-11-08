@@ -56,7 +56,7 @@ export async function renderQuizDetail({ id, query }) {
     },
   });
 
-  const isOwner = isLoggedIn() && state.user && (quiz.owner_id === state.user.id || state.user.is_admin);
+  const isOwner = isLoggedIn() && state.user && (quiz.owner_id === state.user.id || state.user.is_staff);
   const status = quiz.status;
   const isStory = quiz.mode === "adventure";
   const languageList = quiz.languages || [quiz.default_language];
@@ -444,7 +444,7 @@ export async function renderQuizDetail({ id, query }) {
                     ${
                       status !== "public"
                         ? `<button class="btn btn-sm btn-primary" data-act="publish">${
-                            state.user && (state.user.is_trusted || state.user.is_admin)
+                            state.user && (state.user.is_trusted || state.user.is_staff)
                               ? t("quiz.publish")
                               : t("quiz.publish_request")
                           }</button>`

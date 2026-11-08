@@ -196,6 +196,19 @@ def make_admin(client: TestClient) -> None:
         db.commit()
 
 
+def make_moderator(client: TestClient) -> None:
+    """Grant the signed-in user moderator rights (test shortcut)."""
+    from app.db import SessionLocal
+    from app.models import User
+
+    me = client.get("/api/v1/auth/me").json()
+    with SessionLocal() as db:
+        user = db.get(User, me["id"])
+        assert user is not None
+        user.is_moderator = True
+        db.commit()
+
+
 def publish_quiz(client: TestClient, quiz_id: int, *, trusted: bool = True) -> dict:
     if trusted:
         make_trusted(client)

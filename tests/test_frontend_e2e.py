@@ -1732,3 +1732,45 @@ def test_a_phone_shows_the_problem_before_it_asks_for_a_scroll(browser):
             assert recorder.errors == [], recorder.errors
         finally:
             context.close()
+
+
+def test_the_first_visual_shows_both_a_wiki_and_a_quiz(browser):
+    """One picture for the whole product: a shared document, then a live quiz.
+
+    The hero used to repeat the quiz mock that already sits in the first scene
+    below it. It is now a two-act window: a wiki being written by three people,
+    and a quiz being answered. The tabs must switch by hand and the panel must
+    follow.
+    """
+    context, page, recorder = new_page(browser, viewport=(1440, 900))
+    try:
+        page.goto(f"{BASE_URL}/about", wait_until="networkidle")
+        page.wait_for_selector("[data-studio]", timeout=20000)
+        page.wait_for_timeout(1200)
+
+        assert page.locator("[data-studio-panel]").count() == 2
+        on = page.evaluate(
+            "[...document.querySelectorAll('[data-studio-panel]')].filter(p => p.classList.contains('is-on')).map(p => p.dataset.studioPanel)"
+        )
+        assert len(on) == 1, f"exactly one act is visible, got {on}"
+
+        page.evaluate("document.querySelector('[data-studio-tab=\"quiz\"]').click()")
+        page.wait_for_timeout(400)
+        assert page.evaluate("document.querySelector('[data-studio]').dataset.on") == "quiz"
+        assert page.evaluate("[...document.querySelectorAll('[data-studio-panel]')].filter(p => p.classList.contains('is-on')).length") == 1
+        assert recorder.errors == [], recorder.errors
+    finally:
+        context.close()
+
+
+def test_the_footer_offers_a_way_to_write_to_the_project(browser):
+    """A visitor who wants to help or ask something finds a mail address."""
+    context, page, recorder = new_page(browser, viewport=(1440, 900))
+    try:
+        page.goto(f"{BASE_URL}/", wait_until="networkidle")
+        page.wait_for_selector("footer", timeout=20000)
+        hrefs = page.evaluate("[...document.querySelectorAll('footer a')].map(a => a.getAttribute('href') || '')")
+        assert any(href.startswith("mailto:developper@openlearnproject.org") for href in hrefs), hrefs
+        assert recorder.errors == [], recorder.errors
+    finally:
+        context.close()

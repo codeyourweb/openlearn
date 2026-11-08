@@ -82,6 +82,7 @@ from ..wiki import (
     side_by_side_diff,
     excerpt,
     outline,
+    reflow_markdown,
     render_markdown,
     rewrite_links_for_export,
     slugify,
@@ -105,7 +106,7 @@ def _member_role(db: OrmSession, wiki: Wiki, user: User | None) -> str | None:
         return None
     if user.id == wiki.owner_id:
         return "owner"
-    if user.is_admin:
+    if user.is_staff:
         # Administrators write everywhere, not just moderate: a moderator who
         # cannot fix a typo has to file a proposal against himself.
         return "maintainer"
@@ -188,7 +189,7 @@ def _serialise_wiki(
         "can_write": _writable(role),
         # Only the owner (or an administrator) may erase the whole wiki.
         "can_delete": bool(
-            user is not None and (wiki.owner_id == user.id or getattr(user, "is_admin", False))
+            user is not None and (wiki.owner_id == user.id or getattr(user, "is_staff", False))
         ),
         "created_at": wiki.created_at,
         "updated_at": wiki.updated_at,
@@ -285,7 +286,7 @@ def list_wikis(
         clauses.append(Wiki.owner_id == user.id)
         if member_ids:
             clauses.append(Wiki.id.in_(member_ids))
-        if user.is_admin:
+        if user.is_staff:
             clauses.append(Wiki.status == "pending")
     statement = select(Wiki).where(or_(*clauses))
     if mine and user is not None:
@@ -465,7 +466,7 @@ def _insert_pages(
             wiki_id=wiki.id,
             slug=unique_slug(slugify(imported.title, fallback="page"), taken),
             title=imported.title,
-            content_md=imported.content_md,
+            content_md=reflow_markdown(imported.content_md),
             tags=imported.tags,
             position=position,
             author_id=user.id,
@@ -517,8 +518,8 @@ async def import_archive(
     db.flush()
     created = _insert_pages(db, wiki, imported.pages, user, note=f"Imported from {imported.source}")
     if visibility == "public":
-        wiki.is_public = bool(user.is_admin)
-        wiki.status = "public" if user.is_admin else "pending"
+        wiki.is_public = bool(user.is_staff)
+        wiki.status = "public" if user.is_staff else "pending"
     db.commit()
     db.refresh(wiki)
     return {
@@ -585,7 +586,7 @@ def delete_wiki(
     user: User = Depends(require_user),
 ):
     wiki = _get_wiki(db, wiki_id)
-    if wiki.owner_id != user.id and not user.is_admin:
+    if wiki.owner_id != user.id and not user.is_staff:
         raise HTTPException(status_code=403, detail="Only the owner can delete this wiki.")
     page_ids = list(db.scalars(select(WikiPage.id).where(WikiPage.wiki_id == wiki.id)).all())
     if page_ids:
@@ -619,7 +620,7 @@ def publish_wiki(
         db.commit()
         return _serialise_wiki(db, wiki, role, user)
 
-    trusted = user.is_trusted or user.is_admin
+    trusted = user.is_trusted or user.is_staff
     wiki.status = "public" if trusted else "pending"
     wiki.is_public = trusted
     wiki.published_at = utcnow() if trusted else None
@@ -665,7 +666,7 @@ def add_member(
     user: User = Depends(require_user),
 ):
     wiki = _get_wiki(db, wiki_id)
-    if wiki.owner_id != user.id and not user.is_admin:
+    if wiki.owner_id != user.id and not user.is_staff:
         raise HTTPException(status_code=403, detail="Only the owner invites members.")
     target = db.scalar(select(User).where(User.email == payload.email))
     if target is None:
@@ -691,7 +692,7 @@ def remove_member(
     user: User = Depends(require_user),
 ):
     wiki = _get_wiki(db, wiki_id)
-    if wiki.owner_id != user.id and not user.is_admin:
+    if wiki.owner_id != user.id and not user.is_staff:
         raise HTTPException(status_code=403, detail="Only the owner manages members.")
     db.execute(
         delete(WikiMember).where(WikiMember.wiki_id == wiki.id, WikiMember.user_id == member_id)
@@ -794,7 +795,7 @@ def create_page(
         wiki_id=wiki.id,
         slug=unique_slug(slugify(payload.title, fallback="page"), taken),
         title=payload.title,
-        content_md=payload.content_md or f"# {payload.title}\n",
+        content_md=reflow_markdown(payload.content_md or f"# {payload.title}\n"),
         tags=payload.tags,
         position=total,
         author_id=user.id,
@@ -859,7 +860,7 @@ def create_capsule(
             wiki_id=wiki.id,
             slug=slug,
             title=title,
-            content_md=body,
+            content_md=reflow_markdown(body),
             tags=[],
             position=total + offset,
             parent_id=previous_id,
@@ -948,7 +949,7 @@ def save_page(
             author_id=user.id,
             base_number=page.current_version_number,
             title=payload.title,
-            content_md=payload.content_md,
+            content_md=reflow_markdown(payload.content_md),
             note=payload.note or "Suggested update",
         )
 
@@ -973,7 +974,7 @@ def save_page(
         taken.discard(page.slug)
         page.slug = unique_slug(slugify(payload.title, fallback="page"), taken)
     page.title = payload.title
-    page.content_md = payload.content_md
+    page.content_md = reflow_markdown(payload.content_md)
     page.tags = payload.tags
     version = _freeze(db, page, user, note=payload.note)
     # Publishing ends the working copy: what was typed becomes the page.
@@ -1602,7 +1603,7 @@ def create_proposal(
         author_id=user.id,
         base_number=payload.base_number or page.current_version_number,
         title=payload.title,
-        content_md=payload.content_md,
+        content_md=reflow_markdown(payload.content_md),
         note=payload.note,
     )
     db.add(proposal)
@@ -1824,7 +1825,7 @@ def _linkable_quiz(db: OrmSession, quiz_id: int, user: User) -> Quiz:
     quiz = db.get(Quiz, quiz_id)
     if quiz is None:
         raise HTTPException(status_code=404, detail="Questionnaire not found.")
-    if quiz.owner_id != user.id and quiz.status != "public" and not user.is_admin:
+    if quiz.owner_id != user.id and quiz.status != "public" and not user.is_staff:
         raise HTTPException(status_code=403, detail="That questionnaire is not yours to share.")
     return quiz
 

@@ -54,7 +54,7 @@ def _public_view(quiz: Quiz, user: User | None) -> bool:
         return True
     if user is None:
         return False
-    return quiz.owner_id == user.id or user.is_admin
+    return quiz.owner_id == user.id or user.is_staff
 
 
 def _arm_clock(run: AdventureRun, snapshot: dict, now: datetime | None = None) -> None:

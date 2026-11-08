@@ -197,11 +197,25 @@ def require_user(request: Request, db: OrmSession = Depends(get_db)) -> User:
 
 
 def require_admin(user: User = Depends(require_user)) -> User:
-    """Administrator-only dependency (moderation, user management)."""
+    """Administrator-only dependency (instance configuration)."""
     if not user.is_admin:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Administrator privileges are required.",
+        )
+    return user
+
+
+def require_staff(user: User = Depends(require_user)) -> User:
+    """Moderation dependency: an administrator or a moderator.
+
+    A moderator validates wikis, quizzes and accounts, but the instance
+    configuration (AI, mail, SSO) stays behind ``require_admin``.
+    """
+    if not user.is_staff:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Moderator privileges are required.",
         )
     return user
 

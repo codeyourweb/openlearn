@@ -111,18 +111,36 @@ export async function renderHost({ code }) {
     }, 120);
   };
 
+  /** The answer grid, shared by the host view and the host-as-player view.
+   *
+   * A host who joined their own session used to see the question listed twice:
+   * once as the static grid above, once as buttons in a separate card. The grid
+   * itself becomes the answer surface in that case, so the question and its
+   * options appear exactly once — same as for any other player.
+   */
   const optionsBlock = (question, reveal) => {
     const counts = new Map((reveal ? reveal.options : []).map((option) => [option.id, option.count]));
     const correct = new Set(reveal ? reveal.correct_option_ids : []);
+    const playing =
+      !reveal && iAmPlaying() && !closed && !(question.answered_ids || []).includes(myPid());
     return `
       <div class="options-grid">
         ${question.options
           .map((option, index) => {
             const isCorrect = correct.has(option.id);
             const cls = reveal ? (isCorrect ? "correct" : "wrong") : "";
+            const letter = String.fromCharCode(65 + index);
+            if (playing) {
+              return `
+              <button class="option-btn ${selection.has(option.id) ? "is-picked" : ""}"
+                      type="button" data-pick="${option.id}" data-picked="0" aria-pressed="${selection.has(option.id)}">
+                <span class="letter">${letter}</span>
+                <span>${escapeHtml(option.text)}</span>
+              </button>`;
+            }
             return `
               <div class="option-btn ${cls}" aria-disabled="true">
-                <span class="letter">${String.fromCharCode(65 + index)}</span>
+                <span class="letter">${letter}</span>
                 <span>${escapeHtml(option.text)}</span>
                 ${reveal ? `<span class="option-count">${counts.get(option.id) || 0}</span>` : ""}
               </div>`;
@@ -151,23 +169,12 @@ export async function renderHost({ code }) {
         </div>
       </section>`;
     }
+    // Answer control only: the question and its options are already on screen,
+    // as interactive buttons, a few lines above. Repeating them here is what
+    // made a hosting player read every question twice.
     return `<section class="card host-play mt-2">
-      <div class="card-head">
-        <h3>${t("host.you_play")}</h3>
-        <span class="badge muted">${question.multiple_answers ? t("play.multiple_hint") : t("play.single_hint")}</span>
-      </div>
-      <div class="answers-inline">
-        ${question.options
-          .map(
-            (option, index) => `
-          <button class="option-btn" data-pick="${option.id}" data-picked="0">
-            <span class="letter">${String.fromCharCode(65 + index)}</span>
-            <span>${escapeHtml(option.text)}</span>
-          </button>`,
-          )
-          .join("")}
-      </div>
-      <div class="row end mt-2">
+      <div class="row between row-wrap">
+        <span class="hint">${question.multiple_answers ? t("play.multiple_hint") : t("play.single_hint")}</span>
         <button class="btn btn-primary" data-act="send-answer" disabled>${t("play.submit")}</button>
       </div>
     </section>`;
