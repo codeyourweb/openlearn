@@ -1,0 +1,1205 @@
+{
+  "kind": "quizzes",
+  "items": [
+    {
+      "title": "Mixed revision — set 1",
+      "description": "Three questions from different subjects: identify the topic before answering.",
+      "mode": "qcm",
+      "default_language": "en",
+      "wrong_answer_policy": "zero",
+      "questions": [
+        {
+          "text_html": "What is erosion?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "The transport of material by wind, water or ice",
+              "is_correct": true
+            },
+            {
+              "text": "The melting of rock",
+              "is_correct": false
+            },
+            {
+              "text": "The growth of crystals",
+              "is_correct": false
+            },
+            {
+              "text": "The freezing of soil",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What is a cognate?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "A word that resembles one in another language",
+              "is_correct": true
+            },
+            {
+              "text": "A false friend",
+              "is_correct": false
+            },
+            {
+              "text": "A borrowed grammar rule",
+              "is_correct": false
+            },
+            {
+              "text": "A dialect",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What is syncopation?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "An accent placed off the expected beat",
+              "is_correct": true
+            },
+            {
+              "text": "A very slow tempo",
+              "is_correct": false
+            },
+            {
+              "text": "A silent bar",
+              "is_correct": false
+            },
+            {
+              "text": "A chord change",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Mixed revision — set 2",
+      "description": "Three questions from different subjects: identify the topic before answering.",
+      "mode": "qcm",
+      "default_language": "en",
+      "wrong_answer_policy": "zero",
+      "questions": [
+        {
+          "text_html": "What does a currency depreciation change?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Imports become dearer and exports cheaper",
+              "is_correct": true
+            },
+            {
+              "text": "Both become dearer",
+              "is_correct": false
+            },
+            {
+              "text": "Nothing changes",
+              "is_correct": false
+            },
+            {
+              "text": "Only savings change",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What is the main cost of a long prompt?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "More tokens to process on every turn",
+              "is_correct": true
+            },
+            {
+              "text": "Slower model download",
+              "is_correct": false
+            },
+            {
+              "text": "A larger context window",
+              "is_correct": false
+            },
+            {
+              "text": "Fewer possible answers",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What is a balanced diet?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "One supplying energy and nutrients in the right proportions",
+              "is_correct": true
+            },
+            {
+              "text": "One with equal weights of food",
+              "is_correct": false
+            },
+            {
+              "text": "One without fat",
+              "is_correct": false
+            },
+            {
+              "text": "One with only plants",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Mixed revision — set 3",
+      "description": "Three questions from different subjects: identify the topic before answering.",
+      "mode": "qcm",
+      "default_language": "en",
+      "wrong_answer_policy": "zero",
+      "questions": [
+        {
+          "text_html": "What share of Earth's water is held by the oceans?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "About 97%",
+              "is_correct": true
+            },
+            {
+              "text": "About 71%",
+              "is_correct": false
+            },
+            {
+              "text": "About 50%",
+              "is_correct": false
+            },
+            {
+              "text": "About 30%",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "Why do learners overgeneralise rules?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "They apply a pattern beyond its domain",
+              "is_correct": true
+            },
+            {
+              "text": "They are careless",
+              "is_correct": false
+            },
+            {
+              "text": "They forget vocabulary",
+              "is_correct": false
+            },
+            {
+              "text": "They read too little",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "Why do official recommendations change?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "The evidence base improves over time",
+              "is_correct": true
+            },
+            {
+              "text": "Governments change",
+              "is_correct": false
+            },
+            {
+              "text": "Foods change",
+              "is_correct": false
+            },
+            {
+              "text": "People lie",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Mixed revision — set 4",
+      "description": "Three questions from different subjects: identify the topic before answering.",
+      "mode": "qcm",
+      "default_language": "en",
+      "wrong_answer_policy": "zero",
+      "questions": [
+        {
+          "text_html": "Why do trees help a city?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "They shade, cool air and slow storm water",
+              "is_correct": true
+            },
+            {
+              "text": "They consume cars",
+              "is_correct": false
+            },
+            {
+              "text": "They replace drains",
+              "is_correct": false
+            },
+            {
+              "text": "They block wind only",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What is the smallest unit of life?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "The cell",
+              "is_correct": true
+            },
+            {
+              "text": "The atom",
+              "is_correct": false
+            },
+            {
+              "text": "The organ",
+              "is_correct": false
+            },
+            {
+              "text": "The tissue",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "Which ocean is the largest and deepest?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Pacific",
+              "is_correct": true
+            },
+            {
+              "text": "Atlantic",
+              "is_correct": false
+            },
+            {
+              "text": "Indian",
+              "is_correct": false
+            },
+            {
+              "text": "Arctic",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Mixed revision — set 5",
+      "description": "Three questions from different subjects: identify the topic before answering.",
+      "mode": "qcm",
+      "default_language": "en",
+      "wrong_answer_policy": "zero",
+      "questions": [
+        {
+          "text_html": "What is a hallucination?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "A confident answer that is not supported by facts",
+              "is_correct": true
+            },
+            {
+              "text": "A slow response",
+              "is_correct": false
+            },
+            {
+              "text": "A refusal to answer",
+              "is_correct": false
+            },
+            {
+              "text": "A formatting error",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What is a calorie?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "A unit of energy",
+              "is_correct": true
+            },
+            {
+              "text": "A unit of mass",
+              "is_correct": false
+            },
+            {
+              "text": "A vitamin",
+              "is_correct": false
+            },
+            {
+              "text": "A portion size",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "Why is fresh water a limited resource?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Only a small share of water is fresh and reachable",
+              "is_correct": true
+            },
+            {
+              "text": "It is destroyed by use",
+              "is_correct": false
+            },
+            {
+              "text": "Rivers dry up permanently",
+              "is_correct": false
+            },
+            {
+              "text": "Rainwater is unusable",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Mixed revision — set 6",
+      "description": "Three questions from different subjects: identify the topic before answering.",
+      "mode": "qcm",
+      "default_language": "en",
+      "wrong_answer_policy": "zero",
+      "questions": [
+        {
+          "text_html": "Which nutrient repairs muscle after training?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Protein",
+              "is_correct": true
+            },
+            {
+              "text": "Fat",
+              "is_correct": false
+            },
+            {
+              "text": "Fibre",
+              "is_correct": false
+            },
+            {
+              "text": "Sugar",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What is the speed of light in a vacuum?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "About 300,000 km/s",
+              "is_correct": true
+            },
+            {
+              "text": "About 30,000 km/s",
+              "is_correct": false
+            },
+            {
+              "text": "About 3,000 km/s",
+              "is_correct": false
+            },
+            {
+              "text": "About 3,000,000 km/s",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What forms where two plates pull apart?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "A rift, often filled by a new ocean",
+              "is_correct": true
+            },
+            {
+              "text": "A mountain range",
+              "is_correct": false
+            },
+            {
+              "text": "A desert",
+              "is_correct": false
+            },
+            {
+              "text": "A glacier",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Mixed revision — set 7",
+      "description": "Three questions from different subjects: identify the topic before answering.",
+      "mode": "qcm",
+      "default_language": "en",
+      "wrong_answer_policy": "zero",
+      "questions": [
+        {
+          "text_html": "What is the quickest sanity check on a result?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Compare it with an estimate you expect",
+              "is_correct": true
+            },
+            {
+              "text": "Read it twice",
+              "is_correct": false
+            },
+            {
+              "text": "Ask a colleague",
+              "is_correct": false
+            },
+            {
+              "text": "Recalculate slowly",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "Which two continents fit together like puzzle pieces?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Africa and South America",
+              "is_correct": true
+            },
+            {
+              "text": "Europe and Asia",
+              "is_correct": false
+            },
+            {
+              "text": "Australia and Antarctica",
+              "is_correct": false
+            },
+            {
+              "text": "Asia and North America",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "Why is a basket of prices revised?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Consumption habits change over time",
+              "is_correct": true
+            },
+            {
+              "text": "Politicians dislike the old one",
+              "is_correct": false
+            },
+            {
+              "text": "Prices stop moving",
+              "is_correct": false
+            },
+            {
+              "text": "It is a legal requirement",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Mixed revision — set 8",
+      "description": "Three questions from different subjects: identify the topic before answering.",
+      "mode": "qcm",
+      "default_language": "en",
+      "wrong_answer_policy": "zero",
+      "questions": [
+        {
+          "text_html": "What did the telegraph change?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "The speed at which news could travel",
+              "is_correct": true
+            },
+            {
+              "text": "The cost of paper",
+              "is_correct": false
+            },
+            {
+              "text": "The shape of cities",
+              "is_correct": false
+            },
+            {
+              "text": "The length of the working day",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "If a car covers 120 km in 1.5 h, what is its average speed?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "80 km/h",
+              "is_correct": true
+            },
+            {
+              "text": "60 km/h",
+              "is_correct": false
+            },
+            {
+              "text": "100 km/h",
+              "is_correct": false
+            },
+            {
+              "text": "120 km/h",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What does JSON represent?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Structured data as nested keys and values",
+              "is_correct": true
+            },
+            {
+              "text": "A compressed archive",
+              "is_correct": false
+            },
+            {
+              "text": "An image format",
+              "is_correct": false
+            },
+            {
+              "text": "A stylesheet language",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Mixed revision — set 9",
+      "description": "Three questions from different subjects: identify the topic before answering.",
+      "mode": "qcm",
+      "default_language": "en",
+      "wrong_answer_policy": "zero",
+      "questions": [
+        {
+          "text_html": "What is interest?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "The price of using money over time",
+              "is_correct": true
+            },
+            {
+              "text": "A tax on income",
+              "is_correct": false
+            },
+            {
+              "text": "A bank fee",
+              "is_correct": false
+            },
+            {
+              "text": "A share of profit",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "Why is insulation an energy measure?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "It reduces the energy needed to keep a building comfortable",
+              "is_correct": true
+            },
+            {
+              "text": "It generates electricity",
+              "is_correct": false
+            },
+            {
+              "text": "It filters air",
+              "is_correct": false
+            },
+            {
+              "text": "It adds humidity",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What does a subsidy do?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Lowers the cost of producing or buying something",
+              "is_correct": true
+            },
+            {
+              "text": "Raises a price",
+              "is_correct": false
+            },
+            {
+              "text": "Bans a product",
+              "is_correct": false
+            },
+            {
+              "text": "Taxes an import",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Mixed revision — set 10",
+      "description": "Three questions from different subjects: identify the topic before answering.",
+      "mode": "qcm",
+      "default_language": "en",
+      "wrong_answer_policy": "zero",
+      "questions": [
+        {
+          "text_html": "What does hydration affect first?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Blood volume and the ability to regulate heat",
+              "is_correct": true
+            },
+            {
+              "text": "Muscle size",
+              "is_correct": false
+            },
+            {
+              "text": "Bone density",
+              "is_correct": false
+            },
+            {
+              "text": "Reflex speed",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "Why are the poles colder than the equator?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Sunlight strikes them at a slant",
+              "is_correct": true
+            },
+            {
+              "text": "They are further from the Sun",
+              "is_correct": false
+            },
+            {
+              "text": "They have no atmosphere",
+              "is_correct": false
+            },
+            {
+              "text": "They rotate faster",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What does prevalence describe?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "How many people have a condition at a time",
+              "is_correct": true
+            },
+            {
+              "text": "Speed of contagion",
+              "is_correct": false
+            },
+            {
+              "text": "Severity of symptoms",
+              "is_correct": false
+            },
+            {
+              "text": "Cost of care",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Mixed revision — set 11",
+      "description": "Three questions from different subjects: identify the topic before answering.",
+      "mode": "qcm",
+      "default_language": "en",
+      "wrong_answer_policy": "zero",
+      "questions": [
+        {
+          "text_html": "Why is correlation not causation?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Two things can move together for a third reason",
+              "is_correct": true
+            },
+            {
+              "text": "Correlation is always weak",
+              "is_correct": false
+            },
+            {
+              "text": "Causation cannot be measured",
+              "is_correct": false
+            },
+            {
+              "text": "Samples are too small",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "Which revolution began in Britain in the eighteenth century?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "The Industrial Revolution",
+              "is_correct": true
+            },
+            {
+              "text": "The Neolithic Revolution",
+              "is_correct": false
+            },
+            {
+              "text": "The Scientific Revolution",
+              "is_correct": false
+            },
+            {
+              "text": "The Digital Revolution",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What helps listening comprehension most?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Hearing the same material at several speeds",
+              "is_correct": true
+            },
+            {
+              "text": "Reading the transcript once",
+              "is_correct": false
+            },
+            {
+              "text": "Studying phonetics only",
+              "is_correct": false
+            },
+            {
+              "text": "Silent reading",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Mixed revision — set 12",
+      "description": "Three questions from different subjects: identify the topic before answering.",
+      "mode": "qcm",
+      "default_language": "en",
+      "wrong_answer_policy": "zero",
+      "questions": [
+        {
+          "text_html": "Which layer of the Earth is liquid?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "The outer core",
+              "is_correct": true
+            },
+            {
+              "text": "The inner core",
+              "is_correct": false
+            },
+            {
+              "text": "The crust",
+              "is_correct": false
+            },
+            {
+              "text": "The lower mantle",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What makes vocabulary stick?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Meeting a word in several contexts",
+              "is_correct": true
+            },
+            {
+              "text": "Writing it ten times",
+              "is_correct": false
+            },
+            {
+              "text": "Reading it once",
+              "is_correct": false
+            },
+            {
+              "text": "Translating it aloud",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "Why is silence part of music?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "It sets off sound and shapes expectation",
+              "is_correct": true
+            },
+            {
+              "text": "It saves the players' energy",
+              "is_correct": false
+            },
+            {
+              "text": "It marks page turns",
+              "is_correct": false
+            },
+            {
+              "text": "It is required notation",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Mixed revision — set 13",
+      "description": "Three questions from different subjects: identify the topic before answering.",
+      "mode": "qcm",
+      "default_language": "en",
+      "wrong_answer_policy": "zero",
+      "questions": [
+        {
+          "text_html": "What does 'statistically significant' mean?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "The result is unlikely to be chance alone",
+              "is_correct": true
+            },
+            {
+              "text": "The effect is large",
+              "is_correct": false
+            },
+            {
+              "text": "The result is important",
+              "is_correct": false
+            },
+            {
+              "text": "The study is perfect",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What is an octave?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "The interval where one frequency is double the other",
+              "is_correct": true
+            },
+            {
+              "text": "A fifth",
+              "is_correct": false
+            },
+            {
+              "text": "A semitone",
+              "is_correct": false
+            },
+            {
+              "text": "A mode",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What does DNA carry?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "The instructions for building and running a cell",
+              "is_correct": true
+            },
+            {
+              "text": "Energy for the cell",
+              "is_correct": false
+            },
+            {
+              "text": "Water for the cell",
+              "is_correct": false
+            },
+            {
+              "text": "Waste from the cell",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Mixed revision — set 14",
+      "description": "Three questions from different subjects: identify the topic before answering.",
+      "mode": "qcm",
+      "default_language": "en",
+      "wrong_answer_policy": "zero",
+      "questions": [
+        {
+          "text_html": "What makes a claim about climate checkable?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "A measurable quantity with a source and a timeframe",
+              "is_correct": true
+            },
+            {
+              "text": "The author's confidence",
+              "is_correct": false
+            },
+            {
+              "text": "The number of shares",
+              "is_correct": false
+            },
+            {
+              "text": "The length of the article",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What made movable type revolutionary in Europe?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "It made copies far cheaper to produce",
+              "is_correct": true
+            },
+            {
+              "text": "It invented the alphabet",
+              "is_correct": false
+            },
+            {
+              "text": "It allowed colour printing",
+              "is_correct": false
+            },
+            {
+              "text": "It replaced spoken language",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "Why do frequency lists help beginners?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "A few hundred words cover a large share of speech",
+              "is_correct": true
+            },
+            {
+              "text": "They are shorter to print",
+              "is_correct": false
+            },
+            {
+              "text": "They are easier to spell",
+              "is_correct": false
+            },
+            {
+              "text": "They avoid grammar",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Mixed revision — set 15",
+      "description": "Three questions from different subjects: identify the topic before answering.",
+      "mode": "qcm",
+      "default_language": "en",
+      "wrong_answer_policy": "zero",
+      "questions": [
+        {
+          "text_html": "What usually happens when central banks raise rates?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Borrowing becomes more expensive and demand cools",
+              "is_correct": true
+            },
+            {
+              "text": "Prices rise faster",
+              "is_correct": false
+            },
+            {
+              "text": "Saving becomes unattractive",
+              "is_correct": false
+            },
+            {
+              "text": "Trade stops",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "Why does giving a source document help?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "It grounds the answer in text the model can quote",
+              "is_correct": true
+            },
+            {
+              "text": "It makes the model faster",
+              "is_correct": false
+            },
+            {
+              "text": "It reduces the token count",
+              "is_correct": false
+            },
+            {
+              "text": "It retrains the model",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "Why does protein matter after exercise?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "It supplies the material to repair muscle",
+              "is_correct": true
+            },
+            {
+              "text": "It burns fat directly",
+              "is_correct": false
+            },
+            {
+              "text": "It replaces water",
+              "is_correct": false
+            },
+            {
+              "text": "It speeds digestion",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Mixed revision — set 16",
+      "description": "Three questions from different subjects: identify the topic before answering.",
+      "mode": "qcm",
+      "default_language": "en",
+      "wrong_answer_policy": "zero",
+      "questions": [
+        {
+          "text_html": "What is a system prompt?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Standing instructions that frame the whole conversation",
+              "is_correct": true
+            },
+            {
+              "text": "The user's first question",
+              "is_correct": false
+            },
+            {
+              "text": "A list of banned words",
+              "is_correct": false
+            },
+            {
+              "text": "The model's architecture",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "Which system powers a short, maximal sprint?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Stored energy used without oxygen",
+              "is_correct": true
+            },
+            {
+              "text": "Fat oxidation",
+              "is_correct": false
+            },
+            {
+              "text": "The aerobic system",
+              "is_correct": false
+            },
+            {
+              "text": "Digestion",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What is productivity?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Output produced per unit of work",
+              "is_correct": true
+            },
+            {
+              "text": "The number of employees",
+              "is_correct": false
+            },
+            {
+              "text": "The total output",
+              "is_correct": false
+            },
+            {
+              "text": "The price of output",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

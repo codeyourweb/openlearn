@@ -1,0 +1,5255 @@
+{
+  "kind": "quizzes",
+  "items": [
+    {
+      "title": "Physical geography — quiz 1",
+      "description": "Five questions drawn from the physical geography guide.",
+      "mode": "qcm",
+      "default_language": "en",
+      "wrong_answer_policy": "zero",
+      "questions": [
+        {
+          "text_html": "What is a rain shadow?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "The dry side of a mountain range",
+              "is_correct": true
+            },
+            {
+              "text": "A cloud that blocks the Sun",
+              "is_correct": false
+            },
+            {
+              "text": "A forest that stops rain",
+              "is_correct": false
+            },
+            {
+              "text": "A river that dries up in summer",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What share of Earth's water is held by the oceans?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "About 97%",
+              "is_correct": true
+            },
+            {
+              "text": "About 71%",
+              "is_correct": false
+            },
+            {
+              "text": "About 50%",
+              "is_correct": false
+            },
+            {
+              "text": "About 30%",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What forms where two plates pull apart?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "A rift, often filled by a new ocean",
+              "is_correct": true
+            },
+            {
+              "text": "A mountain range",
+              "is_correct": false
+            },
+            {
+              "text": "A desert",
+              "is_correct": false
+            },
+            {
+              "text": "A glacier",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Physical geography — quiz 2",
+      "description": "Five questions drawn from the physical geography guide.",
+      "mode": "qcm",
+      "default_language": "en",
+      "wrong_answer_policy": "zero",
+      "questions": [
+        {
+          "text_html": "Why are the poles colder than the equator?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Sunlight strikes them at a slant",
+              "is_correct": true
+            },
+            {
+              "text": "They are further from the Sun",
+              "is_correct": false
+            },
+            {
+              "text": "They have no atmosphere",
+              "is_correct": false
+            },
+            {
+              "text": "They rotate faster",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What percentage of the Earth's surface is covered by water?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "About 71%",
+              "is_correct": true
+            },
+            {
+              "text": "About 50%",
+              "is_correct": false
+            },
+            {
+              "text": "About 60%",
+              "is_correct": false
+            },
+            {
+              "text": "About 85%",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What is the boundary where a plate sinks under another called?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "A subduction zone",
+              "is_correct": true
+            },
+            {
+              "text": "A mid-ocean ridge",
+              "is_correct": false
+            },
+            {
+              "text": "A transform fault",
+              "is_correct": false
+            },
+            {
+              "text": "A hotspot",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Physical geography — quiz 3",
+      "description": "Five questions drawn from the physical geography guide.",
+      "mode": "qcm",
+      "default_language": "en",
+      "wrong_answer_policy": "zero",
+      "questions": [
+        {
+          "text_html": "Roughly how fast do tectonic plates move?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "A few centimetres per year",
+              "is_correct": true
+            },
+            {
+              "text": "A few metres per year",
+              "is_correct": false
+            },
+            {
+              "text": "A few millimetres per century",
+              "is_correct": false
+            },
+            {
+              "text": "They do not move",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "Which layer of the Earth is liquid?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "The outer core",
+              "is_correct": true
+            },
+            {
+              "text": "The inner core",
+              "is_correct": false
+            },
+            {
+              "text": "The crust",
+              "is_correct": false
+            },
+            {
+              "text": "The lower mantle",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What instrument measures the strength of an earthquake?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "A seismograph",
+              "is_correct": true
+            },
+            {
+              "text": "A barometer",
+              "is_correct": false
+            },
+            {
+              "text": "An anemometer",
+              "is_correct": false
+            },
+            {
+              "text": "A hygrometer",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Physical geography — quiz 4",
+      "description": "Five questions drawn from the physical geography guide.",
+      "mode": "qcm",
+      "default_language": "en",
+      "wrong_answer_policy": "zero",
+      "questions": [
+        {
+          "text_html": "Which two continents fit together like puzzle pieces?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Africa and South America",
+              "is_correct": true
+            },
+            {
+              "text": "Europe and Asia",
+              "is_correct": false
+            },
+            {
+              "text": "Australia and Antarctica",
+              "is_correct": false
+            },
+            {
+              "text": "Asia and North America",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "Which current keeps north-western Europe mild?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "The Gulf Stream",
+              "is_correct": true
+            },
+            {
+              "text": "The Humboldt Current",
+              "is_correct": false
+            },
+            {
+              "text": "The Kuroshio Current",
+              "is_correct": false
+            },
+            {
+              "text": "The Benguela Current",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "Which line divides the Earth into northern and southern halves?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "The equator",
+              "is_correct": true
+            },
+            {
+              "text": "The prime meridian",
+              "is_correct": false
+            },
+            {
+              "text": "The Tropic of Cancer",
+              "is_correct": false
+            },
+            {
+              "text": "The Arctic Circle",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Physical geography — quiz 5",
+      "description": "Five questions drawn from the physical geography guide.",
+      "mode": "qcm",
+      "default_language": "en",
+      "wrong_answer_policy": "zero",
+      "questions": [
+        {
+          "text_html": "Which ocean is the largest and deepest?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Pacific",
+              "is_correct": true
+            },
+            {
+              "text": "Atlantic",
+              "is_correct": false
+            },
+            {
+              "text": "Indian",
+              "is_correct": false
+            },
+            {
+              "text": "Arctic",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What causes tides?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "The pull of the Moon and the Sun",
+              "is_correct": true
+            },
+            {
+              "text": "Prevailing winds",
+              "is_correct": false
+            },
+            {
+              "text": "Undersea volcanoes",
+              "is_correct": false
+            },
+            {
+              "text": "The Earth's rotation alone",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What is the deepest point of the ocean called?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "The Mariana Trench",
+              "is_correct": true
+            },
+            {
+              "text": "The Puerto Rico Trench",
+              "is_correct": false
+            },
+            {
+              "text": "The Java Trench",
+              "is_correct": false
+            },
+            {
+              "text": "The Tonga Trench",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Turning points of history — quiz 1",
+      "description": "Five questions drawn from the turning points of history guide.",
+      "mode": "qcm",
+      "default_language": "en",
+      "wrong_answer_policy": "zero",
+      "questions": [
+        {
+          "text_html": "Which document limited the power of the English king in 1215?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Magna Carta",
+              "is_correct": true
+            },
+            {
+              "text": "The Bill of Rights",
+              "is_correct": false
+            },
+            {
+              "text": "The Treaty of Versailles",
+              "is_correct": false
+            },
+            {
+              "text": "The Code of Hammurabi",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "Where did writing first appear, around 3200 BCE?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Mesopotamia",
+              "is_correct": true
+            },
+            {
+              "text": "Egypt",
+              "is_correct": false
+            },
+            {
+              "text": "China",
+              "is_correct": false
+            },
+            {
+              "text": "Greece",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What did public schooling make possible?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Literacy beyond a small elite",
+              "is_correct": true
+            },
+            {
+              "text": "Cheaper books",
+              "is_correct": false
+            },
+            {
+              "text": "Faster printing",
+              "is_correct": false
+            },
+            {
+              "text": "Shorter working days",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Turning points of history — quiz 2",
+      "description": "Five questions drawn from the turning points of history guide.",
+      "mode": "qcm",
+      "default_language": "en",
+      "wrong_answer_policy": "zero",
+      "questions": [
+        {
+          "text_html": "Which empire built the road network later used across Europe?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "The Roman Empire",
+              "is_correct": true
+            },
+            {
+              "text": "The Ottoman Empire",
+              "is_correct": false
+            },
+            {
+              "text": "The Mongol Empire",
+              "is_correct": false
+            },
+            {
+              "text": "The Byzantine Empire",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "Which ancient library is famous for collecting the ancient world's texts?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "The Library of Alexandria",
+              "is_correct": true
+            },
+            {
+              "text": "The Library of Pergamon",
+              "is_correct": false
+            },
+            {
+              "text": "The Library of Baghdad",
+              "is_correct": false
+            },
+            {
+              "text": "The Bodleian Library",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What is an archive?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "A collection of records kept for the future",
+              "is_correct": true
+            },
+            {
+              "text": "A museum of objects",
+              "is_correct": false
+            },
+            {
+              "text": "A library of novels",
+              "is_correct": false
+            },
+            {
+              "text": "A list of laws",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Turning points of history — quiz 3",
+      "description": "Five questions drawn from the turning points of history guide.",
+      "mode": "qcm",
+      "default_language": "en",
+      "wrong_answer_policy": "zero",
+      "questions": [
+        {
+          "text_html": "Which invention moved production into factories?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "The steam engine",
+              "is_correct": true
+            },
+            {
+              "text": "The printing press",
+              "is_correct": false
+            },
+            {
+              "text": "The telegraph",
+              "is_correct": false
+            },
+            {
+              "text": "The compass",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "Why do historians compare several sources?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "To test each account against the others",
+              "is_correct": true
+            },
+            {
+              "text": "To find the longest text",
+              "is_correct": false
+            },
+            {
+              "text": "To choose the oldest paper",
+              "is_correct": false
+            },
+            {
+              "text": "To avoid reading originals",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What made movable type revolutionary in Europe?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "It made copies far cheaper to produce",
+              "is_correct": true
+            },
+            {
+              "text": "It invented the alphabet",
+              "is_correct": false
+            },
+            {
+              "text": "It allowed colour printing",
+              "is_correct": false
+            },
+            {
+              "text": "It replaced spoken language",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Turning points of history — quiz 4",
+      "description": "Five questions drawn from the turning points of history guide.",
+      "mode": "qcm",
+      "default_language": "en",
+      "wrong_answer_policy": "zero",
+      "questions": [
+        {
+          "text_html": "What was the Silk Road?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "A network of trade routes between Asia and Europe",
+              "is_correct": true
+            },
+            {
+              "text": "A single paved road",
+              "is_correct": false
+            },
+            {
+              "text": "A sea route to India",
+              "is_correct": false
+            },
+            {
+              "text": "A Roman military road",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "Why did the first cities grow beside rivers?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Flooding left fertile soil and a food surplus",
+              "is_correct": true
+            },
+            {
+              "text": "Rivers made good roads",
+              "is_correct": false
+            },
+            {
+              "text": "Rivers provided stone",
+              "is_correct": false
+            },
+            {
+              "text": "Rivers kept enemies away",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What did the telegraph change?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "The speed at which news could travel",
+              "is_correct": true
+            },
+            {
+              "text": "The cost of paper",
+              "is_correct": false
+            },
+            {
+              "text": "The shape of cities",
+              "is_correct": false
+            },
+            {
+              "text": "The length of the working day",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Turning points of history — quiz 5",
+      "description": "Five questions drawn from the turning points of history guide.",
+      "mode": "qcm",
+      "default_language": "en",
+      "wrong_answer_policy": "zero",
+      "questions": [
+        {
+          "text_html": "Which revolution began in Britain in the eighteenth century?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "The Industrial Revolution",
+              "is_correct": true
+            },
+            {
+              "text": "The Neolithic Revolution",
+              "is_correct": false
+            },
+            {
+              "text": "The Scientific Revolution",
+              "is_correct": false
+            },
+            {
+              "text": "The Digital Revolution",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What did the printing press make possible for learning?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Widely shared, identical texts",
+              "is_correct": true
+            },
+            {
+              "text": "Cheaper paper",
+              "is_correct": false
+            },
+            {
+              "text": "Faster handwriting",
+              "is_correct": false
+            },
+            {
+              "text": "New languages",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What was the Renaissance a revival of?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Classical learning and art",
+              "is_correct": true
+            },
+            {
+              "text": "Industrial machinery",
+              "is_correct": false
+            },
+            {
+              "text": "Religious law",
+              "is_correct": false
+            },
+            {
+              "text": "Military tactics",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Everyday science — quiz 1",
+      "description": "Five questions drawn from the everyday science guide.",
+      "mode": "qcm",
+      "default_language": "en",
+      "wrong_answer_policy": "zero",
+      "questions": [
+        {
+          "text_html": "What gas do plants take from the air to grow?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Carbon dioxide",
+              "is_correct": true
+            },
+            {
+              "text": "Oxygen",
+              "is_correct": false
+            },
+            {
+              "text": "Nitrogen",
+              "is_correct": false
+            },
+            {
+              "text": "Hydrogen",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What is the smallest unit of life?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "The cell",
+              "is_correct": true
+            },
+            {
+              "text": "The atom",
+              "is_correct": false
+            },
+            {
+              "text": "The organ",
+              "is_correct": false
+            },
+            {
+              "text": "The tissue",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What is a molecule?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Two or more atoms bonded together",
+              "is_correct": true
+            },
+            {
+              "text": "A single atom",
+              "is_correct": false
+            },
+            {
+              "text": "A cell organelle",
+              "is_correct": false
+            },
+            {
+              "text": "A mixture of elements",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Everyday science — quiz 2",
+      "description": "Five questions drawn from the everyday science guide.",
+      "mode": "qcm",
+      "default_language": "en",
+      "wrong_answer_policy": "zero",
+      "questions": [
+        {
+          "text_html": "Why does ice float on water?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "It is less dense than liquid water",
+              "is_correct": true
+            },
+            {
+              "text": "It is colder",
+              "is_correct": false
+            },
+            {
+              "text": "It contains air",
+              "is_correct": false
+            },
+            {
+              "text": "It is lighter than air",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What does a catalyst do?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Speeds a reaction without being consumed",
+              "is_correct": true
+            },
+            {
+              "text": "Provides energy to a reaction",
+              "is_correct": false
+            },
+            {
+              "text": "Stops a reaction",
+              "is_correct": false
+            },
+            {
+              "text": "Changes the products",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "Which way does heat flow?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "From warmer to colder",
+              "is_correct": true
+            },
+            {
+              "text": "From colder to warmer",
+              "is_correct": false
+            },
+            {
+              "text": "In both directions equally",
+              "is_correct": false
+            },
+            {
+              "text": "It does not flow",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Everyday science — quiz 3",
+      "description": "Five questions drawn from the everyday science guide.",
+      "mode": "qcm",
+      "default_language": "en",
+      "wrong_answer_policy": "zero",
+      "questions": [
+        {
+          "text_html": "What does DNA carry?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "The instructions for building and running a cell",
+              "is_correct": true
+            },
+            {
+              "text": "Energy for the cell",
+              "is_correct": false
+            },
+            {
+              "text": "Water for the cell",
+              "is_correct": false
+            },
+            {
+              "text": "Waste from the cell",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What is erosion?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "The transport of material by wind, water or ice",
+              "is_correct": true
+            },
+            {
+              "text": "The melting of rock",
+              "is_correct": false
+            },
+            {
+              "text": "The growth of crystals",
+              "is_correct": false
+            },
+            {
+              "text": "The freezing of soil",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "Which force keeps planets in orbit?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Gravity",
+              "is_correct": true
+            },
+            {
+              "text": "Magnetism",
+              "is_correct": false
+            },
+            {
+              "text": "Friction",
+              "is_correct": false
+            },
+            {
+              "text": "Buoyancy",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Everyday science — quiz 4",
+      "description": "Five questions drawn from the everyday science guide.",
+      "mode": "qcm",
+      "default_language": "en",
+      "wrong_answer_policy": "zero",
+      "questions": [
+        {
+          "text_html": "What are the three states of matter most people meet daily?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Solid, liquid and gas",
+              "is_correct": true
+            },
+            {
+              "text": "Solid, plasma and gas",
+              "is_correct": false
+            },
+            {
+              "text": "Liquid, plasma and solid",
+              "is_correct": false
+            },
+            {
+              "text": "Gas, plasma and liquid",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What is the pH of a neutral solution?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "7",
+              "is_correct": true
+            },
+            {
+              "text": "0",
+              "is_correct": false
+            },
+            {
+              "text": "14",
+              "is_correct": false
+            },
+            {
+              "text": "1",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What is the speed of light in a vacuum?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "About 300,000 km/s",
+              "is_correct": true
+            },
+            {
+              "text": "About 30,000 km/s",
+              "is_correct": false
+            },
+            {
+              "text": "About 3,000 km/s",
+              "is_correct": false
+            },
+            {
+              "text": "About 3,000,000 km/s",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Everyday science — quiz 5",
+      "description": "Five questions drawn from the everyday science guide.",
+      "mode": "qcm",
+      "default_language": "en",
+      "wrong_answer_policy": "zero",
+      "questions": [
+        {
+          "text_html": "What is photosynthesis for?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Turning light into chemical energy",
+              "is_correct": true
+            },
+            {
+              "text": "Releasing energy from sugar",
+              "is_correct": false
+            },
+            {
+              "text": "Copying DNA",
+              "is_correct": false
+            },
+            {
+              "text": "Breaking down waste",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What happens to energy in any process?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "It is converted, never destroyed",
+              "is_correct": true
+            },
+            {
+              "text": "It is used up",
+              "is_correct": false
+            },
+            {
+              "text": "It is created",
+              "is_correct": false
+            },
+            {
+              "text": "It disappears",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What does a vaccine do?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Trains the immune system to recognise a pathogen",
+              "is_correct": true
+            },
+            {
+              "text": "Kills all bacteria in the body",
+              "is_correct": false
+            },
+            {
+              "text": "Replaces antibodies",
+              "is_correct": false
+            },
+            {
+              "text": "Stops the spread of a virus",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "How the web works — quiz 1",
+      "description": "Five questions drawn from the how the web works guide.",
+      "mode": "qcm",
+      "default_language": "en",
+      "wrong_answer_policy": "zero",
+      "questions": [
+        {
+          "text_html": "What is the role of a web browser?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Requesting, rendering and running pages",
+              "is_correct": true
+            },
+            {
+              "text": "Hosting websites",
+              "is_correct": false
+            },
+            {
+              "text": "Assigning IP addresses",
+              "is_correct": false
+            },
+            {
+              "text": "Storing databases",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What does HTTP status 404 mean?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "The resource does not exist",
+              "is_correct": true
+            },
+            {
+              "text": "The server failed",
+              "is_correct": false
+            },
+            {
+              "text": "Access is denied",
+              "is_correct": false
+            },
+            {
+              "text": "The request was too large",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What is a server in the client-server model?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "A program that answers requests",
+              "is_correct": true
+            },
+            {
+              "text": "The user's browser",
+              "is_correct": false
+            },
+            {
+              "text": "A network cable",
+              "is_correct": false
+            },
+            {
+              "text": "A domain name",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "How the web works — quiz 2",
+      "description": "Five questions drawn from the how the web works guide.",
+      "mode": "qcm",
+      "default_language": "en",
+      "wrong_answer_policy": "zero",
+      "questions": [
+        {
+          "text_html": "What does JSON represent?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Structured data as nested keys and values",
+              "is_correct": true
+            },
+            {
+              "text": "A compressed archive",
+              "is_correct": false
+            },
+            {
+              "text": "An image format",
+              "is_correct": false
+            },
+            {
+              "text": "A stylesheet language",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What is a content delivery cache?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "A stored copy of a response, reused until it changes",
+              "is_correct": true
+            },
+            {
+              "text": "A backup of the database",
+              "is_correct": false
+            },
+            {
+              "text": "A list of blocked sites",
+              "is_correct": false
+            },
+            {
+              "text": "A search index",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What is an API?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "A defined way for programs to exchange data",
+              "is_correct": true
+            },
+            {
+              "text": "A programming language",
+              "is_correct": false
+            },
+            {
+              "text": "A database engine",
+              "is_correct": false
+            },
+            {
+              "text": "A browser extension",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "How the web works — quiz 3",
+      "description": "Five questions drawn from the how the web works guide.",
+      "mode": "qcm",
+      "default_language": "en",
+      "wrong_answer_policy": "zero",
+      "questions": [
+        {
+          "text_html": "Why do sites publish an API alongside their interface?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "So third-party tools can build on the same data",
+              "is_correct": true
+            },
+            {
+              "text": "To make pages smaller",
+              "is_correct": false
+            },
+            {
+              "text": "To hide the interface",
+              "is_correct": false
+            },
+            {
+              "text": "To save bandwidth",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "Why is an open web standard important?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Anyone can implement it, so no vendor controls access",
+              "is_correct": true
+            },
+            {
+              "text": "It is cheaper to write",
+              "is_correct": false
+            },
+            {
+              "text": "It loads faster",
+              "is_correct": false
+            },
+            {
+              "text": "It looks better",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What does an open data format allow?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Moving your content to another tool",
+              "is_correct": true
+            },
+            {
+              "text": "A faster website",
+              "is_correct": false
+            },
+            {
+              "text": "Smaller images",
+              "is_correct": false
+            },
+            {
+              "text": "Cheaper hosting",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "How the web works — quiz 4",
+      "description": "Five questions drawn from the how the web works guide.",
+      "mode": "qcm",
+      "default_language": "en",
+      "wrong_answer_policy": "zero",
+      "questions": [
+        {
+          "text_html": "Why does a password need to be hashed, not stored?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "So a stolen database does not reveal the passwords",
+              "is_correct": true
+            },
+            {
+              "text": "To make logins faster",
+              "is_correct": false
+            },
+            {
+              "text": "To save space",
+              "is_correct": false
+            },
+            {
+              "text": "To allow recovery",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What does DNS do?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Translates a domain name into an IP address",
+              "is_correct": true
+            },
+            {
+              "text": "Encrypts web traffic",
+              "is_correct": false
+            },
+            {
+              "text": "Compresses images",
+              "is_correct": false
+            },
+            {
+              "text": "Stores passwords",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What does a CDN do?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Serves files from a location near the visitor",
+              "is_correct": true
+            },
+            {
+              "text": "Encrypts passwords",
+              "is_correct": false
+            },
+            {
+              "text": "Indexes pages",
+              "is_correct": false
+            },
+            {
+              "text": "Backs up databases",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "How the web works — quiz 5",
+      "description": "Five questions drawn from the how the web works guide.",
+      "mode": "qcm",
+      "default_language": "en",
+      "wrong_answer_policy": "zero",
+      "questions": [
+        {
+          "text_html": "What does HTTPS add to HTTP?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Encryption and proof of the server's identity",
+              "is_correct": true
+            },
+            {
+              "text": "Faster downloads",
+              "is_correct": false
+            },
+            {
+              "text": "Smaller pages",
+              "is_correct": false
+            },
+            {
+              "text": "Better caching",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What is the difference between a domain and a URL?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "A domain names a host; a URL locates a resource on it",
+              "is_correct": true
+            },
+            {
+              "text": "They are the same",
+              "is_correct": false
+            },
+            {
+              "text": "A URL is shorter",
+              "is_correct": false
+            },
+            {
+              "text": "A domain includes a path",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What is a cookie used for?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Keeping state between requests",
+              "is_correct": true
+            },
+            {
+              "text": "Encrypting the connection",
+              "is_correct": false
+            },
+            {
+              "text": "Compressing files",
+              "is_correct": false
+            },
+            {
+              "text": "Resolving names",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "How language models work — quiz 1",
+      "description": "Five questions drawn from the how language models work guide.",
+      "mode": "qcm",
+      "default_language": "en",
+      "wrong_answer_policy": "zero",
+      "questions": [
+        {
+          "text_html": "What is the main cost of a long prompt?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "More tokens to process on every turn",
+              "is_correct": true
+            },
+            {
+              "text": "Slower model download",
+              "is_correct": false
+            },
+            {
+              "text": "A larger context window",
+              "is_correct": false
+            },
+            {
+              "text": "Fewer possible answers",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What is a hallucination?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "A confident answer that is not supported by facts",
+              "is_correct": true
+            },
+            {
+              "text": "A slow response",
+              "is_correct": false
+            },
+            {
+              "text": "A refusal to answer",
+              "is_correct": false
+            },
+            {
+              "text": "A formatting error",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What is a prompt?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "The instruction and context given to a model",
+              "is_correct": true
+            },
+            {
+              "text": "The model's weights",
+              "is_correct": false
+            },
+            {
+              "text": "A cached response",
+              "is_correct": false
+            },
+            {
+              "text": "The training corpus",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "How language models work — quiz 2",
+      "description": "Five questions drawn from the how language models work guide.",
+      "mode": "qcm",
+      "default_language": "en",
+      "wrong_answer_policy": "zero",
+      "questions": [
+        {
+          "text_html": "What does the context window limit?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "How much text the model can consider at once",
+              "is_correct": true
+            },
+            {
+              "text": "How fast it answers",
+              "is_correct": false
+            },
+            {
+              "text": "How many users can connect",
+              "is_correct": false
+            },
+            {
+              "text": "How long it trains",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What is a system prompt?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Standing instructions that frame the whole conversation",
+              "is_correct": true
+            },
+            {
+              "text": "The user's first question",
+              "is_correct": false
+            },
+            {
+              "text": "A list of banned words",
+              "is_correct": false
+            },
+            {
+              "text": "The model's architecture",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What does 'open weights' mean for a model?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "The parameters can be downloaded and run locally",
+              "is_correct": true
+            },
+            {
+              "text": "The training data is public",
+              "is_correct": false
+            },
+            {
+              "text": "The model is free of errors",
+              "is_correct": false
+            },
+            {
+              "text": "It has no licence",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "How language models work — quiz 3",
+      "description": "Five questions drawn from the how language models work guide.",
+      "mode": "qcm",
+      "default_language": "en",
+      "wrong_answer_policy": "zero",
+      "questions": [
+        {
+          "text_html": "Why must a model's output be verified?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "It optimises for plausibility, not truth",
+              "is_correct": true
+            },
+            {
+              "text": "It cannot read sources",
+              "is_correct": false
+            },
+            {
+              "text": "It forgets its training",
+              "is_correct": false
+            },
+            {
+              "text": "It refuses to cite",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What is a token in a language model?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "A piece of text, shorter than a word on average",
+              "is_correct": true
+            },
+            {
+              "text": "A whole sentence",
+              "is_correct": false
+            },
+            {
+              "text": "A single character always",
+              "is_correct": false
+            },
+            {
+              "text": "A file",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "Why do two identical prompts sometimes give different answers?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Sampling is probabilistic",
+              "is_correct": true
+            },
+            {
+              "text": "The model was retrained",
+              "is_correct": false
+            },
+            {
+              "text": "The server lost data",
+              "is_correct": false
+            },
+            {
+              "text": "Tokens are cached",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "How language models work — quiz 4",
+      "description": "Five questions drawn from the how language models work guide.",
+      "mode": "qcm",
+      "default_language": "en",
+      "wrong_answer_policy": "zero",
+      "questions": [
+        {
+          "text_html": "What is fine-tuning?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Further training on a narrower set of examples",
+              "is_correct": true
+            },
+            {
+              "text": "Compressing the model",
+              "is_correct": false
+            },
+            {
+              "text": "Caching answers",
+              "is_correct": false
+            },
+            {
+              "text": "Splitting input into tokens",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What does a language model actually predict?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "The next token",
+              "is_correct": true
+            },
+            {
+              "text": "The meaning of a sentence",
+              "is_correct": false
+            },
+            {
+              "text": "The author's intent",
+              "is_correct": false
+            },
+            {
+              "text": "The factual truth",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What is an embedding?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "A vector that places a text by its meaning",
+              "is_correct": true
+            },
+            {
+              "text": "A compressed image",
+              "is_correct": false
+            },
+            {
+              "text": "A type of prompt",
+              "is_correct": false
+            },
+            {
+              "text": "A training dataset",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "How language models work — quiz 5",
+      "description": "Five questions drawn from the how language models work guide.",
+      "mode": "qcm",
+      "default_language": "en",
+      "wrong_answer_policy": "zero",
+      "questions": [
+        {
+          "text_html": "Why does giving a source document help?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "It grounds the answer in text the model can quote",
+              "is_correct": true
+            },
+            {
+              "text": "It makes the model faster",
+              "is_correct": false
+            },
+            {
+              "text": "It reduces the token count",
+              "is_correct": false
+            },
+            {
+              "text": "It retrains the model",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What does temperature control?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "How random the next-token choice is",
+              "is_correct": true
+            },
+            {
+              "text": "How long the answer is",
+              "is_correct": false
+            },
+            {
+              "text": "How fast it runs",
+              "is_correct": false
+            },
+            {
+              "text": "How much it costs",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What is retrieval-augmented generation?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Feeding relevant documents into the prompt before answering",
+              "is_correct": true
+            },
+            {
+              "text": "Training on new data overnight",
+              "is_correct": false
+            },
+            {
+              "text": "Compressing a model",
+              "is_correct": false
+            },
+            {
+              "text": "Translating responses",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Sport and training — quiz 1",
+      "description": "Five questions drawn from the sport and training guide.",
+      "mode": "qcm",
+      "default_language": "en",
+      "wrong_answer_policy": "zero",
+      "questions": [
+        {
+          "text_html": "What is carbohydrate loading for?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Filling glycogen stores before a long effort",
+              "is_correct": true
+            },
+            {
+              "text": "Building muscle mass",
+              "is_correct": false
+            },
+            {
+              "text": "Speeding recovery after sprints",
+              "is_correct": false
+            },
+            {
+              "text": "Reducing hydration",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "When does the body adapt to training?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "During recovery between sessions",
+              "is_correct": true
+            },
+            {
+              "text": "During the hardest set",
+              "is_correct": false
+            },
+            {
+              "text": "During warm-up",
+              "is_correct": false
+            },
+            {
+              "text": "While stretching only",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "Why is sleep part of a training plan?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "It is when most recovery happens",
+              "is_correct": true
+            },
+            {
+              "text": "It burns extra calories",
+              "is_correct": false
+            },
+            {
+              "text": "It replaces warm-up",
+              "is_correct": false
+            },
+            {
+              "text": "It increases flexibility",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Sport and training — quiz 2",
+      "description": "Five questions drawn from the sport and training guide.",
+      "mode": "qcm",
+      "default_language": "en",
+      "wrong_answer_policy": "zero",
+      "questions": [
+        {
+          "text_html": "Which system powers a short, maximal sprint?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Stored energy used without oxygen",
+              "is_correct": true
+            },
+            {
+              "text": "Fat oxidation",
+              "is_correct": false
+            },
+            {
+              "text": "The aerobic system",
+              "is_correct": false
+            },
+            {
+              "text": "Digestion",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What does a warm-up prepare?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Muscles, joints and the cardiovascular system for effort",
+              "is_correct": true
+            },
+            {
+              "text": "Only the mind",
+              "is_correct": false
+            },
+            {
+              "text": "Only the lungs",
+              "is_correct": false
+            },
+            {
+              "text": "Only the muscles",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "Why does a coach give feedback immediately?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "The correction is easier to apply while the movement is fresh",
+              "is_correct": true
+            },
+            {
+              "text": "It saves the coach time",
+              "is_correct": false
+            },
+            {
+              "text": "It shortens the session",
+              "is_correct": false
+            },
+            {
+              "text": "It avoids video",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Sport and training — quiz 3",
+      "description": "Five questions drawn from the sport and training guide.",
+      "mode": "qcm",
+      "default_language": "en",
+      "wrong_answer_policy": "zero",
+      "questions": [
+        {
+          "text_html": "What does aerobic training improve?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "The ability to use oxygen over long efforts",
+              "is_correct": true
+            },
+            {
+              "text": "Maximum sprint speed",
+              "is_correct": false
+            },
+            {
+              "text": "Grip strength",
+              "is_correct": false
+            },
+            {
+              "text": "Flexibility only",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "Why do varied repetitions improve a skill?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "They build a general pattern, not one fixed motion",
+              "is_correct": true
+            },
+            {
+              "text": "They are easier",
+              "is_correct": false
+            },
+            {
+              "text": "They need less sleep",
+              "is_correct": false
+            },
+            {
+              "text": "They avoid feedback",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What is a taper?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Reducing training before a competition",
+              "is_correct": true
+            },
+            {
+              "text": "Increasing volume sharply",
+              "is_correct": false
+            },
+            {
+              "text": "Changing sports",
+              "is_correct": false
+            },
+            {
+              "text": "Stopping all activity for months",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Sport and training — quiz 4",
+      "description": "Five questions drawn from the sport and training guide.",
+      "mode": "qcm",
+      "default_language": "en",
+      "wrong_answer_policy": "zero",
+      "questions": [
+        {
+          "text_html": "What does hydration affect first?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Blood volume and the ability to regulate heat",
+              "is_correct": true
+            },
+            {
+              "text": "Muscle size",
+              "is_correct": false
+            },
+            {
+              "text": "Bone density",
+              "is_correct": false
+            },
+            {
+              "text": "Reflex speed",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "Which nutrient repairs muscle after training?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Protein",
+              "is_correct": true
+            },
+            {
+              "text": "Fat",
+              "is_correct": false
+            },
+            {
+              "text": "Fibre",
+              "is_correct": false
+            },
+            {
+              "text": "Sugar",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What is the value of an easy session?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "It adds volume without adding much fatigue",
+              "is_correct": true
+            },
+            {
+              "text": "It replaces hard work",
+              "is_correct": false
+            },
+            {
+              "text": "It builds maximum strength",
+              "is_correct": false
+            },
+            {
+              "text": "It shortens recovery",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Sport and training — quiz 5",
+      "description": "Five questions drawn from the sport and training guide.",
+      "mode": "qcm",
+      "default_language": "en",
+      "wrong_answer_policy": "zero",
+      "questions": [
+        {
+          "text_html": "Why is specificity important in training?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "You improve what you practise",
+              "is_correct": true
+            },
+            {
+              "text": "All sports use the same energy",
+              "is_correct": false
+            },
+            {
+              "text": "Variety prevents progress",
+              "is_correct": false
+            },
+            {
+              "text": "Strength always transfers",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What is progressive overload?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Gradually increasing the demand of training",
+              "is_correct": true
+            },
+            {
+              "text": "Training until exhaustion",
+              "is_correct": false
+            },
+            {
+              "text": "Repeating the same session",
+              "is_correct": false
+            },
+            {
+              "text": "Changing sport weekly",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What is a common sign of overtraining?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Resting heart rate rising and performance falling",
+              "is_correct": true
+            },
+            {
+              "text": "Deeper sleep",
+              "is_correct": false
+            },
+            {
+              "text": "Higher motivation",
+              "is_correct": false
+            },
+            {
+              "text": "Faster recovery",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Reading a work of art — quiz 1",
+      "description": "Five questions drawn from the reading a work of art guide.",
+      "mode": "qcm",
+      "default_language": "en",
+      "wrong_answer_policy": "zero",
+      "questions": [
+        {
+          "text_html": "What does a novel's narrator control?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "What the reader can know, and when",
+              "is_correct": true
+            },
+            {
+              "text": "The length of the book",
+              "is_correct": false
+            },
+            {
+              "text": "The price of the edition",
+              "is_correct": false
+            },
+            {
+              "text": "The cover design",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What question helps most when looking at a work?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "What is the artist asking me to notice?",
+              "is_correct": true
+            },
+            {
+              "text": "How much is it worth?",
+              "is_correct": false
+            },
+            {
+              "text": "Who owned it?",
+              "is_correct": false
+            },
+            {
+              "text": "Is it famous?",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "Which colours tend to advance towards the viewer?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Warm colours",
+              "is_correct": true
+            },
+            {
+              "text": "Cool colours",
+              "is_correct": false
+            },
+            {
+              "text": "Neutral greys",
+              "is_correct": false
+            },
+            {
+              "text": "Black only",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Reading a work of art — quiz 2",
+      "description": "Five questions drawn from the reading a work of art guide.",
+      "mode": "qcm",
+      "default_language": "en",
+      "wrong_answer_policy": "zero",
+      "questions": [
+        {
+          "text_html": "Why does context matter for a work of art?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "It explains what the work answered to",
+              "is_correct": true
+            },
+            {
+              "text": "It proves the work is good",
+              "is_correct": false
+            },
+            {
+              "text": "It fixes its price",
+              "is_correct": false
+            },
+            {
+              "text": "It replaces close looking",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What is chiaroscuro?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Strong contrast between light and dark",
+              "is_correct": true
+            },
+            {
+              "text": "A type of frame",
+              "is_correct": false
+            },
+            {
+              "text": "A painting technique using wax",
+              "is_correct": false
+            },
+            {
+              "text": "A style of poetry",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What is a vanishing point?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Where parallel lines appear to meet in perspective",
+              "is_correct": true
+            },
+            {
+              "text": "The centre of a canvas",
+              "is_correct": false
+            },
+            {
+              "text": "The brightest area",
+              "is_correct": false
+            },
+            {
+              "text": "The signature of the artist",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Reading a work of art — quiz 3",
+      "description": "Five questions drawn from the reading a work of art guide.",
+      "mode": "qcm",
+      "default_language": "en",
+      "wrong_answer_policy": "zero",
+      "questions": [
+        {
+          "text_html": "What is the difference between story and plot?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Story is the events; plot is their arrangement",
+              "is_correct": true
+            },
+            {
+              "text": "They are identical",
+              "is_correct": false
+            },
+            {
+              "text": "Plot is shorter",
+              "is_correct": false
+            },
+            {
+              "text": "Story is only dialogue",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "Why do museums group works by period?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Shared constraints and conventions become visible",
+              "is_correct": true
+            },
+            {
+              "text": "It is cheaper to hang",
+              "is_correct": false
+            },
+            {
+              "text": "It protects the frames",
+              "is_correct": false
+            },
+            {
+              "text": "It follows the law",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What is a still life usually about?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Ordinary objects arranged for study",
+              "is_correct": true
+            },
+            {
+              "text": "Historical battles",
+              "is_correct": false
+            },
+            {
+              "text": "Religious scenes",
+              "is_correct": false
+            },
+            {
+              "text": "Landscapes",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Reading a work of art — quiz 4",
+      "description": "Five questions drawn from the reading a work of art guide.",
+      "mode": "qcm",
+      "default_language": "en",
+      "wrong_answer_policy": "zero",
+      "questions": [
+        {
+          "text_html": "What does an artist's use of scale emphasise?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Importance, power or vulnerability",
+              "is_correct": true
+            },
+            {
+              "text": "The cost of materials",
+              "is_correct": false
+            },
+            {
+              "text": "The speed of painting",
+              "is_correct": false
+            },
+            {
+              "text": "The frame size",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What does composition describe in a picture?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "How the elements are arranged in the frame",
+              "is_correct": true
+            },
+            {
+              "text": "The price of the work",
+              "is_correct": false
+            },
+            {
+              "text": "The artist's biography",
+              "is_correct": false
+            },
+            {
+              "text": "The size of the canvas",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What does negative space do?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Gives the subject room and emphasis",
+              "is_correct": true
+            },
+            {
+              "text": "Hides the background",
+              "is_correct": false
+            },
+            {
+              "text": "Fills the frame",
+              "is_correct": false
+            },
+            {
+              "text": "Marks the frame",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Reading a work of art — quiz 5",
+      "description": "Five questions drawn from the reading a work of art guide.",
+      "mode": "qcm",
+      "default_language": "en",
+      "wrong_answer_policy": "zero",
+      "questions": [
+        {
+          "text_html": "What is a motif in literature?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "A recurring element that carries meaning",
+              "is_correct": true
+            },
+            {
+              "text": "The main character",
+              "is_correct": false
+            },
+            {
+              "text": "The final sentence",
+              "is_correct": false
+            },
+            {
+              "text": "The book's title",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "Why is a first reading rarely the last?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Meaning changes with what the reader brings",
+              "is_correct": true
+            },
+            {
+              "text": "Books decay",
+              "is_correct": false
+            },
+            {
+              "text": "Editions differ",
+              "is_correct": false
+            },
+            {
+              "text": "Authors rewrite endings",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What makes a translation an interpretation?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Every choice privileges some meanings over others",
+              "is_correct": true
+            },
+            {
+              "text": "It copies the original exactly",
+              "is_correct": false
+            },
+            {
+              "text": "It shortens the text",
+              "is_correct": false
+            },
+            {
+              "text": "It changes the author",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Health literacy — quiz 1",
+      "description": "Five questions drawn from the health literacy guide.",
+      "mode": "qcm",
+      "default_language": "en",
+      "wrong_answer_policy": "zero",
+      "questions": [
+        {
+          "text_html": "What is a confounding factor?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Something else that differs between groups and explains the result",
+              "is_correct": true
+            },
+            {
+              "text": "A deliberate error",
+              "is_correct": false
+            },
+            {
+              "text": "A missing questionnaire",
+              "is_correct": false
+            },
+            {
+              "text": "A legal requirement",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What is relative risk?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "How much a rate changes between groups",
+              "is_correct": true
+            },
+            {
+              "text": "The number of cases",
+              "is_correct": false
+            },
+            {
+              "text": "The number of participants",
+              "is_correct": false
+            },
+            {
+              "text": "The duration of a study",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What does informed consent require?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Understanding the risks and agreeing freely",
+              "is_correct": true
+            },
+            {
+              "text": "Paying for treatment",
+              "is_correct": false
+            },
+            {
+              "text": "Signing a contract",
+              "is_correct": false
+            },
+            {
+              "text": "Following a doctor's order",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Health literacy — quiz 2",
+      "description": "Five questions drawn from the health literacy guide.",
+      "mode": "qcm",
+      "default_language": "en",
+      "wrong_answer_policy": "zero",
+      "questions": [
+        {
+          "text_html": "What is a symptom?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Something the patient experiences",
+              "is_correct": true
+            },
+            {
+              "text": "A measurement taken by a machine",
+              "is_correct": false
+            },
+            {
+              "text": "A diagnosis",
+              "is_correct": false
+            },
+            {
+              "text": "A treatment",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "Why do reviews pool several studies?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "A larger base gives a more stable estimate",
+              "is_correct": true
+            },
+            {
+              "text": "They are quicker to write",
+              "is_correct": false
+            },
+            {
+              "text": "They avoid statistics",
+              "is_correct": false
+            },
+            {
+              "text": "They replace trials",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "Why can a headline about risk mislead?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "It reports relative change without the baseline",
+              "is_correct": true
+            },
+            {
+              "text": "It is written by journalists",
+              "is_correct": false
+            },
+            {
+              "text": "It omits the authors",
+              "is_correct": false
+            },
+            {
+              "text": "It is too long",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Health literacy — quiz 3",
+      "description": "Five questions drawn from the health literacy guide.",
+      "mode": "qcm",
+      "default_language": "en",
+      "wrong_answer_policy": "zero",
+      "questions": [
+        {
+          "text_html": "Why are replicas of a study valuable?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "They test whether the first result holds",
+              "is_correct": true
+            },
+            {
+              "text": "They are cheaper to run",
+              "is_correct": false
+            },
+            {
+              "text": "They replace peer review",
+              "is_correct": false
+            },
+            {
+              "text": "They reduce the sample",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "Why is a control group needed?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "To show what would have happened without the treatment",
+              "is_correct": true
+            },
+            {
+              "text": "To increase the sample",
+              "is_correct": false
+            },
+            {
+              "text": "To speed the trial",
+              "is_correct": false
+            },
+            {
+              "text": "To reduce costs",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What does prevalence describe?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "How many people have a condition at a time",
+              "is_correct": true
+            },
+            {
+              "text": "Speed of contagion",
+              "is_correct": false
+            },
+            {
+              "text": "Severity of symptoms",
+              "is_correct": false
+            },
+            {
+              "text": "Cost of care",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Health literacy — quiz 4",
+      "description": "Five questions drawn from the health literacy guide.",
+      "mode": "qcm",
+      "default_language": "en",
+      "wrong_answer_policy": "zero",
+      "questions": [
+        {
+          "text_html": "What is the first question to ask about a health claim?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "How strong is the evidence behind it?",
+              "is_correct": true
+            },
+            {
+              "text": "Who said it?",
+              "is_correct": false
+            },
+            {
+              "text": "Is it new?",
+              "is_correct": false
+            },
+            {
+              "text": "Is it popular?",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "Why is a screening test's false-positive rate important?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "It decides how many healthy people are alarmed",
+              "is_correct": true
+            },
+            {
+              "text": "It sets the price",
+              "is_correct": false
+            },
+            {
+              "text": "It shortens the wait",
+              "is_correct": false
+            },
+            {
+              "text": "It replaces diagnosis",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What is absolute risk?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "How many people in a group are affected",
+              "is_correct": true
+            },
+            {
+              "text": "The percentage change between groups",
+              "is_correct": false
+            },
+            {
+              "text": "The cost of treatment",
+              "is_correct": false
+            },
+            {
+              "text": "The survival time",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Health literacy — quiz 5",
+      "description": "Five questions drawn from the health literacy guide.",
+      "mode": "qcm",
+      "default_language": "en",
+      "wrong_answer_policy": "zero",
+      "questions": [
+        {
+          "text_html": "What does 'statistically significant' mean?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "The result is unlikely to be chance alone",
+              "is_correct": true
+            },
+            {
+              "text": "The effect is large",
+              "is_correct": false
+            },
+            {
+              "text": "The result is important",
+              "is_correct": false
+            },
+            {
+              "text": "The study is perfect",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What makes a randomised trial stronger?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Participants are assigned to groups by chance",
+              "is_correct": true
+            },
+            {
+              "text": "It is published quickly",
+              "is_correct": false
+            },
+            {
+              "text": "It uses more statistics",
+              "is_correct": false
+            },
+            {
+              "text": "It is funded privately",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What is a placebo effect?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "An improvement caused by expectation, not the treatment",
+              "is_correct": true
+            },
+            {
+              "text": "A side effect of a drug",
+              "is_correct": false
+            },
+            {
+              "text": "A dosing error",
+              "is_correct": false
+            },
+            {
+              "text": "A statistical mistake",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Everyday mathematics — quiz 1",
+      "description": "Five questions drawn from the everyday mathematics guide.",
+      "mode": "qcm",
+      "default_language": "en",
+      "wrong_answer_policy": "zero",
+      "questions": [
+        {
+          "text_html": "What is a proportion?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "A statement that two ratios are equal",
+              "is_correct": true
+            },
+            {
+              "text": "A single fraction",
+              "is_correct": false
+            },
+            {
+              "text": "A percentage sum",
+              "is_correct": false
+            },
+            {
+              "text": "A square root",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What is the median?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "The middle value of a sorted list",
+              "is_correct": true
+            },
+            {
+              "text": "The most frequent value",
+              "is_correct": false
+            },
+            {
+              "text": "The average",
+              "is_correct": false
+            },
+            {
+              "text": "The largest value",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What is the mean of 2, 4 and 9?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "5",
+              "is_correct": true
+            },
+            {
+              "text": "4",
+              "is_correct": false
+            },
+            {
+              "text": "6",
+              "is_correct": false
+            },
+            {
+              "text": "7",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Everyday mathematics — quiz 2",
+      "description": "Five questions drawn from the everyday mathematics guide.",
+      "mode": "qcm",
+      "default_language": "en",
+      "wrong_answer_policy": "zero",
+      "questions": [
+        {
+          "text_html": "If something doubles every day for 10 days, how much did it grow?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "About a thousand times",
+              "is_correct": true
+            },
+            {
+              "text": "Ten times",
+              "is_correct": false
+            },
+            {
+              "text": "A hundred times",
+              "is_correct": false
+            },
+            {
+              "text": "A million times",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What does rounding to two significant figures lose?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Precision beyond the second digit",
+              "is_correct": true
+            },
+            {
+              "text": "The sign",
+              "is_correct": false
+            },
+            {
+              "text": "The order of magnitude",
+              "is_correct": false
+            },
+            {
+              "text": "The unit",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "If a car covers 120 km in 1.5 h, what is its average speed?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "80 km/h",
+              "is_correct": true
+            },
+            {
+              "text": "60 km/h",
+              "is_correct": false
+            },
+            {
+              "text": "100 km/h",
+              "is_correct": false
+            },
+            {
+              "text": "120 km/h",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Everyday mathematics — quiz 3",
+      "description": "Five questions drawn from the everyday mathematics guide.",
+      "mode": "qcm",
+      "default_language": "en",
+      "wrong_answer_policy": "zero",
+      "questions": [
+        {
+          "text_html": "A 20% rise after a 20% fall: where are you?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Below the starting value",
+              "is_correct": true
+            },
+            {
+              "text": "Exactly at the start",
+              "is_correct": false
+            },
+            {
+              "text": "Above the start",
+              "is_correct": false
+            },
+            {
+              "text": "Impossible to know",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "How do you combine two independent probabilities?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Multiply them",
+              "is_correct": true
+            },
+            {
+              "text": "Add them",
+              "is_correct": false
+            },
+            {
+              "text": "Average them",
+              "is_correct": false
+            },
+            {
+              "text": "Subtract them",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What does a 1-in-1000 risk mean?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "About one case per thousand people",
+              "is_correct": true
+            },
+            {
+              "text": "One case per million",
+              "is_correct": false
+            },
+            {
+              "text": "One case in total",
+              "is_correct": false
+            },
+            {
+              "text": "One case per hundred",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Everyday mathematics — quiz 4",
+      "description": "Five questions drawn from the everyday mathematics guide.",
+      "mode": "qcm",
+      "default_language": "en",
+      "wrong_answer_policy": "zero",
+      "questions": [
+        {
+          "text_html": "What is a prime number?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "A number with exactly two divisors",
+              "is_correct": true
+            },
+            {
+              "text": "Any odd number",
+              "is_correct": false
+            },
+            {
+              "text": "A number ending in 3",
+              "is_correct": false
+            },
+            {
+              "text": "A number above ten",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What is the quickest sanity check on a result?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Compare it with an estimate you expect",
+              "is_correct": true
+            },
+            {
+              "text": "Read it twice",
+              "is_correct": false
+            },
+            {
+              "text": "Ask a colleague",
+              "is_correct": false
+            },
+            {
+              "text": "Recalculate slowly",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What does a percentage express?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "A fraction of a hundred",
+              "is_correct": true
+            },
+            {
+              "text": "A ratio of two",
+              "is_correct": false
+            },
+            {
+              "text": "A decimal fraction of ten",
+              "is_correct": false
+            },
+            {
+              "text": "A fixed unit",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Everyday mathematics — quiz 5",
+      "description": "Five questions drawn from the everyday mathematics guide.",
+      "mode": "qcm",
+      "default_language": "en",
+      "wrong_answer_policy": "zero",
+      "questions": [
+        {
+          "text_html": "Why estimate before calculating exactly?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "It catches order-of-magnitude errors",
+              "is_correct": true
+            },
+            {
+              "text": "It saves paper",
+              "is_correct": false
+            },
+            {
+              "text": "It avoids fractions",
+              "is_correct": false
+            },
+            {
+              "text": "It replaces algebra",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What does multiplication by a number below 1 do?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Reduces the value",
+              "is_correct": true
+            },
+            {
+              "text": "Increases it",
+              "is_correct": false
+            },
+            {
+              "text": "Keeps it equal",
+              "is_correct": false
+            },
+            {
+              "text": "Makes it negative",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "Why is correlation not causation?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Two things can move together for a third reason",
+              "is_correct": true
+            },
+            {
+              "text": "Correlation is always weak",
+              "is_correct": false
+            },
+            {
+              "text": "Causation cannot be measured",
+              "is_correct": false
+            },
+            {
+              "text": "Samples are too small",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Climate and resources — quiz 1",
+      "description": "Five questions drawn from the climate and resources guide.",
+      "mode": "qcm",
+      "default_language": "en",
+      "wrong_answer_policy": "zero",
+      "questions": [
+        {
+          "text_html": "What is an urban heat island?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "A city district warmer than its surroundings",
+              "is_correct": true
+            },
+            {
+              "text": "A city built on a volcano",
+              "is_correct": false
+            },
+            {
+              "text": "A tropical suburb",
+              "is_correct": false
+            },
+            {
+              "text": "A district without water",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "Which sector consumes the most fresh water?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Agriculture",
+              "is_correct": true
+            },
+            {
+              "text": "Industry",
+              "is_correct": false
+            },
+            {
+              "text": "Households",
+              "is_correct": false
+            },
+            {
+              "text": "Energy production",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What is a carbon budget?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "The total emissions that fit a temperature limit",
+              "is_correct": true
+            },
+            {
+              "text": "The cost of a policy",
+              "is_correct": false
+            },
+            {
+              "text": "The energy a country uses",
+              "is_correct": false
+            },
+            {
+              "text": "A fund for forests",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Climate and resources — quiz 2",
+      "description": "Five questions drawn from the climate and resources guide.",
+      "mode": "qcm",
+      "default_language": "en",
+      "wrong_answer_policy": "zero",
+      "questions": [
+        {
+          "text_html": "Why does eating less meat reduce emissions?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Livestock uses land and feed with high emissions",
+              "is_correct": true
+            },
+            {
+              "text": "Meat is processed in factories",
+              "is_correct": false
+            },
+            {
+              "text": "Animals breathe too much",
+              "is_correct": false
+            },
+            {
+              "text": "Transport dominates",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What happens to coastal land as sea levels rise?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Salt water intrudes and low land floods more often",
+              "is_correct": true
+            },
+            {
+              "text": "Rivers flow faster inland",
+              "is_correct": false
+            },
+            {
+              "text": "Mountains erode faster",
+              "is_correct": false
+            },
+            {
+              "text": "Rain becomes rare",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What makes a claim about climate checkable?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "A measurable quantity with a source and a timeframe",
+              "is_correct": true
+            },
+            {
+              "text": "The author's confidence",
+              "is_correct": false
+            },
+            {
+              "text": "The number of shares",
+              "is_correct": false
+            },
+            {
+              "text": "The length of the article",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Climate and resources — quiz 3",
+      "description": "Five questions drawn from the climate and resources guide.",
+      "mode": "qcm",
+      "default_language": "en",
+      "wrong_answer_policy": "zero",
+      "questions": [
+        {
+          "text_html": "What is the difference between kW and kWh?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Power versus energy over time",
+              "is_correct": true
+            },
+            {
+              "text": "They are identical",
+              "is_correct": false
+            },
+            {
+              "text": "Energy versus power",
+              "is_correct": false
+            },
+            {
+              "text": "Voltage versus current",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What does recycling save most effectively?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "The energy of making a material from scratch",
+              "is_correct": true
+            },
+            {
+              "text": "The cost of transport",
+              "is_correct": false
+            },
+            {
+              "text": "The need for design",
+              "is_correct": false
+            },
+            {
+              "text": "The use of water entirely",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "Why is insulation an energy measure?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "It reduces the energy needed to keep a building comfortable",
+              "is_correct": true
+            },
+            {
+              "text": "It generates electricity",
+              "is_correct": false
+            },
+            {
+              "text": "It filters air",
+              "is_correct": false
+            },
+            {
+              "text": "It adds humidity",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Climate and resources — quiz 4",
+      "description": "Five questions drawn from the climate and resources guide.",
+      "mode": "qcm",
+      "default_language": "en",
+      "wrong_answer_policy": "zero",
+      "questions": [
+        {
+          "text_html": "What is biodiversity?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "The variety of living things in a place",
+              "is_correct": true
+            },
+            {
+              "text": "The number of species in zoos",
+              "is_correct": false
+            },
+            {
+              "text": "The size of a population",
+              "is_correct": false
+            },
+            {
+              "text": "The health of one species",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "Why is fresh water a limited resource?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Only a small share of water is fresh and reachable",
+              "is_correct": true
+            },
+            {
+              "text": "It is destroyed by use",
+              "is_correct": false
+            },
+            {
+              "text": "Rivers dry up permanently",
+              "is_correct": false
+            },
+            {
+              "text": "Rainwater is unusable",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What is the precautionary principle?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Act against a risk before certainty arrives",
+              "is_correct": true
+            },
+            {
+              "text": "Wait for proof",
+              "is_correct": false
+            },
+            {
+              "text": "Ban all innovation",
+              "is_correct": false
+            },
+            {
+              "text": "Let the market decide",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Climate and resources — quiz 5",
+      "description": "Five questions drawn from the climate and resources guide.",
+      "mode": "qcm",
+      "default_language": "en",
+      "wrong_answer_policy": "zero",
+      "questions": [
+        {
+          "text_html": "Why do trees help a city?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "They shade, cool air and slow storm water",
+              "is_correct": true
+            },
+            {
+              "text": "They consume cars",
+              "is_correct": false
+            },
+            {
+              "text": "They replace drains",
+              "is_correct": false
+            },
+            {
+              "text": "They block wind only",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What makes CO2 a greenhouse gas?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "It absorbs infrared radiation and re-emits it",
+              "is_correct": true
+            },
+            {
+              "text": "It reflects sunlight",
+              "is_correct": false
+            },
+            {
+              "text": "It destroys ozone",
+              "is_correct": false
+            },
+            {
+              "text": "It cools the stratosphere",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What does an energy transition need besides generation?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Grids, storage and flexible demand",
+              "is_correct": true
+            },
+            {
+              "text": "Cheaper panels only",
+              "is_correct": false
+            },
+            {
+              "text": "Fewer consumers",
+              "is_correct": false
+            },
+            {
+              "text": "Higher voltage",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Economics in plain words — quiz 1",
+      "description": "Five questions drawn from the economics in plain words guide.",
+      "mode": "qcm",
+      "default_language": "en",
+      "wrong_answer_policy": "zero",
+      "questions": [
+        {
+          "text_html": "What is interest?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "The price of using money over time",
+              "is_correct": true
+            },
+            {
+              "text": "A tax on income",
+              "is_correct": false
+            },
+            {
+              "text": "A bank fee",
+              "is_correct": false
+            },
+            {
+              "text": "A share of profit",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What does a subsidy do?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Lowers the cost of producing or buying something",
+              "is_correct": true
+            },
+            {
+              "text": "Raises a price",
+              "is_correct": false
+            },
+            {
+              "text": "Bans a product",
+              "is_correct": false
+            },
+            {
+              "text": "Taxes an import",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "Why is a basket of prices revised?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Consumption habits change over time",
+              "is_correct": true
+            },
+            {
+              "text": "Politicians dislike the old one",
+              "is_correct": false
+            },
+            {
+              "text": "Prices stop moving",
+              "is_correct": false
+            },
+            {
+              "text": "It is a legal requirement",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Economics in plain words — quiz 2",
+      "description": "Five questions drawn from the economics in plain words guide.",
+      "mode": "qcm",
+      "default_language": "en",
+      "wrong_answer_policy": "zero",
+      "questions": [
+        {
+          "text_html": "What is productivity?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Output produced per unit of work",
+              "is_correct": true
+            },
+            {
+              "text": "The number of employees",
+              "is_correct": false
+            },
+            {
+              "text": "The total output",
+              "is_correct": false
+            },
+            {
+              "text": "The price of output",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What is the difference between debt and deficit?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Debt is accumulated; deficit is this year's gap",
+              "is_correct": true
+            },
+            {
+              "text": "They are synonyms",
+              "is_correct": false
+            },
+            {
+              "text": "Deficit is accumulated",
+              "is_correct": false
+            },
+            {
+              "text": "Both are annual",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What does inflation measure?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "The change in a basket of prices over time",
+              "is_correct": true
+            },
+            {
+              "text": "The level of prices",
+              "is_correct": false
+            },
+            {
+              "text": "The total money supply",
+              "is_correct": false
+            },
+            {
+              "text": "The rate of growth",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Economics in plain words — quiz 3",
+      "description": "Five questions drawn from the economics in plain words guide.",
+      "mode": "qcm",
+      "default_language": "en",
+      "wrong_answer_policy": "zero",
+      "questions": [
+        {
+          "text_html": "What does a currency depreciation change?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Imports become dearer and exports cheaper",
+              "is_correct": true
+            },
+            {
+              "text": "Both become dearer",
+              "is_correct": false
+            },
+            {
+              "text": "Nothing changes",
+              "is_correct": false
+            },
+            {
+              "text": "Only savings change",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "Why is a diversified economy more resilient?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "A shock to one sector hurts less",
+              "is_correct": true
+            },
+            {
+              "text": "It always grows faster",
+              "is_correct": false
+            },
+            {
+              "text": "It avoids imports",
+              "is_correct": false
+            },
+            {
+              "text": "It needs no tax",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What is an opportunity cost?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "The value of what you give up to choose something",
+              "is_correct": true
+            },
+            {
+              "text": "The price paid at the till",
+              "is_correct": false
+            },
+            {
+              "text": "The tax on a purchase",
+              "is_correct": false
+            },
+            {
+              "text": "The interest on a loan",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Economics in plain words — quiz 4",
+      "description": "Five questions drawn from the economics in plain words guide.",
+      "mode": "qcm",
+      "default_language": "en",
+      "wrong_answer_policy": "zero",
+      "questions": [
+        {
+          "text_html": "What is a tariff?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "A tax on imported goods",
+              "is_correct": true
+            },
+            {
+              "text": "A subsidy for exports",
+              "is_correct": false
+            },
+            {
+              "text": "A quota on production",
+              "is_correct": false
+            },
+            {
+              "text": "A price ceiling",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What does a price ceiling usually create?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Shortages",
+              "is_correct": true
+            },
+            {
+              "text": "Surpluses",
+              "is_correct": false
+            },
+            {
+              "text": "Lower quality",
+              "is_correct": false
+            },
+            {
+              "text": "Higher supply",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What is GDP?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "The value produced inside a country in a period",
+              "is_correct": true
+            },
+            {
+              "text": "The money held by the state",
+              "is_correct": false
+            },
+            {
+              "text": "The total of savings",
+              "is_correct": false
+            },
+            {
+              "text": "The average wage",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Economics in plain words — quiz 5",
+      "description": "Five questions drawn from the economics in plain words guide.",
+      "mode": "qcm",
+      "default_language": "en",
+      "wrong_answer_policy": "zero",
+      "questions": [
+        {
+          "text_html": "What is a stock and what is a flow?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "A stock is a quantity; a flow is per unit of time",
+              "is_correct": true
+            },
+            {
+              "text": "They are the same",
+              "is_correct": false
+            },
+            {
+              "text": "A flow is stored",
+              "is_correct": false
+            },
+            {
+              "text": "A stock is spent",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What usually happens when central banks raise rates?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Borrowing becomes more expensive and demand cools",
+              "is_correct": true
+            },
+            {
+              "text": "Prices rise faster",
+              "is_correct": false
+            },
+            {
+              "text": "Saving becomes unattractive",
+              "is_correct": false
+            },
+            {
+              "text": "Trade stops",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "Why do countries specialise?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "They produce some goods at lower opportunity cost",
+              "is_correct": true
+            },
+            {
+              "text": "They have more people",
+              "is_correct": false
+            },
+            {
+              "text": "They refuse to trade",
+              "is_correct": false
+            },
+            {
+              "text": "They share a currency",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Learning a language — quiz 1",
+      "description": "Five questions drawn from the learning a language guide.",
+      "mode": "qcm",
+      "default_language": "en",
+      "wrong_answer_policy": "zero",
+      "questions": [
+        {
+          "text_html": "What does shadowing practise?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Speaking immediately after a model, copying rhythm",
+              "is_correct": true
+            },
+            {
+              "text": "Translating word by word",
+              "is_correct": false
+            },
+            {
+              "text": "Memorising lists",
+              "is_correct": false
+            },
+            {
+              "text": "Writing summaries",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What helps listening comprehension most?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Hearing the same material at several speeds",
+              "is_correct": true
+            },
+            {
+              "text": "Reading the transcript once",
+              "is_correct": false
+            },
+            {
+              "text": "Studying phonetics only",
+              "is_correct": false
+            },
+            {
+              "text": "Silent reading",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "How long does a language take to learn?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "It depends on the pair, the goal and the practice",
+              "is_correct": true
+            },
+            {
+              "text": "Three months always",
+              "is_correct": false
+            },
+            {
+              "text": "A fixed number of hours",
+              "is_correct": false
+            },
+            {
+              "text": "It cannot be measured",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Learning a language — quiz 2",
+      "description": "Five questions drawn from the learning a language guide.",
+      "mode": "qcm",
+      "default_language": "en",
+      "wrong_answer_policy": "zero",
+      "questions": [
+        {
+          "text_html": "What is a false friend?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "A word that looks familiar but means something else",
+              "is_correct": true
+            },
+            {
+              "text": "A rare synonym",
+              "is_correct": false
+            },
+            {
+              "text": "An archaic form",
+              "is_correct": false
+            },
+            {
+              "text": "A dialect word",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What makes vocabulary stick?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Meeting a word in several contexts",
+              "is_correct": true
+            },
+            {
+              "text": "Writing it ten times",
+              "is_correct": false
+            },
+            {
+              "text": "Reading it once",
+              "is_correct": false
+            },
+            {
+              "text": "Translating it aloud",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "Why do frequency lists help beginners?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "A few hundred words cover a large share of speech",
+              "is_correct": true
+            },
+            {
+              "text": "They are shorter to print",
+              "is_correct": false
+            },
+            {
+              "text": "They are easier to spell",
+              "is_correct": false
+            },
+            {
+              "text": "They avoid grammar",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Learning a language — quiz 3",
+      "description": "Five questions drawn from the learning a language guide.",
+      "mode": "qcm",
+      "default_language": "en",
+      "wrong_answer_policy": "zero",
+      "questions": [
+        {
+          "text_html": "What should a beginner learn first in a new language?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "The sounds that carry meaning",
+              "is_correct": true
+            },
+            {
+              "text": "Every grammar rule",
+              "is_correct": false
+            },
+            {
+              "text": "Long vocabulary lists",
+              "is_correct": false
+            },
+            {
+              "text": "Poetry",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "Why does immersion accelerate learning?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "The language is needed, not studied",
+              "is_correct": true
+            },
+            {
+              "text": "It removes grammar",
+              "is_correct": false
+            },
+            {
+              "text": "It avoids mistakes",
+              "is_correct": false
+            },
+            {
+              "text": "It is cheaper",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What is the best use of a dictionary in reading?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Look up words that block meaning, not every word",
+              "is_correct": true
+            },
+            {
+              "text": "Look up every word",
+              "is_correct": false
+            },
+            {
+              "text": "Never use one",
+              "is_correct": false
+            },
+            {
+              "text": "Only use a bilingual one",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Learning a language — quiz 4",
+      "description": "Five questions drawn from the learning a language guide.",
+      "mode": "qcm",
+      "default_language": "en",
+      "wrong_answer_policy": "zero",
+      "questions": [
+        {
+          "text_html": "What does spaced repetition optimise?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "The timing of reviews",
+              "is_correct": true
+            },
+            {
+              "text": "The length of a lesson",
+              "is_correct": false
+            },
+            {
+              "text": "The number of words introduced",
+              "is_correct": false
+            },
+            {
+              "text": "The accent",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "Why is a little grammar useful?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "It names patterns the learner already half-sees",
+              "is_correct": true
+            },
+            {
+              "text": "It guarantees correctness",
+              "is_correct": false
+            },
+            {
+              "text": "It replaces practice",
+              "is_correct": false
+            },
+            {
+              "text": "It shortens the vocabulary",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "Why do learners overgeneralise rules?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "They apply a pattern beyond its domain",
+              "is_correct": true
+            },
+            {
+              "text": "They are careless",
+              "is_correct": false
+            },
+            {
+              "text": "They forget vocabulary",
+              "is_correct": false
+            },
+            {
+              "text": "They read too little",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Learning a language — quiz 5",
+      "description": "Five questions drawn from the learning a language guide.",
+      "mode": "qcm",
+      "default_language": "en",
+      "wrong_answer_policy": "zero",
+      "questions": [
+        {
+          "text_html": "What is grammatical gender?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "A noun class that affects agreement",
+              "is_correct": true
+            },
+            {
+              "text": "A rule about politeness",
+              "is_correct": false
+            },
+            {
+              "text": "A verb tense",
+              "is_correct": false
+            },
+            {
+              "text": "A writing system",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "Why is speaking early useful?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Mistakes become correctable material",
+              "is_correct": true
+            },
+            {
+              "text": "It avoids listening",
+              "is_correct": false
+            },
+            {
+              "text": "It replaces reading",
+              "is_correct": false
+            },
+            {
+              "text": "It guarantees fluency",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What is a cognate?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "A word that resembles one in another language",
+              "is_correct": true
+            },
+            {
+              "text": "A false friend",
+              "is_correct": false
+            },
+            {
+              "text": "A borrowed grammar rule",
+              "is_correct": false
+            },
+            {
+              "text": "A dialect",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "How music works — quiz 1",
+      "description": "Five questions drawn from the how music works guide.",
+      "mode": "qcm",
+      "default_language": "en",
+      "wrong_answer_policy": "zero",
+      "questions": [
+        {
+          "text_html": "Why does a melody get stuck in the head?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Short, repeated, slightly irregular patterns are memorable",
+              "is_correct": true
+            },
+            {
+              "text": "It is loud",
+              "is_correct": false
+            },
+            {
+              "text": "It uses many notes",
+              "is_correct": false
+            },
+            {
+              "text": "It is fast",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What is an octave?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "The interval where one frequency is double the other",
+              "is_correct": true
+            },
+            {
+              "text": "A fifth",
+              "is_correct": false
+            },
+            {
+              "text": "A semitone",
+              "is_correct": false
+            },
+            {
+              "text": "A mode",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What does a minor scale often suggest?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "A darker or more melancholic colour",
+              "is_correct": true
+            },
+            {
+              "text": "A faster tempo",
+              "is_correct": false
+            },
+            {
+              "text": "A louder sound",
+              "is_correct": false
+            },
+            {
+              "text": "A different rhythm",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "How music works — quiz 2",
+      "description": "Five questions drawn from the how music works guide.",
+      "mode": "qcm",
+      "default_language": "en",
+      "wrong_answer_policy": "zero",
+      "questions": [
+        {
+          "text_html": "What is syncopation?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "An accent placed off the expected beat",
+              "is_correct": true
+            },
+            {
+              "text": "A very slow tempo",
+              "is_correct": false
+            },
+            {
+              "text": "A silent bar",
+              "is_correct": false
+            },
+            {
+              "text": "A chord change",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "Why is silence part of music?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "It sets off sound and shapes expectation",
+              "is_correct": true
+            },
+            {
+              "text": "It saves the players' energy",
+              "is_correct": false
+            },
+            {
+              "text": "It marks page turns",
+              "is_correct": false
+            },
+            {
+              "text": "It is required notation",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What is rhythm in music?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "The organisation of sound in time",
+              "is_correct": true
+            },
+            {
+              "text": "The pitch of notes",
+              "is_correct": false
+            },
+            {
+              "text": "The loudness of a piece",
+              "is_correct": false
+            },
+            {
+              "text": "The number of instruments",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "How music works — quiz 3",
+      "description": "Five questions drawn from the how music works guide.",
+      "mode": "qcm",
+      "default_language": "en",
+      "wrong_answer_policy": "zero",
+      "questions": [
+        {
+          "text_html": "What is a tempo?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "The speed of the pulse",
+              "is_correct": true
+            },
+            {
+              "text": "The loudness",
+              "is_correct": false
+            },
+            {
+              "text": "The key",
+              "is_correct": false
+            },
+            {
+              "text": "The number of beats per bar",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What is orchestration?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Deciding which instruments play which part",
+              "is_correct": true
+            },
+            {
+              "text": "Tuning the orchestra",
+              "is_correct": false
+            },
+            {
+              "text": "Writing the melody",
+              "is_correct": false
+            },
+            {
+              "text": "Setting the tempo",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "Why do pieces repeat material?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Repetition makes a form the listener can follow",
+              "is_correct": true
+            },
+            {
+              "text": "It is easier to play",
+              "is_correct": false
+            },
+            {
+              "text": "It hides mistakes",
+              "is_correct": false
+            },
+            {
+              "text": "It fills the score",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "How music works — quiz 4",
+      "description": "Five questions drawn from the how music works guide.",
+      "mode": "qcm",
+      "default_language": "en",
+      "wrong_answer_policy": "zero",
+      "questions": [
+        {
+          "text_html": "What does a chord do?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Sounds several notes together as a unit",
+              "is_correct": true
+            },
+            {
+              "text": "Sets the tempo",
+              "is_correct": false
+            },
+            {
+              "text": "Marks the beat",
+              "is_correct": false
+            },
+            {
+              "text": "Changes the key",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What is a scale?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "An ordered set of notes used in a piece",
+              "is_correct": true
+            },
+            {
+              "text": "A volume control",
+              "is_correct": false
+            },
+            {
+              "text": "A type of instrument",
+              "is_correct": false
+            },
+            {
+              "text": "A tempo marking",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What does a key signature indicate?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Which notes belong to the piece by default",
+              "is_correct": true
+            },
+            {
+              "text": "The volume",
+              "is_correct": false
+            },
+            {
+              "text": "The tempo",
+              "is_correct": false
+            },
+            {
+              "text": "The instrument",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "How music works — quiz 5",
+      "description": "Five questions drawn from the how music works guide.",
+      "mode": "qcm",
+      "default_language": "en",
+      "wrong_answer_policy": "zero",
+      "questions": [
+        {
+          "text_html": "What does practising slowly improve?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Control and accuracy before speed",
+              "is_correct": true
+            },
+            {
+              "text": "Only memory",
+              "is_correct": false
+            },
+            {
+              "text": "Only stamina",
+              "is_correct": false
+            },
+            {
+              "text": "Only reading",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What makes two notes consonant?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Their frequencies relate by a simple ratio",
+              "is_correct": true
+            },
+            {
+              "text": "They are played loudly",
+              "is_correct": false
+            },
+            {
+              "text": "They share a name",
+              "is_correct": false
+            },
+            {
+              "text": "They are the same octave",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What is a bar?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "A group of beats between two accents",
+              "is_correct": true
+            },
+            {
+              "text": "A loud passage",
+              "is_correct": false
+            },
+            {
+              "text": "A change of key",
+              "is_correct": false
+            },
+            {
+              "text": "The end of a piece",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Food, energy and health — quiz 1",
+      "description": "Five questions drawn from the food, energy and health guide.",
+      "mode": "qcm",
+      "default_language": "en",
+      "wrong_answer_policy": "zero",
+      "questions": [
+        {
+          "text_html": "Which nutrient provides the most energy per gram?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Fat",
+              "is_correct": true
+            },
+            {
+              "text": "Protein",
+              "is_correct": false
+            },
+            {
+              "text": "Carbohydrate",
+              "is_correct": false
+            },
+            {
+              "text": "Fibre",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "Why do official recommendations change?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "The evidence base improves over time",
+              "is_correct": true
+            },
+            {
+              "text": "Governments change",
+              "is_correct": false
+            },
+            {
+              "text": "Foods change",
+              "is_correct": false
+            },
+            {
+              "text": "People lie",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "Why is a single food rarely a health solution?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "The whole diet and pattern matter more",
+              "is_correct": true
+            },
+            {
+              "text": "Foods cancel each other",
+              "is_correct": false
+            },
+            {
+              "text": "Labels are wrong",
+              "is_correct": false
+            },
+            {
+              "text": "Nutrition is unknown",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Food, energy and health — quiz 2",
+      "description": "Five questions drawn from the food, energy and health guide.",
+      "mode": "qcm",
+      "default_language": "en",
+      "wrong_answer_policy": "zero",
+      "questions": [
+        {
+          "text_html": "What does 'energy density' describe?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "How much energy a food carries per gram",
+              "is_correct": true
+            },
+            {
+              "text": "How heavy a portion is",
+              "is_correct": false
+            },
+            {
+              "text": "How sweet a food is",
+              "is_correct": false
+            },
+            {
+              "text": "How long it keeps",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What does a 'light' product usually change?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "One nutrient, often sugar or fat",
+              "is_correct": true
+            },
+            {
+              "text": "The total energy always",
+              "is_correct": false
+            },
+            {
+              "text": "The vitamin content",
+              "is_correct": false
+            },
+            {
+              "text": "The fibre",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What is the most reliable way to judge a diet claim?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Look for the study and the population behind it",
+              "is_correct": true
+            },
+            {
+              "text": "Trust the packaging",
+              "is_correct": false
+            },
+            {
+              "text": "Ask a friend",
+              "is_correct": false
+            },
+            {
+              "text": "Follow the trend",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Food, energy and health — quiz 3",
+      "description": "Five questions drawn from the food, energy and health guide.",
+      "mode": "qcm",
+      "default_language": "en",
+      "wrong_answer_policy": "zero",
+      "questions": [
+        {
+          "text_html": "What is a calorie?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "A unit of energy",
+              "is_correct": true
+            },
+            {
+              "text": "A unit of mass",
+              "is_correct": false
+            },
+            {
+              "text": "A vitamin",
+              "is_correct": false
+            },
+            {
+              "text": "A portion size",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "Why is salt easy to overconsume?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "It is in processed food without tasting salty",
+              "is_correct": true
+            },
+            {
+              "text": "It is sweet",
+              "is_correct": false
+            },
+            {
+              "text": "It is invisible",
+              "is_correct": false
+            },
+            {
+              "text": "It is added at the table only",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What does hydration affect?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Blood volume and temperature regulation",
+              "is_correct": true
+            },
+            {
+              "text": "Bone density",
+              "is_correct": false
+            },
+            {
+              "text": "Muscle length",
+              "is_correct": false
+            },
+            {
+              "text": "Eye colour",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Food, energy and health — quiz 4",
+      "description": "Five questions drawn from the food, energy and health guide.",
+      "mode": "qcm",
+      "default_language": "en",
+      "wrong_answer_policy": "zero",
+      "questions": [
+        {
+          "text_html": "What does fibre do?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Feeds gut bacteria and slows sugar absorption",
+              "is_correct": true
+            },
+            {
+              "text": "Provides bulk energy",
+              "is_correct": false
+            },
+            {
+              "text": "Replaces protein",
+              "is_correct": false
+            },
+            {
+              "text": "Dissolves fat",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What is a balanced diet?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "One supplying energy and nutrients in the right proportions",
+              "is_correct": true
+            },
+            {
+              "text": "One with equal weights of food",
+              "is_correct": false
+            },
+            {
+              "text": "One without fat",
+              "is_correct": false
+            },
+            {
+              "text": "One with only plants",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "Why can portions be misjudged?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "People estimate volume poorly without scales",
+              "is_correct": true
+            },
+            {
+              "text": "Food contains hidden air",
+              "is_correct": false
+            },
+            {
+              "text": "Plates are always wrong",
+              "is_correct": false
+            },
+            {
+              "text": "Recipes are inaccurate",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Food, energy and health — quiz 5",
+      "description": "Five questions drawn from the food, energy and health guide.",
+      "mode": "qcm",
+      "default_language": "en",
+      "wrong_answer_policy": "zero",
+      "questions": [
+        {
+          "text_html": "What is a micronutrient?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "A vitamin or mineral needed in small amounts",
+              "is_correct": true
+            },
+            {
+              "text": "A fat",
+              "is_correct": false
+            },
+            {
+              "text": "A sugar",
+              "is_correct": false
+            },
+            {
+              "text": "A protein",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What does a food label's energy value depend on?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "The portion size it refers to",
+              "is_correct": true
+            },
+            {
+              "text": "The price",
+              "is_correct": false
+            },
+            {
+              "text": "The packaging",
+              "is_correct": false
+            },
+            {
+              "text": "The brand",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "What does cooking at home change?",
+          "time_limit_seconds": 30,
+          "options": [
+            {
+              "text": "Portion control and ingredient knowledge",
+              "is_correct": true
+            },
+            {
+              "text": "The nutrient value of everything",
+              "is_correct": false
+            },
+            {
+              "text": "The need for vegetables",
+              "is_correct": false
+            },
+            {
+              "text": "The cost of energy",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

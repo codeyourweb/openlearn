@@ -1,0 +1,171 @@
+{
+  "kind": "decks",
+  "items": [
+    {
+      "title": "Human Body Systems",
+      "description": "Eighteen quick cards on anatomy and physiology: organs, vessels, bones and the systems that keep them talking to each other.",
+      "aspect": "2:3",
+      "cards": [
+        {
+          "front": "**Skeletal system**\n\nHow many bones does an adult human have?",
+          "back": "**206**\n\n80 axial (skull, spine, ribcage) and 126 appendicular (limbs and girdles). A newborn has around 270; many fuse during growth."
+        },
+        {
+          "front": "**Heart**\n\nWhich chamber pumps oxygenated blood into the aorta?",
+          "back": "**The left ventricle**\n\nIt has the thickest wall of the four chambers because it drives blood through the whole systemic circulation."
+        },
+        {
+          "front": "**Lungs**\n\nWhere does gas exchange actually happen?",
+          "back": "**In the alveoli**\n\nTiny air sacs, roughly 300 million per pair of lungs, wrapped in capillaries. Oxygen crosses into the blood, CO₂ crosses out."
+        },
+        {
+          "front": "**Breathing**\n\nWhich muscle does most of the work in quiet breathing?",
+          "back": "**The diaphragm**\n\nIt flattens on inhalation, lowering the pressure in the chest so air flows in. The intercostals assist; they take over in respiratory distress."
+        },
+        {
+          "front": "**Digestion**\n\nWhere are most nutrients absorbed?",
+          "back": "**The small intestine** — mainly the jejunum.\n\nIts villi and microvilli give a surface area of roughly 30 m². Water is reclaimed later, in the colon."
+        },
+        {
+          "front": "**Liver**\n\nWhich organ makes bile, and where is it stored?",
+          "back": "**Made by the liver, stored in the gallbladder.**\n\nBile emulsifies fats — it does not digest them itself. The liver also handles detoxification and glucose storage."
+        },
+        {
+          "front": "**Kidneys**\n\nWhat is the functional unit of the kidney?",
+          "back": "**The nephron**\n\nAbout one million per kidney. Each one filters, reabsorbs and secretes to turn plasma into urine."
+        },
+        {
+          "front": "**Nervous system**\n\nWhat is the junction between two neurons called?",
+          "back": "**A synapse**\n\nThe signal crosses as a chemical neurotransmitter, which is why some drugs act on synapses rather than on the neurons themselves."
+        },
+        {
+          "front": "**Blood**\n\nWhich cells carry oxygen, and with which protein?",
+          "back": "**Red blood cells (erythrocytes), using haemoglobin.**\n\nEach cell loses its nucleus to make room for haemoglobin; each haemoglobin carries four O₂ molecules."
+        },
+        {
+          "front": "**Pancreas**\n\nWhich two hormones regulate blood glucose?",
+          "back": "**Insulin and glucagon**\n\nInsulin lowers glucose by pushing it into cells; glucagon raises it by releasing stored glycogen from the liver."
+        },
+        {
+          "front": "**Thyroid**\n\nWhich element must the diet supply for thyroid hormones?",
+          "back": "**Iodine**\n\nT3 and T4 both contain iodine. A deficiency enlarges the gland (goitre) and slows metabolism."
+        },
+        {
+          "front": "**Skin**\n\nWhat is the outermost layer of the skin called?",
+          "back": "**The epidermis**\n\nIts outer surface, the stratum corneum, is dead keratinised cells — the body's first waterproof barrier."
+        },
+        {
+          "front": "**Muscles**\n\nWhich muscle type is both involuntary and striated?",
+          "back": "**Cardiac muscle**\n\nSmooth muscle is involuntary but not striated; skeletal muscle is striated but voluntary. The heart is the exception on both counts."
+        },
+        {
+          "front": "**Joints**\n\nWhat kind of joint is the knee?",
+          "back": "**A hinge joint** (a synovial joint)\n\nFlexion and extension in one plane, with cartilage, a capsule and synovial fluid between the bones."
+        },
+        {
+          "front": "**Digestion**\n\nWhere does the chemical digestion of protein begin?",
+          "back": "**In the stomach**\n\nHydrochloric acid unfolds the proteins and pepsin starts breaking the peptide bonds. Chewing only begins the mechanical work."
+        },
+        {
+          "front": "**Circulation**\n\nWhich vessels carry blood away from the heart?",
+          "back": "**Arteries**\n\nThey branch into arterioles and then capillaries. Note that the pulmonary artery carries deoxygenated blood — direction, not oxygen, defines the name."
+        },
+        {
+          "front": "**Brain**\n\nWhich part coordinates balance and movement?",
+          "back": "**The cerebellum**\n\nIt compares intended movement with what the body reports, and corrects the difference. The brainstem handles the reflexes that keep you upright."
+        },
+        {
+          "front": "**Immune system**\n\nWhich organ filters ageing red blood cells out of circulation?",
+          "back": "**The spleen**\n\nIt also stores platelets and helps mount a response to blood-borne pathogens. You can live without it, but you catch more infections."
+        }
+      ]
+    },
+    {
+      "title": "Vocabulaire anglais B1",
+      "description": "Vingt mots et expressions du niveau B1, avec traduction, exemple et les faux amis qui piègent le plus souvent.",
+      "aspect": "2:3",
+      "cards": [
+        {
+          "front": "**to achieve**",
+          "back": "**atteindre, accomplir** (un objectif, un résultat)\n\n*She achieved everything she set out to do.*\n\nNom : **achievement** — une réussite."
+        },
+        {
+          "front": "**to borrow**",
+          "back": "**emprunter** (on emprunte *à* quelqu'un)\n\n*Can I borrow your umbrella?*\n\nNe pas confondre avec **to lend** = prêter."
+        },
+        {
+          "front": "**to lend**",
+          "back": "**prêter**\n\n*He lent me his car for the weekend.*\n\nConstruction : lend **somebody something** — pas de « to » devant la personne."
+        },
+        {
+          "front": "**awkward**",
+          "back": "**gênant, maladroit**\n\n*There was an awkward silence after his joke.*\n\nPour un objet difficile à manipuler, on dit plutôt **clumsy**."
+        },
+        {
+          "front": "**actually**",
+          "back": "**en fait, en réalité**\n\n*Actually, I've never been to London.*\n\nFaux ami : « actuellement » se traduit par **currently** ou **at the moment**."
+        },
+        {
+          "front": "**eventually**",
+          "back": "**finalement, finir par**\n\n*The bus eventually arrived, forty minutes late.*\n\nFaux ami : « éventuellement » se traduit par **possibly** ou **if necessary**."
+        },
+        {
+          "front": "**to afford**",
+          "back": "**avoir les moyens de (s'offrir)**\n\n*We can't afford a new car this year.*\n\nS'emploie aussi au figuré : *I can't afford to miss this deadline.*"
+        },
+        {
+          "front": "**reliable**",
+          "back": "**fiable, sûr**\n\n*A reliable source told me the shop is closing.*\n\nNe pas confondre avec **reliant**, qui n'existe pas en anglais courant."
+        },
+        {
+          "front": "**to complain**",
+          "back": "**se plaindre**\n\n*He complained about the noise all evening.*\n\nConstruction : complain **about** something, complain **to** somebody."
+        },
+        {
+          "front": "**to improve**",
+          "back": "**améliorer, s'améliorer**\n\n*Her English improved a lot in six months.*\n\nPas besoin de « get better » : *improve* fonctionne dans les deux sens."
+        },
+        {
+          "front": "**a deadline**",
+          "back": "**une échéance, une date limite**\n\n*The deadline is Friday at noon.*\n\nVerbes utiles : **meet** a deadline (la respecter), **miss** a deadline (la dépasser)."
+        },
+        {
+          "front": "**to look forward to**",
+          "back": "**attendre avec impatience**\n\n*I'm looking forward to seeing you.*\n\nAttention : suivi de **-ing**, jamais de l'infinitif."
+        },
+        {
+          "front": "**to give up**",
+          "back": "**abandonner, renoncer à**\n\n*He gave up smoking last year.*\n\nVerbe à particule : le pronom se place au milieu — *give it up*."
+        },
+        {
+          "front": "**nevertheless**",
+          "back": "**néanmoins, pourtant**\n\n*The road was closed; nevertheless, we got there on time.*\n\nRegistre soutenu. À l'oral : **still** ou **anyway**."
+        },
+        {
+          "front": "**to warn**",
+          "back": "**avertir, prévenir (d'un danger)**\n\n*They warned us about the tide.*\n\nConstruction : warn **somebody about/of** something, ou warn somebody **not to** do it."
+        },
+        {
+          "front": "**a venue**",
+          "back": "**un lieu (de spectacle, de rendez-vous)**\n\n*The venue holds three hundred people.*\n\nNe pas confondre avec **a place**, plus général."
+        },
+        {
+          "front": "**to mind**",
+          "back": "**être dérangé par ; faire attention**\n\n*Do you mind if I open the window?* — *No, I don't mind.*\n\nRéponse piège : « oui » signifie que ça dérange."
+        },
+        {
+          "front": "**rather**",
+          "back": "**plutôt, assez**\n\n*It's rather cold in here.* / *I'd rather stay home.*\n\n**would rather** + infinitif sans *to*."
+        },
+        {
+          "front": "**to succeed**",
+          "back": "**réussir**\n\n*She succeeded in passing the exam.*\n\nFaux ami : « succéder à » se dit **to succeed to** (trône, titre) — rare."
+        },
+        {
+          "front": "**a fortnight**",
+          "back": "**quinze jours, deux semaines**\n\n*We're away for a fortnight in August.*\n\nTrès courant au Royaume-Uni, inusité aux États-Unis (on dit *two weeks*)."
+        }
+      ]
+    }
+  ]
+}

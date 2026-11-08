@@ -1,0 +1,663 @@
+{
+  "kind": "decks",
+  "items": [
+    {
+      "title": "Physical geography — revision cards",
+      "description": "Ten cards to revise the physical geography guide.",
+      "aspect": "2:3",
+      "cards": [
+        {
+          "front": "Which ocean is the largest and deepest?",
+          "back": "Pacific\n\nIt is also the oldest ocean floor."
+        },
+        {
+          "front": "What share of Earth's water is held by the oceans?",
+          "back": "About 97%\n\nRivers and lakes hold less than 1%."
+        },
+        {
+          "front": "What is the deepest point of the ocean called?",
+          "back": "The Mariana Trench\n\nIt lies in the western Pacific."
+        },
+        {
+          "front": "Roughly how fast do tectonic plates move?",
+          "back": "A few centimetres per year\n\nAbout as fast as a fingernail grows."
+        },
+        {
+          "front": "What forms where two plates pull apart?",
+          "back": "A rift, often filled by a new ocean\n\nThe East African Rift is an example."
+        },
+        {
+          "front": "Why are the poles colder than the equator?",
+          "back": "Sunlight strikes them at a slant\n\nThe same energy is spread over a wider area."
+        },
+        {
+          "front": "Which current keeps north-western Europe mild?",
+          "back": "The Gulf Stream\n\nIt carries warm water north-east across the Atlantic."
+        },
+        {
+          "front": "What percentage of the Earth's surface is covered by water?",
+          "back": "About 71%\n\nMost of it is salt water."
+        },
+        {
+          "front": "Which two continents fit together like puzzle pieces?",
+          "back": "Africa and South America\n\nThey were joined in Pangaea."
+        },
+        {
+          "front": "What instrument measures the strength of an earthquake?",
+          "back": "A seismograph\n\nIt records ground motion over time."
+        }
+      ]
+    },
+    {
+      "title": "Turning points of history — revision cards",
+      "description": "Ten cards to revise the turning points of history guide.",
+      "aspect": "2:3",
+      "cards": [
+        {
+          "front": "Where did writing first appear, around 3200 BCE?",
+          "back": "Mesopotamia\n\nIt began as accounting records."
+        },
+        {
+          "front": "What made movable type revolutionary in Europe?",
+          "back": "It made copies far cheaper to produce\n\nPrinted arguments spread faster than censorship."
+        },
+        {
+          "front": "Which invention moved production into factories?",
+          "back": "The steam engine\n\nSteam power no longer depended on a river."
+        },
+        {
+          "front": "Why did the first cities grow beside rivers?",
+          "back": "Flooding left fertile soil and a food surplus\n\nSurplus food let people specialise."
+        },
+        {
+          "front": "What did the printing press make possible for learning?",
+          "back": "Widely shared, identical texts\n\nErrors could be corrected once and reprinted."
+        },
+        {
+          "front": "Which ancient library is famous for collecting the ancient world's texts?",
+          "back": "The Library of Alexandria\n\nIts decline remains debated."
+        },
+        {
+          "front": "What was the Silk Road?",
+          "back": "A network of trade routes between Asia and Europe\n\nGoods travelled with ideas and technologies."
+        },
+        {
+          "front": "Which document limited the power of the English king in 1215?",
+          "back": "Magna Carta\n\nIt established that the king was subject to law."
+        },
+        {
+          "front": "What was the Renaissance a revival of?",
+          "back": "Classical learning and art\n\nIt began in the Italian city-states."
+        },
+        {
+          "front": "Which empire built the road network later used across Europe?",
+          "back": "The Roman Empire\n\nSome routes are still in use."
+        }
+      ]
+    },
+    {
+      "title": "Everyday science — revision cards",
+      "description": "Ten cards to revise the everyday science guide.",
+      "aspect": "2:3",
+      "cards": [
+        {
+          "front": "What is the smallest unit of life?",
+          "back": "The cell\n\nSome organisms are a single cell."
+        },
+        {
+          "front": "What does DNA carry?",
+          "back": "The instructions for building and running a cell\n\nAlmost every cell in a body holds the same DNA."
+        },
+        {
+          "front": "What happens to energy in any process?",
+          "back": "It is converted, never destroyed\n\nThe total amount stays constant."
+        },
+        {
+          "front": "Which way does heat flow?",
+          "back": "From warmer to colder\n\nA fridge moves heat the other way by doing work."
+        },
+        {
+          "front": "What does a catalyst do?",
+          "back": "Speeds a reaction without being consumed\n\nEnzymes are biological catalysts."
+        },
+        {
+          "front": "What is a molecule?",
+          "back": "Two or more atoms bonded together\n\nWater is one oxygen and two hydrogen atoms."
+        },
+        {
+          "front": "What is photosynthesis for?",
+          "back": "Turning light into chemical energy\n\nPlants, algae and some bacteria do it."
+        },
+        {
+          "front": "What gas do plants take from the air to grow?",
+          "back": "Carbon dioxide\n\nThey release oxygen as a by-product."
+        },
+        {
+          "front": "What is the pH of a neutral solution?",
+          "back": "7\n\nBelow 7 is acidic, above is basic."
+        },
+        {
+          "front": "Which force keeps planets in orbit?",
+          "back": "Gravity\n\nIt weakens with the square of the distance."
+        }
+      ]
+    },
+    {
+      "title": "How the web works — revision cards",
+      "description": "Ten cards to revise the how the web works guide.",
+      "aspect": "2:3",
+      "cards": [
+        {
+          "front": "What does DNS do?",
+          "back": "Translates a domain name into an IP address\n\nIt is a distributed hierarchy."
+        },
+        {
+          "front": "What does HTTPS add to HTTP?",
+          "back": "Encryption and proof of the server's identity\n\nIt runs over TLS."
+        },
+        {
+          "front": "What does HTTP status 404 mean?",
+          "back": "The resource does not exist\n\n410 means it existed and is gone."
+        },
+        {
+          "front": "What is a cookie used for?",
+          "back": "Keeping state between requests\n\nHTTP itself is stateless."
+        },
+        {
+          "front": "What is the role of a web browser?",
+          "back": "Requesting, rendering and running pages\n\nIt also enforces security policies."
+        },
+        {
+          "front": "Why is an open web standard important?",
+          "back": "Anyone can implement it, so no vendor controls access\n\nInteroperability comes from shared specifications."
+        },
+        {
+          "front": "What is an API?",
+          "back": "A defined way for programs to exchange data\n\nIt is a contract, not a UI."
+        },
+        {
+          "front": "What does a CDN do?",
+          "back": "Serves files from a location near the visitor\n\nIt reduces latency."
+        },
+        {
+          "front": "What is the difference between a domain and a URL?",
+          "back": "A domain names a host; a URL locates a resource on it\n\nThe URL adds scheme, path and query."
+        },
+        {
+          "front": "What does JSON represent?",
+          "back": "Structured data as nested keys and values\n\nIt is readable by humans and machines."
+        }
+      ]
+    },
+    {
+      "title": "How language models work — revision cards",
+      "description": "Ten cards to revise the how language models work guide.",
+      "aspect": "2:3",
+      "cards": [
+        {
+          "front": "What is a token in a language model?",
+          "back": "A piece of text, shorter than a word on average\n\nRare words are split into several tokens."
+        },
+        {
+          "front": "What does a language model actually predict?",
+          "back": "The next token\n\nEverything else emerges from that."
+        },
+        {
+          "front": "What is a hallucination?",
+          "back": "A confident answer that is not supported by facts\n\nIt follows from predicting plausible text."
+        },
+        {
+          "front": "What does the context window limit?",
+          "back": "How much text the model can consider at once\n\nOlder turns fall out of it."
+        },
+        {
+          "front": "What is a prompt?",
+          "back": "The instruction and context given to a model\n\nClarity beats cleverness."
+        },
+        {
+          "front": "Why does giving a source document help?",
+          "back": "It grounds the answer in text the model can quote\n\nRetrieval reduces invented facts."
+        },
+        {
+          "front": "What is fine-tuning?",
+          "back": "Further training on a narrower set of examples\n\nIt shapes style and task behaviour."
+        },
+        {
+          "front": "What does temperature control?",
+          "back": "How random the next-token choice is\n\nLow temperature is more deterministic."
+        },
+        {
+          "front": "What is an embedding?",
+          "back": "A vector that places a text by its meaning\n\nSimilar meanings lie close together."
+        },
+        {
+          "front": "Why must a model's output be verified?",
+          "back": "It optimises for plausibility, not truth\n\nCheck against a source outside the model."
+        }
+      ]
+    },
+    {
+      "title": "Sport and training — revision cards",
+      "description": "Ten cards to revise the sport and training guide.",
+      "aspect": "2:3",
+      "cards": [
+        {
+          "front": "Which system powers a short, maximal sprint?",
+          "back": "Stored energy used without oxygen\n\nIt lasts a few seconds."
+        },
+        {
+          "front": "When does the body adapt to training?",
+          "back": "During recovery between sessions\n\nFatigue is the stimulus, rest is the adaptation."
+        },
+        {
+          "front": "What does aerobic training improve?",
+          "back": "The ability to use oxygen over long efforts\n\nIt builds the heart and the capillary network."
+        },
+        {
+          "front": "Why is sleep part of a training plan?",
+          "back": "It is when most recovery happens\n\nShort sleep blunts adaptation."
+        },
+        {
+          "front": "What is progressive overload?",
+          "back": "Gradually increasing the demand of training\n\nSmall increments are sustainable."
+        },
+        {
+          "front": "What does a warm-up prepare?",
+          "back": "Muscles, joints and the cardiovascular system for effort\n\nIt also rehearses the movement."
+        },
+        {
+          "front": "Why do varied repetitions improve a skill?",
+          "back": "They build a general pattern, not one fixed motion\n\nToo much variation prevents refinement."
+        },
+        {
+          "front": "What is carbohydrate loading for?",
+          "back": "Filling glycogen stores before a long effort\n\nIt matters for endurance events."
+        },
+        {
+          "front": "What is a common sign of overtraining?",
+          "back": "Resting heart rate rising and performance falling\n\nIt needs rest, not more work."
+        },
+        {
+          "front": "What does hydration affect first?",
+          "back": "Blood volume and the ability to regulate heat\n\nThirst arrives late."
+        }
+      ]
+    },
+    {
+      "title": "Reading a work of art — revision cards",
+      "description": "Ten cards to revise the reading a work of art guide.",
+      "aspect": "2:3",
+      "cards": [
+        {
+          "front": "What does composition describe in a picture?",
+          "back": "How the elements are arranged in the frame\n\nIt directs the viewer's eye."
+        },
+        {
+          "front": "Which colours tend to advance towards the viewer?",
+          "back": "Warm colours\n\nCool tones recede."
+        },
+        {
+          "front": "What is chiaroscuro?",
+          "back": "Strong contrast between light and dark\n\nCaravaggio used it dramatically."
+        },
+        {
+          "front": "Why does context matter for a work of art?",
+          "back": "It explains what the work answered to\n\nPatronage and censorship shape what is made."
+        },
+        {
+          "front": "What is a vanishing point?",
+          "back": "Where parallel lines appear to meet in perspective\n\nIt creates depth on a flat surface."
+        },
+        {
+          "front": "What does a novel's narrator control?",
+          "back": "What the reader can know, and when\n\nAn unreliable narrator makes this visible."
+        },
+        {
+          "front": "What is the difference between story and plot?",
+          "back": "Story is the events; plot is their arrangement\n\nOrder changes meaning."
+        },
+        {
+          "front": "What does negative space do?",
+          "back": "Gives the subject room and emphasis\n\nSilence works the same way in music."
+        },
+        {
+          "front": "Why do museums group works by period?",
+          "back": "Shared constraints and conventions become visible\n\nIt shows what changed, and when."
+        },
+        {
+          "front": "What is a motif in literature?",
+          "back": "A recurring element that carries meaning\n\nRepetition builds significance."
+        }
+      ]
+    },
+    {
+      "title": "Health literacy — revision cards",
+      "description": "Ten cards to revise the health literacy guide.",
+      "aspect": "2:3",
+      "cards": [
+        {
+          "front": "What is absolute risk?",
+          "back": "How many people in a group are affected\n\nIt is the number that matters to a patient."
+        },
+        {
+          "front": "What is relative risk?",
+          "back": "How much a rate changes between groups\n\nA doubling of a small number stays small."
+        },
+        {
+          "front": "What makes a randomised trial stronger?",
+          "back": "Participants are assigned to groups by chance\n\nChance assignment limits bias."
+        },
+        {
+          "front": "What is a placebo effect?",
+          "back": "An improvement caused by expectation, not the treatment\n\nBlinding is used to control for it."
+        },
+        {
+          "front": "Why do reviews pool several studies?",
+          "back": "A larger base gives a more stable estimate\n\nThey also show disagreement."
+        },
+        {
+          "front": "What does 'statistically significant' mean?",
+          "back": "The result is unlikely to be chance alone\n\nSignificance is not clinical importance."
+        },
+        {
+          "front": "Why is a control group needed?",
+          "back": "To show what would have happened without the treatment\n\nComparison is what creates evidence."
+        },
+        {
+          "front": "What is a confounding factor?",
+          "back": "Something else that differs between groups and explains the result\n\nRandomisation spreads such factors out."
+        },
+        {
+          "front": "Why can a headline about risk mislead?",
+          "back": "It reports relative change without the baseline\n\nAsk how many people, out of how many."
+        },
+        {
+          "front": "What does prevalence describe?",
+          "back": "How many people have a condition at a time\n\nIncidence counts new cases."
+        }
+      ]
+    },
+    {
+      "title": "Everyday mathematics — revision cards",
+      "description": "Ten cards to revise the everyday mathematics guide.",
+      "aspect": "2:3",
+      "cards": [
+        {
+          "front": "What does a percentage express?",
+          "back": "A fraction of a hundred\n\nIt makes comparisons easier."
+        },
+        {
+          "front": "A 20% rise after a 20% fall: where are you?",
+          "back": "Below the starting value\n\nThe fall applies to a larger number."
+        },
+        {
+          "front": "How do you combine two independent probabilities?",
+          "back": "Multiply them\n\nTwo coin flips: half of a half."
+        },
+        {
+          "front": "What is the median?",
+          "back": "The middle value of a sorted list\n\nIt resists extreme values."
+        },
+        {
+          "front": "What does a 1-in-1000 risk mean?",
+          "back": "About one case per thousand people\n\nThe base matters more than the ratio."
+        },
+        {
+          "front": "What is the mean of 2, 4 and 9?",
+          "back": "5\n\nAdd and divide by the count."
+        },
+        {
+          "front": "Why estimate before calculating exactly?",
+          "back": "It catches order-of-magnitude errors\n\nRounding to one figure is enough."
+        },
+        {
+          "front": "What is a proportion?",
+          "back": "A statement that two ratios are equal\n\nIt allows scaling of recipes and maps."
+        },
+        {
+          "front": "If a car covers 120 km in 1.5 h, what is its average speed?",
+          "back": "80 km/h\n\nDistance divided by time."
+        },
+        {
+          "front": "What does multiplication by a number below 1 do?",
+          "back": "Reduces the value\n\nPercentages are decimals in disguise."
+        }
+      ]
+    },
+    {
+      "title": "Climate and resources — revision cards",
+      "description": "Ten cards to revise the climate and resources guide.",
+      "aspect": "2:3",
+      "cards": [
+        {
+          "front": "What makes CO2 a greenhouse gas?",
+          "back": "It absorbs infrared radiation and re-emits it\n\nMore of it raises the surface temperature."
+        },
+        {
+          "front": "Which sector consumes the most fresh water?",
+          "back": "Agriculture\n\nIrrigation dominates."
+        },
+        {
+          "front": "What is the difference between kW and kWh?",
+          "back": "Power versus energy over time\n\nA kilowatt-hour is one kilowatt for an hour."
+        },
+        {
+          "front": "Why is fresh water a limited resource?",
+          "back": "Only a small share of water is fresh and reachable\n\nDistribution matters as much as volume."
+        },
+        {
+          "front": "What does an energy transition need besides generation?",
+          "back": "Grids, storage and flexible demand\n\nA supply is only useful if it arrives when needed."
+        },
+        {
+          "front": "What is biodiversity?",
+          "back": "The variety of living things in a place\n\nIt supports resilience."
+        },
+        {
+          "front": "Why do trees help a city?",
+          "back": "They shade, cool air and slow storm water\n\nUrban heat islands are measurable."
+        },
+        {
+          "front": "What is a carbon budget?",
+          "back": "The total emissions that fit a temperature limit\n\nIt is spent once."
+        },
+        {
+          "front": "What does recycling save most effectively?",
+          "back": "The energy of making a material from scratch\n\nAluminium is the classic case."
+        },
+        {
+          "front": "Why does eating less meat reduce emissions?",
+          "back": "Livestock uses land and feed with high emissions\n\nThe effect varies by production method."
+        }
+      ]
+    },
+    {
+      "title": "Economics in plain words — revision cards",
+      "description": "Ten cards to revise the economics in plain words guide.",
+      "aspect": "2:3",
+      "cards": [
+        {
+          "front": "What does inflation measure?",
+          "back": "The change in a basket of prices over time\n\nThe basket decides the result."
+        },
+        {
+          "front": "What is interest?",
+          "back": "The price of using money over time\n\nIt links today's money to tomorrow's."
+        },
+        {
+          "front": "What usually happens when central banks raise rates?",
+          "back": "Borrowing becomes more expensive and demand cools\n\nIt is a tool against inflation."
+        },
+        {
+          "front": "What is a tariff?",
+          "back": "A tax on imported goods\n\nThe customer usually pays part of it."
+        },
+        {
+          "front": "What is GDP?",
+          "back": "The value produced inside a country in a period\n\nIt is a flow, not a stock."
+        },
+        {
+          "front": "Why do countries specialise?",
+          "back": "They produce some goods at lower opportunity cost\n\nComparative advantage explains the gain."
+        },
+        {
+          "front": "What is an opportunity cost?",
+          "back": "The value of what you give up to choose something\n\nEvery choice has one."
+        },
+        {
+          "front": "What does a price ceiling usually create?",
+          "back": "Shortages\n\nDemand rises above the capped supply."
+        },
+        {
+          "front": "What is a stock and what is a flow?",
+          "back": "A stock is a quantity; a flow is per unit of time\n\nDebt is a stock, deficit a flow."
+        },
+        {
+          "front": "Why is a diversified economy more resilient?",
+          "back": "A shock to one sector hurts less\n\nConcentration amplifies shocks."
+        }
+      ]
+    },
+    {
+      "title": "Learning a language — revision cards",
+      "description": "Ten cards to revise the learning a language guide.",
+      "aspect": "2:3",
+      "cards": [
+        {
+          "front": "What should a beginner learn first in a new language?",
+          "back": "The sounds that carry meaning\n\nThe ear guides the mouth."
+        },
+        {
+          "front": "Why do frequency lists help beginners?",
+          "back": "A few hundred words cover a large share of speech\n\nCommon words recur constantly."
+        },
+        {
+          "front": "What makes vocabulary stick?",
+          "back": "Meeting a word in several contexts\n\nContext gives it hooks."
+        },
+        {
+          "front": "What is a cognate?",
+          "back": "A word that resembles one in another language\n\nResemblance can mislead."
+        },
+        {
+          "front": "Why is speaking early useful?",
+          "back": "Mistakes become correctable material\n\nFeedback accelerates learning."
+        },
+        {
+          "front": "What does spaced repetition optimise?",
+          "back": "The timing of reviews\n\nIt exploits forgetting."
+        },
+        {
+          "front": "What is a false friend?",
+          "back": "A word that looks familiar but means something else\n\nSpanish 'embarazada' is not embarrassed."
+        },
+        {
+          "front": "Why does immersion accelerate learning?",
+          "back": "The language is needed, not studied\n\nNecessity drives attention."
+        },
+        {
+          "front": "What helps listening comprehension most?",
+          "back": "Hearing the same material at several speeds\n\nSlow first, then natural speed."
+        },
+        {
+          "front": "What is grammatical gender?",
+          "back": "A noun class that affects agreement\n\nIt is only loosely tied to meaning."
+        }
+      ]
+    },
+    {
+      "title": "How music works — revision cards",
+      "description": "Ten cards to revise the how music works guide.",
+      "aspect": "2:3",
+      "cards": [
+        {
+          "front": "What is rhythm in music?",
+          "back": "The organisation of sound in time\n\nPulse, division and accent."
+        },
+        {
+          "front": "What makes two notes consonant?",
+          "back": "Their frequencies relate by a simple ratio\n\nOctaves and fifths are simple."
+        },
+        {
+          "front": "What is a scale?",
+          "back": "An ordered set of notes used in a piece\n\nScales shape the mood."
+        },
+        {
+          "front": "What does a chord do?",
+          "back": "Sounds several notes together as a unit\n\nHarmony is built from chords."
+        },
+        {
+          "front": "What is a tempo?",
+          "back": "The speed of the pulse\n\nIt is given in beats per minute."
+        },
+        {
+          "front": "Why do pieces repeat material?",
+          "back": "Repetition makes a form the listener can follow\n\nVariation keeps attention."
+        },
+        {
+          "front": "What is an octave?",
+          "back": "The interval where one frequency is double the other\n\nThe notes sound alike."
+        },
+        {
+          "front": "What does a key signature indicate?",
+          "back": "Which notes belong to the piece by default\n\nAccidentals mark exceptions."
+        },
+        {
+          "front": "What is syncopation?",
+          "back": "An accent placed off the expected beat\n\nIt drives dance music."
+        },
+        {
+          "front": "Why does a melody get stuck in the head?",
+          "back": "Short, repeated, slightly irregular patterns are memorable\n\nSimplicity plus one surprise."
+        }
+      ]
+    },
+    {
+      "title": "Food, energy and health — revision cards",
+      "description": "Ten cards to revise the food, energy and health guide.",
+      "aspect": "2:3",
+      "cards": [
+        {
+          "front": "What does a food label's energy value depend on?",
+          "back": "The portion size it refers to\n\nAlways check the reference amount."
+        },
+        {
+          "front": "Which nutrient provides the most energy per gram?",
+          "back": "Fat\n\nAbout nine kilocalories per gram."
+        },
+        {
+          "front": "What does fibre do?",
+          "back": "Feeds gut bacteria and slows sugar absorption\n\nIt is mostly not digested."
+        },
+        {
+          "front": "Why is a single food rarely a health solution?",
+          "back": "The whole diet and pattern matter more\n\nLook at the week, not the meal."
+        },
+        {
+          "front": "What is a calorie?",
+          "back": "A unit of energy\n\nOn labels it means a kilocalorie."
+        },
+        {
+          "front": "Why does protein matter after exercise?",
+          "back": "It supplies the material to repair muscle\n\nSpread across the day."
+        },
+        {
+          "front": "What does hydration affect?",
+          "back": "Blood volume and temperature regulation\n\nThirst arrives late."
+        },
+        {
+          "front": "Why can portions be misjudged?",
+          "back": "People estimate volume poorly without scales\n\nMeasuring once is informative."
+        },
+        {
+          "front": "What is a balanced diet?",
+          "back": "One supplying energy and nutrients in the right proportions\n\nVariety is the practical rule."
+        },
+        {
+          "front": "What does a 'light' product usually change?",
+          "back": "One nutrient, often sugar or fat\n\nRead the whole table."
+        }
+      ]
+    }
+  ]
+}

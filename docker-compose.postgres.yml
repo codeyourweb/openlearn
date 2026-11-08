@@ -1,0 +1,36 @@
+# PostgreSQL overlay.
+#
+#   docker compose -f docker-compose.yml -f docker-compose.postgres.yml up -d
+#
+# Set POSTGRES_* in .env before the first start: the password is written into
+# the database volume, changing it afterwards requires an ALTER ROLE.
+
+services:
+  app:
+    environment:
+      OL_DATABASE_URL: postgresql+psycopg://${POSTGRES_USER:-openlearn}:${POSTGRES_PASSWORD:-openlearn}@db:5432/${POSTGRES_DB:-openlearn}
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: postgres:16-alpine
+    container_name: ${OPENLEARN_CONTAINER:-openlearn}-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-openlearn}
+      POSTGRES_USER: ${POSTGRES_USER:-openlearn}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-openlearn}
+    volumes:
+      - openlearn-postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-openlearn} -d ${POSTGRES_DB:-openlearn}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    # Keep the database off the network edge: only the app reaches it.
+    expose:
+      - "5432"
+
+volumes:
+  openlearn-postgres:

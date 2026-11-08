@@ -1,0 +1,593 @@
+{
+  "kind": "wikis",
+  "items": [
+    {
+      "slug": "geography",
+      "title": "Physical geography",
+      "description": "Continents, oceans, climate and the forces that shape the surface of the Earth.",
+      "language": "en",
+      "pages": [
+        {
+          "slug": "the-oceans",
+          "title": "The oceans",
+          "markdown": "# The oceans\n\nOceans cover about seventy-one percent of the surface and hold roughly ninety-seven percent of the water on Earth. The Pacific is the largest and deepest, followed by the Atlantic, the Indian, the Southern and the Arctic. The Mariana Trench, in the western Pacific, reaches almost eleven kilometres below sea level, further down than Everest rises.\n\n_Part 1 of the physical geography guide._\n",
+          "tags": [
+            "geography"
+          ]
+        },
+        {
+          "slug": "continents-and-plates",
+          "title": "Continents and plates",
+          "markdown": "# Continents and plates\n\nThe crust is broken into plates that drift a few centimetres a year. Where two plates meet, the result is a mountain range, a deep trench, or a chain of volcanoes; where they slide past each other, the ground shakes. Africa and South America fit together because they were once part of the same landmass.\n\n_Part 2 of the physical geography guide._\n",
+          "tags": [
+            "geography"
+          ]
+        },
+        {
+          "slug": "climate-zones",
+          "title": "Climate zones",
+          "markdown": "# Climate zones\n\nSunlight arrives at a slant, which is why the poles are colder than the equator. Winds and currents move that heat around: the Gulf Stream keeps north-western Europe mild for its latitude, while the same ocean a few degrees west carries ice south along Canada's coast.\n\n_Part 3 of the physical geography guide._\n",
+          "tags": [
+            "geography"
+          ]
+        },
+        {
+          "slug": "key-facts",
+          "title": "Key facts",
+          "markdown": "# Key facts\n\n- **Which ocean is the largest and deepest?** Pacific\n- **What share of Earth's water is held by the oceans?** About 97%\n- **What is the deepest point of the ocean called?** The Mariana Trench\n- **Roughly how fast do tectonic plates move?** A few centimetres per year\n- **What forms where two plates pull apart?** A rift, often filled by a new ocean\n- **Why are the poles colder than the equator?** Sunlight strikes them at a slant\n- **Which current keeps north-western Europe mild?** The Gulf Stream\n- **What percentage of the Earth's surface is covered by water?** About 71%\n- **Which two continents fit together like puzzle pieces?** Africa and South America\n- **What instrument measures the strength of an earthquake?** A seismograph\n- **What is the boundary where a plate sinks under another called?** A subduction zone\n- **Which layer of the Earth is liquid?** The outer core\n- **What causes tides?** The pull of the Moon and the Sun\n- **What is a rain shadow?** The dry side of a mountain range\n- **Which line divides the Earth into northern and southern halves?** The equator\n",
+          "tags": [
+            "geography",
+            "revision"
+          ],
+          "parent": "the-oceans"
+        }
+      ]
+    },
+    {
+      "slug": "history",
+      "title": "Turning points of history",
+      "description": "A short tour of the inventions, cities and decisions that changed how people lived.",
+      "language": "en",
+      "pages": [
+        {
+          "slug": "writing-and-the-first-cities",
+          "title": "Writing and the first cities",
+          "markdown": "# Writing and the first cities\n\nWriting appeared around 3200 BCE in Mesopotamia, first as accounts of grain and labour, then as law and literature. Cities grew where rivers flooded predictably, because a surplus of food let some people specialise in something other than farming.\n\n_Part 1 of the turning points of history guide._\n",
+          "tags": [
+            "history"
+          ]
+        },
+        {
+          "slug": "print-and-the-spread-of-ideas",
+          "title": "Print and the spread of ideas",
+          "markdown": "# Print and the spread of ideas\n\nMovable type in fifteenth-century Europe made copying cheap. A text that once took months to reproduce could be printed in hundreds of copies in weeks, and arguments travelled faster than the authorities could answer them.\n\n_Part 2 of the turning points of history guide._\n",
+          "tags": [
+            "history"
+          ]
+        },
+        {
+          "slug": "industry-and-after",
+          "title": "Industry and after",
+          "markdown": "# Industry and after\n\nSteam power moved production from workshops to factories and drew people into cities. The same period produced public schooling, sanitation and, eventually, the idea that knowledge should be available to everyone rather than kept behind a guild.\n\n_Part 3 of the turning points of history guide._\n",
+          "tags": [
+            "history"
+          ]
+        },
+        {
+          "slug": "key-facts",
+          "title": "Key facts",
+          "markdown": "# Key facts\n\n- **Where did writing first appear, around 3200 BCE?** Mesopotamia\n- **What made movable type revolutionary in Europe?** It made copies far cheaper to produce\n- **Which invention moved production into factories?** The steam engine\n- **Why did the first cities grow beside rivers?** Flooding left fertile soil and a food surplus\n- **What did the printing press make possible for learning?** Widely shared, identical texts\n- **Which ancient library is famous for collecting the ancient world's texts?** The Library of Alexandria\n- **What was the Silk Road?** A network of trade routes between Asia and Europe\n- **Which document limited the power of the English king in 1215?** Magna Carta\n- **What was the Renaissance a revival of?** Classical learning and art\n- **Which empire built the road network later used across Europe?** The Roman Empire\n- **What did the telegraph change?** The speed at which news could travel\n- **Which revolution began in Britain in the eighteenth century?** The Industrial Revolution\n- **What is an archive?** A collection of records kept for the future\n- **Why do historians compare several sources?** To test each account against the others\n- **What did public schooling make possible?** Literacy beyond a small elite\n",
+          "tags": [
+            "history",
+            "revision"
+          ],
+          "parent": "writing-and-the-first-cities"
+        }
+      ]
+    },
+    {
+      "slug": "science",
+      "title": "Everyday science",
+      "description": "Cells, energy, chemical reactions and the physics behind ordinary things.",
+      "language": "en",
+      "pages": [
+        {
+          "slug": "cells-and-life",
+          "title": "Cells and life",
+          "markdown": "# Cells and life\n\nA cell is the smallest unit that can be called alive. Bacteria are single cells; a human body holds tens of trillions, organised into tissues and organs. Almost all of them carry the same DNA, and what makes a liver cell different from a skin cell is which parts of that DNA are switched on.\n\n_Part 1 of the everyday science guide._\n",
+          "tags": [
+            "science"
+          ]
+        },
+        {
+          "slug": "energy-and-heat",
+          "title": "Energy and heat",
+          "markdown": "# Energy and heat\n\nEnergy is never created or destroyed, only converted. A bulb turns electricity into light and heat; a muscle turns sugar into movement and heat. Heat itself moves from warm to cold, which is why a room cools down rather than the outside warming up.\n\n_Part 2 of the everyday science guide._\n",
+          "tags": [
+            "science"
+          ]
+        },
+        {
+          "slug": "matter-and-reactions",
+          "title": "Matter and reactions",
+          "markdown": "# Matter and reactions\n\nAtoms combine and separate in reactions, but the atoms themselves survive. A catalyst speeds a reaction without being consumed, which is how the body runs thousands of reactions at temperatures far below those of a laboratory.\n\n_Part 3 of the everyday science guide._\n",
+          "tags": [
+            "science"
+          ]
+        },
+        {
+          "slug": "key-facts",
+          "title": "Key facts",
+          "markdown": "# Key facts\n\n- **What is the smallest unit of life?** The cell\n- **What does DNA carry?** The instructions for building and running a cell\n- **What happens to energy in any process?** It is converted, never destroyed\n- **Which way does heat flow?** From warmer to colder\n- **What does a catalyst do?** Speeds a reaction without being consumed\n- **What is a molecule?** Two or more atoms bonded together\n- **What is photosynthesis for?** Turning light into chemical energy\n- **What gas do plants take from the air to grow?** Carbon dioxide\n- **What is the pH of a neutral solution?** 7\n- **Which force keeps planets in orbit?** Gravity\n- **What is the speed of light in a vacuum?** About 300,000 km/s\n- **What does a vaccine do?** Trains the immune system to recognise a pathogen\n- **What are the three states of matter most people meet daily?** Solid, liquid and gas\n- **What is erosion?** The transport of material by wind, water or ice\n- **Why does ice float on water?** It is less dense than liquid water\n",
+          "tags": [
+            "science",
+            "revision"
+          ],
+          "parent": "cells-and-life"
+        }
+      ]
+    },
+    {
+      "slug": "technology",
+      "title": "How the web works",
+      "description": "Networks, browsers, servers and the principles that keep the web open.",
+      "language": "en",
+      "pages": [
+        {
+          "slug": "names-and-addresses",
+          "title": "Names and addresses",
+          "markdown": "# Names and addresses\n\nComputers find each other by number, but people remember names. The Domain Name System translates one into the other, in a hierarchy that starts at the root and descends to a single machine. Caching copies the answer along the way so the question is not asked again.\n\n_Part 1 of the how the web works guide._\n",
+          "tags": [
+            "technology"
+          ]
+        },
+        {
+          "slug": "requests-and-responses",
+          "title": "Requests and responses",
+          "markdown": "# Requests and responses\n\nA browser sends a request with a method, a path and headers; the server answers with a status code, headers and a body. HTTPS wraps that exchange in TLS, which proves the server's identity and encrypts what passes.\n\n_Part 2 of the how the web works guide._\n",
+          "tags": [
+            "technology"
+          ]
+        },
+        {
+          "slug": "an-open-web",
+          "title": "An open web",
+          "markdown": "# An open web\n\nThe web is built on specifications anyone may implement, which is why one page works in every browser. The same principle applies to data: an open format lets a reader move their notes, quizzes and pages to another tool without asking permission.\n\n_Part 3 of the how the web works guide._\n",
+          "tags": [
+            "technology"
+          ]
+        },
+        {
+          "slug": "key-facts",
+          "title": "Key facts",
+          "markdown": "# Key facts\n\n- **What does DNS do?** Translates a domain name into an IP address\n- **What does HTTPS add to HTTP?** Encryption and proof of the server's identity\n- **What does HTTP status 404 mean?** The resource does not exist\n- **What is a cookie used for?** Keeping state between requests\n- **What is the role of a web browser?** Requesting, rendering and running pages\n- **Why is an open web standard important?** Anyone can implement it, so no vendor controls access\n- **What is an API?** A defined way for programs to exchange data\n- **What does a CDN do?** Serves files from a location near the visitor\n- **What is the difference between a domain and a URL?** A domain names a host; a URL locates a resource on it\n- **What does JSON represent?** Structured data as nested keys and values\n- **Why does a password need to be hashed, not stored?** So a stolen database does not reveal the passwords\n- **What is a content delivery cache?** A stored copy of a response, reused until it changes\n- **What does an open data format allow?** Moving your content to another tool\n- **What is a server in the client-server model?** A program that answers requests\n- **Why do sites publish an API alongside their interface?** So third-party tools can build on the same data\n",
+          "tags": [
+            "technology",
+            "revision"
+          ],
+          "parent": "names-and-addresses"
+        }
+      ]
+    },
+    {
+      "slug": "ai",
+      "title": "How language models work",
+      "description": "Tokens, training, prompting and the limits of a model that predicts text.",
+      "language": "en",
+      "pages": [
+        {
+          "slug": "tokens-and-prediction",
+          "title": "Tokens and prediction",
+          "markdown": "# Tokens and prediction\n\nA language model reads text cut into tokens and estimates what comes next. Everything it appears to reason about is expressed through that single operation, repeated one token at a time, with the previous output feeding the next step.\n\n_Part 1 of the how language models work guide._\n",
+          "tags": [
+            "ai"
+          ]
+        },
+        {
+          "slug": "training-and-limits",
+          "title": "Training and limits",
+          "markdown": "# Training and limits\n\nTraining adjusts billions of weights to make the next token more likely on a large body of text. What the model learns is a statistical picture of language, not a database of verified facts, which is why a confident answer can still be wrong.\n\n_Part 2 of the how language models work guide._\n",
+          "tags": [
+            "ai"
+          ]
+        },
+        {
+          "slug": "working-with-a-model",
+          "title": "Working with a model",
+          "markdown": "# Working with a model\n\nGiving the model the relevant document, a clear task and worked examples usually matters more than any clever wording. For anything that must be true, the output has to be checked against a source that did not come from the model.\n\n_Part 3 of the how language models work guide._\n",
+          "tags": [
+            "ai"
+          ]
+        },
+        {
+          "slug": "key-facts",
+          "title": "Key facts",
+          "markdown": "# Key facts\n\n- **What is a token in a language model?** A piece of text, shorter than a word on average\n- **What does a language model actually predict?** The next token\n- **What is a hallucination?** A confident answer that is not supported by facts\n- **What does the context window limit?** How much text the model can consider at once\n- **What is a prompt?** The instruction and context given to a model\n- **Why does giving a source document help?** It grounds the answer in text the model can quote\n- **What is fine-tuning?** Further training on a narrower set of examples\n- **What does temperature control?** How random the next-token choice is\n- **What is an embedding?** A vector that places a text by its meaning\n- **Why must a model's output be verified?** It optimises for plausibility, not truth\n- **What is retrieval-augmented generation?** Feeding relevant documents into the prompt before answering\n- **What is a system prompt?** Standing instructions that frame the whole conversation\n- **Why do two identical prompts sometimes give different answers?** Sampling is probabilistic\n- **What does 'open weights' mean for a model?** The parameters can be downloaded and run locally\n- **What is the main cost of a long prompt?** More tokens to process on every turn\n",
+          "tags": [
+            "ai",
+            "revision"
+          ],
+          "parent": "tokens-and-prediction"
+        }
+      ]
+    },
+    {
+      "slug": "sport",
+      "title": "Sport and training",
+      "description": "Energy systems, recovery and the habits that make training stick.",
+      "language": "en",
+      "pages": [
+        {
+          "slug": "energy-for-effort",
+          "title": "Energy for effort",
+          "markdown": "# Energy for effort\n\nA short sprint runs on stored energy that lasts seconds; a longer effort burns glycogen and then fat, with oxygen increasingly involved. Training adapts each system to the demand placed on it, which is why a good distance runner is not automatically a good sprinter.\n\n_Part 1 of the sport and training guide._\n",
+          "tags": [
+            "sport"
+          ]
+        },
+        {
+          "slug": "recovery",
+          "title": "Recovery",
+          "markdown": "# Recovery\n\nAdaptation happens between sessions, not during them. Sleep, food and an easy day are part of the programme: training hard without recovering produces fatigue rather than progress.\n\n_Part 2 of the sport and training guide._\n",
+          "tags": [
+            "sport"
+          ]
+        },
+        {
+          "slug": "practice-that-transfers",
+          "title": "Practice that transfers",
+          "markdown": "# Practice that transfers\n\nSkill improves fastest with focused repetitions, feedback and variation. Repeating an easy version of a movement builds confidence, not competence; the useful repetitions are the ones that are slightly too hard.\n\n_Part 3 of the sport and training guide._\n",
+          "tags": [
+            "sport"
+          ]
+        },
+        {
+          "slug": "key-facts",
+          "title": "Key facts",
+          "markdown": "# Key facts\n\n- **Which system powers a short, maximal sprint?** Stored energy used without oxygen\n- **When does the body adapt to training?** During recovery between sessions\n- **What does aerobic training improve?** The ability to use oxygen over long efforts\n- **Why is sleep part of a training plan?** It is when most recovery happens\n- **What is progressive overload?** Gradually increasing the demand of training\n- **What does a warm-up prepare?** Muscles, joints and the cardiovascular system for effort\n- **Why do varied repetitions improve a skill?** They build a general pattern, not one fixed motion\n- **What is carbohydrate loading for?** Filling glycogen stores before a long effort\n- **What is a common sign of overtraining?** Resting heart rate rising and performance falling\n- **What does hydration affect first?** Blood volume and the ability to regulate heat\n- **Why does a coach give feedback immediately?** The correction is easier to apply while the movement is fresh\n- **What is the value of an easy session?** It adds volume without adding much fatigue\n- **Which nutrient repairs muscle after training?** Protein\n- **Why is specificity important in training?** You improve what you practise\n- **What is a taper?** Reducing training before a competition\n",
+          "tags": [
+            "sport",
+            "revision"
+          ],
+          "parent": "energy-for-effort"
+        }
+      ]
+    },
+    {
+      "slug": "arts",
+      "title": "Reading a work of art",
+      "description": "Composition, colour, context and the questions that open a painting or a novel.",
+      "language": "en",
+      "pages": [
+        {
+          "slug": "composition",
+          "title": "Composition",
+          "markdown": "# Composition\n\nA picture guides the eye before it says anything. Lines, contrasts and empty space decide where the eye enters and where it rests, and a painter arranges those on purpose, whether the result looks planned or casual.\n\n_Part 1 of the reading a work of art guide._\n",
+          "tags": [
+            "arts"
+          ]
+        },
+        {
+          "slug": "colour-and-light",
+          "title": "Colour and light",
+          "markdown": "# Colour and light\n\nColour carries temperature and mood as much as description. Warm tones advance; cool ones recede. Light tells the viewer where to look and, in many paintings, what the artist wanted the scene to mean.\n\n_Part 2 of the reading a work of art guide._\n",
+          "tags": [
+            "arts"
+          ]
+        },
+        {
+          "slug": "context",
+          "title": "Context",
+          "markdown": "# Context\n\nA work is also an answer to the world it was made in: who paid for it, who could see it, what was fashionable, what was forbidden. Reading a work closely and knowing its moment are complementary, not rival, exercises.\n\n_Part 3 of the reading a work of art guide._\n",
+          "tags": [
+            "arts"
+          ]
+        },
+        {
+          "slug": "key-facts",
+          "title": "Key facts",
+          "markdown": "# Key facts\n\n- **What does composition describe in a picture?** How the elements are arranged in the frame\n- **Which colours tend to advance towards the viewer?** Warm colours\n- **What is chiaroscuro?** Strong contrast between light and dark\n- **Why does context matter for a work of art?** It explains what the work answered to\n- **What is a vanishing point?** Where parallel lines appear to meet in perspective\n- **What does a novel's narrator control?** What the reader can know, and when\n- **What is the difference between story and plot?** Story is the events; plot is their arrangement\n- **What does negative space do?** Gives the subject room and emphasis\n- **Why do museums group works by period?** Shared constraints and conventions become visible\n- **What is a motif in literature?** A recurring element that carries meaning\n- **What does an artist's use of scale emphasise?** Importance, power or vulnerability\n- **Why is a first reading rarely the last?** Meaning changes with what the reader brings\n- **What is a still life usually about?** Ordinary objects arranged for study\n- **What makes a translation an interpretation?** Every choice privileges some meanings over others\n- **What question helps most when looking at a work?** What is the artist asking me to notice?\n",
+          "tags": [
+            "arts",
+            "revision"
+          ],
+          "parent": "composition"
+        }
+      ]
+    },
+    {
+      "slug": "health",
+      "title": "Health literacy",
+      "description": "How to read a study, judge a risk and make sense of a health claim.",
+      "language": "en",
+      "pages": [
+        {
+          "slug": "reading-a-study",
+          "title": "Reading a study",
+          "markdown": "# Reading a study\n\nA result is a comparison: between groups, over time, against a baseline. How many people took part, how they were selected, and what the comparison actually measured decide whether a finding travels beyond that sample.\n\n_Part 1 of the health literacy guide._\n",
+          "tags": [
+            "health"
+          ]
+        },
+        {
+          "slug": "risk-and-numbers",
+          "title": "Risk and numbers",
+          "markdown": "# Risk and numbers\n\nAbsolute risk says how many people are affected; relative risk says how much the rate changes. A doubling sounds dramatic and can still mean two cases instead of one in ten thousand, so both numbers matter.\n\n_Part 2 of the health literacy guide._\n",
+          "tags": [
+            "health"
+          ]
+        },
+        {
+          "slug": "claims-and-evidence",
+          "title": "Claims and evidence",
+          "markdown": "# Claims and evidence\n\nA single study is a data point, not a conclusion. Reviews that pool several studies carry more weight, and the strongest claims survive attempts to replicate them.\n\n_Part 3 of the health literacy guide._\n",
+          "tags": [
+            "health"
+          ]
+        },
+        {
+          "slug": "key-facts",
+          "title": "Key facts",
+          "markdown": "# Key facts\n\n- **What is absolute risk?** How many people in a group are affected\n- **What is relative risk?** How much a rate changes between groups\n- **What makes a randomised trial stronger?** Participants are assigned to groups by chance\n- **What is a placebo effect?** An improvement caused by expectation, not the treatment\n- **Why do reviews pool several studies?** A larger base gives a more stable estimate\n- **What does 'statistically significant' mean?** The result is unlikely to be chance alone\n- **Why is a control group needed?** To show what would have happened without the treatment\n- **What is a confounding factor?** Something else that differs between groups and explains the result\n- **Why can a headline about risk mislead?** It reports relative change without the baseline\n- **What does prevalence describe?** How many people have a condition at a time\n- **Why are replicas of a study valuable?** They test whether the first result holds\n- **What does informed consent require?** Understanding the risks and agreeing freely\n- **What is a symptom?** Something the patient experiences\n- **Why is a screening test's false-positive rate important?** It decides how many healthy people are alarmed\n- **What is the first question to ask about a health claim?** How strong is the evidence behind it?\n",
+          "tags": [
+            "health",
+            "revision"
+          ],
+          "parent": "reading-a-study"
+        }
+      ]
+    },
+    {
+      "slug": "math",
+      "title": "Everyday mathematics",
+      "description": "Percentages, proportions, probability and the arithmetic that settles arguments.",
+      "language": "en",
+      "pages": [
+        {
+          "slug": "percentages",
+          "title": "Percentages",
+          "markdown": "# Percentages\n\nA percentage is a fraction of a hundred, which makes comparisons possible but also hides the base. A twenty percent rise followed by a twenty percent fall does not return to the starting value: the second percentage applies to a larger number.\n\n_Part 1 of the everyday mathematics guide._\n",
+          "tags": [
+            "math"
+          ]
+        },
+        {
+          "slug": "probability",
+          "title": "Probability",
+          "markdown": "# Probability\n\nProbability counts possibilities, not intentions. Two independent events multiply, which is why a rare accident becomes likely across many attempts, and why a coin has no memory of its last result.\n\n_Part 2 of the everyday mathematics guide._\n",
+          "tags": [
+            "math"
+          ]
+        },
+        {
+          "slug": "estimating",
+          "title": "Estimating",
+          "markdown": "# Estimating\n\nA quick estimate catches most arithmetic mistakes before they cause damage. Rounding to one significant figure and checking the order of magnitude is usually enough to see whether a figure is plausible.\n\n_Part 3 of the everyday mathematics guide._\n",
+          "tags": [
+            "math"
+          ]
+        },
+        {
+          "slug": "key-facts",
+          "title": "Key facts",
+          "markdown": "# Key facts\n\n- **What does a percentage express?** A fraction of a hundred\n- **A 20% rise after a 20% fall: where are you?** Below the starting value\n- **How do you combine two independent probabilities?** Multiply them\n- **What is the median?** The middle value of a sorted list\n- **What does a 1-in-1000 risk mean?** About one case per thousand people\n- **What is the mean of 2, 4 and 9?** 5\n- **Why estimate before calculating exactly?** It catches order-of-magnitude errors\n- **What is a proportion?** A statement that two ratios are equal\n- **If a car covers 120 km in 1.5 h, what is its average speed?** 80 km/h\n- **What does multiplication by a number below 1 do?** Reduces the value\n- **What is a prime number?** A number with exactly two divisors\n- **Why is correlation not causation?** Two things can move together for a third reason\n- **What does rounding to two significant figures lose?** Precision beyond the second digit\n- **If something doubles every day for 10 days, how much did it grow?** About a thousand times\n- **What is the quickest sanity check on a result?** Compare it with an estimate you expect\n",
+          "tags": [
+            "math",
+            "revision"
+          ],
+          "parent": "percentages"
+        }
+      ]
+    },
+    {
+      "slug": "environment",
+      "title": "Climate and resources",
+      "description": "Greenhouse gases, water, energy and what a single person can change.",
+      "language": "en",
+      "pages": [
+        {
+          "slug": "the-greenhouse-effect",
+          "title": "The greenhouse effect",
+          "markdown": "# The greenhouse effect\n\nCertain gases let sunlight through but absorb the heat the ground radiates back. That is what keeps the planet warm enough for life; adding more of those gases raises the temperature rather than creating a new phenomenon.\n\n_Part 1 of the climate and resources guide._\n",
+          "tags": [
+            "environment"
+          ]
+        },
+        {
+          "slug": "water-and-land",
+          "title": "Water and land",
+          "markdown": "# Water and land\n\nFresh water is a small share of the total and unevenly distributed. Farming uses most of it, which is why irrigation efficiency and soil quality are climate questions as much as agricultural ones.\n\n_Part 2 of the climate and resources guide._\n",
+          "tags": [
+            "environment"
+          ]
+        },
+        {
+          "slug": "energy",
+          "title": "Energy",
+          "markdown": "# Energy\n\nA kilowatt-hour measures energy, a kilowatt measures power. Replacing a fossil source with a renewable one changes emissions, but the grid, storage and the timing of demand decide how much of it can actually be used.\n\n_Part 3 of the climate and resources guide._\n",
+          "tags": [
+            "environment"
+          ]
+        },
+        {
+          "slug": "key-facts",
+          "title": "Key facts",
+          "markdown": "# Key facts\n\n- **What makes CO2 a greenhouse gas?** It absorbs infrared radiation and re-emits it\n- **Which sector consumes the most fresh water?** Agriculture\n- **What is the difference between kW and kWh?** Power versus energy over time\n- **Why is fresh water a limited resource?** Only a small share of water is fresh and reachable\n- **What does an energy transition need besides generation?** Grids, storage and flexible demand\n- **What is biodiversity?** The variety of living things in a place\n- **Why do trees help a city?** They shade, cool air and slow storm water\n- **What is a carbon budget?** The total emissions that fit a temperature limit\n- **What does recycling save most effectively?** The energy of making a material from scratch\n- **Why does eating less meat reduce emissions?** Livestock uses land and feed with high emissions\n- **What is an urban heat island?** A city district warmer than its surroundings\n- **Why is insulation an energy measure?** It reduces the energy needed to keep a building comfortable\n- **What happens to coastal land as sea levels rise?** Salt water intrudes and low land floods more often\n- **What is the precautionary principle?** Act against a risk before certainty arrives\n- **What makes a claim about climate checkable?** A measurable quantity with a source and a timeframe\n",
+          "tags": [
+            "environment",
+            "revision"
+          ],
+          "parent": "the-greenhouse-effect"
+        }
+      ]
+    },
+    {
+      "slug": "economy",
+      "title": "Economics in plain words",
+      "description": "Inflation, interest, trade and the choices behind a price.",
+      "language": "en",
+      "pages": [
+        {
+          "slug": "prices-and-inflation",
+          "title": "Prices and inflation",
+          "markdown": "# Prices and inflation\n\nA price carries information: how scarce something is, what it costs to make, what people will pay. Inflation measures the change in a basket of prices over time, which is why the composition of the basket matters as much as the figure it produces.\n\n_Part 1 of the economics in plain words guide._\n",
+          "tags": [
+            "economy"
+          ]
+        },
+        {
+          "slug": "saving-and-borrowing",
+          "title": "Saving and borrowing",
+          "markdown": "# Saving and borrowing\n\nInterest is the price of using money over time. When it rises, borrowing costs more and saving earns more, which slows demand — usually on purpose, which is why a central bank changes it.\n\n_Part 2 of the economics in plain words guide._\n",
+          "tags": [
+            "economy"
+          ]
+        },
+        {
+          "slug": "trade",
+          "title": "Trade",
+          "markdown": "# Trade\n\nCountries trade because they differ in what they can produce cheaply. A tariff changes that calculation by taxing the crossing of a border, which protects a producer and raises the price for a customer.\n\n_Part 3 of the economics in plain words guide._\n",
+          "tags": [
+            "economy"
+          ]
+        },
+        {
+          "slug": "key-facts",
+          "title": "Key facts",
+          "markdown": "# Key facts\n\n- **What does inflation measure?** The change in a basket of prices over time\n- **What is interest?** The price of using money over time\n- **What usually happens when central banks raise rates?** Borrowing becomes more expensive and demand cools\n- **What is a tariff?** A tax on imported goods\n- **What is GDP?** The value produced inside a country in a period\n- **Why do countries specialise?** They produce some goods at lower opportunity cost\n- **What is an opportunity cost?** The value of what you give up to choose something\n- **What does a price ceiling usually create?** Shortages\n- **What is a stock and what is a flow?** A stock is a quantity; a flow is per unit of time\n- **Why is a diversified economy more resilient?** A shock to one sector hurts less\n- **What does a subsidy do?** Lowers the cost of producing or buying something\n- **What is productivity?** Output produced per unit of work\n- **What does a currency depreciation change?** Imports become dearer and exports cheaper\n- **Why is a basket of prices revised?** Consumption habits change over time\n- **What is the difference between debt and deficit?** Debt is accumulated; deficit is this year's gap\n",
+          "tags": [
+            "economy",
+            "revision"
+          ],
+          "parent": "prices-and-inflation"
+        }
+      ]
+    },
+    {
+      "slug": "languages",
+      "title": "Learning a language",
+      "description": "Sound, vocabulary, grammar and the habits that make a language stick.",
+      "language": "en",
+      "pages": [
+        {
+          "slug": "sound-first",
+          "title": "Sound first",
+          "markdown": "# Sound first\n\nA language is a set of contrasts, and each one draws the line between sounds differently. Hearing the difference before writing it down prevents errors that are hard to undo later, because the ear decides what the mouth does.\n\n_Part 1 of the learning a language guide._\n",
+          "tags": [
+            "languages"
+          ]
+        },
+        {
+          "slug": "words-in-context",
+          "title": "Words in context",
+          "markdown": "# Words in context\n\nA word learned alone is a definition; the same word in three sentences is a tool. Frequency lists reward the beginner, because a few hundred words cover a large share of everyday speech.\n\n_Part 2 of the learning a language guide._\n",
+          "tags": [
+            "languages"
+          ]
+        },
+        {
+          "slug": "speaking-early",
+          "title": "Speaking early",
+          "markdown": "# Speaking early\n\nWaiting for fluency delays it. Speaking badly, often, with feedback, is what builds fluency; the mistakes are the material the correction works on.\n\n_Part 3 of the learning a language guide._\n",
+          "tags": [
+            "languages"
+          ]
+        },
+        {
+          "slug": "key-facts",
+          "title": "Key facts",
+          "markdown": "# Key facts\n\n- **What should a beginner learn first in a new language?** The sounds that carry meaning\n- **Why do frequency lists help beginners?** A few hundred words cover a large share of speech\n- **What makes vocabulary stick?** Meeting a word in several contexts\n- **What is a cognate?** A word that resembles one in another language\n- **Why is speaking early useful?** Mistakes become correctable material\n- **What does spaced repetition optimise?** The timing of reviews\n- **What is a false friend?** A word that looks familiar but means something else\n- **Why does immersion accelerate learning?** The language is needed, not studied\n- **What helps listening comprehension most?** Hearing the same material at several speeds\n- **What is grammatical gender?** A noun class that affects agreement\n- **Why do learners overgeneralise rules?** They apply a pattern beyond its domain\n- **What is the best use of a dictionary in reading?** Look up words that block meaning, not every word\n- **What does shadowing practise?** Speaking immediately after a model, copying rhythm\n- **Why is a little grammar useful?** It names patterns the learner already half-sees\n- **How long does a language take to learn?** It depends on the pair, the goal and the practice\n",
+          "tags": [
+            "languages",
+            "revision"
+          ],
+          "parent": "sound-first"
+        }
+      ]
+    },
+    {
+      "slug": "music",
+      "title": "How music works",
+      "description": "Rhythm, harmony, form and the reasons a melody stays in your head.",
+      "language": "en",
+      "pages": [
+        {
+          "slug": "rhythm",
+          "title": "Rhythm",
+          "markdown": "# Rhythm\n\nRhythm is organised time: a pulse, a division of that pulse, and accents that tell the ear where the group begins. Change the accent and the same notes become a different dance.\n\n_Part 1 of the how music works guide._\n",
+          "tags": [
+            "music"
+          ]
+        },
+        {
+          "slug": "harmony",
+          "title": "Harmony",
+          "markdown": "# Harmony\n\nTwo notes sound consonant when their frequencies relate simply. Harmony builds on that relationship, and tension comes from moving away from the simplest ratios and then returning to them.\n\n_Part 2 of the how music works guide._\n",
+          "tags": [
+            "music"
+          ]
+        },
+        {
+          "slug": "form-and-memory",
+          "title": "Form and memory",
+          "markdown": "# Form and memory\n\nA piece repeats and varies to be remembered. Repetition makes a shape, variation keeps attention, and the return of the opening is what makes a long work feel complete.\n\n_Part 3 of the how music works guide._\n",
+          "tags": [
+            "music"
+          ]
+        },
+        {
+          "slug": "key-facts",
+          "title": "Key facts",
+          "markdown": "# Key facts\n\n- **What is rhythm in music?** The organisation of sound in time\n- **What makes two notes consonant?** Their frequencies relate by a simple ratio\n- **What is a scale?** An ordered set of notes used in a piece\n- **What does a chord do?** Sounds several notes together as a unit\n- **What is a tempo?** The speed of the pulse\n- **Why do pieces repeat material?** Repetition makes a form the listener can follow\n- **What is an octave?** The interval where one frequency is double the other\n- **What does a key signature indicate?** Which notes belong to the piece by default\n- **What is syncopation?** An accent placed off the expected beat\n- **Why does a melody get stuck in the head?** Short, repeated, slightly irregular patterns are memorable\n- **What is a bar?** A group of beats between two accents\n- **What does a minor scale often suggest?** A darker or more melancholic colour\n- **What is orchestration?** Deciding which instruments play which part\n- **Why is silence part of music?** It sets off sound and shapes expectation\n- **What does practising slowly improve?** Control and accuracy before speed\n",
+          "tags": [
+            "music",
+            "revision"
+          ],
+          "parent": "rhythm"
+        }
+      ]
+    },
+    {
+      "slug": "nutrition",
+      "title": "Food, energy and health",
+      "description": "What a label says, what macronutrients do, and how to judge a diet claim.",
+      "language": "en",
+      "pages": [
+        {
+          "slug": "energy-balance",
+          "title": "Energy balance",
+          "markdown": "# Energy balance\n\nWeight changes follow the balance between energy eaten and energy spent, but both sides are harder to measure than a label suggests: absorption varies, portions are misjudged, and activity is overestimated.\n\n_Part 1 of the food, energy and health guide._\n",
+          "tags": [
+            "nutrition"
+          ]
+        },
+        {
+          "slug": "macronutrients",
+          "title": "Macronutrients",
+          "markdown": "# Macronutrients\n\nCarbohydrates, fats and proteins provide energy and building material in different roles. Fibre, though poorly absorbed, feeds the gut and slows the arrival of sugar in the blood.\n\n_Part 2 of the food, energy and health guide._\n",
+          "tags": [
+            "nutrition"
+          ]
+        },
+        {
+          "slug": "judging-claims",
+          "title": "Judging claims",
+          "markdown": "# Judging claims\n\nA food claim is usually about one nutrient in one product. What matters is the whole diet and the pattern over weeks, which is why a single product rarely transforms anything.\n\n_Part 3 of the food, energy and health guide._\n",
+          "tags": [
+            "nutrition"
+          ]
+        },
+        {
+          "slug": "key-facts",
+          "title": "Key facts",
+          "markdown": "# Key facts\n\n- **What does a food label's energy value depend on?** The portion size it refers to\n- **Which nutrient provides the most energy per gram?** Fat\n- **What does fibre do?** Feeds gut bacteria and slows sugar absorption\n- **Why is a single food rarely a health solution?** The whole diet and pattern matter more\n- **What is a calorie?** A unit of energy\n- **Why does protein matter after exercise?** It supplies the material to repair muscle\n- **What does hydration affect?** Blood volume and temperature regulation\n- **Why can portions be misjudged?** People estimate volume poorly without scales\n- **What is a balanced diet?** One supplying energy and nutrients in the right proportions\n- **What does a 'light' product usually change?** One nutrient, often sugar or fat\n- **Why is salt easy to overconsume?** It is in processed food without tasting salty\n- **What is a micronutrient?** A vitamin or mineral needed in small amounts\n- **Why do official recommendations change?** The evidence base improves over time\n- **What is the most reliable way to judge a diet claim?** Look for the study and the population behind it\n- **What does cooking at home change?** Portion control and ingredient knowledge\n- **What does 'energy density' describe?** How much energy a food carries per gram\n",
+          "tags": [
+            "nutrition",
+            "revision"
+          ],
+          "parent": "energy-balance"
+        }
+      ]
+    }
+  ]
+}

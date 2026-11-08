@@ -1,0 +1,79 @@
+# OpenLearn — single-container install (SQLite by default).
+#
+#   cp .env.example .env      # then edit it
+#   docker compose up -d
+#
+# For PostgreSQL or MySQL, add the matching overlay:
+#
+#   docker compose -f docker-compose.yml -f docker-compose.postgres.yml up -d
+#   docker compose -f docker-compose.yml -f docker-compose.mysql.yml up -d
+#
+# To terminate TLS in the application itself (no reverse proxy):
+#
+#   docker compose -f docker-compose.yml -f docker-compose.tls.yml up -d
+#
+# An external database works the same way: leave the db service out and set
+# OL_DATABASE_URL to your server.
+
+name: openlearn
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ${OPENLEARN_IMAGE:-openlearn:latest}
+    container_name: ${OPENLEARN_CONTAINER:-openlearn}
+    restart: unless-stopped
+    environment:
+      OL_ENVIRONMENT: ${OL_ENVIRONMENT:-production}
+      OL_DATABASE_URL: ${OL_DATABASE_URL:-sqlite:////app/data/openlearn.db}
+      OL_MEDIA_DIR: /app/data/media
+      OL_SECRET_KEY: ${OL_SECRET_KEY:-}
+      OL_PUBLIC_BASE_URL: ${OL_PUBLIC_BASE_URL:-}
+      OL_COOKIE_SECURE: ${OL_COOKIE_SECURE:-false}
+      OL_INSTANCE_NAME: ${OL_INSTANCE_NAME:-OpenLearn}
+      OL_GITHUB_URL: ${OL_GITHUB_URL:-https://github.com/codeyourweb/openlearn}
+      # Demo catalogue: demo content is data, loaded once at boot.
+      OL_DEMO_MODE: ${OL_DEMO_MODE:-false}
+      OL_SEED_DEMO_DATA: ${OL_SEED_DEMO_DATA:-true}
+      OL_DEMO_PASSWORD: ${OL_DEMO_PASSWORD:-}
+      # Administration bootstrap (created or promoted at boot).
+      OL_ADMIN_EMAIL: ${OL_ADMIN_EMAIL:-}
+      OL_ADMIN_PASSWORD: ${OL_ADMIN_PASSWORD:-}
+      # Optional features; the administration panel can change them later.
+      OL_AI_ENABLED: ${OL_AI_ENABLED:-false}
+      OL_AI_BASE_URL: ${OL_AI_BASE_URL:-}
+      OL_AI_API_KEY: ${OL_AI_API_KEY:-}
+      OL_AI_MODEL: ${OL_AI_MODEL:-}
+      OL_MAIL_ENABLED: ${OL_MAIL_ENABLED:-false}
+      OL_MAIL_HOST: ${OL_MAIL_HOST:-}
+      OL_MAIL_PORT: ${OL_MAIL_PORT:-587}
+      OL_MAIL_USERNAME: ${OL_MAIL_USERNAME:-}
+      OL_MAIL_PASSWORD: ${OL_MAIL_PASSWORD:-}
+      OL_MAIL_FROM_ADDRESS: ${OL_MAIL_FROM_ADDRESS:-}
+      OL_SSO_ENABLED: ${OL_SSO_ENABLED:-true}
+      OL_MCP_ENABLED: ${OL_MCP_ENABLED:-true}
+    ports:
+      # APP_PORT is the port inside the container: 8000 for HTTP, 8443 with the
+      # TLS overlay. PORT is the host port.
+      - "${PORT:-8000}:${APP_PORT:-8000}"
+    volumes:
+      - openlearn-data:/app/data
+    # The application never writes outside its data volume.
+    read_only: true
+    tmpfs:
+      - /tmp:size=64m
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    healthcheck:
+      test: ["CMD", "python", "/app/healthcheck.py"]
+      interval: 30s
+      timeout: 5s
+      start_period: 20s
+      retries: 3
+
+volumes:
+  openlearn-data:

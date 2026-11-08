@@ -1,0 +1,132 @@
+{
+  "kind": "wikis",
+  "items": [
+    {
+      "slug": "demo-history-olympic-games",
+      "title": "The History of the Olympic Games",
+      "language": "en",
+      "description": "From a religious festival at Olympia to a global event with a host-city bill: what the Games were, and what they became.",
+      "pages": [
+        {
+          "slug": "ancient-olympia",
+          "title": "Olympia",
+          "tags": [
+            "history",
+            "antiquity"
+          ],
+          "markdown": "## A festival, not a competition\n\nThe ancient Games were a religious festival in honour of Zeus, held at Olympia in the western Peloponnese. The traditional start date is 776 BC, and the list of victors was kept from then on, which is why the date survived. They were held every four years, and the four-year interval — the Olympiad — became a unit of time used for dating everything else.\n\n## Who competed\n\nFree Greek men, and only them. Married women were barred from the sanctuary during the festival; a separate festival for women, the Heraea, was held at a different time. Competitors came from the Greek world and its colonies, from Sicily to the Black Sea, and travelled under a truce that allowed safe passage to the sanctuary.\n\nAthletes trained for months and competed naked, oiled, in the dust of the stadium. There were no team sports and no second places.\n\n## The programme\n\n| Event | Notes |\n|---|---|\n| Stadion | A foot race of about 190 metres |\n| Diaulos | Two lengths of the stadium |\n| Dolichos | A long-distance race |\n| Wrestling | Submission by three falls |\n| Boxing | No weight classes, no rounds |\n| Pankration | Wrestling and boxing combined |\n| Pentathlon | Running, jump, discus, javelin, wrestling |\n| Chariot racing | Held in the hippodrome, not the stadium |\n\nThe prize was a crown of wild olive. The real reward was civic: a victor was honoured by his city, sometimes with money, sometimes with a statue, and poets wrote odes about him.\n\n## The end\n\nThe Games declined as Roman power reshaped Greece, and the sanctuary was damaged over centuries. The conventional end date is around 393 AD, when Theodosius I banned pagan cults. Archaeological excavation began in the nineteenth century, and the site — with its stadium, workshop of Pheidias and temple ruins — is what revived the idea.\n"
+        },
+        {
+          "slug": "revival",
+          "title": "Coubertin and Athens 1896",
+          "tags": [
+            "history",
+            "modern"
+          ],
+          "markdown": "## A French aristocrat with a plan\n\nPierre de Coubertin was not the first to propose reviving the Games. Greek and German enthusiasts had tried, and a small \"Olympia\" festival had been held in Athens in 1859. Coubertin's contribution was organisational: in June 1894 he convened a congress at the Sorbonne, persuaded delegates from a dozen countries to support an international games, and founded the International Olympic Committee.\n\n## Athens, 1896\n\nThe first modern Games opened in Athens in April 1896. Around 240 athletes from 14 countries competed in nine sports. The programme borrowed the ancient events and added the modern ones: athletics, cycling, fencing, gymnastics, swimming, tennis, weightlifting, wrestling and shooting.\n\nThe marathon was invented for the occasion, run over the route from Marathon to Athens, and won by a Greek shepherd, Spyridon Louis. The crowd's reaction made the race a permanent fixture.\n\n- **No women** competed officially, though one runner, Stamata Revithi, ran the marathon course on her own and was refused entry to the stadium.\n- **No national teams** in most events; athletes entered as individuals.\n- **No gold medals** as we know them: winners received a silver medal and an olive branch.\n\n## The pattern that set\n\nAthens established the template that still holds: a host city, a stadium, an opening ceremony, national teams, and a four-year cycle. It also established the first conflict — the 1900 and 1904 Games were attached to world's fairs in Paris and St. Louis and ran for months, which nearly killed the project.\n\n> The modern Games survived not because they were well organised, but because the idea was stronger than the organisation.\n"
+        },
+        {
+          "slug": "between-the-wars",
+          "title": "Between the wars",
+          "tags": [
+            "history",
+            "politics"
+          ],
+          "parent": "revival",
+          "markdown": "## A fragile institution\n\nAfter a hesitant start, the Games found a stable form in the 1920s. Antwerp hosted in 1920, still recovering from occupation. Paris hosted in 1924 and the event drew real crowds. That same year, a separate Winter Games was held at Chamonix, and winter sport acquired its own cycle.\n\nAmsterdam in 1928 introduced the Olympic flame, lit on a tower above the stadium. Los Angeles in 1932, held in the middle of the Depression, invented much of the modern show: a village for athletes, a professional organisation, and a budget that made money.\n\n## The 1936 problem\n\nBerlin in 1936 is the moment the Games became inseparable from politics. The Nazi regime used the event as a showcase, and the IOC, having secured vague assurances about the treatment of Jewish athletes, proceeded. Leni Riefenstahl's film *Olympia* turned the spectacle into propaganda of lasting technical influence.\n\nThe sporting story that is remembered is Jesse Owens: four gold medals in front of Hitler, in the stadium of a regime built on racial ideology.\n\n| Games | Notable |\n|---|---|\n| 1920 Antwerp | First Olympic oath |\n| 1924 Paris | First Winter Games at Chamonix |\n| 1928 Amsterdam | Flame lit; women in athletics |\n| 1932 Los Angeles | First Olympic village |\n| 1936 Berlin | Televised; used as propaganda |\n\n## The lesson taken\n\nAfter the war the IOC concluded that the Games needed distance from states, and wrote the principle of political neutrality into its charter. The following decades showed how difficult that principle is to keep.\n"
+        },
+        {
+          "slug": "cold-war",
+          "title": "Politics and boycotts",
+          "tags": [
+            "history",
+            "politics"
+          ],
+          "markdown": "## Two flags, one podium\n\nFrom 1952 the Games became a scoreboard in the Cold War. The Soviet Union entered for the first time, created a state sports system built on talent identification and full-time training, and began to win. The United States responded in kind. Medal tables, invented by journalists, became front-page news.\n\n## Munich, 1972\n\nDuring the 1972 Games in Munich, eleven members of the Israeli team were taken hostage and killed by a Palestinian militant group. The Games were suspended for a day and then resumed, a decision that is still argued about. Security at every subsequent Games was transformed.\n\n## The boycotts\n\n- **1976 Montreal**: African nations withdrew over New Zealand's sporting ties with apartheid South Africa.\n- **1980 Moscow**: the United States and around sixty other countries stayed away over the Soviet invasion of Afghanistan.\n- **1984 Los Angeles**: the Soviet Union and its allies retaliated by boycotting.\n- **1988 Seoul**: a Games that both blocs attended, and the last of the Cold War era.\n\nThe boycotts damaged the athletes far more than the governments they were aimed at. A generation of competitors lost their only realistic chance to compete.\n\n## What changed\n\nCommercial sponsorship arrived to fill the gap left by state funding and boycotts. Television money made the Games rich and made schedulers powerful: finals moved to suit American audiences, and the number of events grew to fill broadcast hours.\n\n> The Olympic movement's claim is that sport is above politics. Its history shows the opposite, and also shows why the claim is worth making anyway.\n"
+        },
+        {
+          "slug": "modern-games",
+          "title": "The modern Games",
+          "tags": [
+            "history",
+            "contemporary"
+          ],
+          "markdown": "## Professionalism arrives\n\nFor most of its history the IOC insisted on amateurism, a rule that mainly punished athletes from poor countries and was widely evaded. By the 1980s it had collapsed. The 1992 Barcelona Games, with a unified German team, a reunited Olympic movement and the American \"Dream Team\" of NBA players, marked the arrival of open professionalism.\n\nBarcelona also set a standard for urban regeneration: the city rebuilt its waterfront and its road system around the event, and the model was copied — and criticised — for decades afterwards.\n\n## Host cities since 1992\n\n| Year | City | Note |\n|---|---|---|\n| 1992 | Barcelona | Professional basketball; unified Germany |\n| 1996 | Atlanta | Centennial Games, heavily commercial |\n| 2000 | Sydney | Widely praised organisation |\n| 2008 | Beijing | Enormous scale, strict control |\n| 2012 | London | First city to host three times |\n| 2016 | Rio de Janeiro | First in South America |\n| 2020 | Tokyo | Postponed to 2021; almost no spectators |\n| 2024 | Paris | Third time; gender parity in athlete quotas |\n\n## The winter cycle\n\nThe Winter Games were held in the same year as the Summer Games until 1992. From 1994 they were offset by two years, which gave each event its own broadcast window — a decision that was commercial before it was sporting.\n\n## Where it stands\n\nThe Games are now too expensive for most cities. Several have withdrawn bids after referendums, and the IOC has changed the process to award multiple editions in advance and to allow more use of existing venues. Brisbane was awarded 2032 under those rules.\n"
+        },
+        {
+          "slug": "rings-and-cost",
+          "title": "The rings, the flame and the bill",
+          "tags": [
+            "history",
+            "symbols"
+          ],
+          "markdown": "## Five rings\n\nCoubertin designed the rings in 1913: five interlocking circles in blue, yellow, black, green and red, on a white field. The colours were chosen so that at least one appears on the flag of every nation then competing. The flag was first flown at Antwerp in 1920.\n\nThe flame is younger than it looks. A fire burned at Amsterdam in 1928, but the torch relay — carried from Olympia to the host city by thousands of runners — was invented for Berlin in 1936, and it was invented by a regime that understood spectacle.\n\n## The motto\n\n*Citius, Altius, Fortius* — faster, higher, stronger — was proposed by Coubertin in 1894 and adopted formally in 1921. In 2021 the IOC added a fourth word, *Communiter*, \"together\", a change that said more about the present than about the past.\n\n## The bill\n\nHosting costs are the persistent problem.\n\n- **Montreal 1976** left a debt that took three decades to repay.\n- **Athens 2004** left venues that fell into disuse and contributed to the country's fiscal crisis.\n- **Sochi 2014** was the most expensive Winter Games ever held, by a wide margin.\n- **Tokyo 2020** cost far more than budgeted, and the pandemic removed the spectators who were meant to justify it.\n\nThe pattern is consistent: promised benefits are diffuse and long-term, costs are concentrated and immediate, and the estimate made at bid time is almost always too low.\n\n> A city does not win the Games. It wins the right to pay for them, and the argument is only about whether the investment was worth it.\n"
+        }
+      ]
+    },
+    {
+      "slug": "demo-football-tactics",
+      "title": "Football Tactics Explained",
+      "language": "en",
+      "description": "Formations, pressing, possession and transitions: how eleven players are organised, and how to see the plan in a match.",
+      "pages": [
+        {
+          "slug": "formations",
+          "title": "The formation map",
+          "tags": [
+            "football",
+            "tactics"
+          ],
+          "markdown": "## What a formation tells you\n\nA formation is a starting shape, written from defence to attack. It is a shorthand, not a plan: 4-3-3 describes where players stand for a goal kick, and says nothing about whether the team presses, sits deep or plays direct.\n\nThe numbers are read as defenders, midfielders, forwards. A 4-2-3-1 has four defenders, two holding midfielders, three attacking midfielders and one striker.\n\n## A short history of shapes\n\n- **2-3-5 (the pyramid)**: the standard shape of early organised football in the 1880s. Five forwards, two defenders.\n- **The WM**: after the offside law changed in 1925, Herbert Chapman at Arsenal pulled a centre-half back and dropped a forward, creating a 3-2-2-3 that looked like the letters W and M.\n- **4-4-2**: the default of English football for decades, and the shape Brazil modified towards 4-2-4 in 1958.\n- **Catenaccio**: Italian, defensive, with a sweeper behind the back line, dominant in the 1960s.\n- **4-3-3**: associated with Total Football in the 1970s and with modern pressing sides.\n\n## Strengths and weaknesses\n\n| Shape | Strength | Weakness |\n|---|---|---|\n| 4-4-2 | Compact, easy to teach, two strikers | Outnumbered in midfield |\n| 4-3-3 | Wide triangles, high press | Space behind full-backs |\n| 4-2-3-1 | Control of the centre, a free number ten | Lone striker isolated |\n| 3-5-2 | Midfield overload, two strikers | Wing-backs must cover the whole flank |\n| 5-3-2 | Defensive solidity | Little width in attack |\n\n## The shape changes with the ball\n\nEvery formation has two versions: with possession and without. A 4-3-3 pressing becomes a 4-5-1 when the wingers drop. A 3-5-2 becomes a 5-3-2 when the wing-backs retreat. Watching the transition between the two is more informative than counting the numbers at kick-off.\n"
+        },
+        {
+          "slug": "pressing",
+          "title": "Pressing and the high line",
+          "tags": [
+            "football",
+            "defending"
+          ],
+          "parent": "formations",
+          "markdown": "## Pressure as a plan\n\nPressing is not simply running at the ball. It is a coordinated attempt to reduce the space and time an opponent has, in a place the pressing team has chosen. The trigger matters more than the effort: a back-pass, a poor first touch, a pass to a player with his back to goal.\n\n## Three depths\n\n**High press**: the forward line pushes up to the opponent's penalty area, cutting passing lanes to the goalkeeper and centre-backs. It wins the ball close to goal, which is the most valuable place to win it. It also requires a high defensive line, and therefore a goalkeeper willing to play as a sweeper.\n\n**Mid-block**: the team defends around the halfway line, inviting pressure and looking to win the ball in the central third.\n\n**Low block**: the team retreats, concedes territory and defends the penalty area. It is not passive; it is a bet that the opponent will make a mistake under frustration.\n\n## The risk\n\nA high line means the space behind the defence is enormous. Everything depends on the offside trap being executed together — one defender half a metre deeper than the rest and the trap fails. This is why pressing systems require training time and why they fall apart in a team with injured or unfamiliar players.\n\n> Pressing is a bet that your organisation is better than your opponent's composure. When it works it looks like energy. When it fails it looks like chaos.\n\n## Gegenpressing\n\nThe German term describes pressing immediately after losing the ball, before the opponent can organise a counter. The logic is that the opposition is at its most disorganised in the seconds after a turnover, and that a team is already positioned to press, having just been in attack.\n"
+        },
+        {
+          "slug": "possession",
+          "title": "Possession and positional play",
+          "tags": [
+            "football",
+            "attacking"
+          ],
+          "markdown": "## Why keep the ball\n\nPossession has three uses: it prevents the opponent from scoring, it moves them out of position, and it allows a team to recover between efforts. A team that holds the ball for long spells is not necessarily attacking; it may be resting.\n\n## Positional play\n\nThe modern doctrine, developed in Spain and associated with Pep Guardiola's Barcelona and Manchester City, is built on a few principles:\n\n- **Occupation of space**: players hold zones rather than chasing the ball, so that the team is always spread across the pitch.\n- **The free man**: the aim of every passing sequence is to create a player who is unmarked, usually by pulling opponents to one side.\n- **Third-man runs**: the pass goes to a player who lays it off to a third, who was moving into the space the first pass created.\n- **Rest defence**: the players who do not attack are positioned to stop a counter, not to join it.\n\n## The cost\n\nPositional play requires technical quality across the whole team, including the goalkeeper, and it is vulnerable to a well-drilled low block. If the opponent refuses to be pulled out of shape, possession becomes sterile: passing around the box without entering it.\n\nThe statistic that measures this is expected goals, which estimates the probability that a shot becomes a goal based on its location and the situation. Possession without shots is worth very little.\n\n## Direct football\n\nThe opposite approach is not primitive. Playing long, contesting the second ball and attacking quickly asks different questions: it compresses the pitch, avoids the risk of losing the ball near your own goal, and suits players who are strong in the air. It is a legitimate answer, and it has won trophies.\n"
+        },
+        {
+          "slug": "transitions",
+          "title": "Transitions",
+          "tags": [
+            "football",
+            "tactics"
+          ],
+          "parent": "formations",
+          "markdown": "## The two moments that decide matches\n\nMost goals come not from settled attacks but from transitions: the few seconds after a team wins the ball, or after it loses it. In that window, neither team is in its planned shape, and space exists that will not exist again for thirty seconds.\n\n## Counter-attacking\n\nA counter needs three things: a first pass that escapes pressure, runners into space, and a decision made early. The classic pattern is a ball won in midfield, a pass wide to a fast player, and a cross or cut-back to a runner arriving in the box.\n\nCounter-attacking teams accept less possession deliberately. They defend in a compact block, invite the opponent forward, and attack the space left behind. It is the most efficient way for a weaker team to win.\n\n## Rest defence\n\nThe defensive organisation a team keeps while attacking is called rest defence. Typically two or three players stay behind the ball, positioned to delay a counter rather than to win it immediately. When a team overcommits — both full-backs high, the holding midfielder ahead of the ball — a single misplaced pass can produce a clear chance.\n\n## The counter-press\n\nThe alternative to retreating is to win the ball back immediately. This requires players close to the ball at the moment of loss, which in turn requires the attacking shape to be compact. A team that attacks with wide spacing cannot counter-press effectively; the two styles are linked.\n\n| Situation | Best response |\n|---|---|\n| Ball lost in opponent's half | Counter-press immediately |\n| Ball lost in own half | Foul or delay, reorganise |\n| Ball won deep | Fast direct pass forward |\n| Ball won high | Attack before the defence sets |\n"
+        },
+        {
+          "slug": "set-pieces",
+          "title": "Set pieces",
+          "tags": [
+            "football",
+            "coaching"
+          ],
+          "markdown": "## A third of the game\n\nSet pieces — corners, free kicks, throw-ins, goal kicks — account for a substantial share of goals in professional football, and they are the part of the game most amenable to rehearsal. A training session can reproduce a corner exactly; it cannot reproduce the chaos of open play.\n\n## Corners\n\nThe basic choices are near post, far post, short, and out-swinging versus in-swinging delivery. Modern coaching adds blocking: players whose job is to impede a marker rather than to head the ball, creating a free run for the target.\n\nDefensive organisation divides into zonal marking (defenders occupy areas) and man-marking (each defender takes an attacker). Zonal systems concede fewer fouls and are harder to disrupt with movement; man-marking is easier to assign but fails against well-timed blocks.\n\n## Free kicks\n\n- **Direct**: a shot on goal, usually from within about 25 metres, over or around a wall.\n- **Indirect patterns**: a rehearsed routine with decoy runners, often involving a short pass to change the angle.\n- **Wide free kicks**: delivered like corners, with the same blocking principles.\n\n## Throw-ins and goal kicks\n\nThe long throw is a set piece in all but name, and it turns a throw near the box into a corner. Goal kicks, since the law change that allowed defenders inside the penalty area, have become the first step of build-up play — and therefore the first pressing trigger for the opponent.\n\n> A set piece is the only moment in football when a coach can control almost every variable. It is not surprising that the best-organised teams score from them.\n"
+        },
+        {
+          "slug": "reading-a-match",
+          "title": "How to watch tactically",
+          "tags": [
+            "football",
+            "analysis"
+          ],
+          "markdown": "## Stop watching the ball\n\nThe first habit to break is following the ball. The information is elsewhere: in the positions of the players who do not have it. A useful exercise is to watch one player for five minutes and note how often he checks his shoulder, and where he stands when his team has possession.\n\n## Four questions\n\n1. **Where does each team press?** Find the line at which the forward players start to engage. That line is the team's chosen battleground.\n2. **Who is the free man?** In possession, one player is usually unmarked by design. Identifying him explains the pattern of passes.\n3. **What happens after a turnover?** Count the seconds between losing the ball and either winning it back or retreating into shape.\n4. **Who is being targeted?** Teams attack the weaker full-back, the slower centre-back, the midfielder on a yellow card. The pattern is rarely random.\n\n## Reading the shape\n\nLook at the distance between the defensive line and the forward line. A compact team keeps it short — under about 30 metres — and is hard to play through. A stretched team has gaps between the lines, and those gaps are where attacking midfielders want to receive.\n\n## The numbers\n\nModern analysis leans on a few metrics. **Expected goals (xG)** estimates chance quality from location and situation, and is more predictive than shot counts. **Packing** or line-breaking counts measure how many opponents a pass removes from the game. **Field tilt** measures territorial dominance in the final third rather than overall possession.\n\nNone of them replaces watching. They are summaries, useful for checking whether what you saw was representative or lucky.\n"
+        }
+      ]
+    }
+  ]
+}

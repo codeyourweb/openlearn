@@ -1,0 +1,22 @@
+# Local overlay: publish the app directly so `http://localhost:8080` works
+# without a reverse proxy, and add the browser test runner.
+#
+#   docker compose -f docker-compose.yml -f docker-compose.dev.yml up -d --build
+#   docker compose -f docker-compose.yml -f docker-compose.dev.yml run --rm tests
+
+services:
+  app:
+    ports:
+      - "8080:8000"
+
+  tests:
+    profiles: ["test"]
+    build:
+      context: .
+      dockerfile: Dockerfile.test
+    image: openlearn-tests:latest
+    depends_on:
+      - app
+    environment:
+      OL_TEST_BASE_URL: http://app:8000
+    command: ["pytest", "-ra", "tests"]

@@ -1,0 +1,33 @@
+# MySQL / MariaDB overlay.
+#
+#   docker compose -f docker-compose.yml -f docker-compose.mysql.yml up -d
+
+services:
+  app:
+    environment:
+      OL_DATABASE_URL: mysql+pymysql://${MYSQL_USER:-openlearn}:${MYSQL_PASSWORD:-openlearn}@db:3306/${MYSQL_DATABASE:-openlearn}?charset=utf8mb4
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: mariadb:11
+    container_name: ${OPENLEARN_CONTAINER:-openlearn}-db
+    restart: unless-stopped
+    environment:
+      MARIADB_DATABASE: ${MYSQL_DATABASE:-openlearn}
+      MARIADB_USER: ${MYSQL_USER:-openlearn}
+      MARIADB_PASSWORD: ${MYSQL_PASSWORD:-openlearn}
+      MARIADB_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-change-me-root}
+    volumes:
+      - openlearn-mysql:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+    expose:
+      - "3306"
+
+volumes:
+  openlearn-mysql:

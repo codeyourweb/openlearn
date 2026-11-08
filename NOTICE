@@ -1,0 +1,54 @@
+OpenLearn
+Copyright (C) 2026 OpenLearn
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU Affero General Public License, version 3 only, as published
+by the Free Software Foundation.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+PARTICULAR PURPOSE. See the GNU Affero General Public License for more details.
+
+You should have received a copy of the licence in the LICENSE file. If not, see
+<https://www.gnu.org/licenses/agpl-3.0.txt>.
+
+
+Why the AGPL, and not a permissive licence
+------------------------------------------
+OpenLearn runs on a server. With a permissive licence, a company could take the
+code, improve it, host it as a paid service and never publish a line back: the
+community would keep maintaining the free version while a competitor sells a
+better one built from it. Section 13 of the AGPL closes that gap — whoever offers
+the software over a network must offer the corresponding source to its users,
+modifications included.
+
+Hosting it commercially is still allowed. Keeping those improvements secret is
+not. That is the balance this project wants: anyone may build a business around
+OpenLearn, nobody may do it by closing what the community wrote.
+
+
+What this licence does not cover
+--------------------------------
+The name and the logo are trademarks of the project, handled separately in
+TRADEMARK.md. The licence grants rights over the code, not over the identity.
+
+
+Third-party components
+----------------------
+OpenLearn links the following libraries. None of them restricts the licence of
+this program, and each keeps its own terms:
+
+  FastAPI, Starlette, Uvicorn .................. BSD-3-Clause
+  SQLAlchemy, Pydantic, PyJWT, httpx ........... MIT
+  markdown-it-py, python-multipart ............. MIT
+  argon2-cffi, nh3, PyMySQL, python3-saml ...... MIT
+  Pillow ...................................... MIT-CMU
+  reportlab ................................... BSD-3-Clause
+  psycopg ..................................... LGPL-3.0-only
+
+psycopg is linked as a separate library and loaded at runtime: it can be
+replaced by another driver without touching this code, which is what section 4
+of the LGPL requires.
+
+The demo catalogue under demo/ is original content, written for this project and
+released under the same licence as the code.

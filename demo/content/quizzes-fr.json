@@ -1,0 +1,453 @@
+{
+  "kind": "quizzes",
+  "items": [
+    {
+      "title": "Histoire de France : dates et figures clés",
+      "description": "Neuf questions sur les dates, les dynasties et les personnages qui ont fait l'histoire de France, de Jeanne d'Arc à Napoléon.",
+      "mode": "qcm",
+      "wrong_answer_policy": "penalty",
+      "default_language": "fr",
+      "title_translations": {
+        "en": "French History: Key Dates and Figures"
+      },
+      "description_translations": {
+        "en": "Nine questions on the dates, dynasties and figures who shaped French history, from Joan of Arc to Napoleon."
+      },
+      "timer_mode": "per_question",
+      "questions": [
+        {
+          "text_html": "<p>En quelle année la Bastille a-t-elle été prise ?</p>",
+          "time_limit_seconds": 25,
+          "points": 100,
+          "options": [
+            {
+              "text": "1789",
+              "is_correct": true
+            },
+            {
+              "text": "1788",
+              "is_correct": false
+            },
+            {
+              "text": "1791",
+              "is_correct": false
+            },
+            {
+              "text": "1793",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>Sélectionnez <b>tous</b> les rois de la dynastie capétienne.</p>",
+          "time_limit_seconds": 35,
+          "points": 100,
+          "allow_multiple": true,
+          "options": [
+            {
+              "text": "Hugues Capet",
+              "is_correct": true
+            },
+            {
+              "text": "Philippe Auguste",
+              "is_correct": true
+            },
+            {
+              "text": "Louis IX, dit Saint Louis",
+              "is_correct": true
+            },
+            {
+              "text": "Charlemagne",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>Qui a été sacré empereur des Français en 1804 ?</p>",
+          "time_limit_seconds": 25,
+          "points": 100,
+          "options": [
+            {
+              "text": "Napoléon Bonaparte",
+              "is_correct": true
+            },
+            {
+              "text": "Louis XVI",
+              "is_correct": false
+            },
+            {
+              "text": "Charles X",
+              "is_correct": false
+            },
+            {
+              "text": "Louis-Philippe Ier",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>Quelle victoire de François Ier, en 1515, est restée célèbre ?</p>",
+          "time_limit_seconds": 30,
+          "points": 100,
+          "options": [
+            {
+              "text": "Marignan",
+              "is_correct": true
+            },
+            {
+              "text": "Bouvines",
+              "is_correct": false
+            },
+            {
+              "text": "Azincourt",
+              "is_correct": false
+            },
+            {
+              "text": "Pavie",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>Qui a dominé le Comité de salut public pendant la Terreur, en 1793-1794 ?</p>",
+          "time_limit_seconds": 30,
+          "points": 100,
+          "options": [
+            {
+              "text": "Maximilien de Robespierre",
+              "is_correct": true
+            },
+            {
+              "text": "Georges Danton",
+              "is_correct": false
+            },
+            {
+              "text": "Jean-Paul Marat",
+              "is_correct": false
+            },
+            {
+              "text": "Gilbert du Motier de La Fayette",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>En quelle année Jeanne d'Arc a-t-elle été brûlée à Rouen ?</p>",
+          "time_limit_seconds": 30,
+          "points": 100,
+          "options": [
+            {
+              "text": "1431",
+              "is_correct": true
+            },
+            {
+              "text": "1429",
+              "is_correct": false
+            },
+            {
+              "text": "1453",
+              "is_correct": false
+            },
+            {
+              "text": "1415",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>Quel édit de 1598 a accordé la liberté de culte aux protestants ?</p>",
+          "time_limit_seconds": 30,
+          "points": 100,
+          "options": [
+            {
+              "text": "L'édit de Nantes",
+              "is_correct": true
+            },
+            {
+              "text": "L'édit de Fontainebleau",
+              "is_correct": false
+            },
+            {
+              "text": "L'édit de Roussillon",
+              "is_correct": false
+            },
+            {
+              "text": "L'édit de Villers-Cotterêts",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>Quelle dynastie régnait sur la France en 1789 ?</p>",
+          "time_limit_seconds": 30,
+          "points": 100,
+          "options": [
+            {
+              "text": "Les Bourbons",
+              "is_correct": true
+            },
+            {
+              "text": "Les Valois",
+              "is_correct": false
+            },
+            {
+              "text": "Les Capétiens directs",
+              "is_correct": false
+            },
+            {
+              "text": "Les Mérovingiens",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>Sous quel règne Versailles est-il devenu le grand palais que l'on connaît ?</p>",
+          "time_limit_seconds": 30,
+          "points": 100,
+          "options": [
+            {
+              "text": "Louis XIV",
+              "is_correct": true
+            },
+            {
+              "text": "Louis XIII",
+              "is_correct": false
+            },
+            {
+              "text": "François Ier",
+              "is_correct": false
+            },
+            {
+              "text": "Henri IV",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Littérature française : les grands classiques",
+      "description": "Neuf questions sur les romans, les pièces et les poètes que l'on étudie encore au lycée, de Molière à Proust.",
+      "mode": "qcm",
+      "wrong_answer_policy": "zero",
+      "default_language": "fr",
+      "title_translations": {
+        "en": "French Literature: The Great Classics"
+      },
+      "description_translations": {
+        "en": "Nine questions on the novels, plays and poets still studied at school in France, from Molière to Proust."
+      },
+      "timer_mode": "per_question",
+      "questions": [
+        {
+          "text_html": "<p>Qui a écrit <i>Les Misérables</i> ?</p>",
+          "time_limit_seconds": 25,
+          "points": 100,
+          "options": [
+            {
+              "text": "Victor Hugo",
+              "is_correct": true
+            },
+            {
+              "text": "Émile Zola",
+              "is_correct": false
+            },
+            {
+              "text": "Honoré de Balzac",
+              "is_correct": false
+            },
+            {
+              "text": "Gustave Flaubert",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>Dans quel roman la madeleine de Proust apparaît-elle ?</p>",
+          "time_limit_seconds": 30,
+          "points": 100,
+          "options": [
+            {
+              "text": "Du côté de chez Swann",
+              "is_correct": true
+            },
+            {
+              "text": "L'Étranger",
+              "is_correct": false
+            },
+            {
+              "text": "Madame Bovary",
+              "is_correct": false
+            },
+            {
+              "text": "Le Père Goriot",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>Sélectionnez <b>toutes</b> les pièces écrites par Molière.</p>",
+          "time_limit_seconds": 35,
+          "points": 100,
+          "allow_multiple": true,
+          "options": [
+            {
+              "text": "Le Misanthrope",
+              "is_correct": true
+            },
+            {
+              "text": "L'Avare",
+              "is_correct": true
+            },
+            {
+              "text": "Tartuffe",
+              "is_correct": true
+            },
+            {
+              "text": "Phèdre",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>Qui a écrit <i>Madame Bovary</i> ?</p>",
+          "time_limit_seconds": 25,
+          "points": 100,
+          "options": [
+            {
+              "text": "Gustave Flaubert",
+              "is_correct": true
+            },
+            {
+              "text": "Stendhal",
+              "is_correct": false
+            },
+            {
+              "text": "Guy de Maupassant",
+              "is_correct": false
+            },
+            {
+              "text": "Émile Zola",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>Quel est le héros du <i>Rouge et le Noir</i> ?</p>",
+          "time_limit_seconds": 30,
+          "points": 100,
+          "options": [
+            {
+              "text": "Julien Sorel",
+              "is_correct": true
+            },
+            {
+              "text": "Eugène de Rastignac",
+              "is_correct": false
+            },
+            {
+              "text": "Frédéric Moreau",
+              "is_correct": false
+            },
+            {
+              "text": "Étienne Lantier",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>Qui a écrit <i>Les Fleurs du mal</i> ?</p>",
+          "time_limit_seconds": 25,
+          "points": 100,
+          "options": [
+            {
+              "text": "Charles Baudelaire",
+              "is_correct": true
+            },
+            {
+              "text": "Paul Verlaine",
+              "is_correct": false
+            },
+            {
+              "text": "Arthur Rimbaud",
+              "is_correct": false
+            },
+            {
+              "text": "Guillaume Apollinaire",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>Qui est l'auteur du <i>Père Goriot</i> ?</p>",
+          "time_limit_seconds": 25,
+          "points": 100,
+          "options": [
+            {
+              "text": "Honoré de Balzac",
+              "is_correct": true
+            },
+            {
+              "text": "Victor Hugo",
+              "is_correct": false
+            },
+            {
+              "text": "Stendhal",
+              "is_correct": false
+            },
+            {
+              "text": "Alexandre Dumas",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>Dans <i>Le Petit Prince</i>, qui raconte l'histoire ?</p>",
+          "time_limit_seconds": 30,
+          "points": 100,
+          "options": [
+            {
+              "text": "Un aviateur",
+              "is_correct": true
+            },
+            {
+              "text": "Un renard",
+              "is_correct": false
+            },
+            {
+              "text": "Un roi",
+              "is_correct": false
+            },
+            {
+              "text": "Un enfant",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>Quel mouvement littéraire est associé à Émile Zola ?</p>",
+          "time_limit_seconds": 30,
+          "points": 100,
+          "options": [
+            {
+              "text": "Le naturalisme",
+              "is_correct": true
+            },
+            {
+              "text": "Le romantisme",
+              "is_correct": false
+            },
+            {
+              "text": "Le symbolisme",
+              "is_correct": false
+            },
+            {
+              "text": "Le surréalisme",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

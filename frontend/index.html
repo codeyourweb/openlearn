@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="fr" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="description" content="OpenLearn — self-hosted live quizzes to train and validate skills." />
+    <title>OpenLearn</title>
+    <link rel="icon" href="/assets/logo.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#app" id="skip-link">Aller au contenu</a>
+    <header class="topbar">
+      <a class="brand" href="/" data-link>
+        <img src="/assets/logo.svg" alt="" width="28" height="28" />
+        <span data-instance-name>Open<span class="brand-accent">Learn</span></span>
+      </a>
+      <nav class="nav" id="nav">
+        <a href="/about" data-link data-i18n="nav.about" data-nav="about">À propos</a>
+        <a href="/wiki" data-link data-i18n="nav.wiki">Wiki</a>
+        <a href="/quizzes" data-link data-i18n="nav.questionnaires">Questionnaires</a>
+      </nav>
+      <div class="session-box" id="session-box"></div>
+      <div class="topbar-tools">
+        <div class="lang-picker" id="language-picker">
+          <button class="lang-button" id="language-button" type="button"
+                  aria-haspopup="listbox" aria-expanded="false" aria-controls="language-menu">
+            <span class="lang-button-flag" id="language-button-flag"></span>
+            <span class="lang-button-label" id="language-button-label">Français</span>
+            <svg class="lang-chevron" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true">
+              <path d="M2 4.2L6 8.2l4-4" fill="none" stroke="currentColor" stroke-width="1.6"
+                    stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <ul class="lang-menu" id="language-menu" role="listbox" aria-labelledby="language-button" hidden></ul>
+        </div>
+        <button class="btn btn-sm btn-ghost" id="theme-toggle" type="button" title="Theme" data-i18n-title="a11y.theme">◐</button>
+      </div>
+    </header>
+
+    <main id="app" tabindex="-1">
+      <div class="loading" id="boot-loading" data-i18n="common.loading">Loading…</div>
+    </main>
+
+    <footer class="footer">
+      <span id="footer-tagline" data-i18n="footer.tagline">OpenLearn — questionnaires and shared knowledge, open source</span>
+      <span class="footer-links">
+        <a href="/docs" data-link data-i18n="footer.api">API docs</a>
+        <a href="/docs/mcp" data-link data-i18n="footer.mcp">MCP</a>
+        <a href="https://github.com/codeyourweb/openlearn" target="_blank" rel="noopener" data-i18n="footer.source">Source code</a>
+        <a href="/api/v1/health" target="_blank" rel="noopener" data-i18n="footer.health">Health</a>
+      </span>
+    </footer>
+
+    <div id="toast-region" class="toast-region" role="status" aria-live="polite"></div>
+    <div id="modal-root"></div>
+    <script type="module" src="/js/app.js"></script>
+  </body>
+</html>

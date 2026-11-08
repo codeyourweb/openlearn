@@ -1,0 +1,151 @@
+{
+  "kind": "adventures",
+  "items": [
+    {
+      "title": "The library at the end of the line",
+      "description": "A short branching story: a night train, a station that is not on the map, and a library that should not be there.",
+      "mode": "adventure",
+      "wrong_answer_policy": "zero",
+      "default_language": "en",
+      "timer_mode": "none",
+      "questions": [],
+      "adventure": {
+        "start": "platform",
+        "death_text_html": "<p>The lamp goes out and the shelves close over the platform. The train leaves without you.</p>",
+        "victory_text_html": "<p>You write one line, and the station lets you go. The book is in your bag when you wake.</p>",
+        "attributes": [
+          {
+            "key": "resolve",
+            "label": "Resolve",
+            "initial_value": 3,
+            "min_value": 0,
+            "max_value": 6,
+            "death_at_or_below": 0
+          }
+        ],
+        "nodes": [
+          {
+            "key": "platform",
+            "kind": "question",
+            "text_html": "<p>The train stops at a station that is not on the map. The doors open on a platform lit by a single lamp, and beyond it, a library.</p>",
+            "pos_x": 0,
+            "pos_y": 0,
+            "choices": [
+              {
+                "key": "step",
+                "text": "Step onto the platform",
+                "target": "hall"
+              },
+              {
+                "key": "stay",
+                "text": "Stay in your seat",
+                "target": "gone",
+                "effects": [
+                  {
+                    "attribute": "resolve",
+                    "delta": -2
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "key": "hall",
+            "kind": "question",
+            "text_html": "<p>The shelves run further than the building should allow. A librarian looks up: 'You are early. The book you need is not written yet.'</p>",
+            "pos_x": 240,
+            "pos_y": 0,
+            "choices": [
+              {
+                "key": "about",
+                "text": "Ask what the book is about",
+                "target": "pen"
+              },
+              {
+                "key": "leave",
+                "text": "Ask how to leave",
+                "target": "trees",
+                "effects": [
+                  {
+                    "attribute": "resolve",
+                    "delta": -1
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "key": "pen",
+            "kind": "question",
+            "text_html": "<p>'It is about a reader who arrives too early and writes the missing pages,' she says, and hands you a pen.</p>",
+            "pos_x": 480,
+            "pos_y": 0,
+            "choices": [
+              {
+                "key": "write",
+                "text": "Write",
+                "target": "done"
+              },
+              {
+                "key": "refuse",
+                "text": "Refuse the pen",
+                "target": "gone",
+                "effects": [
+                  {
+                    "attribute": "resolve",
+                    "delta": -3
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "key": "gone",
+            "kind": "ending",
+            "text_html": "<p>The doors close. The train moves on, and the station is gone. The timetable lists a stop that never was.</p>",
+            "outcomes": [
+              {
+                "kind": "default",
+                "text_html": "<p>The doors close. The train moves on, and the station is gone. The timetable lists a stop that never was.</p>",
+                "priority": 0
+              }
+            ],
+            "pos_x": 720,
+            "pos_y": 120,
+            "choices": []
+          },
+          {
+            "key": "trees",
+            "kind": "ending",
+            "text_html": "<p>She points to the far door. You walk until the shelves become trees, and the trees become the edge of the town you left that morning.</p>",
+            "outcomes": [
+              {
+                "kind": "default",
+                "text_html": "<p>She points to the far door. You walk until the shelves become trees, and the trees become the edge of the town you left that morning.</p>",
+                "priority": 0
+              }
+            ],
+            "pos_x": 720,
+            "pos_y": -120,
+            "choices": []
+          },
+          {
+            "key": "done",
+            "kind": "ending",
+            "text_html": "<p>You write one line: 'The train stops at a station that is not on the map.' The lamp goes out, and you are in your seat again.</p>",
+            "outcomes": [
+              {
+                "kind": "default",
+                "text_html": "<p>You write one line: 'The train stops at a station that is not on the map.' The lamp goes out, and you are in your seat again.</p>",
+                "priority": 0
+              }
+            ],
+            "pos_x": 720,
+            "pos_y": 0,
+            "choices": []
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,336 @@
+# SPDX-License-Identifier: AGPL-3.0-only
+# Copyright (C) 2026 OpenLearn
+"""Administration of the instance itself: AI provider, mail, SSO, audit log.
+
+Everything here is behind :func:`require_admin`. Secrets are write-only: the
+form learns whether a key is set, never its value, and clearing is explicit.
+"""
+
+from __future__ import annotations
+
+import re
+import time
+from typing import Any
+
+import httpx
+from fastapi import APIRouter, Depends, HTTPException, Query, Request, status
+from pydantic import BaseModel, Field
+from sqlalchemy import delete, func, select
+from sqlalchemy.orm import Session as OrmSession
+
+from .. import mailer, runtime, sso
+from ..config import settings
+from ..db import get_db
+from ..deps import require_admin
+from ..models import AiErrorLog, SsoProvider, User
+
+router = APIRouter(prefix="/api/v1/admin", tags=["admin"])
+
+SLUG = re.compile(r"^[a-z0-9][a-z0-9-]{1,38}[a-z0-9]$")
+
+
+class SettingsIn(BaseModel):
+    values: dict[str, Any] = Field(default_factory=dict)
+
+
+class MailTestIn(BaseModel):
+    to: str = Field(min_length=3, max_length=254)
+
+
+class ProviderIn(BaseModel):
+    slug: str = Field(min_length=2, max_length=40)
+    label: str = Field(min_length=2, max_length=80)
+    kind: str = "oidc"
+    enabled: bool = True
+    issuer: str = ""
+    client_id: str = ""
+    client_secret: str = ""
+    scopes: str = "openid email profile"
+    metadata_url: str = ""
+    entity_id: str = ""
+    sso_url: str = ""
+    x509_cert: str = ""
+    auto_create_users: bool = True
+    allowed_domains: str = ""
+
+
+class ProviderPatch(BaseModel):
+    label: str | None = None
+    kind: str | None = None
+    enabled: bool | None = None
+    issuer: str | None = None
+    client_id: str | None = None
+    client_secret: str | None = None
+    scopes: str | None = None
+    metadata_url: str | None = None
+    entity_id: str | None = None
+    sso_url: str | None = None
+    x509_cert: str | None = None
+    auto_create_users: bool | None = None
+    allowed_domains: str | None = None
+
+
+def _public_base(request: Request | None) -> str:
+    if settings.public_base_url:
+        return settings.public_base_url.rstrip("/")
+    if request is None:
+        return ""
+    host = request.headers.get("x-forwarded-host") or request.headers.get("host") or request.url.netloc
+    scheme = request.headers.get("x-forwarded-proto") or request.url.scheme
+    return f"{scheme}://{host}"
+
+
+def _provider_out(provider: SsoProvider, base: str = "") -> dict[str, Any]:
+    return {
+        "id": provider.id,
+        "slug": provider.slug,
+        "label": provider.label,
+        "kind": provider.kind,
+        "enabled": provider.enabled,
+        # The client secret never leaves the server: the form only learns if
+        # one is stored, and can replace it.
+        "has_secret": bool(provider.client_secret),
+        "issuer": provider.issuer,
+        "client_id": provider.client_id,
+        "scopes": provider.scopes,
+        "metadata_url_setting": provider.metadata_url,
+        "entity_id": provider.entity_id,
+        "sso_url": provider.sso_url,
+        "has_certificate": bool(provider.x509_cert),
+        "auto_create_users": provider.auto_create_users,
+        "allowed_domains": provider.allowed_domains,
+        "ready": sso.provider_is_ready(provider),
+        "callback_url": f"{base}/api/v1/auth/sso/{provider.slug}/callback",
+        "metadata_url": f"{base}/api/v1/auth/sso/{provider.slug}/metadata",
+        "acs_url": f"{base}/api/v1/auth/sso/{provider.slug}/acs",
+    }
+
+
+@router.get("/settings", summary="Effective settings, secrets masked")
+def read_settings(db: OrmSession = Depends(get_db), _admin: User = Depends(require_admin)) -> dict[str, Any]:
+    return {
+        "sections": runtime.describe(db),
+        "environment": {
+            "demo_mode": settings.demo_mode,
+            "ai_bootstrap_enabled": settings.ai_enabled,
+            "mail_bootstrap_enabled": settings.mail_enabled,
+            "sso_enabled": settings.sso_enabled,
+            "mcp_enabled": settings.mcp_enabled,
+            "tls_enabled": bool(settings.tls_cert_file and settings.tls_key_file),
+            "database": "sqlite" if settings.is_sqlite else ("postgresql" if settings.is_postgres else "mysql"),
+        },
+    }
+
+
+@router.put("/settings", summary="Update one or more settings")
+def write_settings(
+    payload: SettingsIn,
+    db: OrmSession = Depends(get_db),
+    admin: User = Depends(require_admin),
+) -> dict[str, Any]:
+    unknown = [key for key in payload.values if key not in runtime.SPEC]
+    if unknown:
+        raise HTTPException(status_code=422, detail=f"Unknown setting(s): {', '.join(sorted(unknown))}")
+    try:
+        applied = runtime.set_many(db, payload.values, user_id=admin.id)
+    except (TypeError, ValueError) as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
+    return {"applied": sorted(applied), "sections": runtime.describe(db)}
+
+
+@router.post("/settings/ai/test", summary="Call the configured model once")
+def test_ai(db: OrmSession = Depends(get_db), _admin: User = Depends(require_admin)) -> dict[str, Any]:
+    config = runtime.ai_config(db)
+    if not config.configured:
+        return {"ok": False, "detail": "The provider is not configured yet."}
+    started = time.monotonic()
+    try:
+        with httpx.Client(timeout=min(config.timeout_seconds, 60)) as client:
+            response = client.post(
+                config.base_url + "/chat/completions",
+                json={
+                    "model": config.model,
+                    "messages": [{"role": "user", "content": "Reply with the single word: pong"}],
+                    # 8 tokens was enough for a plain model and empty for a
+                    # reasoning one, which spent them all thinking.
+                    "max_tokens": 200,
+                    "temperature": 0,
+                },
+                headers={"Authorization": f"Bearer {config.api_key}"} if config.api_key else {},
+            )
+        latency = int((time.monotonic() - started) * 1000)
+        if response.status_code >= 400:
+            runtime.record_ai_error(
+                operation="admin-test",
+                model=config.model,
+                base_url=config.base_url,
+                status_code=response.status_code,
+                detail=response.text[:2000],
+            )
+            return {
+                "ok": False,
+                "status": response.status_code,
+                "latency_ms": latency,
+                "detail": "The provider rejected the request. See the AI error log.",
+            }
+        try:
+            message = response.json()["choices"][0]["message"]
+            answer = (message.get("content") or message.get("reasoning_content") or "")
+        except (AttributeError, KeyError, IndexError, TypeError, ValueError):
+            answer = ""
+        return {
+            "ok": True,
+            "status": response.status_code,
+            "latency_ms": latency,
+            "model": config.model,
+            "answer": str(answer)[:120],
+        }
+    except httpx.HTTPError as exc:
+        latency = int((time.monotonic() - started) * 1000)
+        runtime.record_ai_error(
+            operation="admin-test",
+            model=config.model,
+            base_url=config.base_url,
+            status_code=None,
+            detail=str(exc),
+        )
+        return {"ok": False, "latency_ms": latency, "detail": "The provider is unreachable."}
+
+
+@router.post("/settings/mail/test", summary="Send a test message")
+def test_mail(
+    payload: MailTestIn,
+    db: OrmSession = Depends(get_db),
+    _admin: User = Depends(require_admin),
+) -> dict[str, Any]:
+    if not mailer.is_configured():
+        return {"ok": False, "detail": "No SMTP server is configured."}
+    try:
+        mailer.send(mailer.test_message(to=payload.to, instance=runtime.instance_name(db)))
+    except mailer.MailError as exc:
+        return {"ok": False, "detail": str(exc)}
+    return {"ok": True, "detail": f"Test message sent to {payload.to}."}
+
+
+@router.get("/ai/errors", summary="Model provider failures, newest first")
+def ai_errors(
+    limit: int = Query(default=50, ge=1, le=200),
+    offset: int = Query(default=0, ge=0),
+    db: OrmSession = Depends(get_db),
+    _admin: User = Depends(require_admin),
+) -> dict[str, Any]:
+    total = db.scalar(select(func.count()).select_from(AiErrorLog)) or 0
+    rows = db.scalars(
+        select(AiErrorLog).order_by(AiErrorLog.created_at.desc(), AiErrorLog.id.desc()).limit(limit).offset(offset)
+    ).all()
+    return {
+        "total": total,
+        "items": [
+            {
+                "id": row.id,
+                "created_at": row.created_at,
+                "operation": row.operation,
+                "model": row.model,
+                "base_url": row.base_url,
+                "status_code": row.status_code,
+                "detail": row.detail,
+                "user_id": row.user_id,
+            }
+            for row in rows
+        ],
+    }
+
+
+@router.delete("/ai/errors", status_code=status.HTTP_204_NO_CONTENT)
+def clear_ai_errors(db: OrmSession = Depends(get_db), _admin: User = Depends(require_admin)):
+    db.execute(delete(AiErrorLog))
+    db.commit()
+
+
+@router.get("/sso/providers", summary="Identity providers")
+def list_providers(
+    request: Request, db: OrmSession = Depends(get_db), _admin: User = Depends(require_admin)
+) -> list[dict[str, Any]]:
+    rows = db.scalars(select(SsoProvider).order_by(SsoProvider.label)).all()
+    base = _public_base(request)
+    return [_provider_out(row, base) for row in rows]
+
+
+@router.post("/sso/providers", status_code=status.HTTP_201_CREATED, summary="Add an identity provider")
+def create_provider(
+    payload: ProviderIn,
+    request: Request,
+    db: OrmSession = Depends(get_db),
+    _admin: User = Depends(require_admin),
+) -> dict[str, Any]:
+    slug = payload.slug.strip().lower()
+    if not SLUG.match(slug):
+        raise HTTPException(status_code=422, detail="Slug must use lowercase letters, digits and dashes.")
+    if payload.kind not in {"oidc", "saml"}:
+        raise HTTPException(status_code=422, detail="kind must be 'oidc' or 'saml'.")
+    if db.scalar(select(SsoProvider).where(SsoProvider.slug == slug)) is not None:
+        raise HTTPException(status_code=409, detail="Another provider already uses this slug.")
+    values = payload.model_dump()
+    values["slug"] = slug
+    provider = SsoProvider(**values)
+    db.add(provider)
+    db.commit()
+    db.refresh(provider)
+    return _provider_out(provider, _public_base(request))
+
+
+@router.patch("/sso/providers/{provider_id}", summary="Update an identity provider")
+def update_provider(
+    provider_id: int,
+    payload: ProviderPatch,
+    request: Request,
+    db: OrmSession = Depends(get_db),
+    _admin: User = Depends(require_admin),
+) -> dict[str, Any]:
+    provider = db.get(SsoProvider, provider_id)
+    if provider is None:
+        raise HTTPException(status_code=404, detail="Provider not found.")
+    for key, value in payload.model_dump(exclude_unset=True, exclude_none=True).items():
+        setattr(provider, key, value)
+    if provider.kind not in {"oidc", "saml"}:
+        raise HTTPException(status_code=422, detail="kind must be 'oidc' or 'saml'.")
+    db.add(provider)
+    db.commit()
+    db.refresh(provider)
+    # A changed issuer invalidates the cached discovery document.
+    sso.discovery_cache_clear()
+    return _provider_out(provider, _public_base(request))
+
+
+@router.delete("/sso/providers/{provider_id}", status_code=status.HTTP_204_NO_CONTENT)
+def delete_provider(
+    provider_id: int, db: OrmSession = Depends(get_db), _admin: User = Depends(require_admin)
+):
+    provider = db.get(SsoProvider, provider_id)
+    if provider is None:
+        raise HTTPException(status_code=404, detail="Provider not found.")
+    db.delete(provider)
+    db.commit()
+
+
+@router.post("/sso/providers/{provider_id}/test", summary="Check that a provider is reachable")
+def test_provider(
+    provider_id: int, db: OrmSession = Depends(get_db), _admin: User = Depends(require_admin)
+) -> dict[str, Any]:
+    provider = db.get(SsoProvider, provider_id)
+    if provider is None:
+        raise HTTPException(status_code=404, detail="Provider not found.")
+    if provider.kind == "saml":
+        return {"ok": sso.provider_is_ready(provider), "detail": "SAML configuration is complete." if sso.provider_is_ready(provider) else "SSO URL, entity ID and certificate are required."}
+    if not sso.provider_is_ready(provider):
+        return {"ok": False, "detail": "Issuer and client ID are required."}
+    try:
+        document = sso.discovery(provider)
+    except sso.SsoError as exc:
+        return {"ok": False, "detail": str(exc)}
+    return {
+        "ok": True,
+        "issuer": document.get("issuer"),
+        "authorization_endpoint": document.get("authorization_endpoint"),
+        "scopes_supported": document.get("scopes_supported", [])[:10],
+    }

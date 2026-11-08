@@ -1,0 +1,244 @@
+{
+  "kind": "quizzes",
+  "items": [
+    {
+      "title": "Artificial Intelligence Foundations",
+      "description": "Ten questions on how modern AI systems are built, trained and evaluated — no mathematics required.",
+      "mode": "qcm",
+      "wrong_answer_policy": "zero",
+      "default_language": "en",
+      "title_translations": {
+        "fr": "Fondamentaux de l'intelligence artificielle",
+        "de": "Grundlagen der künstlichen Intelligenz"
+      },
+      "description_translations": {
+        "fr": "Dix questions sur la construction, l'entraînement et l'évaluation des systèmes d'IA modernes."
+      },
+      "timer_mode": "per_question",
+      "questions": [
+        {
+          "text_html": "<p>What does a <b>large language model</b> actually learn during training?</p>",
+          "time_limit_seconds": 30,
+          "points": 100,
+          "options": [
+            {
+              "text": "Statistical patterns of tokens in a very large text corpus",
+              "is_correct": true
+            },
+            {
+              "text": "A database of verified facts it can query",
+              "is_correct": false
+            },
+            {
+              "text": "The grammar rules written by its developers",
+              "is_correct": false
+            },
+            {
+              "text": "A copy of the websites it was allowed to read",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>Which statement about <b>hallucinations</b> is correct?</p>",
+          "time_limit_seconds": 30,
+          "points": 100,
+          "options": [
+            {
+              "text": "A model can produce a fluent answer that is simply false",
+              "is_correct": true
+            },
+            {
+              "text": "They only happen when the temperature is set to zero",
+              "is_correct": false
+            },
+            {
+              "text": "They are impossible once the model is fine-tuned",
+              "is_correct": false
+            },
+            {
+              "text": "They are caused by a missing internet connection",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>What is the purpose of a <b>system prompt</b>?</p>",
+          "time_limit_seconds": 30,
+          "points": 100,
+          "options": [
+            {
+              "text": "Frame the assistant's role and constraints before the user speaks",
+              "is_correct": true
+            },
+            {
+              "text": "Store the user's previous conversations permanently",
+              "is_correct": false
+            },
+            {
+              "text": "Speed up the generation by shortening the context",
+              "is_correct": false
+            },
+            {
+              "text": "Encrypt the exchanges with the provider",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>Which pair of techniques is used to adapt a pre-trained model to a specific task <i>without</i> retraining all of its weights?</p>",
+          "time_limit_seconds": 35,
+          "points": 100,
+          "options": [
+            {
+              "text": "Fine-tuning on a small dataset and parameter-efficient adapters (LoRA)",
+              "is_correct": true
+            },
+            {
+              "text": "Increasing the temperature and the maximum number of tokens",
+              "is_correct": false
+            },
+            {
+              "text": "Rebuilding the tokenizer and the embeddings from scratch",
+              "is_correct": false
+            },
+            {
+              "text": "Running the model twice and averaging the two answers",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>What does <b>RAG</b> (retrieval-augmented generation) add to a model?</p>",
+          "time_limit_seconds": 30,
+          "points": 100,
+          "options": [
+            {
+              "text": "Relevant documents are retrieved and placed in the context before answering",
+              "is_correct": true
+            },
+            {
+              "text": "The model is retrained on every question",
+              "is_correct": false
+            },
+            {
+              "text": "Answers are cached to save money",
+              "is_correct": false
+            },
+            {
+              "text": "The model can browse the web without any index",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Science: The Solar System",
+      "description": "Eight questions on the planets, their moons and the scale of the solar system.",
+      "mode": "qcm",
+      "wrong_answer_policy": "penalty",
+      "default_language": "en",
+      "title_translations": {
+        "fr": "Sciences : le système solaire",
+        "es": "Ciencia: el sistema solar"
+      },
+      "timer_mode": "per_question",
+      "questions": [
+        {
+          "text_html": "<p>Which planet has the shortest day?</p>",
+          "time_limit_seconds": 25,
+          "points": 100,
+          "options": [
+            {
+              "text": "Jupiter",
+              "is_correct": true
+            },
+            {
+              "text": "Mercury",
+              "is_correct": false
+            },
+            {
+              "text": "Earth",
+              "is_correct": false
+            },
+            {
+              "text": "Mars",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>Select <b>all</b> planets that have rings.</p>",
+          "time_limit_seconds": 30,
+          "points": 100,
+          "allow_multiple": true,
+          "options": [
+            {
+              "text": "Saturn",
+              "is_correct": true
+            },
+            {
+              "text": "Jupiter",
+              "is_correct": true
+            },
+            {
+              "text": "Uranus",
+              "is_correct": true
+            },
+            {
+              "text": "Mars",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>What is the main reason Venus is hotter than Mercury, although it is farther from the Sun?</p>",
+          "time_limit_seconds": 30,
+          "points": 100,
+          "options": [
+            {
+              "text": "A runaway greenhouse effect driven by its dense CO₂ atmosphere",
+              "is_correct": true
+            },
+            {
+              "text": "Its surface is made of radioactive rock",
+              "is_correct": false
+            },
+            {
+              "text": "It rotates faster than Mercury",
+              "is_correct": false
+            },
+            {
+              "text": "It is closer to the Sun than Mercury",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>Which of these is <i>not</i> a dwarf planet?</p>",
+          "time_limit_seconds": 25,
+          "points": 100,
+          "options": [
+            {
+              "text": "Titan",
+              "is_correct": true
+            },
+            {
+              "text": "Pluto",
+              "is_correct": false
+            },
+            {
+              "text": "Eris",
+              "is_correct": false
+            },
+            {
+              "text": "Ceres",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

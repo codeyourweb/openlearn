@@ -1,0 +1,437 @@
+{
+  "kind": "quizzes",
+  "items": [
+    {
+      "title": "English Grammar for French Speakers",
+      "description": "Nine questions on the mistakes French speakers make most often in English: tenses, prepositions, false friends and countable nouns.",
+      "mode": "qcm",
+      "wrong_answer_policy": "zero",
+      "default_language": "en",
+      "title_translations": {
+        "fr": "Grammaire anglaise pour francophones",
+        "de": "Englische Grammatik für Französischsprachige",
+        "es": "Gramática inglesa para francófonos"
+      },
+      "description_translations": {
+        "fr": "Neuf questions sur les fautes les plus fréquentes des francophones en anglais : temps, prépositions, faux amis et noms comptables.",
+        "de": "Neun Fragen zu den häufigsten Fehlern von Französischsprachigen im Englischen: Zeiten, Präpositionen, falsche Freunde und zählbare Substantive.",
+        "es": "Nueve preguntas sobre los errores más frecuentes de los francófonos en inglés: tiempos verbales, preposiciones, falsos amigos y sustantivos contables."
+      },
+      "timer_mode": "per_question",
+      "questions": [
+        {
+          "text_html": "<p>Which sentence is correct?</p>",
+          "time_limit_seconds": 30,
+          "points": 100,
+          "options": [
+            {
+              "text": "She has been living in Lyon since 2019.",
+              "is_correct": true
+            },
+            {
+              "text": "She lives in Lyon since 2019.",
+              "is_correct": false
+            },
+            {
+              "text": "She is living in Lyon since 2019.",
+              "is_correct": false
+            },
+            {
+              "text": "She has been living in Lyon for 2019.",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>Complete: <i>I'm good ___ mathematics.</i></p>",
+          "time_limit_seconds": 20,
+          "points": 100,
+          "options": [
+            {
+              "text": "at",
+              "is_correct": true
+            },
+            {
+              "text": "in",
+              "is_correct": false
+            },
+            {
+              "text": "on",
+              "is_correct": false
+            },
+            {
+              "text": "to",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>Select <b>all</b> sentences that use the present perfect correctly.</p>",
+          "time_limit_seconds": 35,
+          "points": 100,
+          "allow_multiple": true,
+          "options": [
+            {
+              "text": "I have just finished my homework.",
+              "is_correct": true
+            },
+            {
+              "text": "They have lived here for ten years.",
+              "is_correct": true
+            },
+            {
+              "text": "Have you ever been to Dublin?",
+              "is_correct": true
+            },
+            {
+              "text": "I have seen him yesterday.",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>The English word <i>actually</i> means...</p>",
+          "time_limit_seconds": 25,
+          "points": 100,
+          "options": [
+            {
+              "text": "in fact",
+              "is_correct": true
+            },
+            {
+              "text": "right now",
+              "is_correct": false
+            },
+            {
+              "text": "finally",
+              "is_correct": false
+            },
+            {
+              "text": "probably",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>Complete: <i>I look forward to ___ from you.</i></p>",
+          "time_limit_seconds": 25,
+          "points": 100,
+          "options": [
+            {
+              "text": "hearing",
+              "is_correct": true
+            },
+            {
+              "text": "hear",
+              "is_correct": false
+            },
+            {
+              "text": "heard",
+              "is_correct": false
+            },
+            {
+              "text": "be hearing",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>Reported speech: <i>He said he ___ tired.</i></p>",
+          "time_limit_seconds": 25,
+          "points": 100,
+          "options": [
+            {
+              "text": "was",
+              "is_correct": true
+            },
+            {
+              "text": "is",
+              "is_correct": false
+            },
+            {
+              "text": "has been",
+              "is_correct": false
+            },
+            {
+              "text": "will be",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>What does <i>used to</i> express in <i>I used to play tennis</i>?</p>",
+          "time_limit_seconds": 30,
+          "points": 100,
+          "options": [
+            {
+              "text": "A past habit that no longer happens",
+              "is_correct": true
+            },
+            {
+              "text": "A plan for the near future",
+              "is_correct": false
+            },
+            {
+              "text": "A present obligation",
+              "is_correct": false
+            },
+            {
+              "text": "A polite request",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>Complete: <i>This exam is ___ than the last one.</i></p>",
+          "time_limit_seconds": 20,
+          "points": 100,
+          "options": [
+            {
+              "text": "easier",
+              "is_correct": true
+            },
+            {
+              "text": "more easy",
+              "is_correct": false
+            },
+            {
+              "text": "easiest",
+              "is_correct": false
+            },
+            {
+              "text": "more easier",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>Which of these nouns is countable?</p>",
+          "time_limit_seconds": 25,
+          "points": 100,
+          "options": [
+            {
+              "text": "suggestion",
+              "is_correct": true
+            },
+            {
+              "text": "advice",
+              "is_correct": false
+            },
+            {
+              "text": "information",
+              "is_correct": false
+            },
+            {
+              "text": "furniture",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "German Vocabulary: Learning Habits Poll",
+      "description": "An opinion poll on how you learn German words. There are no right or wrong answers — pick what works for you and see how other learners answered.",
+      "mode": "poll",
+      "wrong_answer_policy": "zero",
+      "default_language": "en",
+      "title_translations": {
+        "fr": "Vocabulaire allemand : sondage sur les habitudes d'apprentissage",
+        "de": "Deutscher Wortschatz: Umfrage zu Lerngewohnheiten",
+        "es": "Vocabulario alemán: encuesta sobre hábitos de aprendizaje"
+      },
+      "description_translations": {
+        "fr": "Un sondage d'opinion sur votre façon d'apprendre les mots allemands. Il n'y a pas de bonne réponse : choisissez ce qui vous convient et découvrez les réponses des autres apprenants.",
+        "de": "Eine Meinungsumfrage dazu, wie Sie deutsche Wörter lernen. Es gibt keine richtige Antwort – wählen Sie, was für Sie passt, und sehen Sie, wie andere Lernende geantwortet haben.",
+        "es": "Una encuesta de opinión sobre cómo aprende palabras alemanas. No hay respuestas correctas: elija lo que le funcione y descubra qué respondieron otros estudiantes."
+      },
+      "timer_mode": "per_question",
+      "questions": [
+        {
+          "text_html": "<p>How do you prefer to memorise new German words?</p>",
+          "time_limit_seconds": 30,
+          "points": 100,
+          "options": [
+            {
+              "text": "With paper flashcards",
+              "is_correct": false
+            },
+            {
+              "text": "With a spaced-repetition app",
+              "is_correct": false
+            },
+            {
+              "text": "By reading German articles",
+              "is_correct": false
+            },
+            {
+              "text": "By listening to podcasts",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>Which skill would you like to improve first?</p>",
+          "time_limit_seconds": 25,
+          "points": 100,
+          "options": [
+            {
+              "text": "Speaking",
+              "is_correct": false
+            },
+            {
+              "text": "Listening",
+              "is_correct": false
+            },
+            {
+              "text": "Reading",
+              "is_correct": false
+            },
+            {
+              "text": "Writing",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>Which German word do you find hardest to pronounce?</p>",
+          "time_limit_seconds": 35,
+          "points": 100,
+          "options": [
+            {
+              "text": "Eichhörnchen",
+              "is_correct": false
+            },
+            {
+              "text": "Streichholzschächtelchen",
+              "is_correct": false
+            },
+            {
+              "text": "Quietscheentchen",
+              "is_correct": false
+            },
+            {
+              "text": "Schleswig-Holstein",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>How much time can you give to German on a normal day?</p>",
+          "time_limit_seconds": 25,
+          "points": 100,
+          "options": [
+            {
+              "text": "Less than 15 minutes",
+              "is_correct": false
+            },
+            {
+              "text": "15 to 30 minutes",
+              "is_correct": false
+            },
+            {
+              "text": "30 to 60 minutes",
+              "is_correct": false
+            },
+            {
+              "text": "More than an hour",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>Which everyday situation would you most like to practise?</p>",
+          "time_limit_seconds": 30,
+          "points": 100,
+          "options": [
+            {
+              "text": "Ordering in a café",
+              "is_correct": false
+            },
+            {
+              "text": "Asking for directions",
+              "is_correct": false
+            },
+            {
+              "text": "A job interview",
+              "is_correct": false
+            },
+            {
+              "text": "Renting a flat",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>What helps you remember a word best?</p>",
+          "time_limit_seconds": 30,
+          "points": 100,
+          "options": [
+            {
+              "text": "A picture",
+              "is_correct": false
+            },
+            {
+              "text": "An example sentence",
+              "is_correct": false
+            },
+            {
+              "text": "Its translation",
+              "is_correct": false
+            },
+            {
+              "text": "Its etymology",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>Which learning format suits you best?</p>",
+          "time_limit_seconds": 30,
+          "points": 100,
+          "options": [
+            {
+              "text": "A short lesson every day",
+              "is_correct": false
+            },
+            {
+              "text": "One long session each week",
+              "is_correct": false
+            },
+            {
+              "text": "A conversation group",
+              "is_correct": false
+            },
+            {
+              "text": "A grammar workbook",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "text_html": "<p>Which German-speaking city would you most like to visit?</p>",
+          "time_limit_seconds": 25,
+          "points": 100,
+          "options": [
+            {
+              "text": "Berlin",
+              "is_correct": false
+            },
+            {
+              "text": "Vienna",
+              "is_correct": false
+            },
+            {
+              "text": "Zurich",
+              "is_correct": false
+            },
+            {
+              "text": "Hamburg",
+              "is_correct": false
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
