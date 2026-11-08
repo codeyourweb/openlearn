@@ -1,22 +1,35 @@
 version: 2
 
+# Major bumps are not refused — a major is sometimes a security fix — but they
+# are not proposed ten at a time on a repository that has just been published
+# either: the limit keeps the queue readable, minor and patch updates are
+# grouped, and a human decides about the rest.
 updates:
   - package-ecosystem: pip
     directory: /backend
     schedule:
       interval: weekly
-    open-pull-requests-limit: 5
+    open-pull-requests-limit: 3
     groups:
       python-minor:
         patterns: ["*"]
         update-types: ["minor", "patch"]
+    labels: ["dependencies"]
 
   - package-ecosystem: github-actions
     directory: /
     schedule:
       interval: monthly
+    open-pull-requests-limit: 3
+    groups:
+      actions-minor:
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
+    labels: ["dependencies"]
 
   - package-ecosystem: docker
     directory: /
     schedule:
       interval: monthly
+    open-pull-requests-limit: 2
+    labels: ["dependencies"]
