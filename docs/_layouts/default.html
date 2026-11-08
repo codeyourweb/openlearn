@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ page.lang | default: site.lang | default: 'fr' }}">
+<html lang="{{ page.lang | default: site.lang | default: 'en' }}">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -26,7 +26,7 @@
   </script>
 </head>
 <body>
-  <a class="skip-link" href="#contenu">Aller au contenu</a>
+  <a class="skip-link" href="#contenu">Skip to content</a>
 
   <header class="site-header">
     <div class="wrap header-inner">
@@ -34,7 +34,7 @@
         <span class="brand-mark" aria-hidden="true">◆</span>
         <span class="brand-name">OpenLearn</span>
       </a>
-      <nav aria-label="Navigation principale">
+      <nav aria-label="Main navigation">
         <ul class="nav">
           {% for item in site.data.nav %}
           <li>
@@ -44,7 +44,7 @@
           {% endfor %}
         </ul>
       </nav>
-      <a class="btn btn-primary" href="{{ site.demo_url }}">Essayer la démo</a>
+      <a class="btn btn-primary" href="{{ site.demo_url }}">Try the demo</a>
     </div>
   </header>
 
@@ -57,15 +57,15 @@
       <div>
         <p class="footer-brand">OpenLearn — {{ site.tagline }}</p>
         <p class="muted small">
-          Logiciel libre sous licence AGPL-3.0-only, écrit par
+          Free software under AGPL-3.0-only, written by
           <a href="{{ site.author.url }}">{{ site.author.name }}</a>.
         </p>
       </div>
       <ul class="footer-links">
-        <li><a href="https://github.com/{{ site.repository }}">Code source</a></li>
-        <li><a href="{{ site.demo_url }}">Instance de démonstration</a></li>
-        <li><a href="{{ '/contribuer/' | relative_url }}">Contribuer</a></li>
-        <li><a href="{{ '/faq/' | relative_url }}">Questions fréquentes</a></li>
+        <li><a href="https://github.com/{{ site.repository }}">Source code</a></li>
+        <li><a href="{{ site.demo_url }}">Live demo</a></li>
+        <li><a href="{{ '/contributing/' | relative_url }}">Contributing</a></li>
+        <li><a href="{{ '/faq/' | relative_url }}">FAQ</a></li>
       </ul>
     </div>
   </footer>

@@ -1,143 +1,141 @@
 ---
-title: OpenLearn — un wiki et des quiz libres pour apprendre sans compte publicitaire
+title: OpenLearn — a free wiki and quiz platform for learning, without tracking
 description: >-
-  OpenLearn réunit un wiki collaboratif, un moteur de quiz et des révisions espacées dans une
-  seule application libre, auto-hébergeable, accessible WCAG 2.2 AA et traduite en douze langues.
+  OpenLearn brings a collaborative wiki, a quiz engine and spaced repetition into one free,
+  self-hostable application, WCAG 2.2 AA accessible and translated into twelve languages.
 permalink: /
 ---
 
 <section class="hero">
-  <h1>Apprendre ensemble, sans rien céder sur la liberté ni sur l'accessibilité.</h1>
+  <h1>Learn together, without giving up freedom or accessibility.</h1>
   <p class="lead">
-    OpenLearn est une plateforme d'apprentissage auto-hébergée : un wiki pour écrire les savoirs,
-    un moteur de quiz pour les vérifier, et des cartes de révision pour les garder. Pas de traceur
-    publicitaire, pas de dépendance à une plateforme — juste un serveur, un navigateur, et les
-    gens qui se servent du logiciel.
+    OpenLearn is a self-hosted learning platform: a wiki to write knowledge down, a quiz engine
+    to check it, and revision cards to keep it. No advertising tracker, no dependency on a
+    platform — just a server, a browser, and the people using the software.
   </p>
   <div class="hero-actions">
-    <a class="btn btn-primary" href="{{ site.demo_url }}">Essayer l'instance de démonstration</a>
-    <a class="btn" href="{{ '/guide/' | relative_url }}">Lire le guide d'utilisation</a>
-    <a class="btn" href="https://github.com/{{ site.repository }}">Code source</a>
+    <a class="btn btn-primary" href="{{ site.demo_url }}">Try the live demo</a>
+    <a class="btn" href="{{ '/guide/' | relative_url }}">Read the user guide</a>
+    <a class="btn" href="https://github.com/{{ site.repository }}">Source code</a>
   </div>
   <p class="muted small" style="margin-top:1.25rem">
-    Licence AGPL-3.0-only · FastAPI + SQLite · Docker · WCAG 2.2 AA · 12 langues
+    AGPL-3.0-only · FastAPI + SQLite · Docker · WCAG 2.2 AA · 12 languages
   </p>
 </section>
 
-## Ce que fait le logiciel
+## What the software does
 
-OpenLearn réunit trois gestes qui vont ensemble : écrire ce qu'on sait, le faire réciter, et
-revenir dessus au bon moment.
+OpenLearn puts together three gestures that belong together: writing down what you know, having
+it recited back, and coming back to it at the right moment.
 
 <div class="grid">
   <div class="card">
-    <h3>Un wiki qui n'a pas peur des renvois</h3>
+    <h3>A wiki that expects cross-references</h3>
     <p>
-      Pages en Markdown, versions, structure hiérarchique, graphe des liens, références
-      croisées et citations. La page sait toujours qui l'a modifiée et ce qui a changé.
+      Markdown pages, versions, a page tree, a link graph, citations and a bibliography. A page
+      always knows who changed it and what changed.
     </p>
   </div>
   <div class="card">
-    <h3>Un moteur de quiz complet</h3>
+    <h3>A complete quiz engine</h3>
     <p>
-      Questions à choix unique ou multiple, échelles de certitude, mode en direct animé par un
-      hôte, parties solo, évaluation détaillée et export des résultats.
+      Single and multiple choice, confidence ratings, a live mode hosted by a presenter, solo
+      games, detailed assessment and result export.
     </p>
   </div>
   <div class="card">
-    <h3>Des révisions espacées</h3>
+    <h3>Spaced repetition</h3>
     <p>
-      Chaque mauvaise réponse peut devenir une carte, resservie après un intervalle qui
-      s'allonge quand elle revient juste. C'est la pédagogie la plus ancienne et la plus
-      solide qui soit : répétition, à intervalles croissants.
+      Any wrong answer can become a card, served again after an interval that grows as it comes
+      back right. It is the oldest and most solid pedagogy there is: repetition at increasing
+      intervals.
     </p>
   </div>
   <div class="card">
-    <h3>Un espace pour chaque équipe</h3>
+    <h3>Room for every team</h3>
     <p>
-      Comptes, avatars, rôles (auteur, modérateur, administrateur), clés d'API et accès MCP
-      donnent à un agent ou à un outil externe de quoi lire et créer du contenu sans passer
-      par l'interface.
+      Accounts, avatars, roles (author, moderator, administrator), API keys and MCP access give
+      an external tool or agent what it needs to read and create content without the interface.
     </p>
   </div>
   <div class="card">
-    <h3>Un serveur, pas un abonnement</h3>
+    <h3>A server, not a subscription</h3>
     <p>
-      Une image Docker, SQLite par défaut, sauvegarde et restauration en une commande. Un
-      serveur modeste suffit pour une promotion entière.
+      One Docker image, SQLite by default, backup and restore in a single command. A modest
+      server is enough for a whole class.
     </p>
   </div>
   <div class="card">
-    <h3>Douze langues, dont l'arabe en droite à gauche</h3>
+    <h3>Twelve languages, Arabic right to left</h3>
     <p>
-      Français, anglais, allemand, espagnol, italien, russe, chinois, japonais, portugais, hindi,
-      bengali et arabe — chaque écran est traduit, pas seulement la page d'accueil.
+      French, English, German, Spanish, Italian, Russian, Chinese, Japanese, Portuguese, Hindi,
+      Bengali and Arabic — every screen is translated, not only the landing page.
     </p>
   </div>
 </div>
 
-## La question qui a décidé de l'architecture
+## The question that decided the architecture
 
-> La plupart des plateformes d'apprentissage en ligne facturent l'accès au savoir, tracent
-> chaque clic, et gardent les contenus enfermés. Nous voulions l'inverse : un logiciel qu'une
-> association, un lycée, un laboratoire ou une famille puisse poser sur son serveur, laisser
-> tourner dix ans, et quitter quand bon lui semble sans perdre une ligne.
+> Most online learning platforms charge for access to knowledge, track every click, and keep
+> content locked in. We wanted the opposite: software that an association, a school, a lab or a
+> family can put on its own server, leave running for ten years, and walk away from without
+> losing a line.
 
-Ce choix a des conséquences techniques, assumées une par une. La suite est décrite dans
-[la philosophie du projet]({{ '/philosophie/' | relative_url }}) : pourquoi l'AGPL plutôt que MIT,
-pourquoi un compte facultatif, pourquoi l'accessibilité n'est pas une couche optionnelle, et
-comment le projet refuse de mesurer les gens.
+That choice has technical consequences, accepted one by one. They are described in
+[the philosophy behind the project]({{ '/philosophy/' | relative_url }}): why AGPL rather than
+MIT, why an optional account, why accessibility is not an optional layer, and how the project
+refuses to measure people.
 
-## La documentation
+## Documentation
 
-Le guide d'utilisation décrit chaque fonction, écran par écran, avec les chemins réels de
-l'application :
+The user guide describes every feature screen by screen, with the real paths of the
+application:
 
 <div class="grid">
   <div class="card">
-    <h3><a href="{{ '/guide/demarrage/' | relative_url }}">Démarrer</a></h3>
-    <p>Compte, confirmation d'adresse, connexion, navigation, langues, thème.</p>
+    <h3><a href="{{ '/guide/getting-started/' | relative_url }}">Getting started</a></h3>
+    <p>Account, email confirmation, sign-in, navigation, languages, theme.</p>
   </div>
   <div class="card">
-    <h3><a href="{{ '/guide/wiki/' | relative_url }}">Le wiki</a></h3>
-    <p>Écrire en Markdown, versionner, restaurer, relier les pages, publier.</p>
+    <h3><a href="{{ '/guide/wiki/' | relative_url }}">The wiki</a></h3>
+    <p>Write in Markdown, keep versions, restore one, cross-link pages, publish.</p>
   </div>
   <div class="card">
-    <h3><a href="{{ '/guide/quiz/' | relative_url }}">Les quiz</a></h3>
-    <p>Créer, régler les tentatives, jouer en solo, animer en direct, lire les statistiques.</p>
+    <h3><a href="{{ '/guide/quizzes/' | relative_url }}">Quizzes</a></h3>
+    <p>Create, set the attempt rule, play solo, host a live game, read the statistics.</p>
   </div>
   <div class="card">
-    <h3><a href="{{ '/guide/revisions/' | relative_url }}">Les révisions</a></h3>
-    <p>Fiches, jeux de cartes, répétition espacée, impression.</p>
+    <h3><a href="{{ '/guide/spaced-repetition/' | relative_url }}">Revision</a></h3>
+    <p>Cards, card decks, spaced repetition, printing.</p>
   </div>
   <div class="card">
-    <h3><a href="{{ '/guide/moderation/' | relative_url }}">Modérer et administrer</a></h3>
-    <p>File de publication, notes aux auteurs, comptes, courriel, IA, SSO, bannissements.</p>
+    <h3><a href="{{ '/guide/moderation/' | relative_url }}">Moderating and administering</a></h3>
+    <p>Publication queue, notes to authors, accounts, mail, AI, SSO, temporary bans.</p>
   </div>
   <div class="card">
-    <h3><a href="{{ '/guide/api-mcp/' | relative_url }}">API et MCP</a></h3>
-    <p>Clés d'API, référence OpenAPI, branchement d'un agent.</p>
+    <h3><a href="{{ '/guide/api-mcp/' | relative_url }}">API and MCP</a></h3>
+    <p>API keys, the OpenAPI reference, connecting an agent.</p>
   </div>
 </div>
 
-## À qui cela s'adresse
+## Who it is for
 
-- **Une équipe pédagogique** qui veut un espace de cours sans dépendre d'un fournisseur.
-- **Une association de vulgarisation** qui écrit des fiches et veut les faire réviser.
-- **Un club de jeux de connaissances**, qui a besoin d'un mode en direct et d'un classement.
-- **Une administration soumise à des exigences d'accessibilité** et de souveraineté des données.
-- **Un développeur** qui cherche un exemple lisible d'API FastAPI, de wiki versionné et de
-  composants front accessibles.
+- **A teaching team** that wants a course space without depending on a vendor.
+- **An outreach association** that writes explainers and wants them revised.
+- **A quiz club** that needs a live mode and a scoreboard.
+- **A public body** bound by accessibility and data-sovereignty requirements.
+- **A developer** looking for a readable example of a FastAPI API, a versioned wiki and
+  accessible front-end components.
 
-## État du projet
+## Project status
 
-Le logiciel est utilisé publiquement : [openlearnproject.org]({{ site.demo_url }}) est une
-instance de démonstration ouverte, alimentée par un catalogue de contenus d'exemple. Le code
-est complet, testé (plus de 450 tests back-end et une suite de bout en bout au navigateur),
-et publié sous AGPL-3.0-only avec un CLA pour la contribution.
+The software is used in public: [openlearnproject.org]({{ site.demo_url }}) is an open
+demonstration instance, filled with a catalogue of sample content. The code is complete, tested
+(over 450 back-end tests plus a browser end-to-end suite), and published under AGPL-3.0-only with
+a CLA for contributions.
 
 <p class="muted small">
-OpenLearn est écrit par <a href="{{ site.author.url }}">{{ site.author.name }}</a> et publié
-sous licence AGPL-3.0-only. La marque OpenLearn et l'instance de démonstration ne sont pas
-cédées avec le code : voir les conditions de marque du dépôt.
+OpenLearn is written by <a href="{{ site.author.url }}">{{ site.author.name }}</a> and released
+under AGPL-3.0-only. The OpenLearn name and the demonstration instance are not granted with the
+code: see the trademark terms in the repository.
 </p>

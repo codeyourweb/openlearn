@@ -1,79 +1,77 @@
 ---
 layout: doc
-title: Guide d'utilisation — prendre en main OpenLearn
+title: User guide — getting to grips with OpenLearn
 description: >-
-  Le guide utilisateur d'OpenLearn, fonction par fonction : écrire dans le wiki, créer et animer
-  des quiz, réviser avec des cartes, gérer son compte, modérer les publications.
+  The OpenLearn user guide, feature by feature: writing in the wiki, creating and hosting
+  quizzes, revising with cards, managing your account, moderating publications.
 permalink: /guide/
 ---
 
-<p class="doc-eyebrow">Guide d'utilisation</p>
+<p class="doc-eyebrow">User guide</p>
 
-# Prendre en main OpenLearn
+# Getting to grips with OpenLearn
 
-Ce guide décrit le logiciel tel qu'il se présente aujourd'hui, écran par écran. Il ne suppose
-aucune connaissance technique : si vous savez utiliser un navigateur, vous saurez écrire une
-page de wiki et lancer un quiz.
+This guide describes the software as it is today, screen by screen. It assumes no technical
+knowledge: if you can use a browser, you can write a wiki page and run a quiz.
 
-Chaque page suit la même logique : **à quoi ça sert**, **où cela se trouve**, **comment on s'en
-sert**, et **les pièges ordinaires**. Les chemins indiqués (`/wiki/new`, `/quizzes/new`…) sont
-ceux de l'instance de démonstration ; ils sont identiques sur toute instance du logiciel.
+Every page follows the same logic: **what it is for**, **where to find it**, **how to use it**,
+and **the ordinary pitfalls**. The paths given (`/wiki/new`, `/quizzes/new`…) are those of the
+demonstration instance; they are identical on any instance of the software.
 
-## Par où commencer
+## Where to start
 
 <ol class="steps">
-  <li><strong>Créez un compte</strong> sur l'instance, puis ouvrez le lien de confirmation que
-  vous recevez par courriel. Tant que l'adresse n'est pas confirmée, l'application fonctionne
-  normalement mais affiche un bandeau de rappel.</li>
-  <li><strong>Ouvrez le tableau de bord</strong> (<code>/dashboard</code>) : il liste vos wikis,
-  vos quiz et vos cartes, et c'est de là que partent toutes les créations.</li>
-  <li><strong>Écrivez une première page</strong> dans un espace wiki, ou
-  <strong>créez un quiz</strong> de cinq questions pour tester le mode en direct.</li>
-  <li><strong>Demandez la publication</strong> : votre contenu devient public après validation
-  par un modérateur, qui vous envoie alors un courriel.</li>
+  <li><strong>Create an account</strong> on the instance, then open the confirmation link you
+  receive by email. Until the address is confirmed the application works normally, but shows a
+  reminder banner.</li>
+  <li><strong>Open the dashboard</strong> (<code>/dashboard</code>): it lists your wikis, your
+  quizzes and your cards, and every new creation starts from there.</li>
+  <li><strong>Write a first page</strong> in a wiki space, or <strong>create a quiz</strong> of
+  five questions to try the live mode.</li>
+  <li><strong>Request publication</strong>: your content becomes public once a moderator has
+  approved it, and you then receive an email.</li>
 </ol>
 
-## Les trois objets du logiciel
+## The three objects of the software
 
 <div class="grid">
   <div class="card">
-    <h3>Le wiki</h3>
-    <p>Un espace de pages en Markdown, versionnées, structurées et publiables. C'est là qu'on
-    écrit le savoir. <a href="{{ '/guide/wiki/' | relative_url }}">Guide du wiki</a></p>
+    <h3>The wiki</h3>
+    <p>A space of Markdown pages, versioned, structured and publishable. This is where knowledge
+    gets written. <a href="{{ '/guide/wiki/' | relative_url }}">Wiki guide</a></p>
   </div>
   <div class="card">
-    <h3>Le quiz</h3>
-    <p>Une suite de questions à choix, jouable seul, entre amis ou animée en salle.
-    <a href="{{ '/guide/quiz/' | relative_url }}">Guide des quiz</a></p>
+    <h3>The quiz</h3>
+    <p>A series of multiple-choice questions, playable alone, with friends, or hosted in a room.
+    <a href="{{ '/guide/quizzes/' | relative_url }}">Quiz guide</a></p>
   </div>
   <div class="card">
-    <h3>La carte de révision</h3>
-    <p>La mémoire du quiz : une question, une réponse, et un intervalle qui s'allonge quand
-    vous réussissez. <a href="{{ '/guide/revisions/' | relative_url }}">Guide des révisions</a></p>
+    <h3>The revision card</h3>
+    <p>The quiz's memory: a question, an answer, and an interval that grows as you get it right.
+    <a href="{{ '/guide/spaced-repetition/' | relative_url }}">Revision guide</a></p>
   </div>
 </div>
 
-## Selon qui vous êtes
+## Depending on who you are
 
-| Vous êtes | Commencez par | Puis |
+| You are | Start with | Then |
 | --- | --- | --- |
-| Visiteur | Lire les wikis publics, jouer aux quiz publics | Créer un compte pour écrire |
-| Auteur | [Démarrer]({{ '/guide/demarrage/' | relative_url }}) | [Écrire dans le wiki]({{ '/guide/wiki/' | relative_url }}), [créer un quiz]({{ '/guide/quiz/' | relative_url }}) |
-| Modérateur | [Modérer]({{ '/guide/moderation/' | relative_url }}) | Valider les publications, suivre les signalements |
-| Administrateur | [Administrer]({{ '/guide/moderation/' | relative_url }}) | Paramètres, comptes, courriel, IA, SSO, sauvegardes |
-| Développeur | [API et MCP]({{ '/guide/api-mcp/' | relative_url }}) | Automatiser, brancher un agent |
-| Exploitant | [Auto-hébergement]({{ '/auto-hebergement/' | relative_url }}) | Sauvegarde, restauration, mises à jour |
+| Visitor | Reading public wikis, playing public quizzes | Create an account to write |
+| Author | [Getting started]({{ '/guide/getting-started/' | relative_url }}) | [Write in the wiki]({{ '/guide/wiki/' | relative_url }}), [create a quiz]({{ '/guide/quizzes/' | relative_url }}) |
+| Moderator | [Moderating]({{ '/guide/moderation/' | relative_url }}) | Approving publications, handling reports |
+| Administrator | [Administering]({{ '/guide/moderation/' | relative_url }}) | Settings, accounts, mail, AI, SSO, backups |
+| Developer | [API and MCP]({{ '/guide/api-mcp/' | relative_url }}) | Automating, connecting an agent |
+| Operator | [Self-hosting]({{ '/self-hosting/' | relative_url }}) | Backup, restore, upgrades |
 
-## Ce qui n'est pas dans ce guide
+## What is not in this guide
 
-L'installation, la sauvegarde et les mises à jour sont du ressort de l'exploitant : elles sont
-décrites dans [Auto-héberger OpenLearn]({{ '/auto-hebergement/' | relative_url }}). La référence
-complète des points d'entrée HTTP est intégrée au logiciel, à l'adresse `/docs` de votre
-instance, et résumée dans [API et MCP]({{ '/guide/api-mcp/' | relative_url }}).
+Installation, backup and upgrades belong to the operator: they are described in
+[Self-hosting OpenLearn]({{ '/self-hosting/' | relative_url }}). The complete reference of HTTP
+endpoints is built into the software, at `/docs` on your instance, and summarised in
+[API and MCP]({{ '/guide/api-mcp/' | relative_url }}).
 
 <div class="note">
-<p><strong>Une instance, un comportement.</strong> Un administrateur peut désactiver
-l'inscription, l'assistant IA, l'authentification unique ou l'envoi de courriels. Si un écran
-décrit ici n'existe pas chez vous, c'est probablement que la fonction est éteinte côté serveur
-— la page le signale généralement.</p>
+<p><strong>One instance, one behaviour.</strong> An administrator may disable registration, the
+AI assistant, single sign-on or mail delivery. If a screen described here does not exist on your
+instance, the feature is probably switched off server-side — the page usually says so.</p>
 </div>

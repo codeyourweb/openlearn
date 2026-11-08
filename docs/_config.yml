@@ -1,12 +1,11 @@
 title: OpenLearn
-tagline: Un wiki et des quiz, libres et accessibles
+tagline: A wiki and quizzes for learning, free and accessible
 description: >-
-  OpenLearn est une plateforme libre d'apprentissage : un wiki collaboratif, un moteur de quiz
-  et des parcours de révision, auto-hébergeables, accessibles WCAG 2.2 AA et disponibles en
-  douze langues.
+  OpenLearn is a free learning platform: a collaborative wiki, a quiz engine and spaced
+  repetition, self-hostable, WCAG 2.2 AA accessible and available in twelve languages.
 url: "https://codeyourweb.github.io"
 baseurl: "/openlearn"
-lang: fr
+lang: en
 author:
   name: Jean-Pierre GARNIER
   url: "https://github.com/codeyourweb"

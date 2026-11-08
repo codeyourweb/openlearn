@@ -1,120 +1,117 @@
 ---
 layout: doc
-title: Modérer et administrer — publications, comptes, réglages
+title: Moderating and administering — publications, accounts, settings
 description: >-
-  Valider ou refuser une publication, notifier l'auteur, gérer les comptes et les rôles,
-  configurer le courriel, l'IA et l'authentification unique, suivre les bannissements.
+  Approve or refuse a publication, notify the author, manage accounts and roles, configure mail,
+  AI and single sign-on, review temporary bans.
 permalink: /guide/moderation/
 ---
 
-<p class="doc-eyebrow">Guide · Publications, comptes, réglages</p>
+<p class="doc-eyebrow">Guide · Publications, accounts, settings</p>
 
-# Modérer et administrer
+# Moderating and administering
 
-Cette page couvre deux rôles distincts. Un **modérateur** voit la file des publications et les
-signalements ; il n'accède ni à la configuration du courriel, ni à celle de l'IA, ni à l'ajout de
-comptes administrateurs. Un **administrateur** a accès à tout.
+This page covers two distinct roles. A **moderator** sees the publication queue and the reports;
+they reach neither the mail configuration, nor the AI configuration, nor the creation of
+administrator accounts. An **administrator** has access to everything.
 
-## La file de publication
+## The publication queue
 
-Un wiki ou un quiz demandé en publication arrive avec le statut **En attente de révision**. La
-file se consulte depuis l'administration, onglet des publications.
+A wiki or a quiz requested for publication arrives with the status **Pending review**. The queue is
+found in the administration area, on the publications tab.
 
-Pour chaque élément, l'écran montre : le titre, l'auteur, le statut, la date de la demande, et un
-aperçu du contenu. Deux actions :
+For each item the screen shows: the title, the author, the status, the date of the request, and a
+preview of the content. Two actions:
 
-- **Approuver** — l'élément devient **public** immédiatement.
-- **Refuser** — l'élément repasse **privé**, avec une  note obligatoire en pratique : c'est elle
-  qui explique la décision à l'auteur.
+- **Approve** — the item becomes **public** immediately.
+- **Refuse** — the item goes back to **private**, with a note that is required in practice: that
+  is what explains the decision to the author.
 
-Une **note** accompagne chaque décision. Elle est transmise à l'auteur dans le courriel de
-notification, et reste visible dans l'historique de l'élément.
+A **note** accompanies every decision. It is sent to the author in the notification email, and
+stays visible in the item's history.
 
 <div class="note">
-<p><strong>L'auteur est prévenu, une fois.</strong> À la validation, un courriel part
-automatiquement vers l'adresse de l'auteur : titre, lien vers le contenu, note du modérateur. Si
-le modérateur valide son propre contenu, aucun courriel n'est envoyé — personne n'a besoin d'être
-prévenu de son propre geste. Un refus ne déclenche pas de courriel : le motif s'affiche dans
-l'interface, et l'auteur le voit en revenant sur son contenu.</p>
+<p><strong>The author is told, once.</strong> On approval, an email goes automatically to the
+author's address: title, link to the content, moderator's note. If a moderator approves their own
+content, no email is sent — nobody needs to be told about their own action. A refusal sends no
+email: the reason is shown in the interface, and the author sees it on returning to their
+content.</p>
 </div>
 
-### Ce qu'un modérateur doit regarder
+### What a moderator should look at
 
-- Le contenu est-il compréhensible sans son auteur à côté ?
-- Les sources sont-elles citées, quand le sujet en demande ?
-- Le titre correspond-il au contenu, ou promet-il autre chose ?
-- Pour un quiz : les corrigés sont-ils justes ? Une erreur factuelle dans un corrigé est plus
-  grave qu'une faute de frappe.
+- Is the content understandable without its author sitting next to you?
+- Are sources cited, where the subject calls for it?
+- Does the title match the content, or does it promise something else?
+- For a quiz: are the corrections right? A factual error in a correction is more serious than a
+  typo.
 
-Le rôle consiste à dire **oui ou non avec une raison**, pas à réécrire le travail de quelqu'un.
+The role is to say **yes or no with a reason**, not to rewrite someone's work.
 
-## Gérer les comptes
+## Managing accounts
 
-L'administration liste les comptes avec leurs rôles :
+The administration area lists accounts with their roles:
 
-| Rôle | Portée |
+| Role | Scope |
 | --- | --- |
-| **Auteur** | Écrit, demande la publication |
-| **Modérateur** | Valide les publications, ne touche pas aux réglages sensibles |
-| **Administrateur** | Tout : comptes, courriel, IA, SSO, mentions légales |
+| **Author** | Writes, requests publication |
+| **Moderator** | Approves publications, does not touch sensitive settings |
+| **Administrator** | Everything: accounts, mail, AI, SSO, legal notices |
 
-Les actions courantes : promouvoir ou rétrograder un compte, désactiver un compte (sans le
-supprimer), réinitialiser un mot de passe d'urgence.
+The usual actions: promote or demote an account, disable an account (without deleting it), reset a
+password in an emergency.
 
-## Paramètres de l'instance
+## Instance settings
 
-L'onglet **Paramètres** regroupe quatre blocs :
+The **Settings** tab groups four blocks:
 
-- **Instance** — nom affiché dans l'en-tête et dans les courriels, langue par défaut,
-  inscription ouverte ou fermée.
-- **Messagerie** — serveur SMTP, port, identifiants, adresse d'expédition, avec un bouton
-  **Envoyer un message de test**. Un courriel de test qui n'arrive pas est le premier symptôme
-  d'un réglage incomplet ; vérifiez ensuite SPF, DKIM et DMARC côté domaine.
-- **Inscription et sécurité** — plafond de tentatives de connexion, durée de validité des liens
-  de réinitialisation, intervalle minimal entre deux demandes.
-- **Fournisseur de modèle** — URL compatible OpenAI, modèle, clé. Un bouton **Tester la
-  connexion** indique le modèle et le temps de réponse. Sans fournisseur, les fonctions d'IA
-  disparaissent de l'interface au lieu d'échouer à l'usage.
+- **Instance** — the name shown in the header and in emails, the default language, registration
+  open or closed.
+- **Mail** — SMTP server, port, credentials, sender address, with a **Send a test message**
+  button. A test email that does not arrive is the first symptom of an incomplete setting; check
+  SPF, DKIM and DMARC on the domain next.
+- **Registration and security** — sign-in attempt ceiling, validity of reset links, minimum
+  interval between two requests.
+- **Model provider** — OpenAI-compatible URL, model, key. A **Test the connection** button reports
+  the model and the response time. Without a provider, the AI features disappear from the
+  interface instead of failing at the point of use.
 
-Les valeurs fixées par le déploiement (mode démo, base de données, TLS, serveur MCP) sont
-affichées en lecture seule : elles viennent de l'environnement, pas de l'écran.
+Values fixed by the deployment (demo mode, database, TLS, MCP server) are shown read-only: they
+come from the environment, not from the screen.
 
-## Authentification unique
+## Single sign-on
 
-Onglet **Authentification unique** : ajouter un fournisseur OIDC (Keycloak, Authentik, Google
-Workspace…) ou SAML. Champs nécessaires : URL de l'émetteur, identifiant client, secret,
-domaines autorisés, et l'URL de retour à déclarer chez le fournisseur (affichée par l'écran).
-L'état indique **Prêt**, **Incomplet** ou **Désactivé**.
+The **Single sign-on** tab: add an OIDC provider (Keycloak, Authentik, Google Workspace…) or SAML.
+Fields needed: issuer URL, client identifier, secret, allowed domains, and the callback URL to
+declare at the provider (shown by the screen). The state reads **Ready**, **Incomplete** or
+**Disabled**.
 
-L'option **Créer les comptes inconnus** décide si une personne authentifiée par le fournisseur
-obtient un compte automatiquement. Désactivée, seuls les comptes déjà présents peuvent se
-connecter par ce canal.
+The **Create unknown accounts** option decides whether someone authenticated by the provider gets
+an account automatically. When disabled, only existing accounts can sign in that way.
 
-## Bannissements et abus
+## Bans and abuse
 
-Un visiteur qui martèle un formulaire (connexion, inscription, mot de passe oublié) reçoit des
-avertissements, puis un **bannissement temporaire** — en mémoire, avec expiration. L'écran
-d'administration liste les adresses concernées, le motif et l'échéance, et permet de lever un
-bannissement.
+A visitor hammering a form (sign-in, sign-up, forgotten password) receives warnings, then a
+**temporary ban** — held in memory, with an expiry. The administration screen lists the addresses
+concerned, the reason and the deadline, and lets you lift a ban.
 
-Les réseaux privés et les proxys de confiance sont exemptés : sans cela, un reverse proxy
-ferait partager la même adresse à tous les visiteurs, et le premier spammeur bannirait tout le
-monde.
+Private networks and trusted proxies are exempt: without that, a reverse proxy would give every
+visitor the same address, and the first spammer would ban everyone.
 
-## Journal des erreurs d'IA
+## AI error log
 
-Quand un appel au modèle échoue, l'erreur est enregistrée (onglet **Journal des erreurs IA**) avec
-la date, le point d'entrée et le message. C'est le premier endroit à regarder quand « la
-traduction ne marche plus » ou « le brouillon IA ne répond pas ».
+When a call to the model fails, the error is recorded (**AI error log** tab) with the date, the
+entry point and the message. It is the first place to look when "translation stopped working" or
+"the AI draft does not answer".
 
-## Mentions légales
+## Legal notices
 
-Onglet **Mentions légales** : éditeur, hébergeur, contact, et textes affichés sur `/legal`. Une
-instance publique doit les renseigner ; la démonstration les remplit à titre d'exemple.
+The **Legal notices** tab: publisher, host, contact, and the texts shown on `/legal`. A public
+instance must fill them in; the demonstration fills them as an example.
 
-## Bonnes pratiques
+## Good practice
 
-- Un administrateur ne modère pas son propre contenu : confiez la validation à un autre compte.
-- Testez le courriel **après chaque changement** de configuration SMTP.
-- Avant une mise à jour, faites une sauvegarde et vérifiez la restauration : voir
-  [Auto-héberger]({{ '/auto-hebergement/' | relative_url }}).
+- An administrator does not moderate their own content: hand validation to another account.
+- Test mail **after every change** to the SMTP configuration.
+- Before an upgrade, take a backup and verify the restore: see
+  [Self-hosting]({{ '/self-hosting/' | relative_url }}).

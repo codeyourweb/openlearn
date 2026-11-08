@@ -1,14 +1,14 @@
-- label: Philosophie
-  url: /philosophie/
-- label: Fonctionnalités
-  url: /fonctionnalites/
+- label: Philosophy
+  url: /philosophy/
+- label: Features
+  url: /features/
 - label: Documentation
   url: /guide/
-- label: Accessibilité
-  url: /accessibilite/
-- label: Auto-hébergement
-  url: /auto-hebergement/
-- label: Contribuer
-  url: /contribuer/
+- label: Accessibility
+  url: /accessibility/
+- label: Self-hosting
+  url: /self-hosting/
+- label: Contributing
+  url: /contributing/
 - label: FAQ
   url: /faq/

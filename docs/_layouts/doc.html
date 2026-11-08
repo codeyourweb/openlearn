@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ page.lang | default: site.lang | default: 'fr' }}">
+<html lang="{{ page.lang | default: site.lang | default: 'en' }}">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -8,16 +8,16 @@
   <link rel="icon" href="{{ '/assets/img/favicon.svg' | relative_url }}" type="image/svg+xml">
 </head>
 <body>
-  <a class="skip-link" href="#contenu">Aller au contenu</a>
+  <a class="skip-link" href="#contenu">Skip to content</a>
 
   <header class="site-header">
     <div class="wrap header-inner">
       <a class="brand" href="{{ '/' | relative_url }}">
         <span class="brand-mark" aria-hidden="true">◆</span>
         <span class="brand-name">OpenLearn</span>
-        <span class="brand-sub">documentation</span>
+        <span class="brand-sub">guide</span>
       </a>
-      <nav aria-label="Navigation principale">
+      <nav aria-label="Main navigation">
         <ul class="nav">
           {% for item in site.data.nav %}
           <li><a href="{{ item.url | relative_url }}"
@@ -25,24 +25,24 @@
           {% endfor %}
         </ul>
       </nav>
-      <a class="btn btn-primary" href="{{ site.demo_url }}">Ouvrir la démo</a>
+      <a class="btn btn-primary" href="{{ site.demo_url }}">Open the demo</a>
     </div>
   </header>
 
   <div class="wrap doc-shell">
-    <aside class="doc-side" aria-label="Sommaire du guide">
-      <p class="doc-side-title">Guide d'utilisation</p>
+    <aside class="doc-side" aria-label="Guide contents">
+      <p class="doc-side-title">User guide</p>
       <ol class="doc-nav">
-        <li><a href="{{ '/guide/' | relative_url }}" {% if page.url == '/guide/' %}aria-current="page"{% endif %}>Vue d'ensemble</a></li>
+        <li><a href="{{ '/guide/' | relative_url }}" {% if page.url == '/guide/' %}aria-current="page"{% endif %}>Overview</a></li>
         {% for item in site.data.guide %}
         <li><a href="{{ item.url | relative_url }}" {% if page.url == item.url %}aria-current="page"{% endif %}>{{ item.label }}</a></li>
         {% endfor %}
       </ol>
-      <p class="doc-side-title">Exploitation</p>
+      <p class="doc-side-title">Operations</p>
       <ul class="doc-nav">
-        <li><a href="{{ '/auto-hebergement/' | relative_url }}">Installer et sauvegarder</a></li>
-        <li><a href="{{ '/accessibilite/' | relative_url }}">Accessibilité</a></li>
-        <li><a href="{{ '/faq/' | relative_url }}">Questions fréquentes</a></li>
+        <li><a href="{{ '/self-hosting/' | relative_url }}">Install and back up</a></li>
+        <li><a href="{{ '/accessibility/' | relative_url }}">Accessibility</a></li>
+        <li><a href="{{ '/faq/' | relative_url }}">FAQ</a></li>
       </ul>
     </aside>
 
@@ -54,21 +54,21 @@
       {% endif %}
       {{ content }}
 
-      <nav class="doc-pager" aria-label="Pages voisines">
+      <nav class="doc-pager" aria-label="Adjacent pages">
         {% assign pages_list = site.data.guide %}
         {% for item in pages_list %}
           {% if item.url == page.url %}
             {% unless forloop.first %}
               {% assign previous = forloop.index0 | minus: 1 %}
               <a class="pager-prev" href="{{ pages_list[previous].url | relative_url }}">
-                <span class="pager-label">Précédent</span>
+                <span class="pager-label">Previous</span>
                 {{ pages_list[previous].label }}
               </a>
             {% endunless %}
             {% unless forloop.last %}
               {% assign following = forloop.index0 | plus: 1 %}
               <a class="pager-next" href="{{ pages_list[following].url | relative_url }}">
-                <span class="pager-label">Suivant</span>
+                <span class="pager-label">Next</span>
                 {{ pages_list[following].label }}
               </a>
             {% endunless %}
@@ -83,15 +83,15 @@
       <div>
         <p class="footer-brand">OpenLearn — {{ site.tagline }}</p>
         <p class="muted small">
-          Logiciel libre sous licence AGPL-3.0-only, écrit par
+          Free software under AGPL-3.0-only, written by
           <a href="{{ site.author.url }}">{{ site.author.name }}</a>.
         </p>
       </div>
       <ul class="footer-links">
-        <li><a href="{{ '/guide/' | relative_url }}">Guide d'utilisation</a></li>
-        <li><a href="https://github.com/{{ site.repository }}">Code source</a></li>
-        <li><a href="{{ site.demo_url }}">Instance de démonstration</a></li>
-        <li><a href="{{ '/contribuer/' | relative_url }}">Contribuer</a></li>
+        <li><a href="{{ '/guide/' | relative_url }}">User guide</a></li>
+        <li><a href="https://github.com/{{ site.repository }}">Source code</a></li>
+        <li><a href="{{ site.demo_url }}">Live demo</a></li>
+        <li><a href="{{ '/contributing/' | relative_url }}">Contributing</a></li>
       </ul>
     </div>
   </footer>

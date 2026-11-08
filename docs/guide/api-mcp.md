@@ -1,93 +1,87 @@
 ---
 layout: doc
-title: API et MCP — automatiser OpenLearn et y brancher un agent
+title: API and MCP — automate OpenLearn, connect an agent
 description: >-
-  Utiliser l'API HTTP d'OpenLearn avec une clé personnelle, parcourir la référence OpenAPI, et
-  connecter un agent au serveur MCP avec les droits d'un compte.
+  Use the OpenLearn HTTP API with a personal key, browse the OpenAPI reference, and connect an
+  agent to the MCP server with the rights of an account.
 permalink: /guide/api-mcp/
 ---
 
-<p class="doc-eyebrow">Guide · Automatiser et brancher un agent</p>
+<p class="doc-eyebrow">Guide · Automate, connect an agent</p>
 
-# API et MCP
+# API and MCP
 
-Tout ce que fait l'interface passe par une API HTTP : il n'existe pas de chemin privilégié.
-C'est ce qui rend l'automatisation possible, et c'est aussi la raison pour laquelle une clé
-d'API doit être traitée comme un mot de passe.
+Everything the interface does goes through an HTTP API: there is no privileged path. That is what
+makes automation possible, and it is also why an API key must be treated like a password.
 
-## Se procurer une clé
+## Getting a key
 
-1. **Compte** → **Clés d'API** → **Créer une clé**.
-2. Nommez-la d'après son usage (« import de fiches », « robot de sauvegarde »).
-3. Copiez la valeur : elle n'est plus affichée ensuite.
-4. Révoquez-la dès qu'elle n'est plus utile.
+1. **Account** → **API keys** → **Create a key**.
+2. Name it after its use ("card import", "backup robot").
+3. Copy the value: it is not shown again.
+4. Revoke it as soon as it is no longer useful.
 
-Chaque clé agit **avec les droits du compte** qui l'a créée. Il n'existe pas de portée plus
-fine : si vous voulez une clé en lecture seule, créez un compte dédié.
+Every key acts **with the rights of the account that created it**. There is no finer scope: if you
+want a read-only key, create a dedicated account.
 
-## Appeler l'API
+## Calling the API
 
 ```bash
 curl -H "Authorization: Bearer $OPENLEARN_KEY" \
-     https://votre-instance.example/api/v1/auth/me
+     https://your-instance.example/api/v1/auth/me
 ```
 
-Les ressources suivent les objets du produit : `/api/v1/wiki`, `/api/v1/quizzes`,
-`/api/v1/cards`, `/api/v1/auth`, `/api/v1/admin`. Les échecs reviennent avec un code HTTP
-explicite — 401 non authentifié, 403 interdit, 404 absent, 409 conflit, 422 validation, 429 trop
-de requêtes.
+Resources follow the objects of the product: `/api/v1/wiki`, `/api/v1/quizzes`, `/api/v1/cards`,
+`/api/v1/auth`, `/api/v1/admin`. Failures come back with an explicit HTTP code — 401
+unauthenticated, 403 forbidden, 404 missing, 409 conflict, 422 validation, 429 too many requests.
 
-Deux règles pratiques :
+Two practical rules:
 
-- Les écritures attendent un jeton CSRF quand vous utilisez une session de navigateur ; avec une
-  clé d'API, l'en-tête `Authorization` suffit.
-- Les listes sont paginées. Un script qui ignore la pagination croira qu'il n'y a que la
-  première page.
+- Writes expect a CSRF token when you use a browser session; with an API key, the
+  `Authorization` header is enough.
+- Lists are paginated. A script that ignores pagination will believe there is only the first page.
 
-## La référence complète
+## The full reference
 
-Chaque instance publie sa propre référence, générée depuis le code :
+Every instance publishes its own reference, generated from the code:
 
-- `/docs` — explorateur OpenAPI, avec un filtre de recherche ;
-- `/api/openapi.json` — le document brut, à charger dans Postman, Insomnia, ou à générer en
-  client typé.
+- `/docs` — the OpenAPI explorer, with a search filter;
+- `/api/openapi.json` — the raw document, to load into Postman, Insomnia, or generate a typed
+  client from.
 
-La référence d'une instance reflète exactement sa version : c'est plus fiable qu'une
-documentation recopiée à la main.
+An instance's reference reflects exactly its version: that is more reliable than documentation
+copied out by hand.
 
-## Le serveur MCP
+## The MCP server
 
-OpenLearn embarque un serveur **MCP** (Model Context Protocol). Un agent — un assistant de
-bureau, un client MCP, un script d'orchestration — peut ainsi lire et créer des pages de wiki ou
-des quiz, avec les droits du compte qui l'autorise.
+OpenLearn embeds an **MCP** (Model Context Protocol) server. An agent — a desktop assistant, an MCP
+client, an orchestration script — can therefore read and create wiki pages or quizzes with the
+rights of the account that authorises it.
 
-- L'activation se fait côté serveur (`OL_MCP_ENABLED`) ; l'onglet **Environnement** de
-  l'administration indique si c'est le cas.
-- L'écran `/docs/mcp` de l'instance donne l'URL du point d'entrée et les outils exposés.
-- L'authentification se fait avec une clé d'API : un agent n'a jamais plus de droits que la clé
-  qu'on lui confie.
+- Activation is server-side (`OL_MCP_ENABLED`); the **Environment** tab of the administration area
+  says whether it is on.
+- The instance's `/docs/mcp` screen gives the endpoint URL and the tools exposed.
+- Authentication uses an API key: an agent never has more rights than the key it is given.
 
 <div class="note">
-<p><strong>Un agent écrit, il ne relit pas.</strong> Un modèle qui rédige une page de wiki produit
-une page plausible, pas une page vraie. Dans un usage pédagogique, faites relire : la
-responsabilité éditoriale ne se délègue pas à une clé d'API.</p>
+<p><strong>An agent writes, it does not check.</strong> A model drafting a wiki page produces a
+plausible page, not a true one. In a teaching context, have it reviewed: editorial responsibility
+is not delegated to an API key.</p>
 </div>
 
-## Cas d'usage raisonnables
+## Reasonable use cases
 
-| Objectif | Moyen |
+| Goal | Means |
 | --- | --- |
-| Importer un catalogue de questions préparé ailleurs | `POST /api/v1/quizzes` puis ajout des questions |
-| Sauvegarder les pages d'un wiki en Markdown | `GET /api/v1/wiki` puis export par page |
-| Alimenter un tableau de bord de résultats | Export CSV depuis l'interface, ou les points d'entrée de statistiques |
-| Faire rédiger un brouillon de fiche par un agent | Clé dédiée, puis relecture humaine avant publication |
-| Synchroniser avec un ENT ou un autre wiki | Import/export JSON, ou appels API planifiés |
+| Import a question bank prepared elsewhere | `POST /api/v1/quizzes`, then add the questions |
+| Back up a wiki's pages as Markdown | `GET /api/v1/wiki`, then export each page |
+| Feed a results dashboard | CSV export from the interface, or the statistics endpoints |
+| Have an agent draft a card | Dedicated key, then human review before publication |
+| Sync with an LMS or another wiki | JSON import/export, or scheduled API calls |
 
-## Limites à connaître
+## Limits to know
 
-- Les **plafonds de débit** s'appliquent aussi aux clés : un import massif doit ralentir ou
-  échelonner ses appels.
-- Les **droits suivent le compte** : une clé d'auteur ne peut pas publier, elle ne peut que
-  demander la publication.
-- Une **suppression** reste une suppression, même par API : il n'y a pas de corbeille générale.
-  Sauvegardez avant d'écrire un script qui efface.
+- **Rate limits** apply to keys too: a bulk import must slow down or stagger its calls.
+- **Rights follow the account**: an author's key cannot publish, it can only request publication.
+- A **deletion** is a deletion, even through the API: there is no general recycle bin. Back up
+  before writing a script that erases.
