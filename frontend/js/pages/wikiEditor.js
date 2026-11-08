@@ -1454,6 +1454,12 @@ async function _wikiEditor(root, params) {
   const placeCaretAtStart = (block) => {
     const put = () => {
       if (!block.isConnected) return;
+      // The retries below exist for Chromium's own snap-back, but they land
+      // *after* the first keystroke when the author writes fast: putting the
+      // caret back at offset 0 then wrote the rest of the word before the first
+      // letter ("remière ligne … P"). Once the paragraph holds a character, the
+      // author owns the caret.
+      if (block.textContent.length > 0) return;
       const range = document.createRange();
       range.setStart(block, 0);
       range.collapse(true);
