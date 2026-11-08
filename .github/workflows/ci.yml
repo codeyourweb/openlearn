@@ -184,6 +184,12 @@ jobs:
       OL_ADMIN_PASSWORD: ChangeMe123!
       OL_DEMO_PASSWORD: DemoPassw0rd!
       OL_AI_ENABLED: "false"
+      # The catalogue the browser scenarios walk through, and a sign-up ceiling
+      # wide enough for a run that creates one account per scenario: the
+      # production default of ten per minute is the right answer for a public
+      # instance and the wrong one for a test that registers thirty times.
+      OL_DEMO_MODE: "true"
+      OL_AUTH_RATE_LIMIT: "500"
     steps:
       - uses: actions/checkout@v7
       - name: Build and start the stack
