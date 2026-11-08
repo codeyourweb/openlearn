@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="{{ page.lang | default: site.lang | default: 'fr' }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  {% seo %}
+  <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+  <link rel="icon" href="{{ '/assets/img/favicon.svg' | relative_url }}" type="image/svg+xml">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "OpenLearn",
+    "alternateName": "Open Quizz",
+    "applicationCategory": "EducationalApplication",
+    "operatingSystem": "Linux, Docker",
+    "description": {{ site.description | strip_newlines | jsonify }},
+    "url": "{{ site.url }}{{ site.baseurl }}/",
+    "downloadUrl": "https://github.com/{{ site.repository }}",
+    "license": "https://www.gnu.org/licenses/agpl-3.0.html",
+    "inLanguage": ["fr", "en", "de", "es", "it", "ru", "zh", "ja", "pt", "hi", "bn", "ar"],
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
+    "author": { "@type": "Person", "name": "Jean-Pierre GARNIER", "url": "https://github.com/codeyourweb" }
+  }
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#contenu">Aller au contenu</a>
+
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="{{ '/' | relative_url }}">
+        <span class="brand-mark" aria-hidden="true">◆</span>
+        <span class="brand-name">OpenLearn</span>
+      </a>
+      <nav aria-label="Navigation principale">
+        <ul class="nav">
+          {% for item in site.data.nav %}
+          <li>
+            <a href="{{ item.url | relative_url }}"
+               {% if page.url == item.url %}aria-current="page"{% endif %}>{{ item.label }}</a>
+          </li>
+          {% endfor %}
+        </ul>
+      </nav>
+      <a class="btn btn-primary" href="{{ site.demo_url }}">Essayer la démo</a>
+    </div>
+  </header>
+
+  <main id="contenu" class="wrap">
+    {{ content }}
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <div>
+        <p class="footer-brand">OpenLearn — {{ site.tagline }}</p>
+        <p class="muted small">
+          Logiciel libre sous licence AGPL-3.0-only, écrit par
+          <a href="{{ site.author.url }}">{{ site.author.name }}</a>.
+        </p>
+      </div>
+      <ul class="footer-links">
+        <li><a href="https://github.com/{{ site.repository }}">Code source</a></li>
+        <li><a href="{{ site.demo_url }}">Instance de démonstration</a></li>
+        <li><a href="{{ '/contribuer/' | relative_url }}">Contribuer</a></li>
+        <li><a href="{{ '/faq/' | relative_url }}">Questions fréquentes</a></li>
+      </ul>
+    </div>
+  </footer>
+</body>
+</html>

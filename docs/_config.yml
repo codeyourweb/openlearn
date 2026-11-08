@@ -1,0 +1,39 @@
+title: OpenLearn
+tagline: Un wiki et des quiz, libres et accessibles
+description: >-
+  OpenLearn est une plateforme libre d'apprentissage : un wiki collaboratif, un moteur de quiz
+  et des parcours de révision, auto-hébergeables, accessibles WCAG 2.2 AA et disponibles en
+  douze langues.
+url: "https://codeyourweb.github.io"
+baseurl: "/openlearn"
+lang: fr
+author:
+  name: Jean-Pierre GARNIER
+  url: "https://github.com/codeyourweb"
+repository: codeyourweb/openlearn
+demo_url: "https://openlearnproject.org"
+license: AGPL-3.0-only
+
+plugins:
+  - jekyll-sitemap
+  - jekyll-seo-tag
+
+markdown: kramdown
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - ACCESSIBILITY.md
+  - ADMINISTRATION.md
+  - DEPLOYMENT.md
+  - MCP.md
+
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: default
+      image: /assets/img/og-openlearn.png

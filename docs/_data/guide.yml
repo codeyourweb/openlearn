@@ -1,0 +1,24 @@
+- label: Démarrer
+  url: /guide/demarrage/
+  short: Compte, connexion, navigation
+- label: Le wiki
+  url: /guide/wiki/
+  short: Écrire, versionner, publier
+- label: Les quiz
+  url: /guide/quiz/
+  short: Créer, jouer en solo, animer en direct
+- label: Les révisions
+  url: /guide/revisions/
+  short: Cartes et répétition espacée
+- label: Le compte
+  url: /guide/compte/
+  short: Profil, mot de passe, clés d'API
+- label: Modérer et administrer
+  url: /guide/moderation/
+  short: Publications, comptes, réglages
+- label: API et MCP
+  url: /guide/api-mcp/
+  short: Automatiser et brancher un agent
+- label: Dépannage
+  url: /guide/depannage/
+  short: Courriel, liens, erreurs courantes

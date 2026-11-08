@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="{{ page.lang | default: site.lang | default: 'fr' }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  {% seo %}
+  <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+  <link rel="icon" href="{{ '/assets/img/favicon.svg' | relative_url }}" type="image/svg+xml">
+</head>
+<body>
+  <a class="skip-link" href="#contenu">Aller au contenu</a>
+
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="{{ '/' | relative_url }}">
+        <span class="brand-mark" aria-hidden="true">◆</span>
+        <span class="brand-name">OpenLearn</span>
+        <span class="brand-sub">documentation</span>
+      </a>
+      <nav aria-label="Navigation principale">
+        <ul class="nav">
+          {% for item in site.data.nav %}
+          <li><a href="{{ item.url | relative_url }}"
+            {% if page.url contains item.url %}aria-current="page"{% endif %}>{{ item.label }}</a></li>
+          {% endfor %}
+        </ul>
+      </nav>
+      <a class="btn btn-primary" href="{{ site.demo_url }}">Ouvrir la démo</a>
+    </div>
+  </header>
+
+  <div class="wrap doc-shell">
+    <aside class="doc-side" aria-label="Sommaire du guide">
+      <p class="doc-side-title">Guide d'utilisation</p>
+      <ol class="doc-nav">
+        <li><a href="{{ '/guide/' | relative_url }}" {% if page.url == '/guide/' %}aria-current="page"{% endif %}>Vue d'ensemble</a></li>
+        {% for item in site.data.guide %}
+        <li><a href="{{ item.url | relative_url }}" {% if page.url == item.url %}aria-current="page"{% endif %}>{{ item.label }}</a></li>
+        {% endfor %}
+      </ol>
+      <p class="doc-side-title">Exploitation</p>
+      <ul class="doc-nav">
+        <li><a href="{{ '/auto-hebergement/' | relative_url }}">Installer et sauvegarder</a></li>
+        <li><a href="{{ '/accessibilite/' | relative_url }}">Accessibilité</a></li>
+        <li><a href="{{ '/faq/' | relative_url }}">Questions fréquentes</a></li>
+      </ul>
+    </aside>
+
+    <main id="contenu" class="doc-main">
+      {% if page.title %}
+      <p class="doc-eyebrow">
+        {% for item in site.data.guide %}{% if item.url == page.url %}Guide · {{ item.short }}{% endif %}{% endfor %}
+      </p>
+      {% endif %}
+      {{ content }}
+
+      <nav class="doc-pager" aria-label="Pages voisines">
+        {% assign pages_list = site.data.guide %}
+        {% for item in pages_list %}
+          {% if item.url == page.url %}
+            {% unless forloop.first %}
+              {% assign previous = forloop.index0 | minus: 1 %}
+              <a class="pager-prev" href="{{ pages_list[previous].url | relative_url }}">
+                <span class="pager-label">Précédent</span>
+                {{ pages_list[previous].label }}
+              </a>
+            {% endunless %}
+            {% unless forloop.last %}
+              {% assign following = forloop.index0 | plus: 1 %}
+              <a class="pager-next" href="{{ pages_list[following].url | relative_url }}">
+                <span class="pager-label">Suivant</span>
+                {{ pages_list[following].label }}
+              </a>
+            {% endunless %}
+          {% endif %}
+        {% endfor %}
+      </nav>
+    </main>
+  </div>
+
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <div>
+        <p class="footer-brand">OpenLearn — {{ site.tagline }}</p>
+        <p class="muted small">
+          Logiciel libre sous licence AGPL-3.0-only, écrit par
+          <a href="{{ site.author.url }}">{{ site.author.name }}</a>.
+        </p>
+      </div>
+      <ul class="footer-links">
+        <li><a href="{{ '/guide/' | relative_url }}">Guide d'utilisation</a></li>
+        <li><a href="https://github.com/{{ site.repository }}">Code source</a></li>
+        <li><a href="{{ site.demo_url }}">Instance de démonstration</a></li>
+        <li><a href="{{ '/contribuer/' | relative_url }}">Contribuer</a></li>
+      </ul>
+    </div>
+  </footer>
+</body>
+</html>

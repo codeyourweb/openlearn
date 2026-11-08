@@ -1,0 +1,14 @@
+- label: Philosophie
+  url: /philosophie/
+- label: Fonctionnalités
+  url: /fonctionnalites/
+- label: Documentation
+  url: /guide/
+- label: Accessibilité
+  url: /accessibilite/
+- label: Auto-hébergement
+  url: /auto-hebergement/
+- label: Contribuer
+  url: /contribuer/
+- label: FAQ
+  url: /faq/

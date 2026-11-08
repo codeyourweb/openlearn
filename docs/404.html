@@ -1,0 +1,29 @@
+---
+title: Page introuvable
+description: Cette adresse ne correspond à aucune page du site OpenLearn.
+permalink: /404.html
+sitemap: false
+---
+
+<section class="hero">
+  <h1>Cette page n'existe pas.</h1>
+  <p class="lead">
+    L'adresse est peut-être erronée, ou la page a été déplacée. Le plus court chemin reste le
+    guide d'utilisation.
+  </p>
+  <div class="hero-actions">
+    <a class="btn btn-primary" href="{{ '/guide/' | relative_url }}">Ouvrir le guide</a>
+    <a class="btn" href="{{ '/' | relative_url }}">Retour à l'accueil</a>
+    <a class="btn" href="{{ site.demo_url }}">Essayer la démonstration</a>
+  </div>
+</section>
+
+<h2>Les pages les plus demandées</h2>
+
+<ul>
+  <li><a href="{{ '/guide/demarrage/' | relative_url }}">Créer un compte et démarrer</a></li>
+  <li><a href="{{ '/guide/wiki/' | relative_url }}">Écrire dans le wiki</a></li>
+  <li><a href="{{ '/guide/quiz/' | relative_url }}">Créer un quiz et animer une partie</a></li>
+  <li><a href="{{ '/auto-hebergement/' | relative_url }}">Installer, sauvegarder, mettre à jour</a></li>
+  <li><a href="{{ '/philosophie/' | relative_url }}">La philosophie du projet</a></li>
+</ul>
