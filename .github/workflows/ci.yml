@@ -56,7 +56,7 @@ jobs:
           PYTHONPATH: backend
         run: pytest -q tests/test_locale_coverage.py tests/test_language_declarations.py tests/test_frontend_modules.py
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: "20"
 
