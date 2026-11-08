@@ -1,0 +1,11 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Accessibility commitment
+    url: https://codeyourweb.github.io/openlearn/accessibility/
+    about: An accessibility defect is a blocking defect. Read what the project commits to before reporting one.
+  - name: Security report
+    url: mailto:developper@openlearnproject.org
+    about: Please do not open a public issue for a vulnerability. Write to the maintainer.
+  - name: User guide
+    url: https://codeyourweb.github.io/openlearn/guide/
+    about: Every screen is documented, including what to do when an email does not arrive.

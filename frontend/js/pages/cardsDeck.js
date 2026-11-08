@@ -88,6 +88,11 @@ function paintDeck() {
     <section class="page deck-page">
       <header class="page-head">
         <div>
+          ${
+            deck.wiki_id
+              ? `<a class="muted small" href="/wiki/${deck.wiki_id}" data-link>← ${escapeHtml(t("cards.back_to_wiki"))}</a>`
+              : ""
+          }
           <h1>${escapeHtml(deck.title)}</h1>
           <p class="muted">
             ${escapeHtml(`${cards.length} ${cards.length === 1 ? t("cards.card_one") : t("cards.card_many")}`)}

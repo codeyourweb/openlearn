@@ -5,6 +5,7 @@
 from __future__ import annotations
 
 import re
+import unicodedata
 from datetime import datetime
 from typing import Annotated, Literal
 
@@ -184,7 +185,18 @@ class QuestionIn(BaseModel):
 # Branching ("adventure") mode
 # ---------------------------------------------------------------------------
 
-_ADV_KEY = re.compile(r"^[a-zA-Z0-9_-]{1,60}$")
+def _slug_key(value: str, *, limit: int = 60) -> str:
+    """Turn a written label into a usable technical key.
+
+    Adventure authors write "Points forts" or "courage équestre" in a field meant
+    for an identifier, and used to be answered with an English message about
+    letters, digits and underscores. The key is internal: the software derives it
+    from what was written instead of refusing the words.
+    """
+    decomposed = unicodedata.normalize("NFKD", str(value or ""))
+    stripped = "".join(char for char in decomposed if not unicodedata.combining(char))
+    slug = re.sub(r"[^A-Za-z0-9_-]+", "-", stripped).strip("-_").lower()
+    return (slug or "item")[:limit]
 
 
 class AdventureAttributeIn(BaseModel):
@@ -200,10 +212,7 @@ class AdventureAttributeIn(BaseModel):
     @field_validator("key")
     @classmethod
     def _clean_key(cls, value: str) -> str:
-        cleaned = value.strip()
-        if not _ADV_KEY.match(cleaned):
-            raise ValueError("Attribute keys may only contain letters, digits, '-' and '_'.")
-        return cleaned
+        return _slug_key(value, limit=40)
 
     @field_validator("label")
     @classmethod
@@ -222,6 +231,13 @@ class AdventureAttributeIn(BaseModel):
 class AdventureEffectIn(BaseModel):
     attribute: str = Field(min_length=1, max_length=40)
     delta: int = Field(ge=-1_000, le=1_000)
+
+    @field_validator("attribute")
+    @classmethod
+    def _clean_attribute(cls, value: str) -> str:
+        # Same rule as `AdventureAttributeIn.key`: a reference written with
+        # accents or spaces has to point at the attribute it names.
+        return _slug_key(value, limit=40)
 
 
 class AdventureChoiceIn(BaseModel):
@@ -254,6 +270,11 @@ class AdventureOutcomeIn(BaseModel):
     translations: dict[str, str] = Field(default_factory=dict)
     priority: int = Field(default=0, ge=0, le=999)
 
+    @field_validator("attribute")
+    @classmethod
+    def _clean_attribute(cls, value: str | None) -> str | None:
+        return _slug_key(value, limit=40) if value else value
+
     @field_validator("text_html")
     @classmethod
     def _clean_html(cls, value: str) -> str:
@@ -280,10 +301,7 @@ class AdventureNodeIn(BaseModel):
     @field_validator("key")
     @classmethod
     def _clean_key(cls, value: str) -> str:
-        cleaned = value.strip()
-        if not _ADV_KEY.match(cleaned):
-            raise ValueError("Node keys may only contain letters, digits, '-' and '_'.")
-        return cleaned
+        return _slug_key(value)
 
     @field_validator("text_html")
     @classmethod

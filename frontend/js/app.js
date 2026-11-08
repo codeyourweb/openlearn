@@ -116,6 +116,30 @@ function applyTranslations(scope = document) {
   document.title = t("app.name");
 }
 
+/** Send a defect report to the tracker, with the context already filled in.
+ *
+ * The author of a report should not have to look up which version they are on or
+ * which page failed: those are the two facts a maintainer asks for first, and
+ * the two an upset user forgets. Everything else stays in their hands.
+ */
+function wireReportLink() {
+  const link = document.getElementById("report-problem");
+  if (!link) return;
+  const build = () => {
+    const params = new URLSearchParams({
+      template: "bug_report.yml",
+      "page-url": location.href,
+      version: window.__OPENLEARN_VERSION__ || "",
+      browser: navigator.userAgent,
+      language: document.documentElement.lang || "",
+    });
+    link.href = `https://github.com/codeyourweb/openlearn/issues/new?${params.toString()}`;
+  };
+  build();
+  link.addEventListener("click", build);
+  link.addEventListener("focus", build);
+}
+
 function buildLanguagePicker() {
   const picker = document.getElementById("language-picker");
   const button = document.getElementById("language-button");
@@ -368,6 +392,17 @@ async function boot() {
     setUser(null);
   }
   renderChrome();
+  wireReportLink();
+  // The tracker report names the version: a maintainer asks for it first, and a
+  // user should not have to dig it out of the footer.
+  api
+    .get("/api/v1/health")
+    .then((health) => {
+      window.__OPENLEARN_VERSION__ = health.version || "";
+    })
+    .catch(() => {
+      /* no version to offer: the link still works without it */
+    });
   start();
 }
 

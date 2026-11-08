@@ -1,0 +1,98 @@
+name: Bug report
+description: Something in OpenLearn does not behave as documented.
+title: "[Bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for taking the time to report this. The fields below came
+        pre-filled from the page where you clicked "Report a problem" — keep them,
+        they save a round-trip.
+
+        **Please do not paste personal data** (email addresses, names of learners,
+        passwords, API keys). A screenshot with a real name in it is a leak.
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: What you did, and what the software did instead.
+      placeholder: |
+        I opened the card generator, chose a wiki page, and pressed Generate.
+        The deck was built from a questionnaire instead.
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected
+      description: One sentence is enough. It is the part that turns a complaint into a fix.
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: Numbered steps, if you can reproduce it. If it happened once, say so.
+      placeholder: |
+        1. Go to /cards
+        2. Click "Create cards from…"
+        3. …
+    validations:
+      required: false
+
+  - type: input
+    id: page-url
+    attributes:
+      label: Page
+      description: Pre-filled. The address where the problem occurred.
+      placeholder: https://openlearnproject.org/wiki/12/p/exercice
+    validations:
+      required: false
+
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: Pre-filled. Shown in the footer of the instance.
+    validations:
+      required: false
+
+  - type: input
+    id: browser
+    attributes:
+      label: Browser
+      description: Pre-filled.
+    validations:
+      required: false
+
+  - type: input
+    id: language
+    attributes:
+      label: Interface language
+      description: Pre-filled. Some defects only appear in one language or one text direction.
+    validations:
+      required: false
+
+  - type: dropdown
+    id: account
+    attributes:
+      label: Were you signed in?
+      options:
+        - "Yes"
+        - "No"
+        - "Not sure"
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: accessibility
+    attributes:
+      label: Accessibility
+      description: An accessibility defect is treated as a blocking defect, not as an enhancement.
+      options:
+        - label: This prevents me from using the software with my assistive technology.
+          required: false

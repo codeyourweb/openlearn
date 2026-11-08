@@ -110,21 +110,61 @@ function generatorPanel() {
     <dialog class="modal" id="deck-source">
       <form method="dialog" class="modal-body">
         <h2>${escapeHtml(t("cards.from_source_title"))}</h2>
-        <label class="field">
-          <span>${escapeHtml(t("cards.from_wiki"))}</span>
-          <select id="deck-source-wiki"><option value="">…</option></select>
+        <fieldset class="field">
+          <legend>${escapeHtml(t("cards.source_kind"))}</legend>
+          <label class="check">
+            <input type="radio" name="deck-source-kind" value="wiki" checked>
+            <span>${escapeHtml(t("cards.from_wiki"))}</span>
+          </label>
+          <label class="check">
+            <input type="radio" name="deck-source-kind" value="quiz">
+            <span>${escapeHtml(t("cards.from_quiz"))}</span>
+          </label>
+        </fieldset>
+        <label class="field" data-source-panel="wiki">
+          <span>${escapeHtml(t("cards.source_page"))}</span>
+          <select id="deck-source-wiki"><option value="">${escapeHtml(t("cards.choose_source"))}</option></select>
         </label>
-        <label class="field">
-          <span>${escapeHtml(t("cards.from_quiz"))}</span>
-          <select id="deck-source-quiz"><option value="">…</option></select>
+        <label class="field" data-source-panel="quiz" hidden>
+          <span>${escapeHtml(t("cards.source_quiz"))}</span>
+          <select id="deck-source-quiz"><option value="">${escapeHtml(t("cards.choose_source"))}</option></select>
         </label>
         <p class="muted small">${escapeHtml(t("cards.from_source_hint"))}</p>
         <div class="row-wrap end">
           <button class="btn btn-ghost" value="cancel" formnovalidate>${escapeHtml(t("action.cancel"))}</button>
-          <button class="btn btn-primary" id="deck-source-go" value="ok">${escapeHtml(t("cards.generate"))}</button>
+          <button class="btn btn-primary" id="deck-source-go" value="ok" disabled>${escapeHtml(t("cards.generate"))}</button>
         </div>
       </form>
     </dialog>`;
+}
+
+/** The two sources are exclusive, and nothing is pre-selected.
+ *
+ * Both lists used to arrive pre-filled, and the generator took whichever value
+ * came first: choosing a wiki page and pressing Generate could quietly build the
+ * deck from an unrelated quiz. A source is now picked explicitly, the matching
+ * list starts empty, and Generate stays disabled until something is chosen.
+ */
+function wireSourceKind(app) {
+  const kinds = app.querySelectorAll('[name="deck-source-kind"]');
+  const selects = {
+    wiki: app.querySelector("#deck-source-wiki"),
+    quiz: app.querySelector("#deck-source-quiz"),
+  };
+  const go = app.querySelector("#deck-source-go");
+  const selectedKind = () =>
+    [...kinds].find((input) => input.checked)?.value || "wiki";
+  const refresh = () => {
+    const kind = selectedKind();
+    app.querySelectorAll("[data-source-panel]").forEach((panel) => {
+      panel.hidden = panel.dataset.sourcePanel !== kind;
+    });
+    if (go) go.disabled = !selects[kind]?.value;
+  };
+  kinds.forEach((input) => input.addEventListener("change", refresh));
+  Object.values(selects).forEach((select) => select?.addEventListener("change", refresh));
+  refresh();
+  return { selectedKind, selects, refresh };
 }
 
 async function fillSources() {
@@ -140,8 +180,8 @@ async function fillSources() {
         options.push(`<option value="${page.id}">${escapeHtml(`${wiki.title} — ${page.title}`)}</option>`);
       }
     }
-    wikiSelect.innerHTML = options.join("");
-    if (!wikiSelect.innerHTML.trim()) {
+    wikiSelect.innerHTML = `<option value="">${escapeHtml(t("cards.choose_source"))}</option>${options.join("")}`;
+    if (!options.length) {
       wikiSelect.innerHTML = `<option value="">${escapeHtml(t("cards.no_pages"))}</option>`;
     }
   } catch {
@@ -150,9 +190,14 @@ async function fillSources() {
   try {
     const quizzes = await api.get("/api/v1/quizzes/mine?limit=100");
     const list = quizzes.items || quizzes || [];
-    quizSelect.innerHTML = list.length
-      ? list.map((quiz) => `<option value="${quiz.id}">${escapeHtml(quiz.title)}</option>`).join("")
-      : `<option value="">${escapeHtml(t("cards.no_quizzes"))}</option>`;
+    quizSelect.innerHTML = `<option value="">${escapeHtml(t("cards.choose_source"))}</option>${
+      list.length
+        ? list.map((quiz) => `<option value="${quiz.id}">${escapeHtml(quiz.title)}</option>`).join("")
+        : ""
+    }`;
+    if (!list.length) {
+      quizSelect.innerHTML = `<option value="">${escapeHtml(t("cards.no_quizzes"))}</option>`;
+    }
   } catch {
     quizSelect.innerHTML = `<option value="">${escapeHtml(t("cards.no_quizzes"))}</option>`;
   }
@@ -316,14 +361,19 @@ function paint() {
   }
   const dialog = app.querySelector("#deck-source");
   if (dialog) {
+    const sourceWiring = wireSourceKind(app);
     dialog.addEventListener("close", async () => {
       if (dialog.returnValue !== "ok") return;
-      const wikiValue = app.querySelector("#deck-source-wiki")?.value;
-      const quizValue = app.querySelector("#deck-source-quiz")?.value;
-      const chosen = wikiValue ? ["wiki", wikiValue] : quizValue ? ["quiz", quizValue] : null;
-      if (!chosen) return;
+      const kind = sourceWiring.selectedKind();
+      // Only the list of the chosen source is read: the other one is not a
+      // fallback, it is a different intent.
+      const value = sourceWiring.selects[kind]?.value;
+      if (!value) {
+        toast(t("cards.choose_source"), "info");
+        return;
+      }
       try {
-        await generateFrom(chosen[0], chosen[1]);
+        await generateFrom(kind, value);
       } catch (error) {
         toast(error.detail || error.message || t("common.error"), "error");
       }

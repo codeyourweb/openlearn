@@ -5,6 +5,7 @@
 from __future__ import annotations
 
 import copy
+import json
 from datetime import timedelta
 from hashlib import sha256
 
@@ -606,3 +607,38 @@ def test_run_history_is_listed_for_the_owner_of_the_run(client):
     assert len(runs) == 1
     assert runs[0]["status"] == "finished"
     assert runs[0]["ending_kind"] == "death"
+
+def test_attribute_keys_are_derived_from_what_the_author_wrote(client):
+    """An attribute is named "Points forts", not "points_forts".
+
+    The key is an internal identifier, but it used to be typed by the author and
+    validated by an English regex: a French label was answered with "Attribute
+    keys may only contain letters, digits, '-' and '_'". The words a teacher
+    writes are now turned into a key instead of being refused.
+    """
+    register_user(client)
+    # The same rename the editor performs: the references follow the key.
+    payload = json.loads(json.dumps(story_payload()).replace("composure", "Sang-froid"))
+    for attribute in payload["adventure"]["attributes"]:
+        if attribute["key"] == "Sang-froid":
+            attribute["label"] = "Sang-froid"
+            break
+    payload["adventure"]["attributes"].append(
+        {
+            "key": "confiance en soi",
+            "label": "Confiance en soi",
+            "initial_value": 2,
+            "min_value": 0,
+            "max_value": 10,
+        }
+    )
+
+    response = client.post("/api/v1/quizzes", json=payload, headers=csrf_headers(client))
+    assert response.status_code in (200, 201), response.text
+
+    stored = client.get(f"/api/v1/quizzes/{response.json()['id']}").json()
+    keys = [attribute["key"] for attribute in stored["adventure"]["attributes"]]
+    assert "sang-froid" in keys
+    assert "confiance-en-soi" in keys
+    assert len(keys) == len(payload["adventure"]["attributes"])
+

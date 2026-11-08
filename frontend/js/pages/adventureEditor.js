@@ -22,6 +22,81 @@ const GRID = 40;
 
 const uid = (prefix) => `${prefix}_${Math.random().toString(36).slice(2, 8)}`;
 
+/** Same rule as the server (`_slug_key`): a label becomes an identifier.
+ *
+ * Folded accents, spaces and punctuation turned into hyphens, lower case. The
+ * two implementations must agree, otherwise a key the editor shows is not the
+ * key the server stores.
+ */
+const slugifyKey = (value) =>
+  String(value || "")
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^A-Za-z0-9_-]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .toLowerCase()
+    .slice(0, 40) || "item";
+
+/* Validation messages arrive from the API in the language of the schema, which
+ * is English. A French author reading "String should have at least 3
+ * characters" has no way to know which field is meant, and no way to fix it. */
+const PROBLEM_PATTERNS = [
+  [/^String should have at least (\d+) characters?$/i, (m) => t("error.min_chars", { n: m[1] })],
+  [/^String should have at most (\d+) characters?$/i, (m) => t("error.max_chars", { n: m[1] })],
+  [/^Field required$/i, () => t("error.required")],
+  [/^Input should be a valid integer/i, () => t("error.integer")],
+  [/^Input should be a valid number/i, () => t("error.number")],
+  [/^String should match pattern/i, () => t("error.format")],
+  [/^Attribute label cannot be empty\.?$/i, () => t("error.attr_label")],
+  [/^Node text cannot be empty\.?$/i, () => t("error.node_text")],
+];
+
+const humanizeProblem = (message) => {
+  const text = String(message || "").trim();
+  for (const [pattern, render] of PROBLEM_PATTERNS) {
+    const match = text.match(pattern);
+    if (match) return render(match);
+  }
+  return text || t("error.generic");
+};
+
+/** Rename a key everywhere it is used.
+ *
+ * Choices, outcomes and the timeout penalty all point at an attribute by key. A
+ * key that changes on its own — which is what happens when it is derived from a
+ * label the author just retyped — would leave those references dangling, and the
+ * save would fail with "affects unknown attribute".
+ */
+const renameKeyEverywhere = (model, previous, next) => {
+  if (!previous || previous === next) return;
+  for (const node of model.adventure.nodes || []) {
+    for (const choice of node.choices || []) {
+      for (const effect of choice.effects || []) {
+        if (effect.attribute === previous) effect.attribute = next;
+      }
+    }
+    for (const outcome of node.outcomes || []) {
+      if (outcome.attribute === previous) outcome.attribute = next;
+    }
+  }
+  if (model.adventure.timeout_penalty_attribute === previous) {
+    model.adventure.timeout_penalty_attribute = next;
+  }
+};
+
+/** Two attributes cannot share a key: the second would overwrite the first. */
+const uniqueAttributeKey = (base, index, attributes) => {
+  const taken = new Set(
+    (attributes || [])
+      .filter((_, other) => other !== index)
+      .map((attribute) => attribute.key),
+  );
+  if (!taken.has(base)) return base;
+  let suffix = 2;
+  while (taken.has(`${base}-${suffix}`)) suffix += 1;
+  return `${base}-${suffix}`;
+};
+
 const clone = (value) => JSON.parse(JSON.stringify(value));
 
 const snap = (value) => Math.round(value / GRID) * GRID;
@@ -686,7 +761,8 @@ function inspectorAttributes(model) {
             <input class="input" data-attribute-field="label" data-attribute="${index}" maxlength="80"
                    value="${escapeHtml(attribute.label)}" placeholder="${t("adv_editor.attribute_label")}" />
             <input class="input adv-key" data-attribute-field="key" data-attribute="${index}" maxlength="40"
-                   value="${escapeHtml(attribute.key)}" title="${t("adv_editor.attribute_key")}" />
+                   value="${escapeHtml(attribute.key)}" title="${t("adv_editor.attribute_key")}"
+                   aria-label="${t("adv_editor.attribute_key")}" readonly />
             <button type="button" class="btn btn-xs btn-ghost" data-act="remove-attribute"
                     data-attribute="${index}" ${
                       model.adventure.attributes.length <= 1 ? "disabled" : ""
@@ -931,7 +1007,7 @@ export async function renderAdventureEditor({ id }) {
         <div class="adv-canvas-scroll">
           <div class="adv-canvas" data-canvas></div>
         </div>
-        <ul class="adv-problems" data-problems hidden></ul>
+        <ul class="adv-problems" data-problems role="alert" tabindex="-1" hidden></ul>
       </div>
 
       <aside class="adv-inspector">
@@ -1206,6 +1282,17 @@ export async function renderAdventureEditor({ id }) {
             if (["initial_value", "min_value", "max_value", "death_at_or_below", "victory_at_or_above"].includes(name))
               attribute[name] = field.value === "" ? null : Number(field.value);
             else attribute[name] = field.value;
+            // The key is an internal identifier. Asking an author to type one is
+            // asking them to guess a rule; it follows the label instead.
+            if (name === "label") {
+              const keyField = inspector.querySelector(
+                `[data-attribute-field="key"][data-attribute="${index}"]`,
+              );
+              const previous = attribute.key;
+              attribute.key = uniqueAttributeKey(slugifyKey(field.value), index, model.adventure.attributes);
+              renameKeyEverywhere(model, previous, attribute.key);
+              if (keyField) keyField.value = attribute.key;
+            }
             markDirty();
           });
           field.addEventListener("change", () => {
@@ -1968,19 +2055,26 @@ export async function renderAdventureEditor({ id }) {
       toast(t("adv_editor.saved_toast"), "success");
       paintAll();
     } catch (error) {
-      let messages = [];
       const detail = error.payload && error.payload.detail;
+      let entries;
       if (Array.isArray(detail)) {
-        messages = detail.map((item) => (item.msg || "").replace(/^Value error, /, ""));
+        entries = detail.map((item) => ({
+          where: Array.isArray(item.loc) ? item.loc.filter((part) => part !== "body").join(" · ") : "",
+          message: humanizeProblem((item.msg || "").replace(/^Value error, /, "")),
+        }));
       } else if (typeof detail === "string") {
-        messages = [detail];
+        entries = [{ where: "", message: humanizeProblem(detail) }];
       } else {
-        messages = [error.detail || t("error.generic")];
+        entries = [{ where: "", message: error.detail || t("error.generic") }];
       }
-      problems.innerHTML = messages
-        .map((message) => `<li>${escapeHtml(message)}</li>`)
+      problems.innerHTML = entries
+        .map((entry) => `<li>${entry.where ? `<strong>${escapeHtml(entry.where)}</strong> — ` : ""}${escapeHtml(entry.message)}</li>`)
         .join("");
       problems.hidden = false;
+      // The block sits under the canvas: without this it opened behind the
+      // sticky action bar and the author only saw the first line of it.
+      problems.scrollIntoView({ block: "center", behavior: "smooth" });
+      problems.focus({ preventScroll: true });
       toast(t("adv_editor.fix_problems"), "error");
     } finally {
       button.disabled = false;
