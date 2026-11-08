@@ -90,6 +90,35 @@ created by an administrator then need a manual password change.
 The display name, used in the header, the browser title and the e-mail
 signature.
 
+## Legal notice
+
+The footer links to `/legal`, which holds two documents side by side. The first
+is the project's own notice — what OpenLearn is, the AGPL-3.0-only licence, the
+contribution rules, what the instance stores. It ships with the code, in the
+interface dictionary, so it is translated like the rest of the page and it is
+not yours to edit.
+
+The second is yours: the notice you owe when you run a server other than your
+own laptop — the publisher, the host, the contact address, how long you keep
+data. **Legal notice** in the administration is a markdown editor with the same
+subset as the wiki, per language. An empty language falls back to English, then
+to French, so an untouched page still says something true.
+
+* **Raw HTML is not accepted.** The document goes through the wiki renderer and
+  an allowlist: `<script>`, `<iframe>`, inline styles and event attributes are
+  dropped, and a pasted `<div>` appears as text. You get headings, lists,
+  tables, links (`http`, `https`, `mailto`), bold, italic and code.
+* **Translate with the model, then read it.** Each language has a *Translate*
+  control once the AI features are configured. It copies your document and
+  translates it — nothing is saved until you press *Save*, so a bad translation
+  is a draft you discard, not a page you publish. The controls disappear
+  entirely when the AI features are off.
+* **The public page shows both**, one after the other, with the instance notice
+  last so it reads as the local addition it is.
+
+The notice is not legal advice. If you run a commercial service, a lawyer's
+review of your section is worth more than any default text.
+
 ## Single sign-on
 
 Providers are declared in **Single sign-on**. A provider is a record, not a code
