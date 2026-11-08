@@ -92,7 +92,7 @@ jobs:
           mkdir -p data
           pytest tests -q -m "not e2e" \
             --cov=backend/app --cov-report=term-missing --cov-report=xml
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: coverage-sqlite
