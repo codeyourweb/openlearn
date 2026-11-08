@@ -56,3 +56,7 @@ Do not open a public issue. Follow [SECURITY.md](SECURITY.md).
 
 Argue about code, not about people. Contributions are judged on what they do,
 not on who wrote them.
+
+The project adopts the [Contributor Covenant](CODE_OF_CONDUCT.md), version 2.1.
+Reports go to <developper@openlearnproject.org> and are handled privately by the
+maintainers.

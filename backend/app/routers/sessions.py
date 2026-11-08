@@ -22,6 +22,7 @@ from sqlalchemy.orm import Session as OrmSession
 from ..config import settings
 from ..db import SessionLocal, get_db
 from ..deps import client_ip, enforce_rate_limit, external_base_url, get_optional_user, verify_csrf
+from ..evaluation import ensure_attempt_left
 from ..game import (
     all_participants_answered,
     build_state,
@@ -37,7 +38,6 @@ from ..game import (
     schedule_timer,
     start_session,
 )
-from ..evaluation import ensure_attempt_left
 from ..models import GameSession, Participant, Quiz, SecurityEvent, User
 from ..realtime import manager
 from ..schemas import AnswerIn, JoinIn, SessionCreateIn

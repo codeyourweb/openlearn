@@ -5,7 +5,6 @@
 from __future__ import annotations
 
 import pytest
-
 from conftest import csrf_headers, login_user, publish_quiz, question_payload, quiz_payload, register_user
 
 

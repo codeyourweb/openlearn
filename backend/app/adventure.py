@@ -52,7 +52,7 @@ def validate_adventure_graph(graph: Any, strict: bool = False) -> None:
     node_keys: list[str] = [(_text(n, "key") or "").strip() for n in nodes]
     if len(set(node_keys)) != len(node_keys):
         raise AdventureError("Node keys must be unique.")
-    node_by_key = {key: node for key, node in zip(node_keys, nodes)}
+    node_by_key = {key: node for key, node in zip(node_keys, nodes, strict=True)}
 
     attr_keys: list[str] = [(_text(a, "key") or "").strip() for a in attributes]
     if len(set(attr_keys)) != len(attr_keys):

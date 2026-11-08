@@ -13,7 +13,6 @@ import json
 
 from tests.conftest import DEFAULT_PASSWORD, csrf_headers, login_user, make_admin, register_user
 
-
 # --------------------------------------------------------------------------- #
 # Instance metadata                                                            #
 # --------------------------------------------------------------------------- #

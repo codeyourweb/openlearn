@@ -167,7 +167,7 @@ class QuestionIn(BaseModel):
         return value
 
     @model_validator(mode="after")
-    def _validate_options(self) -> "QuestionIn":
+    def _validate_options(self) -> QuestionIn:
         # Whether an answer key is required depends on the quiz mode (a poll
         # has none), so that check lives in QuizIn.
         texts = [option.text.casefold() for option in self.options]
@@ -320,7 +320,7 @@ class AdventureIn(BaseModel):
     timeout_penalty_attribute: str = Field(default="", max_length=60)
 
     @model_validator(mode="after")
-    def _validate_timer(self) -> "AdventureIn":
+    def _validate_timer(self) -> AdventureIn:
         if self.timer_mode != "none" and self.time_limit_seconds < 10:
             raise ValueError("A timed story needs at least 10 seconds.")
         if self.timer_mode == "none":
@@ -338,7 +338,7 @@ class AdventureIn(BaseModel):
         return _clean_translation_map(value, html=True, max_length=20_000)
 
     @model_validator(mode="after")
-    def _validate_graph(self) -> "AdventureIn":
+    def _validate_graph(self) -> AdventureIn:
         # Saving is tolerant: a half-drawn story stays a draft. Publishing runs
         # the strict pass (see the visibility endpoint).
         validate_adventure_graph(self, strict=False)
@@ -391,7 +391,7 @@ class QuizIn(BaseModel):
         return _clean_translation_map(value, html=False, max_length=2000)
 
     @model_validator(mode="after")
-    def _validate_timer(self) -> "QuizIn":
+    def _validate_timer(self) -> QuizIn:
         if self.timer_mode == "global":
             if self.global_time_limit_seconds < 30:
                 raise ValueError("A global timer needs at least 30 seconds.")
@@ -400,7 +400,7 @@ class QuizIn(BaseModel):
         return self
 
     @model_validator(mode="after")
-    def _validate_mode(self) -> "QuizIn":
+    def _validate_mode(self) -> QuizIn:
         if self.mode == "adventure":
             if self.adventure is None:
                 raise ValueError("Adventure quizzes need a story graph.")

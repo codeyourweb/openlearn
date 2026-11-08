@@ -25,8 +25,6 @@ from ..content import compute_content_hash
 from ..db import SessionLocal
 from ..models import (
     AppSetting,
-    Option,
-    Question,
     Quiz,
     RevisionCard,
     RevisionDeck,

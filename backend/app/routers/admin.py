@@ -10,6 +10,7 @@ from fastapi import APIRouter, Depends, HTTPException, Query, Response, status
 from sqlalchemy import func, or_, select
 from sqlalchemy.orm import Session as OrmSession
 
+from .. import versions
 from ..db import get_db
 from ..deps import require_admin, require_staff
 from ..models import (
@@ -25,7 +26,6 @@ from ..models import (
     utcnow,
 )
 from ..schemas import AdminUserOut, AdminUserPatch, ModerationIn, QuizIn
-from .. import versions
 from .quizzes import _apply_quiz, _sync_public_flag, serialise_quiz
 
 router = APIRouter(prefix="/api/v1/admin", tags=["admin"])

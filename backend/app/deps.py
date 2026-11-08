@@ -5,7 +5,7 @@
 from __future__ import annotations
 
 import ipaddress
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 from fastapi import Depends, HTTPException, Request, status
 from sqlalchemy import select
@@ -16,7 +16,6 @@ from .config import settings
 from .db import get_db
 from .models import ApiKey, User, utcnow
 from .security import decode_access_token, rate_limiter, sha256
-
 
 # Only real private/loopback ranges count as "our proxy". ipaddress.is_private
 # also covers documentation and reserved ranges, which would let a caller from
@@ -221,4 +220,4 @@ def require_staff(user: User = Depends(require_user)) -> User:
 
 
 def utc_now() -> datetime:
-    return datetime.now(timezone.utc)
+    return datetime.now(UTC)

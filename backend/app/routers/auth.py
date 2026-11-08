@@ -21,8 +21,8 @@ from ..security import (
     create_access_token,
     hash_password,
     hash_to_compare,
-    new_secret,
     needs_rehash,
+    new_secret,
     validate_password,
     verify_password,
 )

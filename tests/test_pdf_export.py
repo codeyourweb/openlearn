@@ -6,9 +6,8 @@ from __future__ import annotations
 
 import io
 
-from pypdf import PdfReader
-
 from conftest import csrf_headers, register_user
+from pypdf import PdfReader
 
 
 def _wiki(client, title="Réseau et DNS") -> dict:

@@ -7,8 +7,8 @@ from __future__ import annotations
 from app.db import SessionLocal
 from app.models import Quiz, User
 from tests.conftest import (
-    csrf_headers,
     create_quiz,
+    csrf_headers,
     make_admin,
     make_trusted,
     quiz_payload,

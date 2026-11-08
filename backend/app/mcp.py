@@ -27,7 +27,7 @@ from . import runtime, search
 from .config import settings
 from .db import get_db
 from .deps import client_ip, resolve_user
-from .models import Question, Quiz, User, Wiki, WikiPage
+from .models import Quiz, User, Wiki, WikiPage
 from .security import rate_limiter
 
 logger = logging.getLogger(__name__)

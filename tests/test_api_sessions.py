@@ -14,8 +14,8 @@ from app.models import GameSession, utcnow
 from tests.conftest import (
     DEFAULT_PASSWORD,
     answer_key,
-    csrf_headers,
     create_quiz,
+    csrf_headers,
     publish_quiz,
     question_payload,
     quiz_payload,

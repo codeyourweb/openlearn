@@ -10,7 +10,7 @@ import secrets
 import threading
 import time
 from collections import defaultdict, deque
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 from typing import Any
 
 import jwt
@@ -109,7 +109,7 @@ def create_access_token(
     token_type: str = "session",
     token_version: int = 0,
 ) -> str:
-    now = datetime.now(timezone.utc)
+    now = datetime.now(UTC)
     ttl = ttl_minutes if ttl_minutes is not None else settings.access_token_ttl_minutes
     payload: dict[str, Any] = {
         "sub": str(user_id),

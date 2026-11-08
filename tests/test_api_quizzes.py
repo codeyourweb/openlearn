@@ -6,11 +6,11 @@ from __future__ import annotations
 
 from tests.conftest import (
     DEFAULT_PASSWORD,
-    csrf_headers,
     create_quiz,
+    csrf_headers,
+    publish_quiz,
     question_payload,
     quiz_payload,
-    publish_quiz,
     register_user,
 )
 

@@ -18,7 +18,7 @@ Design notes
 
 from __future__ import annotations
 
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 from sqlalchemy import (
     JSON,
@@ -42,7 +42,7 @@ QUIZ_MODES = ("qcm", "swipe", "adventure")
 
 
 def utcnow() -> datetime:
-    return datetime.now(timezone.utc)
+    return datetime.now(UTC)
 
 
 class User(Base):
@@ -69,12 +69,12 @@ class User(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
     last_login_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
 
-    quizzes: Mapped[list["Quiz"]] = relationship(
+    quizzes: Mapped[list[Quiz]] = relationship(
         back_populates="owner",
         cascade="all, delete-orphan",
         foreign_keys="Quiz.owner_id",
     )
-    api_keys: Mapped[list["ApiKey"]] = relationship(back_populates="user", cascade="all, delete-orphan")
+    api_keys: Mapped[list[ApiKey]] = relationship(back_populates="user", cascade="all, delete-orphan")
 
     @property
     def is_staff(self) -> bool:
@@ -164,19 +164,19 @@ class Quiz(Base):
     published_version_number: Mapped[int] = mapped_column(Integer, default=0)
 
     owner: Mapped[User] = relationship(back_populates="quizzes", foreign_keys=[owner_id])
-    questions: Mapped[list["Question"]] = relationship(
+    questions: Mapped[list[Question]] = relationship(
         back_populates="quiz", cascade="all, delete-orphan", order_by="Question.position"
     )
-    reviews: Mapped[list["AiReview"]] = relationship(
+    reviews: Mapped[list[AiReview]] = relationship(
         back_populates="quiz", cascade="all, delete-orphan"
     )
-    adventure_attributes: Mapped[list["AdventureAttribute"]] = relationship(
+    adventure_attributes: Mapped[list[AdventureAttribute]] = relationship(
         back_populates="quiz", cascade="all, delete-orphan", order_by="AdventureAttribute.position"
     )
-    adventure_nodes: Mapped[list["AdventureNode"]] = relationship(
+    adventure_nodes: Mapped[list[AdventureNode]] = relationship(
         back_populates="quiz", cascade="all, delete-orphan", order_by="AdventureNode.position"
     )
-    versions: Mapped[list["QuizVersion"]] = relationship(
+    versions: Mapped[list[QuizVersion]] = relationship(
         back_populates="quiz", cascade="all, delete-orphan", order_by="QuizVersion.number"
     )
 
@@ -233,7 +233,7 @@ class Question(Base):
     allow_multiple: Mapped[bool] = mapped_column(Boolean, default=False)
 
     quiz: Mapped[Quiz] = relationship(back_populates="questions")
-    options: Mapped[list["Option"]] = relationship(
+    options: Mapped[list[Option]] = relationship(
         back_populates="question", cascade="all, delete-orphan", order_by="Option.position"
     )
 
@@ -315,10 +315,10 @@ class GameSession(Base):
     started_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     finished_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
 
-    questions: Mapped[list["SessionQuestion"]] = relationship(
+    questions: Mapped[list[SessionQuestion]] = relationship(
         back_populates="session", cascade="all, delete-orphan", order_by="SessionQuestion.position"
     )
-    participants: Mapped[list["Participant"]] = relationship(
+    participants: Mapped[list[Participant]] = relationship(
         back_populates="session", cascade="all, delete-orphan"
     )
 
@@ -337,7 +337,7 @@ class SessionQuestion(Base):
     allow_multiple: Mapped[bool] = mapped_column(Boolean, default=False)
 
     session: Mapped[GameSession] = relationship(back_populates="questions")
-    options: Mapped[list["SessionOption"]] = relationship(
+    options: Mapped[list[SessionOption]] = relationship(
         back_populates="question", cascade="all, delete-orphan", order_by="SessionOption.position"
     )
 
@@ -372,7 +372,7 @@ class Participant(Base):
     last_seen_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
 
     session: Mapped[GameSession] = relationship(back_populates="participants")
-    answers: Mapped[list["Answer"]] = relationship(back_populates="participant", cascade="all, delete-orphan")
+    answers: Mapped[list[Answer]] = relationship(back_populates="participant", cascade="all, delete-orphan")
 
 
 class Answer(Base):
@@ -450,10 +450,10 @@ class AdventureNode(Base):
     position: Mapped[int] = mapped_column(Integer, default=0)
 
     quiz: Mapped[Quiz] = relationship(back_populates="adventure_nodes")
-    choices: Mapped[list["AdventureChoice"]] = relationship(
+    choices: Mapped[list[AdventureChoice]] = relationship(
         back_populates="node", cascade="all, delete-orphan", order_by="AdventureChoice.position"
     )
-    outcomes: Mapped[list["AdventureOutcome"]] = relationship(
+    outcomes: Mapped[list[AdventureOutcome]] = relationship(
         back_populates="node", cascade="all, delete-orphan", order_by="AdventureOutcome.priority"
     )
 
@@ -473,7 +473,7 @@ class AdventureChoice(Base):
     position: Mapped[int] = mapped_column(Integer, default=0)
 
     node: Mapped[AdventureNode] = relationship(back_populates="choices")
-    effects: Mapped[list["AdventureEffect"]] = relationship(
+    effects: Mapped[list[AdventureEffect]] = relationship(
         back_populates="choice", cascade="all, delete-orphan"
     )
 
@@ -587,10 +587,10 @@ class Wiki(Base):
     )
     published_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
 
-    pages: Mapped[list["WikiPage"]] = relationship(
+    pages: Mapped[list[WikiPage]] = relationship(
         back_populates="wiki", cascade="all, delete-orphan", order_by="WikiPage.position"
     )
-    members: Mapped[list["WikiMember"]] = relationship(
+    members: Mapped[list[WikiMember]] = relationship(
         back_populates="wiki", cascade="all, delete-orphan"
     )
 
@@ -881,7 +881,7 @@ class RevisionDeck(Base):
         DateTime(timezone=True), default=utcnow, onupdate=utcnow
     )
 
-    cards: Mapped[list["RevisionCard"]] = relationship(
+    cards: Mapped[list[RevisionCard]] = relationship(
         back_populates="deck", cascade="all, delete-orphan", order_by="RevisionCard.position"
     )
 

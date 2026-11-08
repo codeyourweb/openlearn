@@ -13,11 +13,11 @@ import re
 
 from tests.conftest import (
     create_quiz,
+    csrf_headers,
     make_trusted,
     publish_quiz,
     quiz_payload,
     register_user,
-    csrf_headers,
 )
 
 

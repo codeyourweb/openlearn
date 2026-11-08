@@ -36,12 +36,12 @@ if [ -n "$CERT" ] || [ -n "$KEY" ]; then
   args+=(--ssl-certfile "$CERT" --ssl-keyfile "$KEY")
 fi
 
-if [ -n "${port_was_set}" ]; then
-  PORT="${PORT}"
-elif [ ${#args[@]} -gt 0 ]; then
-  PORT="${OL_TLS_PORT:-8443}"
-else
-  PORT=8000
+if [ -z "${port_was_set}" ]; then
+  if [ ${#args[@]} -gt 0 ]; then
+    PORT="${OL_TLS_PORT:-8443}"
+  else
+    PORT=8000
+  fi
 fi
 
 exec uvicorn app.main:app \

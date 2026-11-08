@@ -415,7 +415,7 @@ def _wiki_entry(theme: dict[str, Any]) -> dict[str, Any]:
         {
             "slug": "key-facts",
             "title": "Key facts",
-            "markdown": f"# Key facts\n\n"
+            "markdown": "# Key facts\n\n"
             + "\n".join(f"- **{question}** {answer}" for question, answer, _, _ in theme["facts"])
             + "\n",
             "tags": [theme["key"], "revision"],

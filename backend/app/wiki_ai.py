@@ -26,16 +26,16 @@ from __future__ import annotations
 import json
 import logging
 import re
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 import httpx
 
 from . import runtime
 from .config import settings
 from .db import SessionLocal
-from .models import AiJob, User, Wiki, WikiChat, WikiChatMessage, WikiPage, utcnow
+from .models import AiJob, User, Wiki, WikiPage, utcnow
 from .sanitize import sanitize_plain
-from .search import fts_any_query, fts_query, keywords
+from .search import fts_any_query, keywords
 from .wiki import reflow_markdown
 
 logger = logging.getLogger(__name__)
@@ -913,7 +913,7 @@ def _run_review(db, job: AiJob) -> dict:
 
 def stale_jobs(db) -> int:
     """Mark jobs left running by a crash as failed, once, at boot."""
-    now = datetime.now(timezone.utc)
+    now = datetime.now(UTC)
     count = 0
     for job in db.query(AiJob).filter(AiJob.status.in_(("queued", "running"))).all():
         job.status = "error"

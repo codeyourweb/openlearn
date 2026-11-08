@@ -22,7 +22,6 @@ from ..config import settings
 from ..db import SessionLocal
 from ..models import User, Wiki, WikiPage, WikiPageDraft, utcnow
 from ..security import decode_access_token
-from ..wiki import rebuild_links
 from .wiki import _member_role, _readable, _writable
 
 logger = logging.getLogger(__name__)

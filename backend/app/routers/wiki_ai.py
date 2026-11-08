@@ -238,7 +238,7 @@ def start_job(
                 "message": "The same task is already running.",
                 "job_id": conflict.job_id,
             },
-        )
+        ) from conflict
     tasks.add_task(wiki_ai.run_job, job.id)
     return _job_out(job)
 

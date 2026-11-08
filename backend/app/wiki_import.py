@@ -260,7 +260,7 @@ def read_archive(raw: bytes, *, archive_name: str = "") -> ImportedWiki:
     container = root if root and stem and posixpath.basename(root).lower() == stem else ""
 
     pages: list[ImportedPage] = []
-    for (path, _), body in zip(documents, bodies):
+    for (path, _), body in zip(documents, bodies, strict=True):
         meta, text = _split_frontmatter(body.replace("\r\n", "\n"))
         text = text.lstrip("\n")
         title = _title_of(meta, text, path)
