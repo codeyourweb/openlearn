@@ -17,7 +17,16 @@ from __future__ import annotations
 import re
 from pathlib import Path
 
+import pytest
+
 ROOT = Path(__file__).resolve().parents[1]
+
+# The end-to-end image ships `backend/` and `tests/` only: the files compared here
+# belong to the repository, and the comparison is worth nothing inside the image.
+pytestmark = pytest.mark.skipif(
+    not (ROOT / "Dockerfile.test").exists() or not (ROOT / "pyproject.toml").exists(),
+    reason="repository-only check: the container ships neither Dockerfile nor pyproject",
+)
 
 
 def _pinned(requirements: str, package: str) -> str | None:

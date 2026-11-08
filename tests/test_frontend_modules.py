@@ -137,3 +137,25 @@ def test_html_carries_no_inline_style_or_script():
     assert "<style" not in html
     assert not re.search(r"<script(?![^>]*\bsrc=)", html)
     assert not re.search(r"\sstyle=\"", html)
+
+
+def test_a_module_that_calls_the_api_imports_the_client():
+    """`account.js` called `api.get` without importing `api`.
+
+    Nothing failed at load time: the page rendered, and only the history and
+    API-key sections -- painted on demand -- replaced themselves with "Something
+    went wrong", which is what a teacher saw. The module still has to be told
+    where the client comes from.
+    """
+    call = re.compile(r"\bapi\.(?:get|post|put|patch|del|getMeta|request)\b")
+    offenders = []
+    for path in modules():
+        if path.name == "api.js":
+            continue
+        source = path.read_text(encoding="utf-8")
+        if call.search(source) and "api" not in bound_names(source):
+            offenders.append(str(path.relative_to(JS_ROOT)))
+    assert not offenders, (
+        "These modules call the API client without importing it, so the call "
+        f"throws ReferenceError the first time it runs: {offenders}"
+    )

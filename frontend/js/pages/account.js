@@ -8,6 +8,7 @@
  * have to scroll through all of them to find one.
  */
 
+import { api } from "../api.js";
 import { verificationRow, wireAccountResend } from "./verifyEmail.js";
 import { flagSvg } from "../flags.js";
 import { currentLanguage, LANGUAGES, setLanguage, t, tp } from "../i18n.js";
