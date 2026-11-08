@@ -6,6 +6,7 @@ from __future__ import annotations
 
 import logging
 import mimetypes
+from contextlib import asynccontextmanager
 from pathlib import Path
 
 from fastapi import FastAPI, HTTPException, Request, status
@@ -74,7 +75,7 @@ def create_app() -> FastAPI:
             length = request.headers.get("content-length")
             is_upload = request.url.path.startswith("/api/v1/uploads")
             if length and length.isdigit() and int(length) > (settings.max_upload_bytes + 4096 if is_upload else MAX_JSON_BODY):
-                return JSONResponse(status_code=status.HTTP_413_REQUEST_ENTITY_TOO_LARGE, content={"detail": "Payload too large."})
+                return JSONResponse(status_code=status.HTTP_413_CONTENT_TOO_LARGE, content={"detail": "Payload too large."})
 
         response = await call_next(request)
         response.headers["X-Content-Type-Options"] = "nosniff"
@@ -137,7 +138,6 @@ def create_app() -> FastAPI:
         for quiz in db.scalars(select(Quiz).where(Quiz.status == "public")).all():
             refresh_quiz(db, quiz)
 
-    @app.on_event("startup")
     def _startup() -> None:
         settings.media_dir.mkdir(parents=True, exist_ok=True)
         # Live editing rooms broadcast from the serving loop, including from
@@ -266,6 +266,14 @@ def create_app() -> FastAPI:
             headers={"Cache-Control": "no-cache"},
         )
 
+    # `on_event` is deprecated and the same body belongs in a lifespan hook. The
+    # handler is registered here because everything it touches is defined above.
+    @asynccontextmanager
+    async def _lifespan(_: FastAPI):
+        _startup()
+        yield
+
+    app.router.lifespan_context = _lifespan
     return app
 
 
