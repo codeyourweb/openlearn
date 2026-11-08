@@ -219,6 +219,7 @@ def sitemap(request: Request) -> Response:
         ("/quizzes", None),
         ("/wiki", None),
         ("/legal", None),
+        ("/accessibility", None),
     ]
     try:
         with SessionLocal() as db:

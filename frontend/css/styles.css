@@ -18,6 +18,8 @@
   --accent: #8b5cf6;
   --accent-2: #22d3ee;
   --accent-soft: rgba(139, 92, 246, 0.15);
+  /* Accent meant to be read, not merely filled: 5.8:1 on the dark surfaces. */
+  --accent-text: #a78bfa;
   /* Ink used on top of the accent gradient. */
   --on-accent: #06101f;
   --topbar-h: 58px;
@@ -166,7 +168,10 @@ main:focus { outline: none; }
   padding: 1.1rem clamp(1rem, 3vw, 2.5rem); border-top: 1px solid rgba(36, 48, 77, 0.6);
   color: var(--muted); font-size: 0.82rem;
 }
-.footer-links { display: flex; gap: 1rem; }
+/* The row wraps: the legal notice, the accessibility statement and the rest
+   are one link too many for a 390 px phone, where the last one used to end
+   8 px past the screen and make the whole page scroll sideways. */
+.footer-links { display: flex; flex-wrap: wrap; gap: 1rem; }
 
 /* ---------- Layout helpers ---------- */
 .container { width: 100%; }
@@ -451,6 +456,7 @@ pre code { background: none; padding: 0; }
   --accent: #6d28d9;
   --accent-2: #0e7490;
   --accent-soft: rgba(109, 40, 217, 0.10);
+  --accent-text: #6d28d9;
   --ok: #15803d;
   --ok-soft: rgba(21, 128, 61, 0.12);
   --ok-text: #14532d;
@@ -1166,7 +1172,9 @@ pre code { background: none; padding: 0; }
   gap: .4rem;
   font-weight: 600;
   font-size: .92rem;
-  color: var(--accent);
+  /* The accent violet is a fill colour: as text on a card it measured 3.7:1 on
+     the dark surface. The link tint is the readable member of the same family. */
+  color: var(--accent-text);
 }
 .mode-card:hover .mode-card-cta svg { transform: translateX(3px); }
 .mode-card-cta svg { transition: transform .16s ease; }
@@ -1735,11 +1743,19 @@ pre code { background: none; padding: 0; }
   border: 1px solid var(--border);
 }
 
-.docs-method.is-get { color: #2f9e6b; border-color: #2f9e6b55; }
-.docs-method.is-post { color: #4a7bf7; border-color: #4a7bf755; }
-.docs-method.is-put { color: #c9821a; border-color: #c9821a55; }
-.docs-method.is-patch { color: #8b5cf6; border-color: #8b5cf655; }
-.docs-method.is-delete { color: #d64c4c; border-color: #d64c4c55; }
+/* Method pills are theme pairs. The green that reads on the dark surface is
+   invisible on the light one, and the reverse: each side is given a shade that
+   clears 4.5:1 on its own --surface-2, measured rather than eyeballed. */
+.docs-method.is-get { color: #4ade80; border-color: #4ade8055; }
+.docs-method.is-post { color: #93b4ff; border-color: #93b4ff55; }
+.docs-method.is-put { color: #f0b354; border-color: #f0b35455; }
+.docs-method.is-patch { color: #c4b5fd; border-color: #c4b5fd55; }
+.docs-method.is-delete { color: #fca5a5; border-color: #fca5a555; }
+[data-theme="light"] .docs-method.is-get { color: #15803d; border-color: #15803d55; }
+[data-theme="light"] .docs-method.is-post { color: #1d4ed8; border-color: #1d4ed855; }
+[data-theme="light"] .docs-method.is-put { color: #9a5b00; border-color: #9a5b0055; }
+[data-theme="light"] .docs-method.is-patch { color: #6d28d9; border-color: #6d28d955; }
+[data-theme="light"] .docs-method.is-delete { color: #b91c1c; border-color: #b91c1c55; }
 
 .docs-path {
   font-size: 0.86rem;
@@ -1779,6 +1795,40 @@ pre code { background: none; padding: 0; }
 .docs-table th {
   color: var(--muted);
   font-weight: 600;
+}
+
+/* On a phone a documentation table is wider than the screen: a parameter name
+   such as `array[Question]` sets a min-content width of 391 px inside a 390 px
+   viewport, and the whole page scrolls sideways (WCAG 2.2 reflow, 1.4.10).
+   Fixed layout halves the columns and lets long tokens wrap. */
+@media (max-width: 620px) {
+  .docs-table {
+    table-layout: fixed;
+  }
+
+  .docs-table th,
+  .docs-table td {
+    overflow-wrap: anywhere;
+    padding: 0.3rem 0.35rem;
+  }
+
+  /* The request body heading carries the FastAPI name of the model, one token
+     such as `Body_upload_question_image_api_v1_upload`, 567 px wide on a 390 px
+     screen. It has to break. */
+  .docs-block h4 {
+    overflow-wrap: anywhere;
+  }
+
+  /* Same disease in the MCP page's markdown table: three columns, no room. */
+  .mcp-docs .prose table {
+    table-layout: fixed;
+  }
+
+  .mcp-docs .prose th,
+  .mcp-docs .prose td {
+    overflow-wrap: anywhere;
+    padding: 0.3rem 0.35rem;
+  }
 }
 
 /* Timers: off and whole-quiz variants */
@@ -2044,7 +2094,11 @@ pre code { background: none; padding: 0; }
   border: 0; background: none; padding: 0.1rem 0.15rem;
 }
 .ed-title:focus { outline: none; border-bottom: 2px solid var(--accent); }
-.ed-tags { border: 0; background: none; font-size: 0.82rem; color: var(--muted); padding: 0.1rem 0.15rem; }
+.ed-tags {
+  border: 0; background: none; font-size: 0.82rem; color: var(--muted);
+  /* 2.5.8: a control has to offer a 24 x 24 target, however small it looks. */
+  padding: 0.28rem 0.35rem; min-height: 24px; min-width: 24px;
+}
 .ed-tags:focus { outline: none; color: var(--text); }
 .ed-bar-actions { display: flex; align-items: center; gap: 0.45rem; flex: none; }
 
@@ -2689,7 +2743,8 @@ a.tab .tab-count { font-size: .72rem; opacity: .8; }
   font-size: .78rem; letter-spacing: .14em; text-transform: uppercase;
   color: var(--accent-2); margin-bottom: .9rem; font-weight: 600;
 }
-.ld-hero h1 {
+.ld-hero h1,
+.ld-hero .ld-hero-title {
   font-size: clamp(2.1rem, 4.6vw, 3.5rem);
   line-height: 1.04;
   letter-spacing: -.02em;
@@ -3474,7 +3529,7 @@ html { overflow-x: clip; }
   .topbar nav a { white-space: nowrap; }
   .ld-eyebrow { font-size: 0.72rem; letter-spacing: 0.1em; }
   /* Ragged headings ("know." alone on a line) look broken on a phone. */
-  .ld-hero h1, .about-hero h1, h1, h2 { text-wrap: balance; }
+  .ld-hero h1, .ld-hero-title, .about-hero h1, h1, h2 { text-wrap: balance; }
   .brand { font-size: 1rem; }
   .nav { gap: 0.95rem; overflow-x: auto; scrollbar-width: none; padding-bottom: 0.15rem; }
   .nav::-webkit-scrollbar { display: none; }
@@ -3493,9 +3548,9 @@ html { overflow-x: clip; }
   .btn { padding: 0.5rem 0.8rem; }
   .ld-tabs { gap: 0.4rem; }
   .ld-tab { padding: 0.4rem 0.8rem; font-size: 0.85rem; }
-  .about-hero h1, .ld-hero h1 { font-size: clamp(1.8rem, 8vw, 2.4rem); }
+  .about-hero h1, .ld-hero h1, .ld-hero-title { font-size: clamp(1.8rem, 8vw, 2.4rem); }
   .ld-hero { padding-block: 1.2rem 1.8rem; }
-  .ld-hero h1 { margin-bottom: 0.85rem; }
+  .ld-hero h1, .ld-hero-title { margin-bottom: 0.85rem; }
   .ld-problem { margin-top: 1.1rem; }
   .embed-deck .revision-card { max-width: 15rem; }
   .footer { padding: 0.9rem; }
@@ -3863,6 +3918,12 @@ html[data-demo="off"] [data-nav="about"] { display: none !important; }
   line-height: 1.5;
   overflow-x: auto;
 }
+/* A link inside running text is underlined: colour alone does not tell it
+   apart from the sentence around it (1.4.1). Cards, titles and buttons keep
+   their own treatment. */
+.mcp-docs .prose a,
+.wiki-article a,
+.legal-doc a { text-decoration: underline; text-underline-offset: 2px; }
 .mcp-docs .prose h2 { margin-top: 1.6rem; }
 .mcp-docs .prose table { width: 100%; border-collapse: collapse; font-size: .84rem; }
 .mcp-docs .prose th, .mcp-docs .prose td { padding: .4rem .6rem; border-bottom: 1px solid var(--border); text-align: left; }
@@ -3969,3 +4030,10 @@ html[data-demo="off"] [data-nav="about"] { display: none !important; }
 [dir="rtl"] .ld-points li { padding-left: 0; padding-right: 1.35rem; }
 [dir="rtl"] .ld-points li::before { left: auto; right: 0; }
 [dir="rtl"] .legal-body ul, [dir="rtl"] .legal-body ol { margin: .5rem 1.2rem .5rem 0; }
+
+/* A link inside a sentence cannot be told from the words around it by colour
+   alone: it measured 1.08:1 against its own paragraph. */
+.auth-switch a { text-decoration: underline; text-underline-offset: 2px; }
+
+.a11y-list { margin: .2rem 0 1rem; padding-left: 1.1rem; display: grid; gap: .45rem; }
+.a11y-list li { line-height: 1.55; }

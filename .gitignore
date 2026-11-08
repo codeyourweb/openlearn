@@ -10,3 +10,4 @@ node_modules/
 
 # Scratch: local probes, screenshots and one-off scripts
 tmp/
+.shots/

@@ -143,7 +143,7 @@ async function _wikiEditor(root, params) {
         <button type="button" class="seg" data-mode="markdown" role="tab" aria-selected="false">Markdown</button>
         <button type="button" class="seg" data-mode="preview" role="tab" aria-selected="false">${escapeHtml(t("wiki.preview"))}</button>
       </div>
-      <div class="ed-tools" role="toolbar">
+      <div class="ed-tools" role="toolbar" aria-label="${escapeHtml(t("wiki.tools"))}">
         <select class="ed-block" id="wiki-block" aria-label="${escapeHtml(t("wiki.block_style"))}" title="${escapeHtml(t("wiki.block_style"))}">
           <option value="p">${escapeHtml(t("wiki.block_paragraph"))}</option>
           <option value="h1">${escapeHtml(t("wiki.block_h1"))}</option>
@@ -243,6 +243,7 @@ async function _wikiEditor(root, params) {
     </div>
 
     <div class="ed-surface">
+      <div id="wiki-status" class="visually-hidden" role="status" aria-live="polite" aria-atomic="true"></div>
       <textarea id="wiki-md" class="ed-textarea" spellcheck="true" aria-label="Markdown"></textarea>
       <div class="ed-wysiwyg wiki-content" id="wiki-wysiwyg" contenteditable="true" spellcheck="true"
            aria-label="${escapeHtml(t("wiki.wysiwyg"))}"></div>
@@ -322,6 +323,18 @@ async function _wikiEditor(root, params) {
 
   const titleInput = root.querySelector("#wiki-page-title");
   const tagsInput = root.querySelector("#wiki-page-tags");
+  /* Formatting a block changes the text silently: a sighted author sees the
+     weight change, a screen reader hears nothing at all. One polite region
+     carries the result of every command. */
+  const status = root.querySelector("#wiki-status");
+  const announce = (message) => {
+    if (!status) return;
+    status.textContent = "";
+    window.setTimeout(() => {
+      status.textContent = message;
+    }, 40);
+  };
+
   const textarea = root.querySelector("#wiki-md");
   const preview = root.querySelector("#wiki-preview");
   const wysiwyg = root.querySelector("#wiki-wysiwyg");
@@ -446,6 +459,9 @@ async function _wikiEditor(root, params) {
       button.setAttribute("aria-selected", String(active));
     });
     root.querySelector(".ed-tools").hidden = mode === "preview";
+    announce(
+      `${t("wiki.editor_mode")}: ${root.querySelector(`[data-mode="${mode}"]`)?.textContent?.trim() || mode}`
+    );
     paintCounter();
     renderCarets();
   };
@@ -916,6 +932,7 @@ async function _wikiEditor(root, params) {
   root.querySelectorAll("[data-cmd]").forEach((button) => {
     button.addEventListener("click", () => {
       const command = button.dataset.cmd;
+      announce(`${button.getAttribute("aria-label") || command} — ${t("wiki.applied")}`);
       if (model.mode === "wysiwyg") {
         switch (command) {
           case "bold":
@@ -1072,7 +1089,7 @@ async function _wikiEditor(root, params) {
         (ratio) => progress.update(ratio),
         "/api/v1/uploads/image",
       );
-      insertImageAt(null, uploaded.path, file.name.replace(/\.[^.]+$/, ""));
+      insertImageAt(null, uploaded.path, askImageAlt(file.name.replace(/\.[^.]+$/, "")));
     } catch (error) {
       toast(error.detail || t("error.generic"), "error");
     } finally {
@@ -1105,6 +1122,15 @@ async function _wikiEditor(root, params) {
       lastSent = text;
       live.sendText(text);
     }, 180);
+  };
+
+  /* An image dropped in with no description is a hole in the page for anyone
+     using a screen reader. The author is asked once, at the moment they still
+     know why the picture is there; an empty answer is a valid "decorative". */
+  const askImageAlt = (suggested) => {
+    const answer = window.prompt(t("wiki.image_alt_prompt"), suggested);
+    if (answer === null) return suggested;
+    return answer.trim();
   };
 
   const insertImageAt = (point, path, alt) => {
@@ -1180,7 +1206,7 @@ async function _wikiEditor(root, params) {
         (ratio) => progress.update(ratio),
         "/api/v1/uploads/image",
       );
-      insertImageAt(point, uploaded.path, file.name.replace(/\.[^.]+$/, ""));
+      insertImageAt(point, uploaded.path, askImageAlt(file.name.replace(/\.[^.]+$/, "")));
     } catch (error) {
       toast(error.detail || t("error.generic"), "error");
     } finally {
@@ -1392,6 +1418,10 @@ async function _wikiEditor(root, params) {
       toast(t("wiki.need_content"), "error");
       return;
     }
+    // A hint, not a refusal: the author may be pasting a document that carries
+    // its own title, and losing their work over a heading level would be worse.
+    const levelOne = content.split("\n").filter((line) => /^#\s+\S/.test(line)).length;
+    if (levelOne > 1) toast(t("wiki.many_h1"), "info", 6000);
     const payload = {
       title: titleInput.value.trim() || t("wiki.untitled"),
       content_md: content,
@@ -1428,10 +1458,51 @@ async function _wikiEditor(root, params) {
   };
 
   root.querySelector("#wiki-save").addEventListener("click", save);
+  /* Moving a block without a mouse: Alt+Arrow on the block under the caret.
+     A drag is the only way otherwise, which leaves the whole page layout out of
+     reach of a keyboard-only author. */
+  const topBlockOf = (node) => {
+    let current = node;
+    while (current && current.parentElement !== wysiwyg) current = current.parentElement;
+    return current && current.parentElement === wysiwyg ? current : null;
+  };
+
+  const moveBlock = (direction) => {
+    const selection = window.getSelection();
+    if (!selection || !selection.rangeCount) return false;
+    const block = topBlockOf(selection.getRangeAt(0).startContainer);
+    if (!block) return false;
+    const sibling = direction < 0 ? block.previousElementSibling : block.nextElementSibling;
+    if (!sibling) return false;
+    if (direction < 0) wysiwyg.insertBefore(block, sibling);
+    else wysiwyg.insertBefore(sibling, block);
+    const range = document.createRange();
+    range.selectNodeContents(block);
+    range.collapse(false);
+    selection.removeAllRanges();
+    selection.addRange(range);
+    const blocks = Array.from(wysiwyg.children);
+    announce(
+      t("wiki.block_moved")
+        .replace("{position}", String(blocks.indexOf(block) + 1))
+        .replace("{total}", String(blocks.length))
+    );
+    markDirty();
+    notifyChange();
+    return true;
+  };
+
   root.addEventListener("keydown", (event) => {
     if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "s") {
       event.preventDefault();
       save();
+      return;
+    }
+    if (event.altKey && (event.key === "ArrowUp" || event.key === "ArrowDown") && model.mode === "wysiwyg") {
+      if (moveBlock(event.key === "ArrowUp" ? -1 : 1)) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
     }
   });
 

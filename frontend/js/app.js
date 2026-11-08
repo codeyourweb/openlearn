@@ -28,6 +28,7 @@ import { renderPlay } from "./pages/play.js";
 import { renderQuizDetail } from "./pages/quizDetail.js";
 import { renderResults } from "./pages/results.js";
 import { renderAbout } from "./pages/about.js";
+import { renderAccessibility } from "./pages/accessibility.js";
 import { renderLegal } from "./pages/legal.js";
 import { renderWiki, renderWikiCreate, renderWikiHistory, renderWikiHome } from "./pages/wiki.js";
 import { renderWikiChat } from "./pages/wikiChat.js";
@@ -71,6 +72,7 @@ register("/docs", renderDocs);
 register("/docs/mcp", renderMcpDocs);
 register("/about", renderAbout);
 register("/legal", renderLegal);
+register("/accessibility", renderAccessibility);
 /* Static wiki routes first: the router matches on segment count and order. */
 register("/wiki", renderWikiHome);
 register("/wiki/new", renderWikiCreate);
@@ -313,11 +315,28 @@ window.addEventListener("resize", measureTopbar);
 onLanguageChange(() => {
   applyTranslations();
   renderChrome();
+  syncChromeLabels();
   const select = document.getElementById("language-select");
   if (select) select.value = currentLanguage();
   // Re-render the current page so its strings follow the new language.
   render();
 });
+
+/* The glyph on the theme button says nothing to a screen reader, and "Switch
+   between light and dark" does not say what a click will do next. */
+function labelTheme() {
+  const button = document.getElementById("theme-toggle");
+  if (!button) return;
+  const light = currentTheme() === "light";
+  button.textContent = light ? "☀" : "◐";
+  button.setAttribute("aria-label", t(light ? "a11y.theme_to_dark" : "a11y.theme_to_light"));
+}
+
+function syncChromeLabels() {
+  const nav = document.getElementById("nav");
+  if (nav) nav.setAttribute("aria-label", t("a11y.main_nav"));
+  labelTheme();
+}
 
 async function boot() {
   applyTheme(currentTheme());
@@ -331,12 +350,14 @@ async function boot() {
   buildLanguagePicker();
   applyTranslations();
   const themeButton = document.getElementById("theme-toggle");
-  if (themeButton) {
+  if (themeButton && !themeButton.dataset.wired) {
+    themeButton.dataset.wired = "1";
     themeButton.addEventListener("click", () => {
-      themeButton.textContent = toggleTheme() === "light" ? "☀" : "◐";
+      toggleTheme();
+      labelTheme();
     });
-    themeButton.textContent = currentTheme() === "light" ? "☀" : "◐";
   }
+  syncChromeLabels();
   await ensureCsrf();
   try {
     setUser(await api.get("/api/v1/auth/me"));

@@ -530,7 +530,7 @@ function _proHtml() {
       <div class="ld-aurora" aria-hidden="true"><span></span><span></span><span></span></div>
       <div class="ld-hero-text">
         <p class="ld-eyebrow" data-reveal>${escapeHtml(t("about.pro_eyebrow"))}</p>
-        <h1 data-reveal>${escapeHtml(t("about.pro_title"))}</h1>
+        <h2 class="ld-hero-title" data-reveal>${escapeHtml(t("about.pro_title"))}</h2>
         <p class="ld-lead" data-reveal>${escapeHtml(t("about.pro_lead"))}</p>
         <ul class="ld-hero-points" data-reveal>
           <li><span aria-hidden="true">✦</span> ${escapeHtml(t("about.pro_point_free"))}</li>

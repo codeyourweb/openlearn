@@ -191,6 +191,8 @@ jobs:
         run: |
           docker compose build tests
           docker compose run --rm -e OL_TEST_BASE_URL=http://app:8000 tests
+      - name: Accessibility audit (axe-core)
+        run: docker compose run --rm tests pytest -q tests/test_accessibility.py
       - name: Logs on failure
         if: failure()
         run: docker compose logs --tail 200

@@ -50,6 +50,16 @@ export async function renderHost({ code }) {
   }
 
   let timerHandle = null;
+  let lastAnnounced = null;
+
+  const announceTimer = (message) => {
+    const region = root.querySelector("#timer-announce");
+    if (!region) return;
+    region.textContent = "";
+    window.setTimeout(() => {
+      region.textContent = message;
+    }, 40);
+  };
   let currentDeadline = null;
   let clockOffset = 0;
   let closed = false;
@@ -84,7 +94,14 @@ export async function renderHost({ code }) {
         fill.style.width = `${Math.min(100, (left / total) * 100)}%`;
         fill.classList.toggle("low", left < total * 0.3);
       }
-      if (label) label.textContent = `${Math.ceil(left / 1000)}s`;
+      const secondsLeft = Math.ceil(left / 1000);
+      if (label) label.textContent = `${secondsLeft}s`;
+      // A counter read out ten times a second is noise. The thresholds that
+      // matter are the last thirty seconds and the last ten.
+      if ((secondsLeft === 30 || secondsLeft === 10) && secondsLeft !== lastAnnounced) {
+        lastAnnounced = secondsLeft;
+        announceTimer(t("play.time_left").replace("{seconds}", String(secondsLeft)));
+      }
       const runClock = root.querySelector("[data-run-clock]");
       if (runClock) {
         const deadline = state.session && state.session.run_deadline;
@@ -349,6 +366,7 @@ export async function renderHost({ code }) {
           question.deadline
             ? `<div class="timer">
                  <div class="timer-bar"><div class="timer-fill"></div></div>
+                 <span id="timer-announce" class="visually-hidden" role="status" aria-live="polite"></span>
                  <div class="timer-row">
                    <span>${question.points} ${t("common.points")}</span>
                    ${
@@ -356,7 +374,7 @@ export async function renderHost({ code }) {
                        ? `<span class="timer-run">${t("play.whole_quiz")} <span data-run-clock></span></span>`
                        : ""
                    }
-                   <span data-timer-label>${Math.ceil(remainingMs() / 1000)}s</span>
+                   <span data-timer-label aria-hidden="true">${Math.ceil(remainingMs() / 1000)}s</span>
                  </div>
                </div>`
             : `<div class="timer timer-off">

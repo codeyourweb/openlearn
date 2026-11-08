@@ -462,7 +462,7 @@ export async function renderQuizDetail({ id, query }) {
       ${quiz.moderation_note ? `<div class="banner warn">${t("quiz.moderation_note")}: ${escapeHtml(quiz.moderation_note)}</div>` : ""}
       ${status !== "public" && !isOwner ? `<div class="banner warn">${t("quiz.not_published")}</div>` : ""}
 
-      <nav class="tabs" role="tablist">
+      <nav class="tabs" role="tablist" aria-label="${escapeHtml(t("quiz.sections"))}">
         ${tabs
           .map(
             (tab) => `<button class="tab ${tab.key === initialTab ? "is-active" : ""}" role="tab"
