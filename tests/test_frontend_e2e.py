@@ -339,6 +339,9 @@ def test_a_private_instance_opens_on_the_wiki_listing(browser):
     """Demo mode owns the tour: a private instance starts on its content."""
     context, page, recorder = new_page(browser)
     try:
+        meta = page.request.get(f"{BASE_URL}/api/v1/meta").json()
+        if meta.get("demo_mode"):
+            pytest.skip("a demo instance opens on its presentation page")
         page.goto(f"{BASE_URL}/", wait_until="networkidle")
         # The suite runs a private instance: no demo seed, no presentation page.
         # Its catalogue may be empty, and an empty grid stays hidden, so the
@@ -1347,7 +1350,10 @@ def test_rich_formatting_keeps_the_selected_text_and_the_landing_is_home(browser
         expect(page.locator(".landing .ld-scene")).to_have_count(6)
         expect(page.locator(".ld-scene-ai .ld-ai-badge")).to_be_visible()
         first_nav = page.locator("#nav a:visible").first
-        expect(first_nav).to_have_attribute("href", "/wiki")
+        meta = page.request.get(f"{BASE_URL}/api/v1/meta").json()
+        # A demo instance keeps its presentation page in the header; a private
+        # one starts on the wiki listing, which is then the first link.
+        expect(first_nav).to_have_attribute("href", "/about" if meta.get("demo_mode") else "/wiki")
 
         # --- the catalogue has a public tab and, once signed in, a mine tab -
         page.goto(f"{BASE_URL}/quizzes", wait_until="networkidle")
