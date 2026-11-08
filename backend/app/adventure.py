@@ -13,6 +13,8 @@ database, and therefore stays trivially testable.
 
 from __future__ import annotations
 
+import re
+import unicodedata
 from typing import Any
 
 MAX_NODES = 200
@@ -23,6 +25,21 @@ MAX_EFFECTS = 12
 
 class AdventureError(ValueError):
     """Raised when a story graph is not playable."""
+
+
+def slug_key(value: Any, *, limit: int = 60) -> str:
+    """Turn written words into a usable technical key.
+
+    Adventure authors write "Points forts" or "courage équestre" in a field meant
+    for an identifier, and used to be answered with an English message about
+    letters, digits and underscores. The key is internal: it is derived from what
+    was written instead of refusing the words. The browser implements the same
+    rule, so both sides agree on what a label becomes.
+    """
+    decomposed = unicodedata.normalize("NFKD", str(value or ""))
+    stripped = "".join(char for char in decomposed if not unicodedata.combining(char))
+    slug = re.sub(r"[^A-Za-z0-9_-]+", "-", stripped).strip("-_").lower()
+    return (slug or "item")[:limit]
 
 
 def _text(entity: Any, field: str) -> str:

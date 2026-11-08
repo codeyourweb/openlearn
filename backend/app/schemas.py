@@ -4,13 +4,12 @@
 
 from __future__ import annotations
 
-import re
-import unicodedata
 from datetime import datetime
 from typing import Annotated, Literal
 
 from pydantic import BaseModel, ConfigDict, EmailStr, Field, field_validator, model_validator
 
+from .adventure import slug_key as _slug_key
 from .models import SUPPORTED_LANGUAGES
 from .sanitize import html_to_text, sanitize_html, sanitize_plain
 
@@ -184,20 +183,6 @@ class QuestionIn(BaseModel):
 # ---------------------------------------------------------------------------
 # Branching ("adventure") mode
 # ---------------------------------------------------------------------------
-
-def _slug_key(value: str, *, limit: int = 60) -> str:
-    """Turn a written label into a usable technical key.
-
-    Adventure authors write "Points forts" or "courage équestre" in a field meant
-    for an identifier, and used to be answered with an English message about
-    letters, digits and underscores. The key is internal: the software derives it
-    from what was written instead of refusing the words.
-    """
-    decomposed = unicodedata.normalize("NFKD", str(value or ""))
-    stripped = "".join(char for char in decomposed if not unicodedata.combining(char))
-    slug = re.sub(r"[^A-Za-z0-9_-]+", "-", stripped).strip("-_").lower()
-    return (slug or "item")[:limit]
-
 
 class AdventureAttributeIn(BaseModel):
     key: str = Field(min_length=1, max_length=40)
@@ -637,6 +622,53 @@ class AiGenerateIn(BaseModel):
         cleaned = sanitize_plain(value, max_length=300)
         if len(cleaned) < 3:
             raise ValueError("Topic is too short.")
+        return cleaned
+
+
+class AiAdventureIn(BaseModel):
+    """What an author writes before the model drafts a whole story."""
+
+    topic: str = Field(min_length=3, max_length=300)
+    brief: str = Field(default="", max_length=1000)
+    scene_count: int = Field(default=6, ge=3, le=12)
+    language: LanguageCode = "en"
+    level: str = Field(default="", max_length=60)
+    # A generated story is saved as a draft the author can play and edit; keeping
+    # it in memory only is useful for a preview, not for the normal flow.
+    save: bool = True
+
+    @field_validator("topic")
+    @classmethod
+    def _clean_topic(cls, value: str) -> str:
+        cleaned = sanitize_plain(value, max_length=300)
+        if len(cleaned) < 3:
+            raise ValueError("Topic is too short.")
+        return cleaned
+
+    @field_validator("brief")
+    @classmethod
+    def _clean_brief(cls, value: str) -> str:
+        return sanitize_plain(value, max_length=1000)
+
+    @field_validator("level")
+    @classmethod
+    def _clean_level(cls, value: str) -> str:
+        return sanitize_plain(value, max_length=60)
+
+
+class AiAdventureReviseIn(BaseModel):
+    """An instruction about an existing story: the model rewrites it whole."""
+
+    instruction: str = Field(min_length=3, max_length=1000)
+    language: LanguageCode | None = None
+    save: bool = False
+
+    @field_validator("instruction")
+    @classmethod
+    def _clean_instruction(cls, value: str) -> str:
+        cleaned = sanitize_plain(value, max_length=1000)
+        if len(cleaned) < 3:
+            raise ValueError("Instruction is too short.")
         return cleaned
 
 

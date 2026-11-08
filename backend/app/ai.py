@@ -18,6 +18,7 @@ from typing import Any
 import httpx
 
 from . import runtime
+from .adventure import slug_key
 from .config import settings
 from .models import SUPPORTED_LANGUAGES
 from .sanitize import html_to_text, sanitize_html, sanitize_plain
@@ -588,6 +589,353 @@ def _safe_int(value: Any, default: int = -1) -> int:
         return int(value)
     except (TypeError, ValueError):
         return default
+
+
+# --- Branching stories ------------------------------------------------------
+#
+# A story is a graph, not a list: the model's answer is coerced into a shape the
+# editor and the run engine already accept, and every dangling reference is
+# repaired here rather than rejected in front of the author. A draft that cannot
+# be walked is worthless, so the repair is conservative: unknown targets point at
+# an ending, unknown attributes are dropped, and a scene with no choice gets a way
+# out.
+
+ADVENTURE_SYSTEM = (
+    "You write short branching stories for a learning application. The reader "
+    "moves from scene to scene by picking one of the choices offered, and the "
+    "story ends on one of several endings. You always answer with a single JSON "
+    "object and nothing else."
+)
+
+_ADVENTURE_RULES = [
+    "Write 5 to 12 scenes in total, including the endings.",
+    "A question scene is a paragraph of two to four sentences, then two or three choices.",
+    "An ending scene closes the story, has no choices, and says what the reader achieved.",
+    "Every choice has a short, concrete text and leads to a scene that exists.",
+    "Declare two to four attributes: the hidden counters of the story (courage, knowledge, trust...).",
+    "A choice may change up to three attributes; each effect names a declared attribute and a delta between -3 and 3.",
+    "Provide at least two endings, so that the story can end badly as well as well.",
+    "Write plain prose: no HTML, no markdown, no surrounding quotation marks.",
+]
+
+
+def _adventure_shape() -> str:
+    return (
+        "Answer with this exact shape:\n"
+        "{\n"
+        '  "title": "a short title",\n'
+        '  "description": "one sentence describing the story",\n'
+        '  "start": "scene-1",\n'
+        '  "victory_text": "what a good run achieves",\n'
+        '  "death_text": "what a failed run leaves behind",\n'
+        '  "attributes": [{"key": "courage", "label": "Courage", "initial_value": 0}],\n'
+        '  "nodes": [\n'
+        '    {"key": "scene-1", "kind": "question", "text": "the scene",\n'
+        '     "choices": [{"text": "what the reader does", "target": "scene-2",\n'
+        '                  "effects": [{"attribute": "courage", "delta": 1}]}]},\n'
+        '    {"key": "scene-2", "kind": "ending", "text": "how it ends",\n'
+        '     "outcomes": [{"kind": "default", "text": "a closing word"}]}\n'
+        "  ]\n"
+        "}\n"
+        "Return JSON only."
+    )
+
+
+def _as_int(value: Any, default: int = 0) -> int:
+    try:
+        return int(value)
+    except (TypeError, ValueError):
+        return default
+
+
+def _paragraph(text_: Any, *, limit: int = 2000) -> str:
+    """Plain model text becomes one paragraph of safe HTML."""
+    cleaned = sanitize_plain(str(text_ or ""), max_length=limit)
+    return f"<p>{cleaned}</p>" if cleaned else ""
+
+
+def generate_adventure(
+    *,
+    topic: str,
+    brief: str = "",
+    scene_count: int = 6,
+    language: str = "en",
+    level: str = "",
+) -> dict:
+    """Ask the model for a complete story and return a walkable payload."""
+    scene_count = max(3, min(scene_count, 12))
+    language = language if language in SUPPORTED_LANGUAGES else "en"
+    grounding = web_context(topic)
+    prompt = (
+        f"Write a branching story about: {topic}\n"
+        f"Scenes: about {scene_count}. Difficulty: {level or 'intermediate'}.\n"
+        f"Write the content in {LANGUAGE_NAMES[language]}.\n"
+    )
+    if brief:
+        prompt += f"What the story must teach or respect:\n{brief}\n"
+    prompt += "Rules:\n" + "\n".join(f"- {rule}" for rule in _ADVENTURE_RULES) + "\n\n"
+    if grounding:
+        prompt += (
+            "Recent web context (may be incomplete, verify before use):\n"
+            + "\n".join(grounding)
+            + "\n\n"
+        )
+    prompt += _adventure_shape()
+    data = _json_call(
+        [
+            {"role": "system", "content": ADVENTURE_SYSTEM},
+            {"role": "user", "content": prompt},
+        ],
+        max_tokens=min(8000, 900 * scene_count + 1500),
+        temperature=0.5,
+    )
+    return normalise_generated_adventure(
+        data, topic=topic, language=language, scene_count=scene_count
+    )
+
+
+def revise_adventure(current: dict, instruction: str, *, language: str | None = None) -> dict:
+    """Ask the model to rewrite an existing story, keeping its structure."""
+    language = language if language in SUPPORTED_LANGUAGES else None
+    prompt = (
+        "Here is an existing branching story as JSON:\n"
+        + json.dumps(current, ensure_ascii=False)
+        + "\n\nApply this change:\n"
+        + instruction
+        + "\n\nKeep every scene key, choice target and attribute key that the change "
+        "does not need to touch: the story must stay walkable from its start scene to "
+        "its endings. Return the whole story, in the same shape, with the same rules.\n"
+    )
+    if language:
+        prompt += f"Write the content in {LANGUAGE_NAMES[language]}.\n"
+    prompt += "Rules:\n" + "\n".join(f"- {rule}" for rule in _ADVENTURE_RULES) + "\n\n"
+    prompt += _adventure_shape()
+    data = _json_call(
+        [
+            {"role": "system", "content": ADVENTURE_SYSTEM},
+            {"role": "user", "content": prompt},
+        ],
+        max_tokens=8000,
+        temperature=0.3,
+    )
+    scene_count = len(current.get("nodes") or []) or 6
+    return normalise_generated_adventure(
+        data,
+        topic=str(current.get("title") or "story"),
+        language=language or "en",
+        scene_count=scene_count,
+    )
+
+
+def normalise_generated_adventure(
+    data: dict, *, topic: str, language: str, scene_count: int
+) -> dict:
+    """Coerce model output into a graph the editor and the engine accept.
+
+    Nothing here trusts the model: keys are re-derived, references are checked
+    against what exists, and a graph that would strand the reader is repaired.
+    """
+    title = sanitize_plain(str(data.get("title") or topic), max_length=120)
+    if len(title) < 3:
+        title = sanitize_plain(topic, max_length=120) or "Generated story"
+    description = sanitize_plain(str(data.get("description") or ""), max_length=2000)
+
+    attributes: list[dict] = []
+    taken: set[str] = set()
+    raw_attributes = data.get("attributes")
+    for raw in raw_attributes[:6] if isinstance(raw_attributes, list) else []:
+        if not isinstance(raw, dict):
+            continue
+        label = sanitize_plain(str(raw.get("label") or raw.get("key") or ""), max_length=80)
+        if not label:
+            continue
+        key = slug_key(raw.get("key") or label, limit=40)
+        base = key
+        suffix = 2
+        while key in taken:
+            key = f"{base[:36]}-{suffix}"
+            suffix += 1
+        taken.add(key)
+        attributes.append(
+            {
+                "key": key,
+                "label": label,
+                "initial_value": max(-10, min(_as_int(raw.get("initial_value", 0)), 10)),
+                "min_value": None,
+                "max_value": None,
+            }
+        )
+    if not attributes:
+        attributes = [{"key": "score", "label": "Score", "initial_value": 0, "min_value": None, "max_value": None}]
+    attribute_keys = [attribute["key"] for attribute in attributes]
+
+    raw_nodes = data.get("nodes")
+    if not isinstance(raw_nodes, list) or not raw_nodes:
+        raise AiError("The AI provider did not return any scene.")
+
+    nodes: list[dict] = []
+    seen: set[str] = set()
+    for index, raw in enumerate(raw_nodes[: min(60, scene_count + 12)]):
+        if not isinstance(raw, dict):
+            continue
+        text_html = _paragraph(raw.get("text_html") or raw.get("text"))
+        if not html_to_text(text_html):
+            continue
+        key = slug_key(raw.get("key") or f"scene-{index + 1}")
+        base = key
+        suffix = 2
+        while key in seen:
+            key = f"{base[:52]}-{suffix}"
+            suffix += 1
+        seen.add(key)
+        kind = "ending" if str(raw.get("kind") or "").lower() == "ending" else "question"
+        nodes.append({"key": key, "kind": kind, "text_html": text_html, "raw": raw})
+    if not nodes:
+        raise AiError("The AI provider did not return any readable scene.")
+
+    # A story needs somewhere to end: without an ending, a wrong branch either
+    # loops or strands the reader on a scene with no way out.
+    endings = [node["key"] for node in nodes if node["kind"] == "ending"]
+    if not endings:
+        nodes.append(
+            {
+                "key": "ending",
+                "kind": "ending",
+                "text_html": _paragraph(data.get("victory_text") or "The story ends here."),
+                "raw": {},
+            }
+        )
+        seen.add("ending")
+        endings = ["ending"]
+    fallback_target = endings[0]
+
+    start = slug_key(data.get("start") or "")
+    if start not in seen:
+        start = next((node["key"] for node in nodes if node["kind"] == "question"), nodes[0]["key"])
+    if start not in {node["key"] for node in nodes if node["kind"] == "question"}:
+        # The start scene must be playable: an ending cannot offer choices.
+        nodes[0]["kind"] = "question"
+        start = nodes[0]["key"]
+
+    built: list[dict] = []
+    for position, node in enumerate(nodes):
+        entry: dict[str, Any] = {
+            "key": node["key"],
+            "kind": node["kind"],
+            "text_html": node["text_html"],
+            "pos_x": 260 * (position % 4),
+            "pos_y": 200 * (position // 4),
+            "choices": [],
+            "outcomes": [],
+        }
+        raw = node["raw"]
+        if node["kind"] == "ending":
+            for outcome in (raw.get("outcomes") or [])[:8] if isinstance(raw.get("outcomes"), list) else []:
+                if not isinstance(outcome, dict):
+                    continue
+                kind = str(outcome.get("kind") or "default").lower()
+                if kind not in {"highest", "lowest", "range", "default"}:
+                    kind = "default"
+                attribute = slug_key(outcome.get("attribute") or "", limit=40) if outcome.get("attribute") else None
+                if attribute and attribute not in attribute_keys:
+                    attribute = None
+                text_html = _paragraph(outcome.get("text_html") or outcome.get("text"))
+                if not text_html:
+                    continue
+                entry["outcomes"].append(
+                    {
+                        "kind": kind,
+                        "attribute": attribute,
+                        "range_min": _as_int(outcome.get("range_min"), 0)
+                        if outcome.get("range_min") is not None
+                        else None,
+                        "range_max": _as_int(outcome.get("range_max"), 0)
+                        if outcome.get("range_max") is not None
+                        else None,
+                        "text_html": text_html,
+                        "priority": max(0, min(_as_int(outcome.get("priority"), 0), 999)),
+                    }
+                )
+        else:
+            raw_choices = raw.get("choices")
+            choice_keys: set[str] = set()
+            for choice in raw_choices[:8] if isinstance(raw_choices, list) else []:
+                if not isinstance(choice, dict):
+                    continue
+                text = sanitize_plain(str(choice.get("text") or ""), max_length=500)
+                if not text:
+                    continue
+                # The editor stores choices by key: the model rarely writes one,
+                # and the text is the only thing it is asked for.
+                choice_key = slug_key(choice.get("key") or text, limit=40)
+                base_key = choice_key
+                suffix_key = 2
+                while choice_key in choice_keys:
+                    choice_key = f"{base_key[:36]}-{suffix_key}"
+                    suffix_key += 1
+                choice_keys.add(choice_key)
+                target = slug_key(choice.get("target") or "")
+                if target not in seen:
+                    target = fallback_target
+                effects: list[dict] = []
+                raw_effects = choice.get("effects")
+                for effect in raw_effects[:3] if isinstance(raw_effects, list) else []:
+                    if not isinstance(effect, dict):
+                        continue
+                    attribute = slug_key(effect.get("attribute") or "", limit=40)
+                    if attribute not in attribute_keys:
+                        continue
+                    delta = max(-3, min(_as_int(effect.get("delta"), 1) or 1, 3))
+                    effects.append({"attribute": attribute, "delta": delta})
+                entry["choices"].append(
+                    {
+                        "key": choice_key,
+                        "text": text,
+                        "target": target,
+                        "effects": effects,
+                    }
+                )
+            if not entry["choices"]:
+                # A scene the model left without a choice is not a dead end the
+                # author has to discover at save time: it is an ending.
+                entry["kind"] = "ending"
+            elif len(entry["choices"]) == 1:
+                entry["choices"].append(
+                    {"key": "continue", "text": "Continue", "target": fallback_target, "effects": []}
+                )
+        if entry["kind"] == "ending" and not entry["outcomes"]:
+            closing = _paragraph(data.get("victory_text") or data.get("victory_text_html") or "")
+            entry["outcomes"] = [
+                {
+                    "kind": "default",
+                    "attribute": None,
+                    "range_min": None,
+                    "range_max": None,
+                    "text_html": closing or entry["text_html"],
+                    "priority": 0,
+                }
+            ]
+        built.append(entry)
+
+    return {
+        "title": title,
+        "description": description,
+        "wrong_answer_policy": "zero",
+        "mode": "adventure",
+        "default_language": language,
+        "adventure": {
+            "start": start,
+            "attributes": attributes,
+            "nodes": built,
+            "death_text_html": _paragraph(data.get("death_text") or data.get("death_text_html") or ""),
+            "victory_text_html": _paragraph(data.get("victory_text") or data.get("victory_text_html") or ""),
+            "timer_mode": "none",
+            "time_limit_seconds": 0,
+            "timeout_effect": "penalty",
+            "timeout_penalty": 1,
+            "timeout_penalty_attribute": "",
+        },
+    }
 
 
 def text_plain(html: str) -> str:

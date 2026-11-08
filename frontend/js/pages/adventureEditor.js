@@ -927,6 +927,16 @@ export async function renderAdventureEditor({ id }) {
   const root = document.createElement("div");
   root.className = "adv-editor";
 
+  // Revising an existing story with the model is an editing aid, not a format:
+  // it appears only when the instance has a provider configured.
+  let aiAvailable = false;
+  try {
+    const status = await api.get("/api/v1/ai/status");
+    aiAvailable = Boolean(status.available) && !isNew;
+  } catch {
+    /* no provider, or no answer: the editor stays exactly as it was */
+  }
+
   let model = emptyModel();
   if (!isNew) {
     try {
@@ -964,6 +974,11 @@ export async function renderAdventureEditor({ id }) {
       <span class="muted small adv-status"></span>
       <div class="spacer"></div>
       ${
+        aiAvailable
+          ? `<button type="button" class="btn btn-sm btn-ghost" data-act="ai-open">${t("adv_editor.ai_revise")}</button>`
+          : ""
+      }
+      ${
         isNew
           ? ""
           : `<a class="btn btn-sm btn-ghost" href="/adventures/${id}/play" target="_blank" rel="noopener">${t(
@@ -972,6 +987,17 @@ export async function renderAdventureEditor({ id }) {
       }
       <button type="button" class="btn btn-sm" data-act="save">${t("action.save")}</button>
     </header>
+
+    <section class="adv-ai-panel" data-ai-panel hidden aria-label="${t("adv_editor.ai_revise")}">
+      <label class="label" for="adv-ai-instruction">${t("adv_editor.ai_revise")}</label>
+      <textarea class="textarea" id="adv-ai-instruction" rows="2" maxlength="1000"
+                placeholder="${t("adv_editor.ai_instruction_ph")}"></textarea>
+      <div class="row-wrap mt-2">
+        <button type="button" class="btn btn-primary btn-sm" data-act="ai-run">${t("adv_editor.ai_apply")}</button>
+        <button type="button" class="btn btn-ghost btn-sm" data-act="ai-close">${t("adv_editor.ai_close")}</button>
+        <span class="muted small" data-ai-status aria-live="polite"></span>
+      </div>
+    </section>
 
     <div class="adv-editor-body">
       <div class="adv-canvas-wrap">
@@ -1181,6 +1207,55 @@ export async function renderAdventureEditor({ id }) {
     refreshStatus();
     scheduleAutosave();
   };
+
+  // Revising with the model: the answer replaces the graph in memory, not in the
+  // database. The author sees it on the canvas and the normal save decides.
+  const aiPanel = root.querySelector("[data-ai-panel]");
+  const aiNote = root.querySelector("[data-ai-status]");
+  const wireAiPanel = () => {
+    if (!aiPanel) return;
+    root.querySelector('[data-act="ai-open"]')?.addEventListener("click", () => {
+      aiPanel.hidden = !aiPanel.hidden;
+      if (!aiPanel.hidden) aiPanel.querySelector("textarea").focus();
+    });
+    aiPanel.querySelector('[data-act="ai-close"]').addEventListener("click", () => {
+      aiPanel.hidden = true;
+    });
+    aiPanel.querySelector('[data-act="ai-run"]').addEventListener("click", async (event) => {
+      const field = aiPanel.querySelector("textarea");
+      const instruction = field.value.trim();
+      if (instruction.length < 3) {
+        field.focus();
+        return;
+      }
+      const button = event.currentTarget;
+      button.disabled = true;
+      aiNote.textContent = t("adv_new.generating");
+      try {
+        const result = await api.post(`/api/v1/ai/adventures/${model.id}/revise`, { instruction });
+        const draft = result && result.draft;
+        if (!draft || !Array.isArray(draft.nodes) || draft.nodes.length === 0) {
+          throw new Error(t("adv_editor.ai_failed"));
+        }
+        model.adventure = { ...model.adventure, ...draft };
+        normalizePositions(model);
+        // The selected node may have been rewritten away.
+        if (!nodeByKey(model, selectedKey)) selectedKey = model.adventure.start;
+        markDirty();
+        paintAll();
+        aiNote.textContent = "";
+        aiPanel.hidden = true;
+        toast(t("adv_editor.ai_applied"), "success");
+      } catch (error) {
+        const detail = (error.payload && error.payload.detail) || error.detail || "";
+        aiNote.textContent = "";
+        toast(detail || t("adv_editor.ai_failed"), "error");
+      } finally {
+        button.disabled = false;
+      }
+    });
+  };
+  wireAiPanel();
 
   const wireInspector = () => {
     const node = current();

@@ -12,6 +12,7 @@ import { escapeHtml, toast } from "./ui.js";
 
 import { renderAccount } from "./pages/account.js";
 import { renderAdmin } from "./pages/admin.js";
+import { renderAdventureAi, renderAdventureMethod } from "./pages/adventureNew.js";
 import { renderAdventureEditor } from "./pages/adventureEditor.js";
 import { renderAdventurePlay } from "./pages/adventurePlay.js";
 import { renderLogin, renderRegister } from "./pages/auth.js";
@@ -61,7 +62,10 @@ register("/quizzes/:id/edit", renderEditor);
 register("/quizzes/:id", renderQuizDetail);
 // Canonical, keyword-bearing form of the same page.
 register("/quizzes/:id/:slug", renderQuizDetail);
-register("/adventures/new", renderAdventureEditor);
+// Same two-step entry as the other formats: hand-built, or drafted by the model.
+register("/adventures/new", renderAdventureMethod);
+register("/adventures/new/manual", renderAdventureEditor);
+register("/adventures/new/ai", renderAdventureAi);
 register("/adventures/:id/edit", renderAdventureEditor);
 register("/adventures/:id/play", renderAdventurePlay);
 register("/play/:code", renderPlay);
