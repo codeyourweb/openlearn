@@ -1132,6 +1132,7 @@ export const it = {
   "wiki.embed_full_page": "Apri la pagina intera",
   "wiki.embed_failed": "Questo contenuto non è disponibile.",
   "wiki.embed_deck": "Carte di ripasso",
+  "wiki.embed_remove": "Rimuovi questo blocco",
   "wiki.side_toggle": "Pagine",
   "wiki.embed_browse": "Sfoglia le carte",
   "wiki.embed_none": "Collega prima un questionario a questa wiki.",

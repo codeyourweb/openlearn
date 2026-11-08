@@ -1132,6 +1132,7 @@ export const hi = {
   "wiki.embed_full_page": "पूरा पृष्ठ खोलें",
   "wiki.embed_failed": "यह सामग्री उपलब्ध नहीं है।",
   "wiki.embed_deck": "पुनरावृत्ति कार्ड",
+  "wiki.embed_remove": "यह ब्लॉक हटाएँ",
   "wiki.side_toggle": "पृष्ठ",
   "wiki.embed_browse": "कार्ड ब्राउज़ करें",
   "wiki.embed_none": "कृपया पहले इस विकी से कोई प्रश्नोत्तरी जोड़ें।",

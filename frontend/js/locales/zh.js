@@ -1132,6 +1132,7 @@ export const zh = {
   "wiki.embed_full_page": "打开完整页面",
   "wiki.embed_failed": "此内容不可用。",
   "wiki.embed_deck": "复习卡片",
+  "wiki.embed_remove": "移除这个区块",
   "wiki.side_toggle": "页面",
   "wiki.embed_browse": "浏览卡片",
   "wiki.embed_none": "请先为此 Wiki 关联一个问卷。",

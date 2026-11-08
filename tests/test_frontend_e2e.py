@@ -2159,6 +2159,20 @@ def test_a_revision_deck_is_not_rewritten_into_a_stranger_s_quiz(browser):
         markdown = next(item for item in saved["pages"] if item["id"] == page_id)["content_md"]
         assert f"{{deck:{deck['id']}}}" in markdown, markdown
         assert f"{{quiz:{deck['id']}}}" not in markdown, markdown
+
+        # The caret cannot enter an opaque block, so the block carries the way
+        # out: a page written before the fix holds a marker its author must be
+        # able to delete without switching to markdown by hand.
+        page.goto(f"{BASE_URL}/wiki/{wiki['id']}/edit/{page_id}", wait_until="networkidle")
+        surface = page.locator("#wiki-wysiwyg")
+        expect(surface.locator(".wiki-embed")).to_have_count(1, timeout=15000)
+        surface.locator("[data-embed-remove]").click()
+        expect(surface.locator(".wiki-embed")).to_have_count(0)
+        page.click("#wiki-save")
+        expect(page).to_have_url(re.compile(r".*/p/.+$"), timeout=15000)
+        cleared = page.request.get(f"{BASE_URL}/api/v1/wiki/{wiki['id']}").json()
+        text = next(item for item in cleared["pages"] if item["id"] == page_id)["content_md"]
+        assert f"{{deck:{deck['id']}}}" not in text and f"{{quiz:{deck['id']}}}" not in text, text
         assert recorder.errors == [], recorder.errors
     finally:
         context.close()

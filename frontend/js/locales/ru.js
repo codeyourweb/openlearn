@@ -1132,6 +1132,7 @@ export const ru = {
   "wiki.embed_full_page": "Открыть страницу целиком",
   "wiki.embed_failed": "Этот контент недоступен.",
   "wiki.embed_deck": "Карточки для повторения",
+  "wiki.embed_remove": "Удалить этот блок",
   "wiki.side_toggle": "Страницы",
   "wiki.embed_browse": "Просмотреть карточки",
   "wiki.embed_none": "Сначала привяжите опросник к этой вики.",

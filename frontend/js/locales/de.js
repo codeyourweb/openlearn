@@ -1132,6 +1132,7 @@ export const de = {
   "wiki.embed_full_page": "Vollseite öffnen",
   "wiki.embed_failed": "Dieser Inhalt ist nicht verfügbar.",
   "wiki.embed_deck": "Lernkarten",
+  "wiki.embed_remove": "Diesen Block entfernen",
   "wiki.side_toggle": "Seiten",
   "wiki.embed_browse": "Karten durchsuchen",
   "wiki.embed_none": "Verknüpfen Sie zuerst einen Fragebogen mit diesem Wiki.",

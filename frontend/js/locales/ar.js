@@ -1132,6 +1132,7 @@ export const ar = {
   "wiki.embed_full_page": "فتح الصفحة كاملة",
   "wiki.embed_failed": "هذا المحتوى غير متاح.",
   "wiki.embed_deck": "بطاقات المراجعة",
+  "wiki.embed_remove": "إزالة هذه الكتلة",
   "wiki.side_toggle": "الصفحات",
   "wiki.embed_browse": "تصفّح البطاقات",
   "wiki.embed_none": "يرجى ربط اختبار بهذا الويكي أولاً.",

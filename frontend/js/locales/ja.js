@@ -1132,6 +1132,7 @@ export const ja = {
   "wiki.embed_full_page": "フルページで開く",
   "wiki.embed_failed": "このコンテンツは利用できません。",
   "wiki.embed_deck": "復習カード",
+  "wiki.embed_remove": "このブロックを削除",
   "wiki.side_toggle": "ページ",
   "wiki.embed_browse": "カードを閲覧",
   "wiki.embed_none": "まずこのWikiにクイズを紐付けてください。",

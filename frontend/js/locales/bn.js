@@ -1132,6 +1132,7 @@ export const bn = {
   "wiki.embed_full_page": "সম্পূর্ণ পাতা খুলুন",
   "wiki.embed_failed": "এই কনটেন্ট উপলব্ধ নয়।",
   "wiki.embed_deck": "রিভিশন কার্ড",
+  "wiki.embed_remove": "এই ব্লকটি সরান",
   "wiki.side_toggle": "পাতা",
   "wiki.embed_browse": "কার্ড ব্রাউজ করুন",
   "wiki.embed_none": "অনুগ্রহ করে আগে এই উইকির সাথে একটি প্রশ্নাবলি যুক্ত করুন।",

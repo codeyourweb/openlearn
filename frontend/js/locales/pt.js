@@ -1132,6 +1132,7 @@ export const pt = {
   "wiki.embed_full_page": "Abrir a página completa",
   "wiki.embed_failed": "Este conteúdo está indisponível.",
   "wiki.embed_deck": "Fichas de revisão",
+  "wiki.embed_remove": "Remover este bloco",
   "wiki.side_toggle": "Páginas",
   "wiki.embed_browse": "Explorar as fichas",
   "wiki.embed_none": "Associe primeiro um questionário a este wiki.",

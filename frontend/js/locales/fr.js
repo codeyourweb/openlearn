@@ -1132,6 +1132,7 @@ export const fr = {
   "wiki.embed_full_page": "Ouvrir la page complète",
   "wiki.embed_failed": "Ce contenu est indisponible.",
   "wiki.embed_deck": "Cartes de révision",
+  "wiki.embed_remove": "Retirer ce bloc",
   "wiki.side_toggle": "Pages",
   "wiki.embed_browse": "Parcourir les cartes",
   "wiki.embed_none": "Veuillez d'abord rattacher un questionnaire à ce wiki.",

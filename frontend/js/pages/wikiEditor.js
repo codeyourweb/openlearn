@@ -362,6 +362,19 @@ async function _wikiEditor(root, params) {
     renderedMarkdown = null;
   });
 
+  // A block cannot be reached by the caret, so Backspace never deletes it: the
+  // button is the only way out, and it is in the editor only.
+  wysiwyg.addEventListener("click", (event) => {
+    const remove = event.target.closest("[data-embed-remove]");
+    if (!remove) return;
+    event.preventDefault();
+    const block = remove.closest(".wiki-embed");
+    if (!block) return;
+    block.remove();
+    renderedMarkdown = null;
+    wysiwyg.dispatchEvent(new Event("input", { bubbles: true }));
+  });
+
   const currentMarkdown = () =>
     model.mode === "wysiwyg" ? htmlToMarkdown(wysiwyg.innerHTML) : textarea.value;
 
@@ -444,6 +457,23 @@ async function _wikiEditor(root, params) {
     });
   };
 
+  /** An embedded block is opaque to the caret: give it a way out. */
+  const decorateEmbeds = () => {
+    wysiwyg.querySelectorAll(".wiki-embed").forEach((block) => {
+      if (block.querySelector("[data-embed-remove]")) return;
+      const remove = document.createElement("button");
+      remove.type = "button";
+      remove.className = "wiki-embed-remove";
+      remove.dataset.embedRemove = "1";
+      remove.setAttribute("aria-label", t("wiki.embed_remove"));
+      remove.title = t("wiki.embed_remove");
+      remove.textContent = "×";
+      block.appendChild(remove);
+    });
+  };
+
+  decorateEmbeds();
+
   /** Paint the rich view: markdown in, coloured text out. */
   const renderRich = (markdown) => {
     // What the surface shows: comparing avoids repainting identical content,
@@ -453,6 +483,7 @@ async function _wikiEditor(root, params) {
     renderedMarkdown = next;
     wysiwyg.innerHTML = markdownToHtml(next, { pages: pageSlugMap() });
     paintCustomColors(wysiwyg);
+    decorateEmbeds();
   };
 
   const switchMode = (mode) => {
@@ -729,6 +760,7 @@ async function _wikiEditor(root, params) {
     caret.collapse(true);
     selection.removeAllRanges();
     selection.addRange(caret);
+    decorateEmbeds();
     wysiwyg.dispatchEvent(new Event("input", { bubbles: true }));
   };
 

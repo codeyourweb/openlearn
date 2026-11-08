@@ -1188,6 +1188,7 @@ export const en = {
   "wiki.embed_full_page": "Open the full page",
   "wiki.embed_failed": "This content is unavailable.",
   "wiki.embed_deck": "Revision cards",
+  "wiki.embed_remove": "Remove this block",
   "wiki.side_toggle": "Pages",
   "wiki.embed_browse": "Browse the cards",
   "wiki.embed_none": "Attach a questionnaire to this wiki first.",
