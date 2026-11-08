@@ -1,7 +1,10 @@
 # syntax=docker/dockerfile:1
 # Test image: pytest (backend, API, OWASP) + Playwright (frontend end-to-end).
 # The Playwright base image ships Chromium and all of its system libraries.
-FROM mcr.microsoft.com/playwright/python:v1.49.1-noble
+# The base image ships the browser binaries, the pip package drives them: the two
+# versions must be identical, or every scenario fails with "Executable doesn't
+# exist". `tests/test_toolchain_versions.py` holds the pair together.
+FROM mcr.microsoft.com/playwright/python:v1.64.1-noble
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
