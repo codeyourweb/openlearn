@@ -1463,7 +1463,7 @@ export const pt = {
   "wiki.ref_label": "Nome da referência",
   "wiki.ref_add": "Adicionar uma fonte",
   "wiki.ref_added": "Fonte adicionada.",
-  "about.tagline": "O conhecimento cresce quando é partilhado"
+  "about.tagline": "O conhecimento cresce quando é partilhado",
   "about.ch_access_title": "Acessível por predefinição",
   "about.ch_access_lead": "Uma plataforma que deixa leitores para trás é apenas meia plataforma. Todas as páginas que qualquer pessoa pode abrir visam o nível AA das WCAG 2.2, e é executada uma auditoria automática em cada compilação.",
   "about.ch_access_b1": "Apenas com teclado: uma ligação para saltar, foco visível, caixas de diálogo que mantêm o teclado dentro e blocos movidos com Alt+setas no editor",
