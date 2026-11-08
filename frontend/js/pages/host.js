@@ -134,7 +134,9 @@ export async function renderHost({ code }) {
    */
   const advanceBar = (question) => {
     const pending = pendingPlayers(question);
-    const timeUp = closed || remainingMs() <= 0;
+    // An untimed question has no deadline: `remainingMs()` answers 0 and the
+    // bar would announce a countdown that never started.
+    const timeUp = Boolean(currentDeadline) && (closed || remainingMs() <= 0);
     const ready = timeUp || pending.length === 0;
     const hint = timeUp
       ? t("host.time_up_ready")
