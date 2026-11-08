@@ -8,7 +8,8 @@
  * have to scroll through all of them to find one.
  */
 
-import { api } from "../api.js";
+import { t } from "../i18n.js";
+import { verificationRow, wireAccountResend } from "./verifyEmail.js";
 import { flagSvg } from "../flags.js";
 import { currentLanguage, LANGUAGES, setLanguage, t, tp } from "../i18n.js";
 import { navigate } from "../router.js";
@@ -101,7 +102,10 @@ export async function renderAccount({ query } = {}) {
   else if (tab === "quizzes") await _paintQuizzes(panel);
   else await _paintHistory(panel);
 
-  if (tab === "profile") _bindProfile(root);
+  if (tab === "profile") {
+    _bindProfile(root);
+    wireAccountResend(root);
+  }
   return root;
 }
 
@@ -116,6 +120,7 @@ function _profileHtml() {
         <h2>${t("account.profile")}</h2>
         <p class="muted small">${t("common.email")}</p>
         <p>${escapeHtml(state.user.email)}</p>
+        ${verificationRow()}
         <p class="muted small">${t("common.display_name")}</p>
         <p>${escapeHtml(state.user.display_name)}</p>
         <p class="muted small">${t("common.created")}</p>

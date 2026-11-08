@@ -126,6 +126,9 @@ export async function renderRegister({ query }) {
       email: String(data.get("email") || "").trim(),
       password: String(data.get("password") || ""),
     });
+    // The account exists but its address is still a claim; say so before the
+    // visitor wonders why the reminder banner is there.
+    toast(t("verify.sent"), "info");
   });
   return root;
 }

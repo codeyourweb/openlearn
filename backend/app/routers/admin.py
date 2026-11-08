@@ -6,13 +6,14 @@ from __future__ import annotations
 
 import json
 
-from fastapi import APIRouter, Depends, HTTPException, Query, Response, status
+from fastapi import APIRouter, Depends, HTTPException, Query, Request, Response, status
 from sqlalchemy import func, or_, select
 from sqlalchemy.orm import Session as OrmSession
 
-from .. import versions
+from .. import abuse, mailer, runtime, verification, versions
+from ..config import settings
 from ..db import get_db
-from ..deps import require_admin, require_staff
+from ..deps import client_ip, require_admin, require_staff
 from ..models import (
     AdventureNode,
     AiReview,
@@ -29,6 +30,40 @@ from ..schemas import AdminUserOut, AdminUserPatch, ModerationIn, QuizIn
 from .quizzes import _apply_quiz, _sync_public_flag, serialise_quiz
 
 router = APIRouter(prefix="/api/v1/admin", tags=["admin"])
+
+
+def _notify_author(
+    db: OrmSession,
+    request: Request,
+    *,
+    owner: User | None,
+    staff: User,
+    title: str,
+    kind: str,
+    path: str,
+    note: str = "",
+) -> None:
+    """Mail the author once their queued content is public.
+
+    Skipped when the moderator approves their own work (they already know), and
+    never fatal: a missing SMTP server must not make a moderation fail.
+    """
+    if owner is None or owner.id == staff.id:
+        return
+    base = verification.public_base(request)
+    if not base:
+        return
+    mailer.send_safely(
+        mailer.publication_approved_message(
+            to=owner.email,
+            title=title,
+            kind=kind,
+            link=f"{base}{path}",
+            instance=runtime.instance_name(db),
+            note=note or "",
+            name=owner.display_name,
+        )
+    )
 
 
 def _quiz_row(db: OrmSession, quiz: Quiz) -> dict:
@@ -166,6 +201,7 @@ def delete_quiz(quiz_id: int, staff: User = Depends(require_staff), db: OrmSessi
 def approve_quiz(
     quiz_id: int,
     payload: ModerationIn,
+    request: Request,
     staff: User = Depends(require_staff),
     db: OrmSession = Depends(get_db),
 ):
@@ -195,6 +231,16 @@ def approve_quiz(
     db.add(quiz)
     db.commit()
     db.refresh(quiz)
+    _notify_author(
+        db,
+        request,
+        owner=db.get(User, quiz.owner_id),
+        staff=staff,
+        title=quiz.title,
+        kind="quiz",
+        path=f"/quizzes/{quiz.id}",
+        note=payload.note or "",
+    )
     return _quiz_row(db, quiz)
 
 
@@ -452,6 +498,7 @@ def list_wikis_admin(
 def approve_wiki(
     wiki_id: int,
     payload: ModerationIn,
+    request: Request,
     staff: User = Depends(require_staff),
     db: OrmSession = Depends(get_db),
 ):
@@ -465,7 +512,50 @@ def approve_wiki(
     wiki.moderation_note = payload.note
     db.commit()
     db.refresh(wiki)
+    _notify_author(
+        db,
+        request,
+        owner=db.get(User, wiki.owner_id),
+        staff=staff,
+        title=wiki.title,
+        kind="wiki",
+        path=f"/wiki/{wiki.id}",
+        note=payload.note or "",
+    )
     return _wiki_row(db, wiki)
+
+
+@router.get("/security/bans")
+def list_bans(admin: User = Depends(require_admin)) -> dict[str, object]:
+    """Who is currently kept away from the forms, and the rule that put them there."""
+    return {
+        "enabled": settings.form_ban_enabled,
+        "threshold": settings.form_ban_strikes,
+        "window_seconds": settings.form_ban_window_seconds,
+        "ban_seconds": settings.form_ban_seconds,
+        "entries": abuse.BANS.entries(),
+    }
+
+
+@router.delete("/security/bans/{ip}", status_code=status.HTTP_204_NO_CONTENT)
+def lift_ban(
+    ip: str,
+    request: Request,
+    admin: User = Depends(require_admin),
+    db: OrmSession = Depends(get_db),
+) -> Response:
+    """Let an address back in before its ban expires (a shared office, a mistake)."""
+    abuse.BANS.lift(ip)
+    db.add(
+        SecurityEvent(
+            event="ip_ban_lifted",
+            ip=client_ip(request),
+            user_id=admin.id,
+            detail=ip[:300],
+        )
+    )
+    db.commit()
+    return Response(status_code=status.HTTP_204_NO_CONTENT)
 
 
 @router.post("/wikis/{wiki_id}/reject")

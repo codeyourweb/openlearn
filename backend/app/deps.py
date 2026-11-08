@@ -11,7 +11,7 @@ from fastapi import Depends, HTTPException, Request, status
 from sqlalchemy import select
 from sqlalchemy.orm import Session as OrmSession
 
-from . import runtime
+from . import abuse, runtime
 from .config import settings
 from .db import get_db
 from .models import ApiKey, User, utcnow
@@ -68,8 +68,24 @@ def external_base_url(request: Request) -> str:
 
 
 def enforce_rate_limit(request: Request, bucket: str, limit: int, window: int) -> None:
-    allowed, retry_after = rate_limiter.check(f"{bucket}:{client_ip(request)}", limit, window)
+    """Refuse a request past its budget, and remember who keeps coming back.
+
+    The strike is recorded on every rejection, so a script that walks through
+    addresses, or retries a form it was already told to slow down on, ends up
+    banned from the forms for a while instead of being politely deferred each
+    time. See :mod:`app.abuse` for the threshold and the allowlist.
+    """
+    ip = client_ip(request)
+    banned = abuse.BANS.banned_for(ip)
+    if banned:
+        raise HTTPException(
+            status_code=status.HTTP_429_TOO_MANY_REQUESTS,
+            detail="You have been temporarily blocked for sending too many requests.",
+            headers={"Retry-After": str(banned)},
+        )
+    allowed, retry_after = rate_limiter.check(f"{bucket}:{ip}", limit, window)
     if not allowed:
+        abuse.BANS.strike(ip)
         raise HTTPException(
             status_code=status.HTTP_429_TOO_MANY_REQUESTS,
             detail="Too many requests. Please slow down.",

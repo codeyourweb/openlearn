@@ -39,6 +39,7 @@ import { renderWikiReferences } from "./pages/wikiReferences.js";
 import { renderWikiTemplates } from "./pages/wikiTemplates.js";
 import { renderCards } from "./pages/cards.js";
 import { renderResetPassword } from "./pages/passwordReset.js";
+import { renderVerificationBanner, renderVerifyEmail } from "./pages/verifyEmail.js";
 import { defaultRoute, instance, loadInstance } from "./instance.js";
 import { renderDeck, renderDeckStudy } from "./pages/cardsDeck.js";
 
@@ -50,6 +51,7 @@ register("/e/:token", renderEvalInvite);
 register("/login", renderLogin);
 register("/reset/:token", renderResetPassword);
 register("/forgot", renderResetPassword);
+register("/verify/:token", renderVerifyEmail);
 register("/register", renderRegister);
 register("/dashboard", renderDashboard);
 register("/quizzes/new", renderNewQuiz);
@@ -289,6 +291,7 @@ function renderChrome() {
 setAfterRender(() => {
   applyTranslations();
   renderChrome();
+  renderVerificationBanner(document.getElementById("app"));
   // Canvas pages and live sessions use the full width of a large screen.
   const container = document.querySelector("main");
   if (container) {

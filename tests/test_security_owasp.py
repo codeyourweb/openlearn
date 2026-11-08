@@ -56,6 +56,7 @@ def test_password_material_never_leaves_the_server(client):
         "is_moderator",
         "is_staff",
         "is_trusted",
+        "email_verified",
     }
     assert me["is_admin"] is False
 

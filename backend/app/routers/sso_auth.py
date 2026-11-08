@@ -182,6 +182,9 @@ def _login_user(db: OrmSession, request: Request, provider: SsoProvider, claims:
                 password_hash=hash_password(new_secret(32)),
                 display_name=display or "Member",
                 is_active=True,
+                # The identity provider checked this address before asserting it.
+                email_verified=True,
+                email_verified_at=utcnow(),
             )
             db.add(user)
             db.flush()

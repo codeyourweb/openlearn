@@ -69,6 +69,24 @@ def forgot_password(
 
     token: str | None = None
     if user is not None and user.is_active:
+        # One mail per address per interval. Without it, the endpoint is a free
+        # way to fill a stranger's inbox: the per-IP budget only limits how many
+        # addresses one visitor may hit, not how often one victim is hit by a
+        # handful of visitors, and a single visitor alternating addresses is
+        # enough to be a nuisance.
+        interval = max(0, int(settings.password_reset_interval_seconds))
+        last = db.scalar(
+            select(PasswordResetToken)
+            .where(PasswordResetToken.user_id == user.id)
+            .order_by(PasswordResetToken.created_at.desc())
+            .limit(1)
+        )
+        if interval and last is not None:
+            created = last.created_at if last.created_at.tzinfo else last.created_at.replace(tzinfo=utcnow().tzinfo)
+            if (utcnow() - created).total_seconds() < interval:
+                _audit(db, "password_reset_throttled", request, user.id, f"interval {interval}s")
+                return {"detail": "If an account exists for this address, a reset link has been sent."}
+
         # Invalidate older outstanding tokens: only the last mail works, which
         # keeps a stolen mailbox archive from being a permanent backdoor.
         for stale in db.scalars(

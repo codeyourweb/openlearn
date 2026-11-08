@@ -10,7 +10,7 @@ from fastapi import APIRouter, Depends, HTTPException, Request, Response, status
 from sqlalchemy import select
 from sqlalchemy.orm import Session as OrmSession
 
-from .. import runtime
+from .. import runtime, verification
 from ..config import settings
 from ..db import get_db
 from ..deps import client_ip, enforce_rate_limit, require_user
@@ -128,6 +128,9 @@ def register(payload: RegisterIn, request: Request, response: Response, db: OrmS
     db.commit()
     db.refresh(user)
     _audit(db, "register_success", request, user.id)
+    # The account exists either way; the link only proves the address is theirs.
+    # A missing SMTP server must not turn a sign-up into an error.
+    verification.issue(db, user, request)
     set_auth_cookies(response, user, request)
     return user
 
@@ -216,6 +219,40 @@ def logout(request: Request, response: Response, db: OrmSession = Depends(get_db
         _audit(db, "logout", request, user.id)
     response.status_code = status.HTTP_204_NO_CONTENT
     return response
+
+
+@router.get("/email/verify/{token}")
+def verify_email(token: str, request: Request, db: OrmSession = Depends(get_db)) -> dict[str, object]:
+    """Consume the link mailed at sign-up (or resent later)."""
+    enforce_rate_limit(request, "email-verify", 30, 3600)
+    try:
+        user = verification.consume(db, token)
+    except LookupError as exc:
+        raise HTTPException(status_code=404, detail="This confirmation link is no longer valid.") from exc
+    except ValueError as exc:
+        raise HTTPException(status_code=410, detail="This confirmation link has expired.") from exc
+    _audit(db, "email_verified", request, user.id)
+    return {"verified": True, "email": user.email}
+
+
+@router.post("/email/resend", status_code=status.HTTP_202_ACCEPTED)
+def resend_verification(
+    request: Request,
+    user: User = Depends(require_user),
+    db: OrmSession = Depends(get_db),
+) -> dict[str, object]:
+    """Send the confirmation link again, at most once per interval."""
+    enforce_rate_limit(request, "email-resend", 5, 3600)
+    if user.email_verified:
+        return {"detail": "This address is already confirmed.", "email_verified": True, "sent": False}
+    token = verification.issue(db, user, request)
+    _audit(db, "email_verification_requested", request, user.id, "sent" if token else "throttled")
+    detail = (
+        "A confirmation link has been sent."
+        if token
+        else "A link was sent recently; wait a few minutes before asking for another."
+    )
+    return {"detail": detail, "email_verified": False, "sent": bool(token)}
 
 
 @router.get("/me", response_model=UserOut)

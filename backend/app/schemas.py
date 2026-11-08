@@ -80,6 +80,9 @@ class UserOut(BaseModel):
     is_moderator: bool = False
     is_staff: bool = False
     is_trusted: bool = False
+    # False until the visitor opened the link mailed at sign-up; accounts that
+    # predate the feature are confirmed by the migration.
+    email_verified: bool = True
     created_at: datetime
 
 

@@ -29,6 +29,7 @@ import pytest  # noqa: E402
 from fastapi.testclient import TestClient  # noqa: E402
 from sqlalchemy.exc import OperationalError  # noqa: E402
 
+from app import abuse  # noqa: E402
 from app.config import settings  # noqa: E402
 from app.db import Base, engine  # noqa: E402
 from app.main import app  # noqa: E402
@@ -86,6 +87,8 @@ def client():
     _fresh_database_file()
     Base.metadata.create_all(bind=engine)
     rate_limiter.reset()
+    # Bans live in memory: a test that earns one must not lend it to the next.
+    abuse.BANS.reset()
     # The 15-second AI spacing is a production guard; keeping it here would make
     # every test that asks twice in a row wait or fail for the wrong reason.
     settings.ai_min_interval_seconds = 0

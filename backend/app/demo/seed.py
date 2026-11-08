@@ -77,6 +77,9 @@ def _author(db, email: str, display_name: str) -> User:
         display_name=display_name,
         is_active=True,
         is_trusted=True,
+        # Seeded accounts answer to addresses the operator controls; asking them
+        # to confirm would leave the demo with unverified authors on every start.
+        email_verified=True,
     )
     db.add(user)
     db.flush()

@@ -49,6 +49,16 @@ class Settings(BaseSettings):
     # Rate limiting (requests per window per client IP)
     auth_rate_limit: int = 10
     auth_rate_window_seconds: int = 60
+    # A visitor who keeps hitting a rate limit is banned from the forms for a
+    # while. Eight rejections inside ten minutes is not a person mistyping; it is
+    # a script, and a public demo should stop answering it.
+    form_ban_enabled: bool = True
+    form_ban_strikes: int = 8
+    form_ban_window_seconds: int = 600
+    form_ban_seconds: int = 1800
+    # Addresses that are never banned: the operator's own probes, a monitoring
+    # service, anything reaching the app over the bridge network.
+    form_ban_allowlist: str = ""
     join_rate_limit: int = 30
     join_rate_window_seconds: int = 60
     api_rate_limit: int = 600
@@ -110,6 +120,13 @@ class Settings(BaseSettings):
     # Tests and demo instances may read the reset token from the API response
     # instead of a mailbox. Never enable this on a public instance.
     expose_reset_token: bool = False
+    # A reset mail must not be usable as a way to flood someone's inbox: one
+    # message per address per interval, whatever the visitor tries.
+    password_reset_interval_seconds: int = 300
+    # How long an address-confirmation link stays usable, and how often one
+    # address may ask for a new one: the same flood protection as a reset.
+    email_verification_ttl_minutes: int = 60 * 48
+    email_verification_interval_seconds: int = 300
 
     # Single-sign-on (OIDC providers are configured in the admin UI; this only
     # switches the feature on for the instance).

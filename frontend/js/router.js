@@ -5,8 +5,15 @@
 const routes = [];
 let afterRender = () => {};
 
+/* Hooks compose: a module that needs a pass after each render must not silently
+   cancel the ones registered before it (the banner and the topbar measurement
+   were stepping on each other this way). */
 export function setAfterRender(fn) {
-  afterRender = typeof fn === "function" ? fn : () => {};
+  const previous = afterRender;
+  afterRender = () => {
+    previous();
+    if (typeof fn === "function") fn();
+  };
 }
 
 export function register(pattern, handler) {

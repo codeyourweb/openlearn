@@ -203,6 +203,9 @@ def test_a_new_request_invalidates_the_previous_link(client, monkeypatch):
     from app.config import settings
 
     monkeypatch.setattr(settings, "expose_reset_token", True, raising=False)
+    # This test is about link invalidation, not about the five-minute floor that
+    # the next test covers: no interval here, two requests, two tokens.
+    monkeypatch.setattr(settings, "password_reset_interval_seconds", 0, raising=False)
     register_user(client, email="twice@example.com")
 
     first = client.post("/api/v1/auth/password/forgot", json={"email": "twice@example.com"}).json()["token"]

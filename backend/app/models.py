@@ -66,6 +66,11 @@ class User(Base):
     # Bumped on password reset or account compromise: every session token
     # minted before the change stops validating.
     token_version: Mapped[int] = mapped_column(Integer, default=0)
+    # An address typed at sign-up is a claim until someone opens the link sent to
+    # it. Accounts that existed before this column are trusted: the migration
+    # backfills them as confirmed, so nobody is locked out by an upgrade.
+    email_verified: Mapped[bool] = mapped_column(Boolean, default=False)
+    email_verified_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
     last_login_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
 
@@ -967,6 +972,20 @@ class AiErrorLog(Base):
     base_url: Mapped[str] = mapped_column(String(200), default="")
     status_code: Mapped[int | None] = mapped_column(Integer)
     detail: Mapped[str] = mapped_column(Text, default="")
+
+
+class EmailVerificationToken(Base):
+    """Single-use link that proves the visitor owns the address they typed."""
+
+    __tablename__ = "email_verification_tokens"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"), index=True)
+    token_hash: Mapped[str] = mapped_column(String(64), unique=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
+    expires_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
+    used_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    requested_ip: Mapped[str] = mapped_column(String(64), default="")
 
 
 class PasswordResetToken(Base):

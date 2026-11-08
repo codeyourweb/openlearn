@@ -14,6 +14,7 @@ import smtplib
 import ssl
 from dataclasses import dataclass
 from email.message import EmailMessage
+from html import escape as escape_html
 
 from . import runtime
 
@@ -106,6 +107,61 @@ def password_reset_message(*, to: str, link: str, minutes: int, instance: str) -
   If you did not ask for it, ignore this message: your password stays unchanged.</p>
 </div>"""
     return Message(to=to, subject=f"Reset your {instance} password", text=text, html=html)
+
+
+def email_verification_message(*, to: str, link: str, hours: int, instance: str, name: str = "") -> Message:
+    # Two renderings, two escaping rules: the plain-text part keeps the raw
+    # characters, the HTML part escapes them. Mixing the two once put `&amp;`
+    # in front of a reader who would have read "&".
+    raw_link = link
+    raw_hello = f"Hello {name}," if name else "Hello,"
+    hello = f"Hello {escape_html(name)}," if name else "Hello,"
+    link = escape_html(link, quote=True)
+    text = (
+        f"{raw_hello}\n\n"
+        f"Confirm the address of your {instance} account by opening this link:\n{raw_link}\n\n"
+        f"The link works for {hours} hours and only once. If you did not create an account, "
+        "ignore this message: nothing happens without the link.\n"
+    )
+    html = f"""\
+<div style="font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-size:15px;color:#1b1d21;line-height:1.55">
+  <p>{hello}</p>
+  <p>Confirm the address of your <strong>{instance}</strong> account.</p>
+  <p><a href="{link}" style="display:inline-block;padding:10px 18px;background:#2b5cff;color:#fff;border-radius:8px;text-decoration:none">Confirm my address</a></p>
+  <p style="color:#5b6270">Or paste this link in your browser:<br><span style="word-break:break-all">{link}</span></p>
+  <p style="color:#5b6270">The link works for {hours} hours and only once. If you did not create
+  an account, ignore this message: nothing happens without the link.</p>
+</div>"""
+    return Message(to=to, subject=f"Confirm your {instance} address", text=text, html=html)
+
+
+def publication_approved_message(
+    *, to: str, title: str, kind: str, link: str, instance: str, note: str = "", name: str = ""
+) -> Message:
+    """Told to an author whose queued content just became public."""
+    raw_title, raw_note, raw_link = title, note, link
+    hello = f"Hello {name}," if name else "Hello,"
+    title = escape_html(title)
+    note = escape_html(note)
+    link = escape_html(link, quote=True)
+    what = "wiki" if kind == "wiki" else "quiz"
+    text = (
+        f"{hello}\n\n"
+        f"Your {what} \"{raw_title}\" is now public on {instance}.\n\n"
+        f"Read it here: {raw_link}\n"
+    )
+    if raw_note:
+        text += f"\nNote from the moderator: {raw_note}\n"
+    text += "\nYou are receiving this message because you submitted it for publication.\n"
+    html = f"""\
+<div style="font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-size:15px;color:#1b1d21;line-height:1.55">
+  <p>{hello}</p>
+  <p>Your {what} <strong>{title}</strong> is now public on <strong>{instance}</strong>.</p>
+  <p><a href="{link}" style="display:inline-block;padding:10px 18px;background:#2b5cff;color:#fff;border-radius:8px;text-decoration:none">Read it</a></p>
+  {'<p style="color:#5b6270">Note from the moderator: ' + note + '</p>' if note else ''}
+  <p style="color:#5b6270">You are receiving this message because you submitted it for publication.</p>
+</div>"""
+    return Message(to=to, subject=f"Your {what} is public on {instance}", text=text, html=html)
 
 
 def test_message(*, to: str, instance: str) -> Message:

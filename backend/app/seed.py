@@ -261,6 +261,7 @@ def ensure_admin() -> None:
                 display_name="Administrator",
                 is_admin=True,
                 is_trusted=True,
+                email_verified=True,
             )
             db.add(user)
             db.commit()
@@ -285,6 +286,7 @@ def seed_demo_content() -> None:
                 email=DEMO_EMAIL,
                 password_hash=hash_password(DEMO_PASSWORD),
                 display_name=DEMO_NAME,
+                email_verified=True,
             )
             db.add(user)
             db.flush()

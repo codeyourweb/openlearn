@@ -23,6 +23,10 @@ _COLUMNS: dict[str, dict[str, str]] = {
         "is_admin": "BOOLEAN NOT NULL DEFAULT 0",
         "is_moderator": "BOOLEAN NOT NULL DEFAULT 0",
         "is_trusted": "BOOLEAN NOT NULL DEFAULT 0",
+        # Existing accounts predate the confirmation link: they are treated as
+        # confirmed, otherwise an upgrade would flag every one of them.
+        "email_verified": "BOOLEAN NOT NULL DEFAULT 1",
+        "email_verified_at": "TIMESTAMP",
         # Bumped when a password is reset: every token issued before carries the
         # old value and stops being accepted, without a session table.
         "token_version": "INTEGER NOT NULL DEFAULT 0",
