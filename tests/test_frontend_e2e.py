@@ -85,8 +85,28 @@ def register_through_ui(page, email: str, name: str = "E2E User") -> None:
     page.fill("#display_name", name)
     page.fill("#email", email)
     page.fill("#password", PASSWORD)
+    # A whole run creates an account per scenario, and a hardened instance
+    # answers the sixteenth one with 429. Left alone, that surfaces as "the page
+    # did not reach /dashboard", which sends the reader hunting a frontend bug.
+    refused = []
+    page.on(
+        "response",
+        lambda response: refused.append(response)
+        if response.url.endswith("/api/v1/auth/register") and response.status == 429
+        else None,
+    )
     page.click("#register-form button[type=submit]")
-    expect(page).to_have_url(re.compile(r".*/dashboard$"), timeout=15000)
+    try:
+        expect(page).to_have_url(re.compile(r".*/dashboard$"), timeout=15000)
+    except AssertionError:
+        if refused:
+            pytest.fail(
+                "The instance refused this registration with 429: the run creates "
+                "one account per scenario and the auth rate limit counts them. "
+                "Raise the limit on the instance under test, or run fewer "
+                "scenarios at once."
+            )
+        raise
 
 
 def create_quiz_through_editor(page, title: str) -> int:
