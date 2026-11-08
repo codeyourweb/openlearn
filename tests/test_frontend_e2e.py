@@ -535,7 +535,7 @@ def test_story_editor_links_and_deletes_nodes_with_the_mouse(browser):
         email = f"story-{uuid.uuid4().hex[:8]}@example.com"
         register_through_ui(page, email, "Story Tester")
 
-        page.goto(f"{BASE_URL}/adventures/new", wait_until="networkidle")
+        page.goto(f"{BASE_URL}/adventures/new/manual", wait_until="networkidle")
         page.fill(".adv-title", "Story editor gestures")
         # Autosave gives the story a real address before anything is valid.
         expect(page).to_have_url(re.compile(r".*/adventures/\d+/edit$"), timeout=15000)
@@ -698,6 +698,10 @@ def test_format_chooser_offers_four_cards_and_a_method_step_before_the_editor(br
         page.goto(f"{BASE_URL}/quizzes/new", wait_until="networkidle")
         page.locator(".mode-card").nth(3).click()
         expect(page).to_have_url(re.compile(r".*/adventures/new$"), timeout=15000)
+        # A story is built by hand or drafted by the model, in that order: the
+        # chooser has to offer both before the canvas opens.
+        expect(page.locator('.mode-card[href="/adventures/new/manual"]')).to_be_visible(timeout=15000)
+        page.locator('.mode-card[href="/adventures/new/manual"]').click()
         expect(page.locator(".adv-canvas, .adv-node").first).to_be_visible(timeout=15000)
         assert recorder.errors == [], f"frontend errors: {recorder.errors}"
     finally:
@@ -978,7 +982,7 @@ def test_the_story_canvas_pans_with_the_mouse(browser):
     try:
         email = f"pan-{uuid.uuid4().hex[:8]}@example.com"
         register_through_ui(page, email, "Pan Tester")
-        page.goto(f"{BASE_URL}/adventures/new", wait_until="networkidle")
+        page.goto(f"{BASE_URL}/adventures/new/manual", wait_until="networkidle")
         page.fill(".adv-title", "Panning story")
         expect(page).to_have_url(re.compile(r".*/adventures/\d+/edit$"), timeout=15000)
         for _ in range(3):

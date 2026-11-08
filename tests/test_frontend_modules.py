@@ -12,6 +12,7 @@ here rather than discovered by a 30-second Playwright timeout.
 from __future__ import annotations
 
 import re
+from collections import Counter
 from pathlib import Path
 
 import pytest
@@ -49,6 +50,64 @@ def bound_names(source: str) -> set[str]:
     for match in re.finditer(r"\(([^)]*)\)\s*=>", source):
         names |= {part.strip().split("=")[0].strip() for part in match.group(1).split(",") if part.strip()}
     return names
+
+
+IMPORT_STATEMENT = re.compile(
+    r"""^\s*import\s+(?P<clause>[\w$\s{},*]+?)\s*from\s*["'](?P<module>[^"']+)["']""",
+    re.MULTILINE,
+)
+
+
+def imported_bindings(source: str) -> list[str]:
+    """The names a module binds from its imports, `a as b` counting only as `b`."""
+    names: list[str] = []
+    for match in IMPORT_STATEMENT.finditer(source):
+        for part in match.group("clause").split(","):
+            part = part.strip().strip("{}").strip()
+            if not part or part == "*":
+                continue
+            if part.startswith("* as "):
+                names.append(part[5:].strip())
+            elif " as " in part:
+                names.append(part.split(" as ", 1)[1].strip())
+            else:
+                names.append(part)
+    return [name for name in names if name]
+
+
+def test_no_module_imports_the_same_binding_twice():
+    """The browser refuses such a module, and nothing else in the toolchain does.
+
+    `node --check` parses the file and stops there: it accepts two statements
+    importing the same name, which the browser rejects at load time with
+    "Identifier 't' has already been declared" -- the application then stays
+    blank, with a message that names no file. It happens when an import block is
+    edited next to an older list, so it is worth a test.
+    """
+    offenders = {}
+    for path in modules():
+        counters = Counter(imported_bindings(path.read_text(encoding="utf-8")))
+        duplicates = {name: count for name, count in counters.items() if count > 1}
+        if duplicates:
+            offenders[str(path.relative_to(JS_ROOT))] = duplicates
+    assert not offenders, (
+        "A module imports the same name twice: the browser refuses the file and "
+        f"the application never starts. {offenders}"
+    )
+
+
+def test_relative_imports_point_at_a_module_that_exists():
+    """A misspelt import is a 404 the page only notices at runtime."""
+    missing = []
+    for path in modules():
+        source = path.read_text(encoding="utf-8")
+        for match in IMPORT_STATEMENT.finditer(source):
+            module = match.group("module")
+            if not module.startswith("."):
+                continue
+            if not (path.parent / module).resolve().exists():
+                missing.append(f"{path.relative_to(JS_ROOT)} -> {module}")
+    assert not missing, f"Imports that resolve to nothing: {missing}"
 
 
 @pytest.mark.parametrize("path", modules(), ids=lambda p: p.name)

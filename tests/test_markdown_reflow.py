@@ -54,6 +54,25 @@ def test_an_indented_continuation_keeps_its_layout():
     assert reflow_markdown(text) == text
 
 
+def test_a_line_break_the_author_typed_survives():
+    """Two trailing spaces are Markdown's hard break, and must not be joined.
+
+    The editor writes `<br>` as "  \n". Joining that line with the next one is
+    what made a line break visible while typing and gone from the page after
+    saving: the author had no way to know the two were the same line.
+    """
+    assert reflow_markdown("une ligne  \nla suite") == "une ligne  \nla suite"
+    # The backslash form means the same thing, and is normalised to spaces.
+    assert reflow_markdown("une ligne\\\nla suite") == "une ligne  \nla suite"
+
+
+def test_a_hard_break_does_not_merge_the_rest_of_the_paragraph():
+    text = "One\nwrapped sentence  \nthen a new line\nstill the same paragraph."
+    assert reflow_markdown(text) == (
+        "One wrapped sentence  \nthen a new line still the same paragraph."
+    )
+
+
 def test_reflow_is_idempotent():
     text = "One line\nbroken in two.\n\nAnother\nparagraph here."
     once = reflow_markdown(text)

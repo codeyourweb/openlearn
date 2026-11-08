@@ -39,6 +39,9 @@ _BLOCK_START = re.compile(
     r"^\s{0,3}(?:#{1,6}\s|[-*+]\s|\d{1,3}[.)]\s|>|\||```|~~~|---|\*\*\*|___|!\[|\[\[)"
 )
 _FENCE = re.compile(r"^\s*(?:```|~~~)")
+# A line the author ended on purpose: two or more spaces, or a backslash, which
+# is how Markdown writes a line break the browser would otherwise swallow.
+_HARD_BREAK = re.compile(r"(?: {2,}|\\)\s*$")
 
 
 def reflow_markdown(markdown: str) -> str:
@@ -86,6 +89,15 @@ def reflow_markdown(markdown: str) -> str:
         if _BLOCK_START.match(line):
             flush()
             out.append(line.rstrip())
+            continue
+        if _HARD_BREAK.search(line):
+            # Structure the author typed on purpose. Joining this line with the
+            # next is what made a line break disappear on save: it was visible
+            # in the editor and gone from the page a moment later. The wrapped
+            # lines before it still belong to the same paragraph.
+            buffer.append(stripped[:-1].rstrip() if stripped.endswith("\\") else stripped)
+            flush()
+            out[-1] += "  "
             continue
         buffer.append(stripped)
     flush()

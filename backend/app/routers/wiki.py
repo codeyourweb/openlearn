@@ -119,6 +119,27 @@ def _writable(role: str | None) -> bool:
     return role in {"owner", "maintainer"}
 
 
+def _may_undo_own_page(db: OrmSession, page: WikiPage, user: User | None) -> bool:
+    """May this person delete a page they created, without write rights?
+
+    Deleting needs write rights on the wiki, and a contributor's work lands as a
+    proposal. But undoing your own mistake is not moderation: a page created by
+    accident stayed undeletable, which is how a blank page ends up in a menu for
+    good. Allowed only while the page is still the author's alone.
+    """
+    if user is None or page.author_id != user.id:
+        return False
+    others = db.scalar(
+        select(func.count())
+        .select_from(WikiPageVersion)
+        .where(
+            WikiPageVersion.page_id == page.id,
+            WikiPageVersion.author_id != user.id,
+        )
+    )
+    return not others
+
+
 def _require_read(db: OrmSession, wiki: Wiki, user: User | None) -> str | None:
     role = _member_role(db, wiki, user)
     if not _readable(wiki, role):
@@ -882,6 +903,7 @@ def get_page(
     payload["wiki"] = {"id": wiki.id, "title": wiki.title, "status": wiki.status}
     payload["role"] = role
     payload["can_write"] = _writable(role)
+    payload["can_delete"] = _writable(role) or _may_undo_own_page(db, page, user)
     # An editor must know that unsaved typing waits for it; a reader never sees
     # the working copy.
     draft = (
@@ -1010,7 +1032,7 @@ def delete_page(
     page = _get_page(db, page_id)
     wiki = _get_wiki(db, page.wiki_id)
     role = _member_role(db, wiki, user)
-    if not _writable(role):
+    if not _writable(role) and not _may_undo_own_page(db, page, user):
         raise HTTPException(status_code=403, detail="You cannot delete this page.")
     # Children climb one level instead of becoming roots: deleting a section
     # should not silently flatten the menu.

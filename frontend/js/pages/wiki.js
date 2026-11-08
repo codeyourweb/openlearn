@@ -613,9 +613,11 @@ async function _wikiPage(root, params) {
               <div class="row-wrap end">
                 ${canWrite
                   ? `<a class="btn btn-sm btn-primary" data-link href="/wiki/${wiki.id}/edit/${page.id}">${escapeHtml(t("action.edit"))}</a>
-                     <a class="btn btn-sm btn-ghost" data-link href="/wiki/${wiki.id}/history/${page.id}">${escapeHtml(t("wiki.history"))}</a>
-                     <button class="btn btn-sm btn-ghost btn-danger" id="wiki-delete-page">${escapeHtml(t("wiki.delete_page"))}</button>`
+                     <a class="btn btn-sm btn-ghost" data-link href="/wiki/${wiki.id}/history/${page.id}">${escapeHtml(t("wiki.history"))}</a>`
                   : `<a class="btn btn-sm" data-link href="/wiki/${wiki.id}/propose/${page.id}">${escapeHtml(t("wiki.propose"))}</a>`}
+                ${canWrite || page.can_delete
+                  ? `<button class="btn btn-sm btn-ghost btn-danger" id="wiki-delete-page">${escapeHtml(t("wiki.delete_page"))}</button>`
+                  : ""}
                 <a class="btn btn-sm btn-ghost" href="/api/v1/wiki/pages/${page.id}/export.md">${escapeHtml(t("wiki.export_md"))}</a>
                 <a class="btn btn-sm btn-ghost" href="/api/v1/wiki/pages/${page.id}/export.pdf" title="${escapeHtml(t("wiki.export_pdf_hint"))}">${escapeHtml(t("wiki.export_pdf"))}</a>
               </div>

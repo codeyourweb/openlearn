@@ -566,19 +566,39 @@ async function _wikiEditor(root, params) {
 
   // Alignment, size and typeface are properties of the block: the toolbar sets
   // a class, and htmlToMarkdown writes the matching {a:…}/{s:…}/{f:…} marker.
+  /* Every block the selection touches, not only the one it starts in.
+   *
+   * Alignment, size and font are block properties, and a selection that spans
+   * the whole page covers many blocks. Acting on `getRangeAt(0).startContainer`
+   * alone justified the first paragraph and left the rest untouched, which reads
+   * as a dead button when the selection is not where the author thinks it is. */
+  const selectedBlocks = () => {
+    const selection = window.getSelection();
+    if (!selection || !selection.rangeCount) return [];
+    const range = selection.getRangeAt(0);
+    const selector = "p, h1, h2, h3, h4, h5, h6, li, blockquote";
+    if (range.collapsed) {
+      const anchor = range.startContainer;
+      const element = anchor.nodeType === Node.ELEMENT_NODE ? anchor : anchor.parentElement;
+      const block = element ? element.closest(`${selector}, div`) : null;
+      return block && block !== wysiwyg && wysiwyg.contains(block) ? [block] : [];
+    }
+    return Array.from(wysiwyg.querySelectorAll(selector)).filter(
+      (node) => node !== wysiwyg && wysiwyg.contains(node) && range.intersectsNode(node),
+    );
+  };
+
   const richBlockClass = (prefix, value, defaults) => {
     wysiwyg.focus();
     restoreRichSelection();
-    const selection = window.getSelection();
-    if (!selection || !selection.rangeCount) return;
-    const anchor = selection.getRangeAt(0).startContainer;
-    const start = anchor.nodeType === Node.ELEMENT_NODE ? anchor : anchor.parentElement;
-    const block = start ? start.closest("p, h1, h2, h3, h4, h5, h6, li, blockquote, div") : null;
-    if (!block || block === wysiwyg || !wysiwyg.contains(block)) return;
-    Array.from(block.classList)
-      .filter((name) => name.startsWith(`${prefix}-`))
-      .forEach((name) => block.classList.remove(name));
-    if (!defaults.includes(value)) block.classList.add(`${prefix}-${value}`);
+    const blocks = selectedBlocks();
+    if (!blocks.length) return;
+    for (const block of blocks) {
+      Array.from(block.classList)
+        .filter((name) => name.startsWith(`${prefix}-`))
+        .forEach((name) => block.classList.remove(name));
+      if (!defaults.includes(value)) block.classList.add(`${prefix}-${value}`);
+    }
     wysiwyg.dispatchEvent(new Event("input", { bubbles: true }));
   };
 
@@ -1371,7 +1391,11 @@ async function _wikiEditor(root, params) {
       onReset: (message) => {
         liveShadow = message.content;
         lastSent = null;
-        adopt(message.content);
+        // Saving broadcasts the saved text to every editor of the page,
+        // including the one that just saved: re-rendering the surface from a copy
+        // identical to what is on screen rebuilt the DOM under the caret for
+        // nothing, and the author went on typing in the wrong block.
+        if (message.content !== currentMarkdown()) adopt(message.content);
         paintPeople(live.users || []);
       },
       onResync: (message) => {
