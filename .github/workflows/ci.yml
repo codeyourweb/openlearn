@@ -204,12 +204,15 @@ jobs:
           done
           docker compose logs --tail 120
           exit 1
+      # The image already points the suite at http://127.0.0.1:8000 and the
+      # service shares the application's network namespace: a loopback address is
+      # the only plain-http origin Chromium still trusts.
       - name: Browser tests
         run: |
           docker compose build tests
-          docker compose run --rm -e OL_TEST_BASE_URL=http://app:8000 tests
+          docker compose run --rm tests
       - name: Accessibility audit (axe-core)
-        run: docker compose run --rm -e OL_TEST_BASE_URL=http://app:8000 tests pytest -q tests/test_accessibility.py
+        run: docker compose run --rm tests pytest -q tests/test_accessibility.py
       - name: Logs on failure
         if: failure()
         run: docker compose logs --tail 200

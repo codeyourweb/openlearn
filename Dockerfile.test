@@ -25,6 +25,6 @@ COPY pytest.ini /app/pytest.ini
 RUN chmod -R a+rX /app/backend /app/frontend /app/tests /app/demo /app/tools
 
 ENV PYTHONPATH=/app/backend \
-    OL_TEST_BASE_URL=http://openlearn:8000
+    OL_TEST_BASE_URL=http://127.0.0.1:8000
 
 CMD ["pytest", "-ra", "tests"]

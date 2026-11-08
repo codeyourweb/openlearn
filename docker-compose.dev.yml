@@ -17,6 +17,12 @@ services:
     image: openlearn-tests:latest
     depends_on:
       - app
+    # Chromium now upgrades a plain-http navigation to https on its own, so
+    # "http://app:8000" becomes a TLS handshake against a plain HTTP port and
+    # every scenario dies with net::ERR_SSL_PROTOCOL_ERROR. A loopback address is
+    # a trustworthy origin and is left alone, so the browser shares the
+    # application's network namespace and talks to it on 127.0.0.1.
+    network_mode: "service:app"
     environment:
-      OL_TEST_BASE_URL: http://app:8000
+      OL_TEST_BASE_URL: http://127.0.0.1:8000
     command: ["pytest", "-ra", "tests"]
