@@ -322,8 +322,16 @@ function nodeToMarkdown(node, depth = 0) {
     case "h3":
     case "h4":
     case "h5":
-    case "h6":
-      return `${"#".repeat(Number(tag[1]))} ${inlineChildren(node)}\n\n`;
+    case "h6": {
+      // A heading is one line: a line break typed inside it cannot be expressed,
+      // and letting it through produced a bare newline the renderer dropped --
+      // the text after the break disappeared from the saved page.
+      const inner = inlineChildren(node)
+        .replace(/[ \t]*\n[ \t]*/g, " ")
+        .replace(/\s{2,}/g, " ")
+        .trim();
+      return `${"#".repeat(Number(tag[1]))} ${inner}\n\n`;
+    }
     case "p": {
       // Alignment, size and typeface belong to the block: the markers wrap it.
       const names = Array.from(node.classList);
