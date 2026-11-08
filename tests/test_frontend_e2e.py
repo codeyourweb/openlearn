@@ -666,7 +666,11 @@ def test_format_chooser_offers_four_cards_and_a_method_step_before_the_editor(br
         cards.nth(1).click()
         expect(page).to_have_url(re.compile(r".*/quizzes/new/swipe$"), timeout=15000)
         methods = page.locator(".mode-card")
-        expect(methods).to_have_count(2)
+        # Manual, plus an AI draft when the instance offers a provider: without
+        # one the second card is not rendered at all, which is the whole point
+        # of the ai-only rule.
+        offered = 2 if page.locator('html[data-ai="on"]').count() else 1
+        expect(methods).to_have_count(offered)
         expect(methods.nth(0)).to_contain_text("Manual")
         methods.nth(0).click()
         expect(page).to_have_url(re.compile(r".*/quizzes/new/swipe/manual$"), timeout=15000)
@@ -1316,8 +1320,13 @@ def test_the_editor_offers_templates_reviews_a_link_picker_and_deletion(browser)
         assert "## Etapes" in page.locator("#wiki-md").input_value()
 
         # --- AI reviews sit at the top of the editing area ---------------
+        # They only exist on an instance that offers an AI provider: a public
+        # continuous-integration run has no key, so the buttons are rendered
+        # disabled and the scenario says so instead of reporting a frontend bug.
         reviews = page.locator(".ed-reviews button[data-review]")
         assert reviews.count() == 3
+        if page.locator('html[data-ai="off"]').count():
+            pytest.skip("The instance under test declares AI off: no review to click.")
         for index in range(3):
             expect(reviews.nth(index)).to_be_visible()
 
@@ -1372,7 +1381,8 @@ def test_rich_formatting_keeps_the_selected_text_and_the_landing_is_home(browser
         # that hides the presentation page on a private instance --
         page.goto(f"{BASE_URL}/about", wait_until="networkidle")
         expect(page.locator('[data-view="discover"] .ld-hero h1')).to_be_visible()
-        expect(page.locator(".landing .ld-scene")).to_have_count(6)
+        # Seven chapters: the accessibility one joined the six product scenes.
+        expect(page.locator(".landing .ld-scene")).to_have_count(7)
         expect(page.locator(".ld-scene-ai .ld-ai-badge")).to_be_visible()
         first_nav = page.locator("#nav a:visible").first
         meta = page.request.get(f"{BASE_URL}/api/v1/meta").json()
@@ -1469,10 +1479,16 @@ def test_rich_formatting_keeps_the_selected_text_and_the_landing_is_home(browser
 
         # --- the wiki sidebar separates generating from deleting ------------
         page.goto(f"{BASE_URL}/wiki/{wiki_id}/p/accueil", wait_until="networkidle")
-        expect(page.locator(".wiki-side-foot #wiki-ai-open")).to_be_visible()
-        page.click("#wiki-ai-open")
-        expect(page.locator("#wiki-ai-panel")).to_be_visible()
-        expect(page.locator(".wiki-content")).to_be_hidden()
+        if page.locator('html[data-ai="on"]').count():
+            expect(page.locator(".wiki-side-foot #wiki-ai-open")).to_be_visible()
+            page.click("#wiki-ai-open")
+            expect(page.locator("#wiki-ai-panel")).to_be_visible()
+            expect(page.locator(".wiki-content")).to_be_hidden()
+        else:
+            # No provider: the button is rendered but the ai-only rule hides it,
+            # and the reading area stays visible.
+            expect(page.locator("#wiki-ai-open")).to_be_hidden()
+            expect(page.locator(".wiki-content")).to_be_visible()
 
         assert recorder.errors == [], f"frontend errors: {recorder.errors}"
     finally:

@@ -757,7 +757,9 @@ class WikiTreePageIn(BaseModel):
 class WikiTreeIn(BaseModel):
     """The whole menu in one call: order and parent of every page."""
 
-    pages: Annotated[list[WikiTreePageIn], Field(default_factory=list, max_length=500)] = []
+    # No trailing "= []": the factory already lives in the annotation, and a
+    # second default makes newer pydantic refuse to build the model.
+    pages: Annotated[list[WikiTreePageIn], Field(default_factory=list, max_length=500)]
 
 
 class WikiReferenceIn(BaseModel):
@@ -796,7 +798,7 @@ class WikiReferenceIn(BaseModel):
 class WikiPageIn(BaseModel):
     title: str = Field(min_length=1, max_length=200)
     content_md: str = Field(default="", max_length=400_000)
-    tags: Annotated[list[str], Field(default_factory=list, max_length=12)] = []
+    tags: Annotated[list[str], Field(default_factory=list, max_length=12)]
     note: str = Field(default="", max_length=300)
     # WYSIWYG saves may send HTML; the editor converts, this is a safety net.
     content_html: str | None = None
@@ -855,7 +857,7 @@ class WikiQuizGenerateIn(BaseModel):
     count: int = Field(default=8, ge=3, le=20)
     language: LanguageCode = "en"
     brief: str = Field(default="", max_length=2000)
-    page_ids: Annotated[list[int], Field(default_factory=list, max_length=60)] = []
+    page_ids: Annotated[list[int], Field(default_factory=list, max_length=60)]
 
 
 class WikiAiJobIn(BaseModel):
@@ -878,11 +880,11 @@ class WikiTemplateIn(BaseModel):
     name: str = Field(min_length=1, max_length=120)
     description: str = Field(default="", max_length=300)
     content_md: str = Field(default="", max_length=100_000)
-    keywords: Annotated[list[str], Field(default_factory=list, max_length=20)] = []
+    keywords: Annotated[list[str], Field(default_factory=list, max_length=20)]
 
 
 class WikiChatIn(BaseModel):
     question: str = Field(min_length=2, max_length=2000)
     language: LanguageCode = "en"
     chat_id: int | None = None
-    wiki_ids: Annotated[list[int], Field(default_factory=list, max_length=50)] = []
+    wiki_ids: Annotated[list[int], Field(default_factory=list, max_length=50)]
