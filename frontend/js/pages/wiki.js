@@ -956,7 +956,7 @@ async function _wikiPage(root, params) {
       quizList.querySelectorAll("[data-detach]").forEach((button) => {
         button.addEventListener("click", async () => {
           try {
-            await api.delete(`/api/v1/wiki/${wiki.id}/quizzes/${button.dataset.detach}`);
+            await api.del(`/api/v1/wiki/${wiki.id}/quizzes/${button.dataset.detach}`);
             await loadQuizzes();
           } catch (error) {
             toast(error.detail || t("common.error"), "error");

@@ -2220,3 +2220,89 @@ def test_the_lobby_shows_a_code_a_phone_can_scan(browser):
         assert recorder.errors == [], recorder.errors
     finally:
         context.close()
+
+
+def test_a_step_keeps_the_caret_and_a_trash_asks_before_it_deletes(browser):
+    """Clicking a step's text put the caret in the toolbar, not in the text.
+
+    The rich text area sat inside a `<label>`, so the browser forwarded every
+    click to the first control the label owns — the bold button. Typing then
+    toggled bold and the caret vanished. The delete buttons had the mirror
+    problem: one refused silently (a step keeps two answers), the other threw an
+    effect away on a single click.
+    """
+    context, page, recorder = new_page(browser, viewport=(1440, 1000))
+    try:
+        email = f"adv-caret-{uuid.uuid4().hex[:8]}@example.com"
+        register_through_ui(page, email, "Sacha Aventure")
+        csrf = next(cookie["value"] for cookie in context.cookies() if cookie["name"] == "ol_csrf")
+        headers = {"X-CSRF-Token": csrf, "Content-Type": "application/json"}
+        draft = page.request.post(
+            f"{BASE_URL}/api/v1/quizzes/draft",
+            headers=headers,
+            data=json.dumps(
+                {
+                    "title": "Le curseur",
+                    "mode": "adventure",
+                    "default_language": "en",
+                    "adventure": {
+                        "start": "debut",
+                        "attributes": [
+                            {"key": "courage", "label": "Courage", "initial_value": 1, "min_value": 0, "max_value": 5}
+                        ],
+                        "nodes": [
+                            {
+                                "key": "debut",
+                                "kind": "question",
+                                "text_html": "<p>Bonjour</p>",
+                                "choices": [
+                                    {"key": "debut-a", "text": "Go", "target": "fin", "effects": []},
+                                    {"key": "debut-b", "text": "Stay", "target": "fin", "effects": []},
+                                ],
+                            },
+                            {
+                                "key": "fin",
+                                "kind": "ending",
+                                "text_html": "<p>The end.</p>",
+                                "outcomes": [
+                                    {"kind": "highest", "attribute": "courage", "text_html": "<p>Well done.</p>"}
+                                ],
+                            },
+                        ],
+                    },
+                }
+            ),
+        ).json()
+
+        page.goto(f"{BASE_URL}/adventures/{draft['id']}/edit", wait_until="networkidle")
+        surface = page.locator('[data-node-field="text_html"]').first
+        expect(surface).to_be_visible(timeout=15000)
+        surface.click()
+        assert page.evaluate(
+            "() => document.activeElement && document.activeElement.classList.contains('rte')"
+        ), page.evaluate("() => document.activeElement && document.activeElement.className")
+
+        page.keyboard.type(" encore")
+        expect(surface).to_contain_text("Bonjour encore")
+        assert page.locator(".rte-toolbar [data-cmd='bold'][aria-pressed='true']").count() == 0
+
+        # A delete click asks first, and cancelling leaves the row in place.
+        page.locator('[data-act="add-effect"]').first.click()
+        rows = page.locator(".adv-effect-row")
+        expect(rows).to_have_count(1)
+        page.locator('[data-act="remove-effect"]').first.click()
+        dialog = page.locator('[role="dialog"]')
+        expect(dialog).to_be_visible(timeout=5000)
+        dialog.get_by_role("button", name=re.compile("cancel", re.I)).click()
+        expect(rows).to_have_count(1)
+        page.locator('[data-act="remove-effect"]').first.click()
+        page.locator('[role="dialog"]').get_by_role("button", name=re.compile("remove", re.I)).click()
+        expect(rows).to_have_count(0)
+
+        # A refused removal says why instead of doing nothing at all.
+        page.locator('[data-act="remove-choice"]').first.click()
+        expect(page.locator(".adv-choice-card")).to_have_count(2)
+        expect(page.get_by_text(re.compile("at least two answers", re.I))).to_be_visible(timeout=5000)
+        assert recorder.errors == [], recorder.errors
+    finally:
+        context.close()

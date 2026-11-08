@@ -532,8 +532,9 @@ function effectsEditor(model, choice, choiceIndex) {
           </select>
           <input class="input input-sm adv-effect-value" type="number" step="1" data-effect="delta"
                  data-choice="${choiceIndex}" data-effect-index="${index}" value="${effect.delta}" />
-          <button type="button" class="btn btn-xs btn-ghost" data-act="remove-effect"
-                  data-choice="${choiceIndex}" data-effect-index="${index}">✕</button>
+          <button type="button" class="btn btn-xs btn-danger-ghost" data-act="remove-effect"
+                  data-choice="${choiceIndex}" data-effect-index="${index}"
+                  title="${t("adv_editor.remove")}" aria-label="${t("adv_editor.remove")}">🗑</button>
         </div>`,
         )
         .join("")}
@@ -555,7 +556,8 @@ function choicesEditor(model, node) {
             <span class="adv-choice-index">${index + 1}</span>
             <input class="input" data-choice-field="text" data-choice="${index}" maxlength="500"
                    value="${escapeHtml(choice.text)}" placeholder="${t("adv_editor.choice_text")}" />
-            <button type="button" class="btn btn-xs btn-ghost" data-act="remove-choice" data-choice="${index}">✕</button>
+            <button type="button" class="btn btn-xs btn-danger-ghost" data-act="remove-choice" data-choice="${index}"
+                    title="${t("adv_editor.remove")}" aria-label="${t("adv_editor.remove")}">🗑</button>
           </div>
           <div class="adv-choice-meta">
             <label class="field">
@@ -631,7 +633,8 @@ function outcomesEditor(model, node) {
             }
             <input class="input input-sm adv-priority" type="number" min="0" max="999" data-outcome-field="priority"
                    data-outcome="${index}" value="${outcome.priority}" title="${t("adv_editor.priority")}" />
-            <button type="button" class="btn btn-xs btn-ghost" data-act="remove-outcome" data-outcome="${index}">✕</button>
+            <button type="button" class="btn btn-xs btn-danger-ghost" data-act="remove-outcome" data-outcome="${index}"
+                    title="${t("adv_editor.remove")}" aria-label="${t("adv_editor.remove")}">🗑</button>
           </div>
           <div class="rte-wrap">
             <div class="rte-toolbar" role="toolbar">
@@ -674,7 +677,9 @@ function inspectorNode(model, node) {
         </div>
       </div>
 
-      <label class="field">
+      <!-- A <label> around a rich text area forwards every click to its first
+           control — the bold button — so the caret never stayed in the text. -->
+      <div class="field">
         <span class="label">${t("adv_editor.node_text")}</span>
         <div class="rte-wrap">
           <div class="rte-toolbar" role="toolbar">
@@ -691,9 +696,10 @@ function inspectorNode(model, node) {
               .join("")}
           </div>
           <div class="rte" contenteditable="true" role="textbox" aria-multiline="true"
+               aria-label="${t("adv_editor.node_text")}"
                data-node-field="text_html">${node.text_html || ""}</div>
         </div>
-      </label>
+      </div>
 
       <div class="row gap-2 adv-media-row">
         <label class="field grow">
@@ -1709,6 +1715,17 @@ export async function renderAdventureEditor({ id }) {
         choiceIndex: Number(port.dataset.port ?? port.dataset.row ?? 0),
       };
       selectedKey = port.dataset.node;
+      // The inspector follows the block the gesture started from. Selecting
+      // through an answer row used to leave the previous step's form on screen,
+      // so the panel's next click acted on another step — or on nothing.
+      if (tab !== "node") {
+        tab = "node";
+        paintTabs();
+      }
+      paintInspector();
+      canvas.querySelectorAll(".adv-node").forEach((item) => {
+        item.classList.toggle("is-selected", item.dataset.node === selectedKey);
+      });
       canvas.classList.add("is-linking");
       root.classList.add("is-linking");
       paintGhostLink(linking.fromKey, linking.choiceIndex, canvasPoint(event));
@@ -1992,11 +2009,16 @@ export async function renderAdventureEditor({ id }) {
         }
         break;
       case "remove-choice":
-        if (node.choices.length > 2) {
-          node.choices.splice(Number(button.dataset.choice), 1);
-          markDirty();
-          paintAll();
+        if (node.choices.length <= 2) {
+          toast(t("adv_editor.min_choices"), "error");
+          break;
         }
+        if (!(await confirmDialog(t("adv_editor.remove_title"), t("adv_editor.remove_choice_body"), t("adv_editor.remove")))) {
+          break;
+        }
+        node.choices.splice(Number(button.dataset.choice), 1);
+        markDirty();
+        paintAll();
         break;
       case "add-effect":
         node.choices[Number(button.dataset.choice)].effects.push({
@@ -2006,11 +2028,21 @@ export async function renderAdventureEditor({ id }) {
         markDirty();
         paintInspector();
         break;
-      case "remove-effect":
-        node.choices[Number(button.dataset.choice)].effects.splice(Number(button.dataset.effectIndex), 1);
+      case "remove-effect": {
+        const choice = node.choices?.[Number(button.dataset.choice)];
+        const index = Number(button.dataset.effectIndex);
+        if (!choice || !choice.effects?.[index]) {
+          paintInspector();
+          break;
+        }
+        if (!(await confirmDialog(t("adv_editor.remove_title"), t("adv_editor.remove_effect_body"), t("adv_editor.remove")))) {
+          break;
+        }
+        choice.effects.splice(index, 1);
         markDirty();
         paintInspector();
         break;
+      }
       case "add-outcome":
         node.outcomes.push({
           kind: "highest",
@@ -2025,11 +2057,16 @@ export async function renderAdventureEditor({ id }) {
         paintInspector();
         break;
       case "remove-outcome":
-        if (node.outcomes.length > 1) {
-          node.outcomes.splice(Number(button.dataset.outcome), 1);
-          markDirty();
-          paintInspector();
+        if (node.outcomes.length <= 1) {
+          toast(t("adv_editor.min_outcome"), "error");
+          break;
         }
+        if (!(await confirmDialog(t("adv_editor.remove_title"), t("adv_editor.remove_outcome_body"), t("adv_editor.remove")))) {
+          break;
+        }
+        node.outcomes.splice(Number(button.dataset.outcome), 1);
+        markDirty();
+        paintInspector();
         break;
       case "add-attribute":
         if (model.adventure.attributes.length < 12) {

@@ -218,7 +218,7 @@ function paintDeck() {
   rootEl.querySelector("#deck-delete")?.addEventListener("click", async () => {
     if (!(await confirmDialog(t("cards.delete_confirm")))) return;
     try {
-      await api.delete(`/api/v1/decks/${deck.id}`);
+      await api.del(`/api/v1/decks/${deck.id}`);
       toast(t("cards.deleted"), "success");
       navigate("/cards");
     } catch (error) {
@@ -342,7 +342,7 @@ function bindEditor() {
     button.addEventListener("click", async () => {
       if (!(await confirmDialog(t("cards.delete_card_confirm")))) return;
       try {
-        await api.delete(`/api/v1/decks/${deck.id}/cards/${button.dataset.delete}`);
+        await api.del(`/api/v1/decks/${deck.id}/cards/${button.dataset.delete}`);
         await loadDeck();
       } catch (error) {
         toast(error.detail || error.message || t("common.error"), "error");

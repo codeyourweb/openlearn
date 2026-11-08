@@ -246,6 +246,12 @@ main:focus { outline: none; }
 .btn-ghost:hover { background: rgba(139, 92, 246, 0.12); }
 .btn-danger { background: var(--danger-surface); border-color: rgba(239, 68, 68, 0.4); color: var(--danger-text); }
 .btn-danger:hover { background: rgba(239, 68, 68, 0.28); }
+/* Destructive, but quiet: a delete that sits in a row of fields must not shout
+   louder than the content it belongs to, and must still read as destructive. */
+.btn-danger-ghost { background: transparent; border-color: transparent; color: var(--muted); }
+.btn-danger-ghost:hover, .btn-danger-ghost:focus-visible {
+  background: var(--danger-soft); border-color: rgba(239, 68, 68, 0.45); color: var(--danger-text);
+}
 .btn-sm { padding: 0.35rem 0.7rem; font-size: 0.82rem; }
 .btn-block { width: 100%; }
 .btn-icon { padding: 0.35rem 0.55rem; font-size: 0.85rem; }
