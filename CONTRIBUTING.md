@@ -31,6 +31,13 @@ The full suite also runs against a throwaway instance:
 docker compose -f docker-compose.yml -f docker-compose.dev.yml run --rm tests
 ```
 
+The two images at the top of the README are generated, not hand-drawn. When a
+screen changes, regenerate them against a running instance:
+
+```bash
+python tools/make_readme_assets.py --base-url http://127.0.0.1:8000
+```
+
 ## Contributor Licence Agreement
 
 Before a pull request can be merged, you need to sign the CLA in

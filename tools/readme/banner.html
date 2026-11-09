@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>OpenLearn — README banner</title>
+<!--
+  Source of docs/assets/img/readme-banner.png.
+  Regenerate with: python tools/make_readme_assets.py
+  Manrope (SIL Open Font License) is used when available; otherwise the page
+  falls back to the system sans-serif and the composition still holds.
+-->
+<style>
+  /* __FONT_FACES__ — replaced by tools/make_readme_assets.py when a font directory is given */
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { width: 1280px; height: 260px; }
+  .banner {
+    position: relative; width: 1280px; height: 260px; overflow: hidden;
+    background: #0a0e1a;
+    font-family: Manrope, Inter, "Segoe UI", system-ui, sans-serif; color: #f4f6fb;
+    display: flex; align-items: center; gap: 42px; padding: 0 64px;
+  }
+  .glow { position: absolute; border-radius: 50%; filter: blur(70px); opacity: .55; }
+  .glow.one { width: 420px; height: 420px; left: 640px; top: -190px; background: #6d3ef2; }
+  .glow.two { width: 380px; height: 380px; left: 1010px; top: 60px; background: #13b7d6; opacity: .35; }
+  .grid { position: absolute; inset: 0; opacity: .16;
+    background-image: linear-gradient(#9aa6c4 1px, transparent 1px), linear-gradient(90deg, #9aa6c4 1px, transparent 1px);
+    background-size: 44px 44px; mask-image: linear-gradient(90deg, transparent 55%, #000 100%); }
+  .mark { position: relative; width: 104px; height: 104px; flex: none; }
+  .text { position: relative; }
+  h1 { font-size: 62px; font-weight: 800; letter-spacing: -.02em; line-height: 1; }
+  h1 span { background: linear-gradient(92deg, #a78bfa, #4dd8ee); -webkit-background-clip: text; color: transparent; }
+  .tagline { margin-top: 14px; font-size: 23px; font-weight: 500; color: #c9d2e8; letter-spacing: .01em; }
+  .claims { margin-top: 26px; display: flex; gap: 10px; font-size: 15px; font-weight: 600; }
+  .claims i { font-style: normal; padding: 7px 14px; border-radius: 999px; color: #d7e0f5;
+    border: 1px solid rgba(160,178,220,.28); background: rgba(140,160,210,.10); }
+  .url { position: absolute; right: 64px; bottom: 34px; font-size: 15px; font-weight: 600; color: #a9b6d4; letter-spacing: .04em; }
+</style>
+</head>
+<body>
+  <div class="banner">
+    <div class="grid"></div>
+    <div class="glow one"></div>
+    <div class="glow two"></div>
+    <svg class="mark" viewBox="0 0 64 64" aria-hidden="true">
+      <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#8b5cf6"/><stop offset="1" stop-color="#22d3ee"/>
+      </linearGradient></defs>
+      <rect x="4" y="4" width="56" height="56" rx="14" fill="url(#g)"/>
+      <path d="M22 24a10 10 0 1 1 14 9c-2.2 1.1-3.5 2.6-3.5 5.2v1.3" fill="none" stroke="#08111f" stroke-width="6" stroke-linecap="round"/>
+      <circle cx="32.5" cy="47" r="3.6" fill="#08111f"/>
+    </svg>
+    <div class="text">
+      <h1>Open<span>Learn</span></h1>
+      <p class="tagline">A shared wiki, quizzes, review cards and branching stories.</p>
+      <div class="claims">
+        <i>Open source · AGPL-3.0</i><i>12 languages</i><i>WCAG 2.2 AA</i><i>No trackers</i>
+      </div>
+    </div>
+    <div class="url">openlearnproject.org</div>
+  </div>
+</body>
+</html>

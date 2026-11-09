@@ -1,4 +1,13 @@
-# OpenLearn
+[![OpenLearn — a shared wiki, quizzes, review cards and branching stories](docs/assets/img/readme-banner.png)](https://openlearnproject.org)
+
+[![Continuous integration](https://github.com/codeyourweb/openlearn/actions/workflows/ci.yml/badge.svg)](https://github.com/codeyourweb/openlearn/actions/workflows/ci.yml)
+![license: AGPL-3.0-only](docs/assets/badges/license.svg)
+![python: 3.12](docs/assets/badges/python.svg)
+![languages: 12](docs/assets/badges/languages.svg)
+![accessibility: WCAG 2.2 AA](docs/assets/badges/a11y.svg)
+![trackers: none](docs/assets/badges/trackers.svg)
+
+[![Four screens of OpenLearn: the home page, the catalogue and its filters, a quiz page, and the same quiz read in German](docs/assets/img/readme-demo.gif)](https://openlearnproject.org)
 
 > **Live demo: <https://openlearnproject.org/>** — a seed catalogue of wikis,
 > questionnaires and adventures, in twelve languages, no account needed to read.
