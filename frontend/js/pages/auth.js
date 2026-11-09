@@ -31,7 +31,7 @@ function ssoBlock() {
 }
 
 
-function bindForm(root, form, submit) {
+function bindForm(root, form, submit, destination = () => root.dataset.next || returnTarget()) {
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
     const button = form.querySelector('button[type="submit"]');
@@ -39,7 +39,7 @@ function bindForm(root, form, submit) {
     errorBox.hidden = true;
     setBusy(button, true);
     try {
-      const destination = root.dataset.next || returnTarget();
+      const target = destination();
       await submit(new FormData(form));
       forgetReturnTarget();
       // The login payload only carries the token: read the profile back, both to
@@ -49,7 +49,7 @@ function bindForm(root, form, submit) {
       setUser(me);
       window.dispatchEvent(new CustomEvent("oq:auth-changed"));
       toast(t("auth.welcome", { name: (me && (me.display_name || me.email)) || "" }), "success");
-      navigate(destination);
+      navigate(target);
     } catch (error) {
       errorBox.textContent = error.detail || t("error.generic");
       errorBox.hidden = false;
@@ -119,6 +119,9 @@ export async function renderRegister({ query }) {
       `/login?next=${encodeURIComponent(returnTarget(query))}`,
     )}" data-link>${t("nav.signin")}</a></p>`;
 
+  // A new account lands on its dashboard, whatever page the reader came from:
+  // the first visit is about the account, not about the article that made them
+  // sign up.
   bindForm(root, root.querySelector("#register-form"), async (data) => {
     await api.post("/api/v1/auth/register", {
       display_name: String(data.get("display_name") || "").trim(),
@@ -128,6 +131,6 @@ export async function renderRegister({ query }) {
     // The account exists but its address is still a claim; say so before the
     // visitor wonders why the reminder banner is there.
     toast(t("verify.sent"), "info");
-  });
+  }, () => "/dashboard");
   return root;
 }
