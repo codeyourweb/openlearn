@@ -157,6 +157,76 @@ def _link_wiki(db, quiz: Quiz, slug: str | None, author: User, title: str | None
         db.add(WikiQuizLink(wiki_id=wiki.id, quiz_id=quiz.id, created_by=author.id))
 
 
+def _merge_in(base: dict[str, Any] | None, extra: dict[str, Any] | None) -> dict[str, Any]:
+    """Add the languages ``base`` lacks; never overwrite one it already has."""
+    merged = dict(base or {})
+    for language, value in (extra or {}).items():
+        if language and value and language not in merged:
+            merged[language] = value
+    return merged
+
+
+def _refresh_translations(db, quiz: Quiz, payload: QuizIn) -> bool:
+    """Merge the translations of a revised package into an installed quiz.
+
+    A demo instance installs the showcase once; the packages are then revised.
+    Re-installing replaces nothing — the demo is a public face, and what a
+    visitor wrote must survive a deploy — so a language added to the package is
+    filled into the rows already there, question by question, matched on their
+    original wording. Existing translations are kept as they are, so a wording
+    corrected by hand is never reverted.
+
+    Returns whether anything changed, so the caller can republish only then.
+    """
+    changed = False
+    title_translations = _merge_in(quiz.title_translations, payload.title_translations)
+    if title_translations != (quiz.title_translations or {}):
+        quiz.title_translations = title_translations
+        changed = True
+    description_translations = _merge_in(
+        quiz.description_translations, payload.description_translations
+    )
+    if description_translations != (quiz.description_translations or {}):
+        quiz.description_translations = description_translations
+        changed = True
+
+    # Swipe cards carry canonical Yes/No labels their options never translate.
+    if payload.mode != "swipe":
+        by_text: dict[str, list[Any]] = {}
+        for question in quiz.questions:
+            by_text.setdefault((question.text_html or "").strip(), []).append(question)
+        for question_in in payload.questions:
+            for question in by_text.get((question_in.text_html or "").strip(), [])[:1]:
+                merged = _merge_in(question.text_translations, question_in.translations)
+                if merged != (question.text_translations or {}):
+                    question.text_translations = merged
+                    changed = True
+                options_by_text = {(option.text or "").strip(): option for option in question.options}
+                for position, option_in in enumerate(question_in.options):
+                    option = options_by_text.get((option_in.text or "").strip())
+                    if option is None and len(question.options) == len(question_in.options):
+                        option = question.options[position]
+                    if option is None:
+                        continue
+                    merged = _merge_in(option.text_translations, option_in.translations)
+                    if merged != (option.text_translations or {}):
+                        option.text_translations = merged
+                        changed = True
+
+    if changed:
+        spoken = {quiz.default_language or "en"}
+        for document in (quiz.title_translations, quiz.description_translations):
+            spoken |= set(document or {})
+        for question in quiz.questions:
+            spoken |= set(question.text_translations or {})
+        quiz.languages = sorted(spoken)
+        # The flag drives the language switcher, and the demo quiz now speaks
+        # more than one language.
+        quiz.is_multilingual = len(quiz.languages) > 1
+        quiz.updated_at = utcnow()
+    return changed
+
+
 def _install_quiz(db, author: User, entry: dict[str, Any], *, status: str = "public") -> Quiz | None:
     # `wiki`/`wiki_title` are seeding instructions, not fields of the questionnaire.
     slug, title = entry.get("wiki"), entry.get("wiki_title")
@@ -165,8 +235,28 @@ def _install_quiz(db, author: User, entry: dict[str, Any], *, status: str = "pub
     })
     existing = db.scalar(select(Quiz).where(Quiz.title == payload.title))
     if existing is not None:
-        # A re-run adds the link a previous version forgot, and changes nothing else.
+        # A re-run adds the link a previous version forgot, and changes nothing
+        # else — except translations the package has gained since: a demo that
+        # announces four languages must read in four languages.
         _link_wiki(db, existing, slug, author, title)
+        if existing.owner_id == author.id and _refresh_translations(db, existing, payload):
+            existing.content_hash = compute_content_hash(existing)
+            db.flush()
+            if existing.status == "public":
+                from ..versions import freeze
+
+                version = freeze(
+                    db,
+                    existing,
+                    user=author,
+                    publish=True,
+                    auto_publish=True,
+                    note="Demo translations",
+                )
+                db.add(version)
+                existing.published_version_number = version.number
+                existing.published_at = utcnow()
+            logger.info("Refreshed the translations of %r", existing.title)
         return None
     # `title` is NOT NULL: it has to exist before the first flush, otherwise the
     # row is rejected before `_apply_quiz` ever runs.
