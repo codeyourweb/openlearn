@@ -150,6 +150,32 @@ function wireReportLink() {
     link.addEventListener("click", build);
     link.addEventListener("focus", build);
   });
+  liftPillAboveFooter();
+}
+
+/** Keep the floating report pill clear of the footer once the page is scrolled
+ *  to its end.
+ *
+ *  A fixed element has no idea what it covers: at the bottom of the page the
+ *  pill sat on the last footer row and bit into the links. Rather than lift it
+ *  on every page — where it would then float pointlessly high — the pill is
+ *  raised by exactly the height of the footer that is on screen, and returns to
+ *  its resting place as soon as the footer leaves. Without IntersectionObserver
+ *  the CSS fallback keeps it at its usual distance, and nothing breaks.
+ */
+function liftPillAboveFooter() {
+  const pill = document.getElementById("report-problem-floating");
+  const footer = document.querySelector(".footer");
+  if (!pill || !footer || !("IntersectionObserver" in window)) return;
+  const observer = new IntersectionObserver(
+    (entries) => {
+      const [entry] = entries;
+      const visible = entry.isIntersecting ? entry.intersectionRect.height : 0;
+      pill.style.setProperty("--report-lift", `${Math.min(Math.round(visible) + 8, 240)}px`);
+    },
+    { threshold: [0, 0.15, 0.35, 0.6, 0.85, 1] },
+  );
+  observer.observe(footer);
 }
 
 function buildLanguagePicker() {
