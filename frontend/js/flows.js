@@ -3,6 +3,7 @@
 /* Shared user flows: start a solo session, host a live session. */
 
 import { api } from "./api.js";
+import { currentLanguage } from "./i18n.js";
 import { isLoggedIn, saveSessionCredentials, state } from "./store.js";
 import { toast } from "./ui.js";
 
@@ -11,6 +12,7 @@ export async function startSolo(quizId, navigate, button) {
   try {
     const result = await api.post(`/api/v1/quizzes/${quizId}/sessions`, {
       mode: "solo",
+      language: currentLanguage(),
       nickname: state.user ? state.user.display_name : undefined,
     });
     saveSessionCredentials(result.session.code, {
@@ -34,7 +36,7 @@ export async function hostLive(quizId, navigate, button) {
   }
   if (button) button.disabled = true;
   try {
-    const result = await api.post(`/api/v1/quizzes/${quizId}/sessions`, { mode: "live" });
+    const result = await api.post(`/api/v1/quizzes/${quizId}/sessions`, { mode: "live", language: currentLanguage() });
     saveSessionCredentials(result.session.code, { hostToken: result.host_token });
     navigate(`/host/${result.session.code}`);
   } catch (error) {

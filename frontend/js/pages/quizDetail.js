@@ -5,7 +5,7 @@
    only sees what is needed to decide whether to play. */
 
 import { api } from "../api.js";
-import { languageLabel, t, tp } from "../i18n.js";
+import { currentLanguage, languageLabel, t, tp } from "../i18n.js";
 import { navigate } from "../router.js";
 import { isLoggedIn, state } from "../store.js";
 import { flagStrip } from "../flags.js";
@@ -26,7 +26,7 @@ export async function renderQuizDetail({ id, query }) {
 
   let quiz;
   try {
-    quiz = await api.get(`/api/v1/quizzes/${id}`);
+    quiz = await api.get(`/api/v1/quizzes/${id}?lang=${encodeURIComponent(currentLanguage())}`);
   } catch (error) {
     root.innerHTML = `
       <div class="empty">
@@ -535,7 +535,7 @@ export async function renderQuizDetail({ id, query }) {
     try {
       const result = await api.post(`/api/v1/quizzes/${quiz.id}/sessions`, {
         mode,
-        language: quiz.default_language,
+        language: currentLanguage(),
         play_as_host: playAsHost,
       });
       const code = result.session.code;

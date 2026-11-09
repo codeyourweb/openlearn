@@ -3,7 +3,7 @@
 /* Author dashboard: every quiz with its publication status and actions. */
 
 import { api } from "../api.js";
-import { t } from "../i18n.js";
+import { currentLanguage, t } from "../i18n.js";
 import { navigate } from "../router.js";
 import { isLoggedIn } from "../store.js";
 import { confirmDialog, escapeHtml, toast } from "../ui.js";
@@ -114,7 +114,7 @@ export async function renderDashboard() {
       try {
         const result = await api.post(`/api/v1/quizzes/${quizId}/sessions`, {
           mode: "live",
-          language: quiz.default_language,
+          language: currentLanguage(),
         });
         const code = result.session.code;
         localStorage.setItem(`ol_ht_${code}`, result.host_token);

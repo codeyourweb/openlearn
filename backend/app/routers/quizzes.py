@@ -75,7 +75,12 @@ def _refresh_hash(quiz: Quiz) -> None:
 
 
 def _summary(
-    db: OrmSession, quiz: Quiz, *, viewer: User | None = None, published: bool = False
+    db: OrmSession,
+    quiz: Quiz,
+    *,
+    viewer: User | None = None,
+    published: bool = False,
+    language: str | None = None,
 ) -> QuizSummaryOut:
     count = db.scalar(select(func.count(Question.id)).where(Question.quiz_id == quiz.id)) or 0
     if quiz.mode == "adventure" and not count:
@@ -88,6 +93,8 @@ def _summary(
             or 0
         )
     title, description, policy = quiz.title, quiz.description, quiz.wrong_answer_policy
+    title_translations = quiz.title_translations or {}
+    description_translations = quiz.description_translations or {}
     languages = quiz.languages or [quiz.default_language or FALLBACK_LANGUAGE]
     if published:
         # The catalogue advertises what is actually live, not the working copy.
@@ -97,9 +104,18 @@ def _summary(
             title = payload.get("title") or title
             description = payload.get("description", description) or ""
             policy = payload.get("wrong_answer_policy") or policy
+            title_translations = payload.get("title_translations") or title_translations
+            description_translations = (
+                payload.get("description_translations") or description_translations
+            )
             languages = payload.get("title_translations") and list(
                 {FALLBACK_LANGUAGE, *(payload.get("title_translations") or {})}
             ) or languages
+    if language:
+        # A card carries the words the reader can read: a German catalogue entry
+        # opening an English page is the same broken promise as untranslated text.
+        title = title_translations.get(language) or title
+        description = description_translations.get(language) or description
     return QuizSummaryOut(
         id=quiz.id,
         title=title,
@@ -235,10 +251,15 @@ def serialise_quiz(
             ],
         }
 
+    title = quiz.title
+    description = quiz.description
+    if language and valid_language(language):
+        title = (quiz.title_translations or {}).get(language) or title
+        description = (quiz.description_translations or {}).get(language) or description
     return {
         "id": quiz.id,
-        "title": quiz.title,
-        "description": quiz.description,
+        "title": title,
+        "description": description,
         "wrong_answer_policy": quiz.wrong_answer_policy,
         "mode": quiz.mode,
         "timer_mode": quiz.timer_mode or "per_question",
@@ -378,10 +399,12 @@ def serialise_payload(
             ],
         }
 
+    title_translations = payload.get("title_translations") or {}
+    description_translations = payload.get("description_translations") or {}
     return {
         "id": quiz.id,
-        "title": payload.get("title", quiz.title),
-        "description": payload.get("description", ""),
+        "title": title_translations.get(lang) or payload.get("title", quiz.title),
+        "description": description_translations.get(lang) or payload.get("description", ""),
         "wrong_answer_policy": payload.get("wrong_answer_policy", "zero"),
         "mode": payload.get("mode", quiz.mode),
         "timer_mode": payload.get("timer_mode", quiz.timer_mode or "per_question"),
@@ -715,7 +738,10 @@ def list_quizzes(
             rows = list(db.scalars(stmt.where(Quiz.id.in_(ranked))))
             rows.sort(key=lambda item: order.get(item.id, len(order)))
             response.headers["X-Total-Count"] = str(len(rows))
-            return [_summary(db, quiz, published=True) for quiz in rows[offset : offset + limit]]
+            return [
+                _summary(db, quiz, published=True, language=lang)
+                for quiz in rows[offset : offset + limit]
+            ]
         else:
             response.headers["X-Total-Count"] = "0"
             return []
@@ -726,7 +752,9 @@ def list_quizzes(
         Quiz.published_at.is_(None), Quiz.published_at.desc(), Quiz.updated_at.desc()
     )
     stmt = stmt.limit(limit).offset(offset)
-    return [_summary(db, quiz, published=True) for quiz in db.scalars(stmt).unique()]
+    return [
+        _summary(db, quiz, published=True, language=lang) for quiz in db.scalars(stmt).unique()
+    ]
 
 
 @router.get("/mine", response_model=list[QuizSummaryOut])
@@ -777,6 +805,7 @@ def create_quiz(payload: QuizIn, user: User = Depends(require_user), db: OrmSess
 @router.get("/{quiz_id}")
 def get_quiz(
     quiz_id: int,
+    lang: str | None = Query(None),
     user: User | None = Depends(get_optional_user),
     db: OrmSession = Depends(get_db),
 ):
@@ -784,13 +813,17 @@ def get_quiz(
     if not _can_view(quiz, user):
         raise HTTPException(status_code=404, detail="Quiz not found.")
     if user is not None and _can_edit(quiz, user):
-        # The author edits the working copy, with the answer key.
+        # The author edits the working copy, with the answer key — in its own
+        # language, never in the translation the reader happens to speak.
         return serialise_quiz(quiz, include_answers=True, viewer=user)
+    # A visitor reads the questions in their own language, translated where a
+    # translation exists and falling back to the original where it does not.
+    language = lang if valid_language(lang) else None
     payload = versions.published_payload(db, quiz)
     if payload is not None:
         # Visitors keep seeing the last validated version, even mid-edit.
-        return serialise_payload(quiz, payload, include_answers=False)
-    return serialise_quiz(quiz, include_answers=False, viewer=user)
+        return serialise_payload(quiz, payload, include_answers=False, language=language)
+    return serialise_quiz(quiz, include_answers=False, language=language, viewer=user)
 
 
 @router.put("/{quiz_id}")

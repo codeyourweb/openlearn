@@ -70,21 +70,33 @@ def test_the_catalogue_can_be_narrowed_by_type(client: TestClient) -> None:
     assert {qcm["id"], swipe["id"]}.isdisjoint({0})
 
 
+def _ids(client: TestClient, query: str) -> tuple[list[int], int]:
+    response = client.get(f"/api/v1/quizzes?{query}")
+    assert response.status_code == 200, response.text
+    return [row["id"] for row in response.json()], int(response.headers["X-Total-Count"])
+
+
 def test_a_language_filter_follows_the_translations(client: TestClient) -> None:
     register_user(client, "filter-lang@example.com")
-    _publish(client, title="Written in French", lang="fr")
-    _publish(client, title="Written in English", lang="en")
-    _publish(client, title="Translated into German", lang="en", translations=["de"])
+    french = _publish(client, title="Written in French", lang="fr")
+    english = _publish(client, title="Written in English", lang="en")
+    translated = _publish(client, title="Translated into German", lang="en", translations=["de"])
 
-    titles, total = _titles(client, "lang=fr")
-    assert "Written in French" in titles
-    assert "Written in English" not in titles
-    assert total == len(titles)
+    # Compared by id: the card is *written* in the language the reader asked for,
+    # so the German catalogue shows the German title of the third quiz.
+    ids, total = _ids(client, "lang=fr")
+    assert french["id"] in ids
+    assert english["id"] not in ids
+    assert total == len(ids)
 
     # A translation makes the quiz reachable in that language too.
-    titles, _ = _titles(client, "lang=de")
-    assert "Translated into German" in titles
-    assert "Written in English" not in titles
+    ids, _ = _ids(client, "lang=de")
+    assert translated["id"] in ids
+    assert english["id"] not in ids
+
+    cards = client.get("/api/v1/quizzes?lang=de").json()
+    card = next(row for row in cards if row["id"] == translated["id"])
+    assert card["title"] == "Translated into German (de)"
 
 
 def test_type_and_language_narrow_together(client: TestClient) -> None:
