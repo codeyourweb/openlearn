@@ -44,23 +44,38 @@ def test_a_well_formed_csrf_cookie_is_kept(client):
 
 
 @pytest.mark.parametrize(
-    "hostile",
+    "unit, count",
     [
-        "![" * 60_000,
-        "[[" * 60_000,
-        "[a](" * 60_000,
-        "#" * 200_000,
-        ("# " + " " * 40) * 5_000,
+        ("![", 60_000),
+        ("[[", 60_000),
+        ("[a](", 60_000),
+        ("#", 200_000),
+        ("# " + " " * 40, 5_000),
     ],
 )
-def test_a_hostile_page_body_is_parsed_in_linear_time(hostile):
-    """Every gap in these patterns is bounded, so a 400 000-char body stays cheap."""
-    started = time.perf_counter()
-    outlined = wiki.outline(hostile)
-    summarized = wiki.excerpt(hostile, limit=180)
-    elapsed = time.perf_counter() - started
+def test_a_hostile_page_body_is_parsed_in_linear_time(unit, count):
+    """Every gap in these patterns is bounded, so the cost grows with the input.
 
-    assert elapsed < 2.0, f"took {elapsed:.1f}s on {len(hostile)} characters"
+    Wall time alone says nothing on a shared runner: a slow machine makes a
+    linear parser look quadratic. What distinguishes the two is the *growth*
+    — four times the input costs about four times the work, not sixteen.
+    """
+
+    def cost(repeats: int) -> tuple[float, list, str]:
+        body = unit * repeats
+        started = time.perf_counter()
+        outlined = wiki.outline(body)
+        summarized = wiki.excerpt(body, limit=180)
+        return time.perf_counter() - started, outlined, summarized
+
+    small, _, _ = cost(count // 4)
+    large, outlined, summarized = cost(count)
+
+    assert large < 15.0, f"took {large:.1f}s on {len(unit) * count} characters"
+    assert large <= max(small, 0.02) * 9, (
+        f"cost grew from {small:.2f}s to {large:.2f}s when the body quadrupled "
+        f"({len(unit) * count} characters): that is closer to quadratic than linear"
+    )
     assert isinstance(outlined, list)
     assert len(summarized) <= 181
 
