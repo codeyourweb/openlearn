@@ -284,6 +284,7 @@ def _wiki_or_404(db: OrmSession, wiki_id: int, user: User | None) -> tuple[Wiki,
 def list_wikis(
     request: Request,
     q: str = Query(default="", max_length=120),
+    lang: str | None = Query(default=None, min_length=2, max_length=5),
     mine: bool = False,
     limit: int = Query(default=50, ge=1, le=100),
     offset: int = Query(default=0, ge=0),
@@ -318,6 +319,8 @@ def list_wikis(
             )
         else:
             statement = statement.where(Wiki.title.ilike(f"%{q}%"))
+    if lang:
+        statement = statement.where(Wiki.default_language == lang)
     total = db.scalar(select(func.count()).select_from(statement.subquery())) or 0
     rows = db.scalars(statement.order_by(Wiki.updated_at.desc()).limit(limit).offset(offset)).all()
     payload = [_serialise_wiki(db, wiki, _member_role(db, wiki, user), user) for wiki in rows]

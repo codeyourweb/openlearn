@@ -3,7 +3,7 @@
 /* Wiki: catalogue, reader and creation flow. */
 
 import { api, uploadImage } from "../api.js";
-import { currentLanguage, t, tp } from "../i18n.js";
+import { LANGUAGES, currentLanguage, t, tp } from "../i18n.js";
 import { markdownToHtml, inlineMarkdown, paintCustomColors } from "../markdown.js";
 import { hydrateEmbeds } from "../wikiEmbeds.js";
 import { flagStrip } from "../flags.js";
@@ -68,6 +68,15 @@ async function _wikiHome(root) {
 
     <div class="wiki-toolbar card">
       <input id="wiki-q" class="input" type="search" placeholder="${escapeHtml(t("wiki.search_placeholder"))}" />
+      <label class="field filter-field">
+        <span class="label">${escapeHtml(t("filter.language"))}</span>
+        <select class="select" id="wiki-lang" aria-label="${escapeHtml(t("filter.language"))}">
+          <option value="">${escapeHtml(t("filter.all_languages"))}</option>
+          ${LANGUAGES.map(
+            (item) => `<option value="${item.code}">${escapeHtml(item.label)}</option>`,
+          ).join("")}
+        </select>
+      </label>
       <div class="segmented" role="tablist">
         <button class="seg is-active" data-scope="all" role="tab" aria-selected="true">${escapeHtml(t("wiki.scope_all"))}</button>
         <button class="seg" data-scope="mine" role="tab" aria-selected="false">${escapeHtml(t("wiki.scope_mine"))}</button>
@@ -117,11 +126,13 @@ async function _wikiHome(root) {
     });
   }
 
+  const language = root.querySelector("#wiki-lang");
   const paint = async () => {
     const query = search.value.trim();
+    const chosenLang = language ? language.value : "";
     results.innerHTML = `<div class="skeleton card"></div>`;
     try {
-      if (query) {
+      if (query && !chosenLang) {
         pagerSlot.innerHTML = "";
         const hits = await api.get(`/api/v1/wiki/search?q=${encodeURIComponent(query)}`);
         empty.hidden = hits.length > 0;
@@ -139,9 +150,14 @@ async function _wikiHome(root) {
           .join("");
         return;
       }
-      const meta = await api.getMeta(
-        `/api/v1/wiki?mine=${scope === "mine"}&limit=${PAGE_SIZE}&offset=${pageIndex * PAGE_SIZE}`,
-      );
+      const params = new URLSearchParams({
+        mine: String(scope === "mine"),
+        limit: String(PAGE_SIZE),
+        offset: String(pageIndex * PAGE_SIZE),
+      });
+      if (query) params.set("q", query);
+      if (chosenLang) params.set("lang", chosenLang);
+      const meta = await api.getMeta(`/api/v1/wiki?${params.toString()}`);
       const wikis = meta.data;
       const total = Number(meta.headers.get("X-Total-Count") || wikis.length);
       if (pageIndex > 0 && !wikis.length && total > 0) {
@@ -206,6 +222,12 @@ async function _wikiHome(root) {
     pageIndex = 0;
     timer = setTimeout(paint, 220);
   });
+  if (language) {
+    language.addEventListener("change", () => {
+      pageIndex = 0;
+      paint();
+    });
+  }
   root.querySelectorAll("[data-scope]").forEach((button) => {
     button.addEventListener("click", () => {
       scope = button.dataset.scope;
