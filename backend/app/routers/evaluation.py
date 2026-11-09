@@ -303,11 +303,14 @@ def attempt_detail(
             selected = set(answer.selected or [])
             for option in db.scalars(select(SessionOption).where(SessionOption.session_question_id == question.id)).all():
                 if option.position in selected:
-                    chosen.append(option.text)
+                    chosen.append(
+                        (option.text_translations or {}).get(session.language) or option.text
+                    )
         items.append(
             {
                 "position": question.position + 1,
-                "question": question.text_html,
+                "question": (question.text_translations or {}).get(session.language)
+                or question.text_html,
                 "answer": chosen,
                 "answered": answer is not None,
                 "is_correct": bool(answer.is_correct) if (answer is not None and reveal) else None,

@@ -20,6 +20,7 @@ from sqlalchemy import func, select
 from sqlalchemy.orm import Session as OrmSession
 
 from ..config import settings
+from ..content import valid_language
 from ..db import SessionLocal, get_db
 from ..deps import client_ip, enforce_rate_limit, external_base_url, get_optional_user, verify_csrf
 from ..evaluation import ensure_attempt_left
@@ -330,7 +331,12 @@ async def answer(code: str, payload: AnswerIn, request: Request, db: OrmSession 
 # Results
 # ---------------------------------------------------------------------------
 @router.get("/sessions/{code}/results")
-def results(code: str, request: Request, db: OrmSession = Depends(get_db)):
+def results(
+    code: str,
+    request: Request,
+    lang: str | None = None,
+    db: OrmSession = Depends(get_db),
+):
     session = get_session_by_code(db, code)
     host_token = request.headers.get("x-host-token")
     user = get_optional_user(request, db)
@@ -342,7 +348,7 @@ def results(code: str, request: Request, db: OrmSession = Depends(get_db)):
     if not is_host and participant is None:
         raise HTTPException(status_code=403, detail="Access denied.")
 
-    payload = results_payload(db, session)
+    payload = results_payload(db, session, language=lang if valid_language(lang) else None)
     if not is_host and participant is not None:
         # Players only see their own row in the answer matrix.
         for question in payload["questions"]:

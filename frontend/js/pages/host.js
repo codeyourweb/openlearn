@@ -9,7 +9,7 @@
 */
 
 import { api } from "../api.js";
-import { t, tp } from "../i18n.js";
+import { localized, t, tp } from "../i18n.js";
 import { LiveConnection } from "../live.js";
 import { qrSvg } from "../qr.js";
 import { navigate } from "../router.js";
@@ -195,13 +195,13 @@ export async function renderHost({ code }) {
               <button class="option-btn ${selection.has(option.id) ? "is-picked" : ""}"
                       type="button" data-pick="${option.id}" data-picked="0" aria-pressed="${selection.has(option.id)}">
                 <span class="letter">${letter}</span>
-                <span>${escapeHtml(option.text)}</span>
+                <span>${escapeHtml(localized(option.text, option.translations))}</span>
               </button>`;
             }
             return `
               <div class="option-btn ${cls}" aria-disabled="true">
                 <span class="letter">${letter}</span>
-                <span>${escapeHtml(option.text)}</span>
+                <span>${escapeHtml(localized(option.text, option.translations))}</span>
                 ${reveal ? `<span class="option-count">${counts.get(option.id) || 0}</span>` : ""}
               </div>`;
           })
@@ -439,7 +439,7 @@ export async function renderHost({ code }) {
                  </div>
                </div>`
         }
-        <div class="question-text">${question.text_html}</div>
+        <div class="question-text">${localized(question.text_html, question.translations)}</div>
         ${question.image_path ? `<img class="question-image" src="${escapeHtml(question.image_path)}" alt="" />` : ""}
         ${optionsBlock(question, null)}
       </div>
@@ -475,7 +475,7 @@ export async function renderHost({ code }) {
         <span class="badge ok">${reveal.answered_count}/${state.participants.length}</span>
       </div>
       <div class="question-card">
-        <div class="question-text">${question.text_html}</div>
+        <div class="question-text">${localized(question.text_html, question.translations)}</div>
         ${question.image_path ? `<img class="question-image" src="${escapeHtml(question.image_path)}" alt="" />` : ""}
         ${optionsBlock(question, reveal)}
         ${

@@ -290,6 +290,67 @@ def test_signing_in_from_a_page_comes_back_to_that_page(browser):
         context.close()
 
 
+def test_changing_language_mid_run_repaints_the_question(browser):
+    """A player who switches language during a QCM reads the other wording.
+
+    The session used to freeze one language at creation, so the only way to read
+    the question in German was to start the quiz again. The run now carries every
+    language, and the player repaints the question where it stands.
+    """
+    context, page, recorder = new_page(browser)
+    try:
+        email = f"e2e-lang-{uuid.uuid4().hex[:10]}@example.com"
+        register_through_ui(page, email, "Bilingue")
+        csrf = next(cookie["value"] for cookie in context.cookies() if cookie["name"] == "ol_csrf")
+        quiz = page.request.post(
+            f"{BASE_URL}/api/v1/quizzes",
+            data=json.dumps(
+                {
+                    "title": "Langue en cours de partie",
+                    "description": "Une question, deux langues.",
+                    "mode": "qcm",
+                    "default_language": "fr",
+                    "questions": [
+                        {
+                            "text_html": "<p>Combien de serveurs racine ?</p>",
+                            "translations": {"de": "<p>Wie viele Root-Server gibt es?</p>"},
+                            "time_limit_seconds": 30,
+                            "points": 100,
+                            "options": [
+                                {"text": "Treize", "is_correct": True,
+                                 "translations": {"de": "Dreizehn"}},
+                                {"text": "Trois", "is_correct": False,
+                                 "translations": {"de": "Drei"}},
+                            ],
+                        }
+                    ],
+                }
+            ),
+            headers={"X-CSRF-Token": csrf, "Content-Type": "application/json"},
+        ).json()
+        # Started from the page, like a player would: the run's participant token
+        # lives in the browser's storage, not in the API response.
+        page.goto(f"{BASE_URL}/quizzes/{quiz['id']}", wait_until="networkidle")
+        page.locator('button[data-act="solo"]').first.click()
+        expect(page).to_have_url(re.compile(r".*/play/[A-Z0-9]+$"), timeout=15000)
+        expect(page.locator(".question-card")).to_be_visible(timeout=15000)
+        question = page.locator(".question-text").first
+        expect(question).to_contain_text("Combien de serveurs racine", timeout=15000)
+        expect(page.locator(".options-grid")).to_contain_text("Treize")
+
+        # Same run, same question, another language: no restart, no new session.
+        page.click("#language-button")
+        page.click('#language-menu [data-language="de"]')
+        expect(page.locator(".question-text").first).to_contain_text(
+            "Wie viele Root-Server", timeout=15000
+        )
+        expect(page.locator(".options-grid")).to_contain_text("Dreizehn")
+        expect(page).to_have_url(re.compile(r".*/play/[A-Z0-9]+$"))
+        assert recorder.errors == [], f"frontend errors: {recorder.errors}"
+    finally:
+        context.close()
+
+
 def test_register_create_and_play_solo(browser):
     context, page, recorder = new_page(browser)
     try:

@@ -7,7 +7,7 @@
 */
 
 import { api } from "../api.js";
-import { t, tp } from "../i18n.js";
+import { localized, t, tp } from "../i18n.js";
 import { LiveConnection } from "../live.js";
 import { navigate } from "../router.js";
 import {
@@ -290,7 +290,7 @@ async function renderPlayer(root, code) {
             <span class="swipe-stamp yes">${escapeHtml(t("common.yes"))} →</span>
             <div class="swipe-card-body">
               ${question.image_path ? `<img class="swipe-card-image" src="${escapeHtml(question.image_path)}" alt="" draggable="false" />` : ""}
-              <div class="swipe-card-text">${question.text_html}</div>
+              <div class="swipe-card-text">${localized(question.text_html, question.translations)}</div>
             </div>
           </div>
         </div>
@@ -328,7 +328,7 @@ async function renderPlayer(root, code) {
               <button type="button" class="${cls}" data-option="${option.id}"
                       ${disabled ? "disabled" : ""} aria-pressed="${selected}">
                 <span class="letter">${String.fromCharCode(65 + index)}</span>
-                <span>${escapeHtml(option.text)}</span>
+                <span>${escapeHtml(localized(option.text, option.translations))}</span>
                 ${reveal ? `<span class="option-count">${(reveal.options.find((entry) => entry.id === option.id) || {}).count || 0}</span>` : ""}
                 ${reveal && !isPoll ? `<span class="visually-hidden">${correct ? t("play.correct") : selected ? t("play.incorrect") : ""}</span>` : ""}
               </button>`;
@@ -414,7 +414,7 @@ async function renderPlayer(root, code) {
                  </div>
                </div>`
         }
-        ${swipe ? "" : `<div class="question-text">${question.text_html}</div>`}
+        ${swipe ? "" : `<div class="question-text">${localized(question.text_html, question.translations)}</div>`}
         ${!swipe && question.image_path ? `<img class="question-image" src="${escapeHtml(question.image_path)}" alt="" />` : ""}
         <div id="answers">${optionsHtml()}</div>
         <p class="banner warn mt-2" id="time-notice" role="status" ${timeUp && !state.reveal ? "" : "hidden"}>${t("play.time_up")}</p>
@@ -443,7 +443,7 @@ async function renderPlayer(root, code) {
         <span class="badge muted">${t("common.score")} ${myScore()}</span>
       </div>
       <div class="question-card">
-        ${state.session.mode === "swipe" ? "" : `<div class="question-text">${question.text_html}</div>`}
+        ${state.session.mode === "swipe" ? "" : `<div class="question-text">${localized(question.text_html, question.translations)}</div>`}
         ${state.session.mode !== "swipe" && question.image_path ? `<img class="question-image" src="${escapeHtml(question.image_path)}" alt="" />` : ""}
         <div id="answers">${optionsHtml()}</div>
         <div id="feedback">${feedbackHtml()}</div>

@@ -336,6 +336,10 @@ class SessionQuestion(Base):
     source_question_id: Mapped[int | None] = mapped_column(Integer)
     position: Mapped[int] = mapped_column(Integer)
     text_html: Mapped[str] = mapped_column(Text)
+    # The wording is frozen when the run starts, in every language the quiz
+    # offered: a player who switches language mid-run reads the same question,
+    # not a stale one.
+    text_translations: Mapped[dict[str, str]] = mapped_column(JSON, default=dict)
     image_path: Mapped[str | None] = mapped_column(String(200))
     time_limit_seconds: Mapped[int] = mapped_column(Integer)
     points: Mapped[int] = mapped_column(Integer, default=100)
@@ -357,6 +361,7 @@ class SessionOption(Base):
     source_option_id: Mapped[int | None] = mapped_column(Integer)
     position: Mapped[int] = mapped_column(Integer)
     text: Mapped[str] = mapped_column(String(500))
+    text_translations: Mapped[dict[str, str]] = mapped_column(JSON, default=dict)
     is_correct: Mapped[bool] = mapped_column(Boolean, default=False)
 
     question: Mapped[SessionQuestion] = relationship(back_populates="options")

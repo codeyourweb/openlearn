@@ -83,8 +83,13 @@ def test_a_run_is_played_in_the_language_it_was_started_in(client: TestClient) -
     state = client.get(f"/api/v1/sessions/{code}/state", headers=headers)
     assert state.status_code == 200, state.text
     question = state.json()["question"]
-    assert question["text_html"] == TRANSLATED_QUESTION
-    assert sorted(option["text"] for option in question["options"]) == sorted(TRANSLATED_ANSWERS)
+    # The run reads German and keeps the authored wording beside it: the same
+    # payload serves a player who switches language without leaving the question.
+    assert question["translations"]["de"] == TRANSLATED_QUESTION
+    assert sorted(
+        option["translations"]["de"] for option in question["options"]
+    ) == sorted(TRANSLATED_ANSWERS)
+    assert "How many servers answer a query" in question["text_html"]
 
 
 def test_the_heading_is_in_the_language_the_reader_asked_for(client: TestClient) -> None:

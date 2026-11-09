@@ -1642,6 +1642,18 @@ export function onLanguageChange(listener) {
   i18n.listeners.push(listener);
 }
 
+/** The wording a reader of the current language should see.
+ *
+ * A questionnaire carries its translations beside its authored text, which is
+ * written in the quiz's default language: showing that text when the asked-for
+ * language is missing is what keeps a half-translated quiz readable — and lets
+ * a player switch language in the middle of a run without starting it again.
+ */
+export function localized(original, translations) {
+  const text = (translations || {})[currentLanguage()];
+  return text || original || "";
+}
+
 /** Translate a key, interpolating `{name}` placeholders. */
 export function t(key, params = {}) {
   const dict = dictionaries[i18n.language] || en;

@@ -107,7 +107,11 @@ def create_session(
             playable.append(
                 {
                     "id": question["id"],
-                    "text_html": resolve_text(wrapped_question, language, "text", "text_html"),
+                    # The snapshot keeps the authored wording and every language
+                    # beside it: the player resolves the one its reader asks for,
+                    # so changing language mid-run needs no new session.
+                    "text_html": resolve_text(wrapped_question, None, "text", "text_html"),
+                    "translations": dict(question.get("translations") or {}),
                     "image_path": question["image_path"],
                     "time_limit_seconds": question["time_limit_seconds"],
                     "points": question["points"],
@@ -115,9 +119,8 @@ def create_session(
                     "options": [
                         {
                             "id": option["id"],
-                            "text": resolve_text(
-                                version_store.resolved_option(option, language), language
-                            ),
+                            "text": resolve_text(version_store.resolved_option(option, None), None),
+                            "translations": dict(option.get("translations") or {}),
                             "is_correct": option["is_correct"],
                         }
                         for option in question["options"]
@@ -134,7 +137,8 @@ def create_session(
         playable = [
             {
                 "id": question.id,
-                "text_html": resolve_text(question, language, "text", "text_html"),
+                "text_html": question.text_html,
+                "translations": dict(question.text_translations or {}),
                 "image_path": question.image_path,
                 "time_limit_seconds": question.time_limit_seconds,
                 "points": question.points,
@@ -142,7 +146,8 @@ def create_session(
                 "options": [
                     {
                         "id": option.id,
-                        "text": resolve_text(option, language),
+                        "text": option.text,
+                        "translations": dict(option.text_translations or {}),
                         "is_correct": option.is_correct,
                     }
                     for option in question.options
@@ -192,6 +197,7 @@ def create_session(
             position=q_index,
             source_question_id=question["id"],
             text_html=question["text_html"],
+            text_translations=question.get("translations") or {},
             image_path=question["image_path"],
             time_limit_seconds=question["time_limit_seconds"],
             points=question["points"],
@@ -203,6 +209,7 @@ def create_session(
                     position=o_index,
                     source_option_id=option["id"],
                     text=option["text"],
+                    text_translations=option.get("translations") or {},
                     is_correct=option["is_correct"],
                 )
             )
@@ -538,6 +545,9 @@ def build_state(db: OrmSession, session: GameSession) -> dict[str, Any]:
             "id": question.id,
             "position": question.position,
             "text_html": question.text_html,
+            # Sent with every state so the player can repaint the question in
+            # another language without asking the server for a new run.
+            "translations": dict(question.text_translations or {}),
             "image_path": question.image_path,
             "time_limit_seconds": question.time_limit_seconds,
             "points": question.points,
@@ -546,7 +556,10 @@ def build_state(db: OrmSession, session: GameSession) -> dict[str, Any]:
                 if session.quiz_mode == "poll"
                 else sum(1 for o in question.options if o.is_correct) > 1
             ),
-            "options": [{"id": o.id, "text": o.text} for o in question.options],
+            "options": [
+                {"id": o.id, "text": o.text, "translations": dict(o.text_translations or {})}
+                for o in question.options
+            ],
             "started_at": _iso(session.question_started_at),
             "deadline": _iso(session.question_deadline),
             "remaining_ms": remaining_ms(session) if session.phase == "question" else 0,
@@ -570,6 +583,7 @@ def build_state(db: OrmSession, session: GameSession) -> dict[str, Any]:
                     {
                         "id": o.id,
                         "text": o.text,
+                        "translations": dict(o.text_translations or {}),
                         "is_correct": False if is_poll else o.is_correct,
                         "count": counts.get(o.id, 0),
                     }
@@ -599,8 +613,24 @@ def _iso(value: datetime | None) -> str | None:
     return value.isoformat().replace("+00:00", "Z") if value else None
 
 
-def results_payload(db: OrmSession, session: GameSession) -> dict[str, Any]:
-    """Full answer matrix used by the post-game detailed view."""
+def _spoken(entity: Any, value_attribute: str, language: str | None) -> str:
+    """The wording a reader of ``language`` should see, authored text otherwise."""
+    if language:
+        translated = (getattr(entity, "text_translations", None) or {}).get(language)
+        if translated:
+            return translated
+    return getattr(entity, value_attribute) or ""
+
+
+def results_payload(
+    db: OrmSession, session: GameSession, language: str | None = None
+) -> dict[str, Any]:
+    """Full answer matrix used by the post-game detailed view.
+
+    The snapshot is language-neutral: the wording is resolved here, for the
+    reader, in the run's language unless another one is asked for.
+    """
+    language = language or session.language
     participants = list(
         db.scalars(
             select(Participant).where(Participant.session_id == session.id).order_by(Participant.id)
@@ -627,7 +657,7 @@ def results_payload(db: OrmSession, session: GameSession) -> dict[str, Any]:
                     "answered": answer is not None,
                     "selected_option_ids": (answer.selected if answer else []) or [],
                     "selected_options": [
-                        option.text
+                        _spoken(option, "text", language)
                         for option in question.options
                         if answer and option.id in (answer.selected or [])
                     ],
@@ -640,12 +670,19 @@ def results_payload(db: OrmSession, session: GameSession) -> dict[str, Any]:
             {
                 "id": question.id,
                 "position": question.position,
-                "text_html": question.text_html,
+                "text_html": _spoken(question, "text_html", language),
+                "translations": dict(question.text_translations or {}),
                 "image_path": question.image_path,
                 "time_limit_seconds": question.time_limit_seconds,
                 "points": question.points,
                 "options": [
-                    {"id": o.id, "text": o.text, "is_correct": o.is_correct} for o in question.options
+                    {
+                        "id": o.id,
+                        "text": _spoken(o, "text", language),
+                        "translations": dict(o.text_translations or {}),
+                        "is_correct": o.is_correct,
+                    }
+                    for o in question.options
                 ],
                 "correct_option_ids": [o.id for o in question.options if o.is_correct],
                 "answers": rows,

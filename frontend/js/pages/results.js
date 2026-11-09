@@ -3,7 +3,7 @@
 /* Detailed post-game view: who answered what, question by question. */
 
 import { api } from "../api.js";
-import { t } from "../i18n.js";
+import { currentLanguage, localized, t } from "../i18n.js";
 import { hostToken, participantToken } from "../store.js";
 import { escapeHtml, formatDate, formatDuration } from "../ui.js";
 
@@ -16,7 +16,10 @@ export async function renderResults({ code }) {
 
   let data;
   try {
-    data = await api.get(`/api/v1/sessions/${normalized}/results`, { headers });
+    data = await api.get(
+      `/api/v1/sessions/${normalized}/results?lang=${encodeURIComponent(currentLanguage())}`,
+      { headers },
+    );
   } catch (error) {
     root.innerHTML = `
       <div class="empty">
@@ -46,7 +49,7 @@ export async function renderResults({ code }) {
     .map((question) => {
       const correctTexts = question.options
         .filter((option) => option.is_correct)
-        .map((option) => escapeHtml(option.text))
+        .map((option) => escapeHtml(localized(option.text, option.translations)))
         .join(" · ");
       const multiple = question.options.filter((option) => option.is_correct).length > 1;
       return `
@@ -55,7 +58,7 @@ export async function renderResults({ code }) {
           <div class="row">
             <span class="q-index">${question.position + 1}</span>
             <div>
-              <div class="question-text">${question.text_html}</div>
+              <div class="question-text">${localized(question.text_html, question.translations)}</div>
               <div class="quiz-meta">
                 <span>${question.time_limit_seconds}s</span>
                 <span>·</span>

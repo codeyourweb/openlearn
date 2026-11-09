@@ -65,7 +65,13 @@ _COLUMNS: dict[str, dict[str, str]] = {
         "allow_multiple": "BOOLEAN NOT NULL DEFAULT 0",
     },
     "options": {"text_translations": "JSON"},
-    "session_questions": {"allow_multiple": "BOOLEAN NOT NULL DEFAULT 0"},
+    "session_questions": {
+        "allow_multiple": "BOOLEAN NOT NULL DEFAULT 0",
+        # Translations frozen with the snapshot, so a run can change language
+        # without restarting.
+        "text_translations": "JSON",
+    },
+    "session_options": {"text_translations": "JSON"},
     "game_sessions": {
         "quiz_mode": "VARCHAR(10) NOT NULL DEFAULT 'qcm'",
         "language": "VARCHAR(5) NOT NULL DEFAULT 'en'",

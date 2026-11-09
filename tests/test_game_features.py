@@ -84,9 +84,13 @@ def test_session_uses_the_requested_language(client):
 
     state = create_session(client, quiz["id"], language="fr")["state"]
     assert state["session"]["language"] == "fr"
-    assert "Quelle est la reponse" in state["question"]["text_html"]
+    # The snapshot carries the authored wording and every translation beside it, so
+    # each player of a live run reads the language their own interface is in.
+    assert "What is the answer" in state["question"]["text_html"]
+    assert "Quelle est la reponse" in state["question"]["translations"]["fr"]
     # Options are shuffled per session, so look the text up rather than trusting a position.
-    assert "Bonne reponse" in [option["text"] for option in state["question"]["options"]]
+    spoken = [option["translations"].get("fr") for option in state["question"]["options"]]
+    assert "Bonne reponse" in spoken
 
     english = create_session(client, quiz["id"], language="en")["state"]
     assert "What is the answer" in english["question"]["text_html"]
