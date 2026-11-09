@@ -2306,3 +2306,50 @@ def test_a_step_keeps_the_caret_and_a_trash_asks_before_it_deletes(browser):
         assert recorder.errors == [], recorder.errors
     finally:
         context.close()
+
+
+def test_a_mailed_reset_link_opens_the_form_that_chooses_a_password(browser):
+    """`/reset/<token>` used to paint the *request* form again.
+
+    The router calls a handler with the path parameters spread at the top level
+    (`{ token, query }`); the page destructured `{ params }`, so the token was
+    always empty and every mailed link sent the reader back to "enter your
+    address" — the one thing they had just done.
+    """
+    context, page, recorder = new_page(browser)
+    try:
+        asked: list[str] = []
+        page.on(
+            "request",
+            lambda request: "password/reset" in request.url and asked.append(request.url),
+        )
+        page.goto(f"{BASE_URL}/reset/known-token-123", wait_until="networkidle")
+        page.wait_for_timeout(1500)
+
+        assert any(url.endswith("/password/reset/known-token-123") for url in asked), (
+            f"the page never asked the server about its token: {asked}"
+        )
+        assert page.locator("#forgot-form").count() == 0, "the request form came back"
+        assert recorder.errors == [], recorder.errors
+    finally:
+        context.close()
+
+
+def test_a_mailed_confirmation_link_carries_its_token_to_the_server(browser):
+    """Same defect on the other mailed link: `/verify/<token>` lost the token."""
+    context, page, recorder = new_page(browser)
+    try:
+        asked: list[str] = []
+        page.on(
+            "request",
+            lambda request: "email/verify" in request.url and asked.append(request.url),
+        )
+        page.goto(f"{BASE_URL}/verify/known-token-123", wait_until="networkidle")
+        page.wait_for_timeout(1500)
+
+        assert any(url.endswith("/email/verify/known-token-123") for url in asked), (
+            f"the confirmation page never sent its token: {asked}"
+        )
+        assert recorder.errors == [], recorder.errors
+    finally:
+        context.close()

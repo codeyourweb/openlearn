@@ -17,9 +17,12 @@ function card() {
   return root;
 }
 
-export async function renderResetPassword({ params, path }) {
+export async function renderResetPassword({ token: rawToken }) {
   const root = card();
-  const token = params && params.token ? String(params.token) : "";
+  /* The router spreads the path parameters at the top level — `{ token }`, not
+     `{ params: { token } }`. Reading the wrong shape made every mailed link
+     open the request form again instead of the form that chooses a password. */
+  const token = rawToken ? String(rawToken) : "";
 
   if (!token) {
     root.innerHTML = `

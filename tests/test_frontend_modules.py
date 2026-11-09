@@ -159,3 +159,23 @@ def test_a_module_that_calls_the_api_imports_the_client():
         "These modules call the API client without importing it, so the call "
         f"throws ReferenceError the first time it runs: {offenders}"
     )
+
+
+def test_a_page_handler_reads_path_parameters_where_the_router_puts_them():
+    """`router.js` calls `handler({ ...params, query })` — flat, not `{ params }`.
+
+    Two pages destructured `{ params }` and silently got an empty token: the
+    password-reset link opened the request form again, and every address
+    confirmation link opened as a bad link. Nothing failed at load time, and no
+    amount of clicking the site revealed it — only a real mailed link did.
+    """
+    wrong = re.compile(r"function\s+render[A-Za-z]*\s*\(\s*\{\s*params\b")
+    offenders = [
+        str(path.relative_to(JS_ROOT))
+        for path in modules()
+        if wrong.search(path.read_text(encoding="utf-8"))
+    ]
+    assert not offenders, (
+        "These handlers expect `{ params }`, which the router never sends — path "
+        f"parameters arrive at the top level: {offenders}"
+    )

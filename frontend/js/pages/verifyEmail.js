@@ -14,8 +14,11 @@ import { escapeHtml, setBusy, toast } from "../ui.js";
 
 const BANNER_ID = "verify-email-banner";
 
-export async function renderVerifyEmail({ params }) {
-  const token = params && params.token ? String(params.token) : "";
+export async function renderVerifyEmail({ token: rawToken }) {
+  /* Path parameters arrive at the top level (see `register` in router.js). A
+     handler reading `{ params }` silently got an empty token and confirmed
+     nothing, so every mailed confirmation opened as a bad link. */
+  const token = rawToken ? String(rawToken) : "";
   const root = document.createElement("div");
   root.className = "auth-card card";
   root.innerHTML = `<div class="loading">${t("common.loading")}</div>`;
