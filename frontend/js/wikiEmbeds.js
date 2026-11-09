@@ -72,6 +72,14 @@ function deckReader(deck) {
 
   const paint = () => {
     const card = cards[index];
+    if (!card) {
+      // An empty deck is a normal state while its author is still writing: the
+      // preview used to read a card that was not there and take the whole editor
+      // down with it.
+      inner.innerHTML = `<p class="muted small center">${escapeHtml(t("cards.no_cards"))}</p>`;
+      counter.textContent = `0 / ${cards.length}`;
+      return;
+    }
     inner.innerHTML = `
       <div class="revision-card-face revision-card-front">${cardFace(card, "front")}</div>
       <div class="revision-card-face revision-card-back">${cardFace(card, "back")}</div>`;
