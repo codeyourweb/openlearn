@@ -1,0 +1,1736 @@
+{
+ "kind": "quizzes",
+ "items": [
+  {
+   "title": "Réseau et DNS : résolution, enregistrements et diagnostic",
+   "description": "Six questions sur ce qui se passe vraiment quand un navigateur demande une adresse : les trois serveurs, le cache, les types d'enregistrement et la lecture d'une réponse dig.",
+   "mode": "qcm",
+   "wrong_answer_policy": "penalty",
+   "default_language": "fr",
+   "is_multilingual": true,
+   "title_translations": {
+    "en": "Networks and DNS: resolution, records and diagnosis",
+    "de": "Netzwerk und DNS: Auflösung, Records und Diagnose",
+    "es": "Red y DNS: resolución, registros y diagnóstico"
+   },
+   "description_translations": {
+    "en": "Six questions on what really happens when a browser asks for an address: the three servers, the cache, the record types and how to read a dig answer.",
+    "de": "Sechs Fragen dazu, was wirklich passiert, wenn ein Browser eine Adresse anfragt: die drei Server, der Cache, die Record-Typen und das Lesen einer dig-Antwort.",
+    "es": "Seis preguntas sobre lo que ocurre cuando un navegador pide una dirección: los tres servidores, la caché, los tipos de registro y cómo leer una respuesta de dig."
+   },
+   "timer_mode": "per_question",
+   "questions": [
+    {
+     "text_html": "<p>Quel serveur détient la zone et peut seul répondre « voici l'adresse » ?</p>",
+     "time_limit_seconds": 30,
+     "points": 100,
+     "options": [
+      {
+       "text": "Le résolveur récursif du fournisseur d'accès",
+       "is_correct": false
+      },
+      {
+       "text": "Le serveur racine",
+       "is_correct": false
+      },
+      {
+       "text": "Le serveur faisant autorité",
+       "is_correct": true
+      },
+      {
+       "text": "Le cache du navigateur",
+       "is_correct": false
+      }
+     ]
+    },
+    {
+     "text_html": "<p>Que signifie le statut <code>NXDOMAIN</code> dans une réponse <code>dig</code> ?</p>",
+     "time_limit_seconds": 30,
+     "points": 100,
+     "options": [
+      {
+       "text": "La requête a abouti mais la réponse est vide",
+       "is_correct": false
+      },
+      {
+       "text": "Le nom interrogé n'existe pas",
+       "is_correct": true
+      },
+      {
+       "text": "Le serveur n'a pas pu répondre",
+       "is_correct": false
+      },
+      {
+       "text": "La zone est signée DNSSEC",
+       "is_correct": false
+      }
+     ]
+    },
+    {
+     "text_html": "<p>Quel type d'enregistrement associe un nom à une adresse IPv6 ?</p>",
+     "time_limit_seconds": 30,
+     "points": 100,
+     "options": [
+      {
+       "text": "A",
+       "is_correct": false
+      },
+      {
+       "text": "AAAA",
+       "is_correct": true
+      },
+      {
+       "text": "CNAME",
+       "is_correct": false
+      },
+      {
+       "text": "MX",
+       "is_correct": false
+      }
+     ]
+    },
+    {
+     "text_html": "<p>Pourquoi ne place-t-on pas de CNAME à la racine d'un domaine ?</p>",
+     "time_limit_seconds": 30,
+     "points": 100,
+     "options": [
+      {
+       "text": "Parce que la racine est toujours en IPv6",
+       "is_correct": false
+      },
+      {
+       "text": "Parce qu'un CNAME ne peut pas cohabiter avec un autre enregistrement, et la racine porte déjà SOA et NS",
+       "is_correct": true
+      },
+      {
+       "text": "Parce qu'un CNAME coûte plus cher",
+       "is_correct": false
+      },
+      {
+       "text": "Parce que les navigateurs refusent les CNAME",
+       "is_correct": false
+      }
+     ]
+    },
+    {
+     "text_html": "<p>À quoi sert le TTL d'un enregistrement ?</p>",
+     "time_limit_seconds": 30,
+     "points": 100,
+     "options": [
+      {
+       "text": "Il chiffre la réponse",
+       "is_correct": false
+      },
+      {
+       "text": "Il fixe la durée pendant laquelle un résolveur garde la réponse en cache",
+       "is_correct": true
+      },
+      {
+       "text": "Il compte les requêtes par seconde",
+       "is_correct": false
+      },
+      {
+       "text": "Il désigne le serveur de messagerie",
+       "is_correct": false
+      }
+     ]
+    },
+    {
+     "text_html": "<p>Lors d'un incident, quel TTL adopter avant de modifier les enregistrements critiques ?</p>",
+     "time_limit_seconds": 30,
+     "points": 100,
+     "options": [
+      {
+       "text": "60 s, puis attendre l'expiration de l'ancien TTL",
+       "is_correct": true
+      },
+      {
+       "text": "3600 s pour stabiliser la zone",
+       "is_correct": false
+      },
+      {
+       "text": "0 s pour couper tout de suite",
+       "is_correct": false
+      },
+      {
+       "text": "86400 s pour éviter les changements",
+       "is_correct": false
+      }
+     ]
+    }
+   ],
+   "wiki_title": "Réseau et DNS"
+  },
+  {
+   "title": "La Révolution française : les journées qui basculent",
+   "description": "Six questions sur les moments de rupture, du Jeu de paume à Brumaire, et sur ce que la Révolution a laissé derrière elle.",
+   "mode": "qcm",
+   "wrong_answer_policy": "penalty",
+   "default_language": "fr",
+   "is_multilingual": true,
+   "title_translations": {
+    "en": "The French Revolution: the days that tipped it",
+    "de": "Die Französische Revolution: die entscheidenden Tage",
+    "es": "La Revolución francesa: los días que lo cambiaron todo"
+   },
+   "description_translations": {
+    "en": "Six questions on the turning points, from the Tennis Court Oath to Brumaire, and on what the Revolution left behind.",
+    "de": "Sechs Fragen zu den Wendepunkten, vom Ballhausschwur bis Brumaire, und zu dem, was die Revolution hinterließ.",
+    "es": "Seis preguntas sobre los momentos de ruptura, del Juramento del Juego de Pelota a Brumario, y sobre lo que dejó la Revolución."
+   },
+   "timer_mode": "per_question",
+   "wiki": "demo-revolution-francaise",
+   "questions": [
+    {
+     "text_html": "<p>Que se passe-t-il le 17 juin 1789 ?</p>",
+     "time_limit_seconds": 30,
+     "points": 100,
+     "options": [
+      {
+       "text": "Les états généraux s'ouvrent à Versailles",
+       "is_correct": false
+      },
+      {
+       "text": "Les députés du tiers état se proclament Assemblée nationale",
+       "is_correct": true
+      },
+      {
+       "text": "La Bastille est prise",
+       "is_correct": false
+      },
+      {
+       "text": "Le roi est arrêté à Varennes",
+       "is_correct": false
+      }
+     ]
+    },
+    {
+     "text_html": "<p>Quel serment les députés prêtent-ils le 20 juin 1789 ?</p>",
+     "time_limit_seconds": 30,
+     "points": 100,
+     "options": [
+      {
+       "text": "Le serment du Jeu de paume",
+       "is_correct": true
+      },
+      {
+       "text": "Le serment de Varennes",
+       "is_correct": false
+      },
+      {
+       "text": "Le serment du 14 juillet",
+       "is_correct": false
+      },
+      {
+       "text": "Le serment de Brumaire",
+       "is_correct": false
+      }
+     ]
+    },
+    {
+     "text_html": "<p>Combien de prisonniers la Bastille contenait-elle le 14 juillet 1789 ?</p>",
+     "time_limit_seconds": 30,
+     "points": 100,
+     "options": [
+      {
+       "text": "Aucun",
+       "is_correct": false
+      },
+      {
+       "text": "Sept",
+       "is_correct": true
+      },
+      {
+       "text": "Une centaine",
+       "is_correct": false
+      },
+      {
+       "text": "Douze",
+       "is_correct": false
+      }
+     ]
+    },
+    {
+     "text_html": "<p>Où Louis XVI est-il arrêté en juin 1791 ?</p>",
+     "time_limit_seconds": 30,
+     "points": 100,
+     "options": [
+      {
+       "text": "À Versailles",
+       "is_correct": false
+      },
+      {
+       "text": "À Varennes",
+       "is_correct": true
+      },
+      {
+       "text": "À Lyon",
+       "is_correct": false
+      },
+      {
+       "text": "À Toulon",
+       "is_correct": false
+      }
+     ]
+    },
+    {
+     "text_html": "<p>En quelle année le Code civil est-il promulgué ?</p>",
+     "time_limit_seconds": 30,
+     "points": 100,
+     "options": [
+      {
+       "text": "1789",
+       "is_correct": false
+      },
+      {
+       "text": "1793",
+       "is_correct": false
+      },
+      {
+       "text": "1804",
+       "is_correct": true
+      },
+      {
+       "text": "1815",
+       "is_correct": false
+      }
+     ]
+    },
+    {
+     "text_html": "<p>D'où viennent les mots « droite » et « gauche » en politique ?</p>",
+     "time_limit_seconds": 30,
+     "points": 100,
+     "options": [
+      {
+       "text": "De la place des députés par rapport au président de l'Assemblée",
+       "is_correct": true
+      },
+      {
+       "text": "Des deux ailes de la Bastille",
+       "is_correct": false
+      },
+      {
+       "text": "Des partis royalistes",
+       "is_correct": false
+      },
+      {
+       "text": "Du calendrier révolutionnaire",
+       "is_correct": false
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "Fleuves et rivières : lire un cours d'eau",
+   "description": "Quatre questions sur les trois cours d'un fleuve et sur les cinq grands bassins français.",
+   "mode": "qcm",
+   "wrong_answer_policy": "penalty",
+   "default_language": "fr",
+   "is_multilingual": true,
+   "title_translations": {
+    "en": "Rivers: reading a watercourse",
+    "de": "Flüsse: einen Wasserlauf lesen",
+    "es": "Ríos: leer un curso de agua"
+   },
+   "description_translations": {
+    "en": "Four questions on the three courses of a river and on the five great French basins.",
+    "de": "Vier Fragen zu den drei Abschnitten eines Flusses und zu den fünf großen französischen Einzugsgebieten.",
+    "es": "Cuatro preguntas sobre los tres tramos de un río y las cinco grandes cuencas francesas."
+   },
+   "timer_mode": "per_question",
+   "wiki": "demo-geographie-fleuves",
+   "questions": [
+    {
+     "text_html": "<p>Quel est le plus long fleuve entièrement français ?</p>",
+     "time_limit_seconds": 30,
+     "points": 100,
+     "options": [
+      {
+       "text": "La Seine",
+       "is_correct": false
+      },
+      {
+       "text": "La Loire",
+       "is_correct": true
+      },
+      {
+       "text": "Le Rhône",
+       "is_correct": false
+      },
+      {
+       "text": "La Garonne",
+       "is_correct": false
+      }
+     ]
+    },
+    {
+     "text_html": "<p>Dans quelle mer le Rhône se jette-t-il ?</p>",
+     "time_limit_seconds": 30,
+     "points": 100,
+     "options": [
+      {
+       "text": "L'Atlantique",
+       "is_correct": false
+      },
+      {
+       "text": "La Manche",
+       "is_correct": false
+      },
+      {
+       "text": "La Méditerranée",
+       "is_correct": true
+      },
+      {
+       "text": "La mer du Nord",
+       "is_correct": false
+      }
+     ]
+    },
+    {
+     "text_html": "<p>Que caractérise le cours moyen d'un fleuve ?</p>",
+     "time_limit_seconds": 30,
+     "points": 100,
+     "options": [
+      {
+       "text": "Une vallée étroite et des galets",
+       "is_correct": false
+      },
+      {
+       "text": "Des méandres et des dépôts d'alluvions",
+       "is_correct": true
+      },
+      {
+       "text": "Un delta uniquement",
+       "is_correct": false
+      },
+      {
+       "text": "Une pente très forte",
+       "is_correct": false
+      }
+     ]
+    },
+    {
+     "text_html": "<p>Qu'est-ce qu'un bassin versant ?</p>",
+     "time_limit_seconds": 30,
+     "points": 100,
+     "options": [
+      {
+       "text": "Le lit majeur du fleuve",
+       "is_correct": false
+      },
+      {
+       "text": "La zone dont toutes les eaux finissent dans le même fleuve",
+       "is_correct": true
+      },
+      {
+       "text": "Le delta à l'embouchure",
+       "is_correct": false
+      },
+      {
+       "text": "Le réseau des affluents navigables",
+       "is_correct": false
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "Fleuves : votre fleuve idéal",
+   "description": "Trois questions d'opinion, sans bonne réponse : dites ce qui vous attire au bord de l'eau et comparez avec les autres lecteurs.",
+   "mode": "poll",
+   "wrong_answer_policy": "penalty",
+   "default_language": "fr",
+   "is_multilingual": true,
+   "title_translations": {
+    "en": "Rivers: your ideal river",
+    "de": "Flüsse: Ihr idealer Fluss",
+    "es": "Ríos: su río ideal"
+   },
+   "description_translations": {
+    "en": "Three opinion questions with no right answer: say what draws you to a riverbank and compare with the other readers.",
+    "de": "Drei Meinungsfragen ohne richtige Antwort: Sagen Sie, was Sie ans Ufer zieht, und vergleichen Sie mit anderen Lesern.",
+    "es": "Tres preguntas de opinión sin respuesta correcta: diga qué le atrae de la orilla y compárese con los demás lectores."
+   },
+   "timer_mode": "per_question",
+   "wiki": "demo-geographie-fleuves",
+   "questions": [
+    {
+     "text_html": "<p>Quel type de cours d'eau préférez-vous suivre à pied ?</p>",
+     "time_limit_seconds": 30,
+     "points": 0,
+     "options": [
+      {
+       "text": "Un torrent de montagne",
+       "is_correct": false
+      },
+      {
+       "text": "Une rivière de plaine",
+       "is_correct": false
+      },
+      {
+       "text": "Un grand fleuve",
+       "is_correct": false
+      },
+      {
+       "text": "Un canal ombragé",
+       "is_correct": false
+      }
+     ]
+    },
+    {
+     "text_html": "<p>Quelle saison choisiriez-vous pour une descente de trois jours ?</p>",
+     "time_limit_seconds": 30,
+     "points": 0,
+     "options": [
+      {
+       "text": "Le printemps",
+       "is_correct": false
+      },
+      {
+       "text": "L'été",
+       "is_correct": false
+      },
+      {
+       "text": "L'automne",
+       "is_correct": false
+      },
+      {
+       "text": "L'hiver",
+       "is_correct": false
+      }
+     ]
+    },
+    {
+     "text_html": "<p>Qu'est-ce qui compte le plus pour vous au bord de l'eau ?</p>",
+     "time_limit_seconds": 30,
+     "points": 0,
+     "options": [
+      {
+       "text": "Le calme",
+       "is_correct": false
+      },
+      {
+       "text": "La baignade",
+       "is_correct": false
+      },
+      {
+       "text": "Le paysage",
+       "is_correct": false
+      },
+      {
+       "text": "La pêche",
+       "is_correct": false
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "Klima und Klimawandel: Wetter, Strahlung und Politik",
+   "description": "Sechs Fragen zu den Grundlagen: der Unterschied zwischen Wetter und Klima, der Treibhauseffekt, die Keeling-Kurve und der Weg von Rio nach Paris.",
+   "mode": "qcm",
+   "wrong_answer_policy": "penalty",
+   "default_language": "de",
+   "is_multilingual": true,
+   "title_translations": {
+    "fr": "Climat et changement climatique : météo, rayonnement et politique",
+    "en": "Climate and climate change: weather, radiation and policy",
+    "es": "Clima y cambio climático: tiempo, radiación y política"
+   },
+   "description_translations": {
+    "fr": "Six questions sur les bases : la différence entre météo et climat, l'effet de serre, la courbe de Keeling et le chemin de Rio à Paris.",
+    "en": "Six questions on the basics: the difference between weather and climate, the greenhouse effect, the Keeling curve and the road from Rio to Paris.",
+    "es": "Seis preguntas sobre lo básico: la diferencia entre tiempo y clima, el efecto invernadero, la curva de Keeling y el camino de Río a París."
+   },
+   "timer_mode": "per_question",
+   "wiki": "demo-klima-wandel",
+   "questions": [
+    {
+     "text_html": "<p>Worin unterscheidet sich das Klima vom Wetter?</p>",
+     "time_limit_seconds": 30,
+     "points": 100,
+     "options": [
+      {
+       "text": "Das Klima ist die Statistik der Wetterzustände über Jahrzehnte",
+       "is_correct": true
+      },
+      {
+       "text": "Das Klima ist das Wetter an einem anderen Ort",
+       "is_correct": false
+      },
+      {
+       "text": "Das Klima ändert sich nur im Winter",
+       "is_correct": false
+      },
+      {
+       "text": "Es gibt keinen Unterschied",
+       "is_correct": false
+      }
+     ]
+    },
+    {
+     "text_html": "<p>Welche Bezugsperiode verwendet die Weltorganisation für Meteorologie derzeit?</p>",
+     "time_limit_seconds": 30,
+     "points": 100,
+     "options": [
+      {
+       "text": "1961–1990",
+       "is_correct": false
+      },
+      {
+       "text": "1981–2010",
+       "is_correct": false
+      },
+      {
+       "text": "1991–2020",
+       "is_correct": true
+      },
+      {
+       "text": "2001–2030",
+       "is_correct": false
+      }
+     ]
+    },
+    {
+     "text_html": "<p>Was zeigt die Keeling-Kurve?</p>",
+     "time_limit_seconds": 30,
+     "points": 100,
+     "options": [
+      {
+       "text": "Den Anstieg der CO2-Konzentration, mit jährlichem Sägezahn",
+       "is_correct": true
+      },
+      {
+       "text": "Die Temperatur der Ozeane",
+       "is_correct": false
+      },
+      {
+       "text": "Die Zahl der Sonnenflecken",
+       "is_correct": false
+      },
+      {
+       "text": "Den Meeresspiegel seit 1900",
+       "is_correct": false
+      }
+     ]
+    },
+    {
+     "text_html": "<p>Wie viel mehr Wasserdampf kann wärmere Luft pro Grad Celsius etwa halten?</p>",
+     "time_limit_seconds": 30,
+     "points": 100,
+     "options": [
+      {
+       "text": "Etwa 1 %",
+       "is_correct": false
+      },
+      {
+       "text": "Etwa 3 %",
+       "is_correct": false
+      },
+      {
+       "text": "Etwa 7 %",
+       "is_correct": true
+      },
+      {
+       "text": "Etwa 20 %",
+       "is_correct": false
+      }
+     ]
+    },
+    {
+     "text_html": "<p>Wer wies die Absorption von Wärmestrahlung im 19. Jahrhundert experimentell nach?</p>",
+     "time_limit_seconds": 30,
+     "points": 100,
+     "options": [
+      {
+       "text": "Svante Arrhenius",
+       "is_correct": false
+      },
+      {
+       "text": "John Tyndall",
+       "is_correct": true
+      },
+      {
+       "text": "Charles Keeling",
+       "is_correct": false
+      },
+      {
+       "text": "Joseph Fourier",
+       "is_correct": false
+      }
+     ]
+    },
+    {
+     "text_html": "<p>Wann wurde das Pariser Abkommen geschlossen?</p>",
+     "time_limit_seconds": 30,
+     "points": 100,
+     "options": [
+      {
+       "text": "1992",
+       "is_correct": false
+      },
+      {
+       "text": "1997",
+       "is_correct": false
+      },
+      {
+       "text": "2009",
+       "is_correct": false
+      },
+      {
+       "text": "2015",
+       "is_correct": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "Bases de datos relacionales: del modelo de Codd a los índices",
+   "description": "Seis preguntas sobre claves, normalización, transacciones e índices, con las definiciones de la wiki.",
+   "mode": "qcm",
+   "wrong_answer_policy": "penalty",
+   "default_language": "es",
+   "is_multilingual": true,
+   "title_translations": {
+    "fr": "Bases de données relationnelles : du modèle de Codd aux index",
+    "en": "Relational databases: from Codd's model to indexes",
+    "de": "Relationale Datenbanken: von Codds Modell zu den Indizes"
+   },
+   "description_translations": {
+    "fr": "Six questions sur les clés, la normalisation, les transactions et les index, avec les définitions du wiki.",
+    "en": "Six questions on keys, normalisation, transactions and indexes, with the wiki's definitions.",
+    "de": "Sechs Fragen zu Schlüsseln, Normalisierung, Transaktionen und Indizes, mit den Definitionen des Wikis."
+   },
+   "timer_mode": "per_question",
+   "wiki": "demo-bases-de-datos-relacionales",
+   "questions": [
+    {
+     "text_html": "<p>¿Quién publicó el modelo relacional en 1970?</p>",
+     "time_limit_seconds": 30,
+     "points": 100,
+     "options": [
+      {
+       "text": "Edgar F. Codd",
+       "is_correct": true
+      },
+      {
+       "text": "Donald Knuth",
+       "is_correct": false
+      },
+      {
+       "text": "Charles Bachman",
+       "is_correct": false
+      },
+      {
+       "text": "Jim Gray",
+       "is_correct": false
+      }
+     ]
+    },
+    {
+     "text_html": "<p>¿Qué garantiza una clave primaria?</p>",
+     "time_limit_seconds": 30,
+     "points": 100,
+     "options": [
+      {
+       "text": "Que la fila se identifica de forma única y no nula",
+       "is_correct": true
+      },
+      {
+       "text": "Que la tabla tiene pocas columnas",
+       "is_correct": false
+      },
+      {
+       "text": "Que las consultas son más rápidas",
+       "is_correct": false
+      },
+      {
+       "text": "Que los datos están cifrados",
+       "is_correct": false
+      }
+     ]
+    },
+    {
+     "text_html": "<p>¿Qué caracteriza a una clave subrogada?</p>",
+     "time_limit_seconds": 30,
+     "points": 100,
+     "options": [
+      {
+       "text": "Es un dato del mundo real, como el ISBN",
+       "is_correct": false
+      },
+      {
+       "text": "Es un número inventado sin significado, generado por el sistema",
+       "is_correct": true
+      },
+      {
+       "text": "Es siempre una fecha",
+       "is_correct": false
+      },
+      {
+       "text": "Es una clave foránea",
+       "is_correct": false
+      }
+     ]
+    },
+    {
+     "text_html": "<p>¿Qué elimina la tercera forma normal?</p>",
+     "time_limit_seconds": 30,
+     "points": 100,
+     "options": [
+      {
+       "text": "Los valores repetidos en una celda",
+       "is_correct": false
+      },
+      {
+       "text": "Las dependencias parciales de la clave",
+       "is_correct": false
+      },
+      {
+       "text": "Las dependencias transitivas entre columnas no clave",
+       "is_correct": true
+      },
+      {
+       "text": "Las claves foráneas",
+       "is_correct": false
+      }
+     ]
+    },
+    {
+     "text_html": "<p>¿Qué significa la A de ACID?</p>",
+     "time_limit_seconds": 30,
+     "points": 100,
+     "options": [
+      {
+       "text": "Atomicidad",
+       "is_correct": true
+      },
+      {
+       "text": "Aislamiento",
+       "is_correct": false
+      },
+      {
+       "text": "Agregación",
+       "is_correct": false
+      },
+      {
+       "text": "Autorización",
+       "is_correct": false
+      }
+     ]
+    },
+    {
+     "text_html": "<p>¿Qué estructura usan casi todos los índices relacionales?</p>",
+     "time_limit_seconds": 30,
+     "points": 100,
+     "options": [
+      {
+       "text": "Tablas hash",
+       "is_correct": false
+      },
+      {
+       "text": "Árboles B",
+       "is_correct": true
+      },
+      {
+       "text": "Listas enlazadas",
+       "is_correct": false
+      },
+      {
+       "text": "Grafos dirigidos",
+       "is_correct": false
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "How the Internet Works: packets, names and standards",
+   "description": "Six questions on the network of networks: packet switching, DNS, BGP and the bodies that publish the standards.",
+   "mode": "qcm",
+   "wrong_answer_policy": "penalty",
+   "default_language": "en",
+   "is_multilingual": true,
+   "title_translations": {
+    "fr": "Comment fonctionne Internet : paquets, noms et normes",
+    "de": "Wie das Internet funktioniert: Pakete, Namen und Standards",
+    "es": "Cómo funciona Internet: paquetes, nombres y estándares"
+   },
+   "description_translations": {
+    "fr": "Six questions sur le réseau des réseaux : commutation de paquets, DNS, BGP et les organismes qui publient les normes.",
+    "de": "Sechs Fragen zum Netz der Netze: Paketvermittlung, DNS, BGP und die Gremien, die die Standards veröffentlichen.",
+    "es": "Seis preguntas sobre la red de redes: conmutación de paquetes, DNS, BGP y los organismos que publican los estándares."
+   },
+   "timer_mode": "per_question",
+   "wiki": "demo-how-the-internet-works",
+   "questions": [
+    {
+     "text_html": "<p>What holds the internet together?</p>",
+     "time_limit_seconds": 30,
+     "points": 100,
+     "options": [
+      {
+       "text": "A single company",
+       "is_correct": false
+      },
+      {
+       "text": "A small number of shared protocols",
+       "is_correct": true
+      },
+      {
+       "text": "A United Nations agency",
+       "is_correct": false
+      },
+      {
+       "text": "A master switch",
+       "is_correct": false
+      }
+     ]
+    },
+    {
+     "text_html": "<p>Why does packet switching beat reserving a circuit?</p>",
+     "time_limit_seconds": 30,
+     "points": 100,
+     "options": [
+      {
+       "text": "It is easier to bill",
+       "is_correct": false
+      },
+      {
+       "text": "It shares capacity, so a link is only occupied while data is sent",
+       "is_correct": true
+      },
+      {
+       "text": "It needs no addresses",
+       "is_correct": false
+      },
+      {
+       "text": "It encrypts every packet",
+       "is_correct": false
+      }
+     ]
+    },
+    {
+     "text_html": "<p>What does BGP do between networks?</p>",
+     "time_limit_seconds": 30,
+     "points": 100,
+     "options": [
+      {
+       "text": "It finds the shortest path",
+       "is_correct": false
+      },
+      {
+       "text": "It announces reachable address blocks and follows business relationships",
+       "is_correct": true
+      },
+      {
+       "text": "It translates names into addresses",
+       "is_correct": false
+      },
+      {
+       "text": "It compresses traffic",
+       "is_correct": false
+      }
+     ]
+    },
+    {
+     "text_html": "<p>Which body publishes the technical standards as RFCs?</p>",
+     "time_limit_seconds": 30,
+     "points": 100,
+     "options": [
+      {
+       "text": "ICANN",
+       "is_correct": false
+      },
+      {
+       "text": "W3C",
+       "is_correct": false
+      },
+      {
+       "text": "IETF",
+       "is_correct": true
+      },
+      {
+       "text": "The regional registries",
+       "is_correct": false
+      }
+     ]
+    },
+    {
+     "text_html": "<p>What do 3xx status codes mean in HTTP?</p>",
+     "time_limit_seconds": 30,
+     "points": 100,
+     "options": [
+      {
+       "text": "Success",
+       "is_correct": false
+      },
+      {
+       "text": "Redirection",
+       "is_correct": true
+      },
+      {
+       "text": "Client error",
+       "is_correct": false
+      },
+      {
+       "text": "Server error",
+       "is_correct": false
+      }
+     ]
+    },
+    {
+     "text_html": "<p>Where does the lookup start when a device resolves a name?</p>",
+     "time_limit_seconds": 30,
+     "points": 100,
+     "options": [
+      {
+       "text": "At a root server",
+       "is_correct": false
+      },
+      {
+       "text": "At a recursive resolver, usually run by the ISP or a public service",
+       "is_correct": true
+      },
+      {
+       "text": "At the authoritative server of the domain",
+       "is_correct": false
+      },
+      {
+       "text": "At the local hosts file only",
+       "is_correct": false
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "How the Internet Works: true or false",
+   "description": "Six statements to swipe through. Some are the textbook version, some are the myth.",
+   "mode": "swipe",
+   "wrong_answer_policy": "penalty",
+   "default_language": "en",
+   "is_multilingual": true,
+   "title_translations": {
+    "fr": "Comment fonctionne Internet : vrai ou faux",
+    "de": "Wie das Internet funktioniert: wahr oder falsch",
+    "es": "Cómo funciona Internet: verdadero o falso"
+   },
+   "description_translations": {
+    "fr": "Six affirmations à trancher. Certaines sont la version du manuel, d'autres sont un mythe.",
+    "de": "Sechs Aussagen zum Wischen. Manche sind Lehrbuchwissen, andere ein Mythos.",
+    "es": "Seis afirmaciones para deslizar. Algunas son la versión del manual, otras son un mito."
+   },
+   "timer_mode": "per_question",
+   "wiki": "demo-how-the-internet-works",
+   "questions": [
+    {
+     "text_html": "<p>The internet has no single owner.</p>",
+     "time_limit_seconds": 20,
+     "points": 100,
+     "options": [
+      {
+       "text": "Yes",
+       "is_correct": true
+      },
+      {
+       "text": "No",
+       "is_correct": false
+      }
+     ]
+    },
+    {
+     "text_html": "<p>A file is sent as one continuous stream from sender to receiver.</p>",
+     "time_limit_seconds": 20,
+     "points": 100,
+     "options": [
+      {
+       "text": "Yes",
+       "is_correct": false
+      },
+      {
+       "text": "No",
+       "is_correct": true
+      }
+     ]
+    },
+    {
+     "text_html": "<p>Packets from the same file can arrive out of order.</p>",
+     "time_limit_seconds": 20,
+     "points": 100,
+     "options": [
+      {
+       "text": "Yes",
+       "is_correct": true
+      },
+      {
+       "text": "No",
+       "is_correct": false
+      }
+     ]
+    },
+    {
+     "text_html": "<p>BGP always chooses the shortest path between two networks.</p>",
+     "time_limit_seconds": 20,
+     "points": 100,
+     "options": [
+      {
+       "text": "Yes",
+       "is_correct": false
+      },
+      {
+       "text": "No",
+       "is_correct": true
+      }
+     ]
+    },
+    {
+     "text_html": "<p>DNS is one central database that every machine queries.</p>",
+     "time_limit_seconds": 20,
+     "points": 100,
+     "options": [
+      {
+       "text": "Yes",
+       "is_correct": false
+      },
+      {
+       "text": "No",
+       "is_correct": true
+      }
+     ]
+    },
+    {
+     "text_html": "<p>HTTP is a text protocol with methods, paths and headers.</p>",
+     "time_limit_seconds": 20,
+     "points": 100,
+     "options": [
+      {
+       "text": "Yes",
+       "is_correct": true
+      },
+      {
+       "text": "No",
+       "is_correct": false
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "The Human Immune System: two lines of defence",
+   "description": "Six questions on innate recognition, the lymphocyte library, antibodies and what a vaccine actually teaches.",
+   "mode": "qcm",
+   "wrong_answer_policy": "penalty",
+   "default_language": "en",
+   "is_multilingual": true,
+   "title_translations": {
+    "fr": "Le système immunitaire humain : deux lignes de défense",
+    "de": "Das menschliche Immunsystem: zwei Verteidigungslinien",
+    "es": "El sistema inmunitario humano: dos líneas de defensa"
+   },
+   "description_translations": {
+    "fr": "Six questions sur la reconnaissance innée, la bibliothèque de lymphocytes, les anticorps et ce qu'un vaccin apprend vraiment.",
+    "de": "Sechs Fragen zur angeborenen Erkennung, zur Lymphozyten-Bibliothek, zu Antikörpern und dazu, was eine Impfung wirklich lehrt.",
+    "es": "Seis preguntas sobre el reconocimiento innato, la biblioteca de linfocitos, los anticuerpos y lo que enseña una vacuna."
+   },
+   "timer_mode": "per_question",
+   "wiki": "demo-human-immune-system",
+   "questions": [
+    {
+     "text_html": "<p>What do innate cells recognise?</p>",
+     "time_limit_seconds": 30,
+     "points": 100,
+     "options": [
+      {
+       "text": "One specific microbe",
+       "is_correct": false
+      },
+      {
+       "text": "Molecular patterns common to whole classes of microbes",
+       "is_correct": true
+      },
+      {
+       "text": "Only human cells",
+       "is_correct": false
+      },
+      {
+       "text": "Antibodies from the mother",
+       "is_correct": false
+      }
+     ]
+    },
+    {
+     "text_html": "<p>Which white cells are the most abundant in blood?</p>",
+     "time_limit_seconds": 30,
+     "points": 100,
+     "options": [
+      {
+       "text": "Lymphocytes",
+       "is_correct": false
+      },
+      {
+       "text": "Neutrophils",
+       "is_correct": true
+      },
+      {
+       "text": "Eosinophils",
+       "is_correct": false
+      },
+      {
+       "text": "Monocytes",
+       "is_correct": false
+      }
+     ]
+    },
+    {
+     "text_html": "<p>How does the adaptive system find a receptor that fits a new pathogen?</p>",
+     "time_limit_seconds": 30,
+     "points": 100,
+     "options": [
+      {
+       "text": "It designs one from scratch",
+       "is_correct": false
+      },
+      {
+       "text": "It maintains a vast random library and selects the rare matching cell",
+       "is_correct": true
+      },
+      {
+       "text": "It borrows one from another species",
+       "is_correct": false
+      },
+      {
+       "text": "It uses the same receptor for every pathogen",
+       "is_correct": false
+      }
+     ]
+    },
+    {
+     "text_html": "<p>How many protein chains does an antibody have?</p>",
+     "time_limit_seconds": 30,
+     "points": 100,
+     "options": [
+      {
+       "text": "Two",
+       "is_correct": false
+      },
+      {
+       "text": "Three",
+       "is_correct": false
+      },
+      {
+       "text": "Four",
+       "is_correct": true
+      },
+      {
+       "text": "Five",
+       "is_correct": false
+      }
+     ]
+    },
+    {
+     "text_html": "<p>Which class makes up around three quarters of serum antibody?</p>",
+     "time_limit_seconds": 30,
+     "points": 100,
+     "options": [
+      {
+       "text": "IgA",
+       "is_correct": false
+      },
+      {
+       "text": "IgE",
+       "is_correct": false
+      },
+      {
+       "text": "IgG",
+       "is_correct": true
+      },
+      {
+       "text": "IgM",
+       "is_correct": false
+      }
+     ]
+    },
+    {
+     "text_html": "<p>What does a vaccine present to the immune system?</p>",
+     "time_limit_seconds": 30,
+     "points": 100,
+     "options": [
+      {
+       "text": "A live pathogen that always causes disease",
+       "is_correct": false
+      },
+      {
+       "text": "Something that looks like a pathogen but cannot cause the disease",
+       "is_correct": true
+      },
+      {
+       "text": "An antibiotic",
+       "is_correct": false
+      },
+      {
+       "text": "A donor's antibodies",
+       "is_correct": false
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "Football Tactics: true or false",
+   "description": "Six statements on formations, pressing and transitions. Swipe yes when the wiki agrees.",
+   "mode": "swipe",
+   "wrong_answer_policy": "penalty",
+   "default_language": "en",
+   "is_multilingual": true,
+   "title_translations": {
+    "fr": "Tactique au football : vrai ou faux",
+    "de": "Fußballtaktik: wahr oder falsch",
+    "es": "Táctica de fútbol: verdadero o falso"
+   },
+   "description_translations": {
+    "fr": "Six affirmations sur les systèmes de jeu, le pressing et les transitions. Répondez oui quand le wiki est d'accord.",
+    "de": "Sechs Aussagen zu Formationen, Pressing und Umschaltmomenten. Wischen Sie Ja, wenn das Wiki zustimmt.",
+    "es": "Seis afirmaciones sobre formaciones, presión y transiciones. Deslice sí cuando la wiki esté de acuerdo."
+   },
+   "timer_mode": "per_question",
+   "wiki": "demo-football-tactics",
+   "questions": [
+    {
+     "text_html": "<p>A formation says where players stand, not how the team plays.</p>",
+     "time_limit_seconds": 20,
+     "points": 100,
+     "options": [
+      {
+       "text": "Yes",
+       "is_correct": true
+      },
+      {
+       "text": "No",
+       "is_correct": false
+      }
+     ]
+    },
+    {
+     "text_html": "<p>In a 4-2-3-1, the three are holding midfielders.</p>",
+     "time_limit_seconds": 20,
+     "points": 100,
+     "options": [
+      {
+       "text": "Yes",
+       "is_correct": false
+      },
+      {
+       "text": "No",
+       "is_correct": true
+      }
+     ]
+    },
+    {
+     "text_html": "<p>Pressing is simply running at the ball as fast as possible.</p>",
+     "time_limit_seconds": 20,
+     "points": 100,
+     "options": [
+      {
+       "text": "Yes",
+       "is_correct": false
+      },
+      {
+       "text": "No",
+       "is_correct": true
+      }
+     ]
+    },
+    {
+     "text_html": "<p>Most goals come from long settled attacks rather than transitions.</p>",
+     "time_limit_seconds": 20,
+     "points": 100,
+     "options": [
+      {
+       "text": "Yes",
+       "is_correct": false
+      },
+      {
+       "text": "No",
+       "is_correct": true
+      }
+     ]
+    },
+    {
+     "text_html": "<p>Set pieces are the part of the game a training session can reproduce exactly.</p>",
+     "time_limit_seconds": 20,
+     "points": 100,
+     "options": [
+      {
+       "text": "Yes",
+       "is_correct": true
+      },
+      {
+       "text": "No",
+       "is_correct": false
+      }
+     ]
+    },
+    {
+     "text_html": "<p>Following the ball is the best way to watch a match tactically.</p>",
+     "time_limit_seconds": 20,
+     "points": 100,
+     "options": [
+      {
+       "text": "Yes",
+       "is_correct": false
+      },
+      {
+       "text": "No",
+       "is_correct": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "Reading a work of art: what you notice first",
+   "description": "Three opinion questions about the way you look at a picture. There is no right answer; the tally shows how the other readers look.",
+   "mode": "poll",
+   "wrong_answer_policy": "penalty",
+   "default_language": "en",
+   "is_multilingual": true,
+   "title_translations": {
+    "fr": "Lire une œuvre d'art : ce que vous voyez d'abord",
+    "de": "Ein Kunstwerk lesen: was Sie zuerst bemerken",
+    "es": "Leer una obra de arte: lo que ve primero"
+   },
+   "description_translations": {
+    "fr": "Trois questions d'opinion sur votre façon de regarder une image. Il n'y a pas de bonne réponse ; le décompte montre comment les autres regardent.",
+    "de": "Drei Meinungsfragen dazu, wie Sie ein Bild betrachten. Es gibt keine richtige Antwort; die Auszählung zeigt, wie andere schauen.",
+    "es": "Tres preguntas de opinión sobre cómo mira una imagen. No hay respuesta correcta; el recuento muestra cómo miran los demás."
+   },
+   "timer_mode": "per_question",
+   "wiki": "arts",
+   "questions": [
+    {
+     "text_html": "<p>What draws your eye first in a picture?</p>",
+     "time_limit_seconds": 30,
+     "points": 0,
+     "options": [
+      {
+       "text": "Colour",
+       "is_correct": false
+      },
+      {
+       "text": "Composition",
+       "is_correct": false
+      },
+      {
+       "text": "The subject",
+       "is_correct": false
+      },
+      {
+       "text": "The light",
+       "is_correct": false
+      }
+     ]
+    },
+    {
+     "text_html": "<p>Which detail would you trust most to date a painting?</p>",
+     "time_limit_seconds": 30,
+     "points": 0,
+     "options": [
+      {
+       "text": "Its style",
+       "is_correct": false
+      },
+      {
+       "text": "Its subject",
+       "is_correct": false
+      },
+      {
+       "text": "Its frame",
+       "is_correct": false
+      },
+      {
+       "text": "Its signature",
+       "is_correct": false
+      }
+     ]
+    },
+    {
+     "text_html": "<p>What makes a museum visit worth it for you?</p>",
+     "time_limit_seconds": 30,
+     "points": 0,
+     "options": [
+      {
+       "text": "Seeing the originals",
+       "is_correct": false
+      },
+      {
+       "text": "The building",
+       "is_correct": false
+      },
+      {
+       "text": "The explanations",
+       "is_correct": false
+      },
+      {
+       "text": "A quiet hour",
+       "is_correct": false
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "Learning a Language: what actually works",
+   "description": "Five questions from the guide: sounds before letters, frequency lists, context, cognates and speaking early.",
+   "mode": "qcm",
+   "wrong_answer_policy": "penalty",
+   "default_language": "en",
+   "is_multilingual": true,
+   "title_translations": {
+    "fr": "Apprendre une langue : ce qui marche vraiment",
+    "de": "Eine Sprache lernen: was wirklich funktioniert",
+    "es": "Aprender un idioma: lo que funciona de verdad"
+   },
+   "description_translations": {
+    "fr": "Cinq questions tirées du guide : les sons avant les lettres, les listes de fréquence, le contexte, les mots apparentés et la parole précoce.",
+    "de": "Fünf Fragen aus dem Leitfaden: Laute vor Buchstaben, Frequenzlisten, Kontext, verwandte Wörter und früh sprechen.",
+    "es": "Cinco preguntas de la guía: los sonidos antes que las letras, las listas de frecuencia, el contexto, los cognados y hablar pronto."
+   },
+   "timer_mode": "per_question",
+   "wiki": "languages",
+   "questions": [
+    {
+     "text_html": "<p>What should a beginner learn first?</p>",
+     "time_limit_seconds": 30,
+     "points": 100,
+     "options": [
+      {
+       "text": "The grammar tables",
+       "is_correct": false
+      },
+      {
+       "text": "The sounds that carry meaning",
+       "is_correct": true
+      },
+      {
+       "text": "The alphabet order",
+       "is_correct": false
+      },
+      {
+       "text": "Long word lists",
+       "is_correct": false
+      }
+     ]
+    },
+    {
+     "text_html": "<p>Why do frequency lists help a beginner?</p>",
+     "time_limit_seconds": 30,
+     "points": 100,
+     "options": [
+      {
+       "text": "They contain every word of the language",
+       "is_correct": false
+      },
+      {
+       "text": "A few hundred words cover a large share of everyday speech",
+       "is_correct": true
+      },
+      {
+       "text": "They are sorted by difficulty",
+       "is_correct": false
+      },
+      {
+       "text": "They avoid pronunciation entirely",
+       "is_correct": false
+      }
+     ]
+    },
+    {
+     "text_html": "<p>What makes vocabulary stick?</p>",
+     "time_limit_seconds": 30,
+     "points": 100,
+     "options": [
+      {
+       "text": "Meeting a word in several contexts",
+       "is_correct": true
+      },
+      {
+       "text": "Writing it once",
+       "is_correct": false
+      },
+      {
+       "text": "Reading the dictionary",
+       "is_correct": false
+      },
+      {
+       "text": "Learning it in isolation",
+       "is_correct": false
+      }
+     ]
+    },
+    {
+     "text_html": "<p>What is a cognate?</p>",
+     "time_limit_seconds": 30,
+     "points": 100,
+     "options": [
+      {
+       "text": "A word that resembles one in another language",
+       "is_correct": true
+      },
+      {
+       "text": "A word with no translation",
+       "is_correct": false
+      },
+      {
+       "text": "A verb form",
+       "is_correct": false
+      },
+      {
+       "text": "A regional accent",
+       "is_correct": false
+      }
+     ]
+    },
+    {
+     "text_html": "<p>Why is speaking early useful?</p>",
+     "time_limit_seconds": 30,
+     "points": 100,
+     "options": [
+      {
+       "text": "Because grammar comes later anyway",
+       "is_correct": false
+      },
+      {
+       "text": "Because mistakes become correctable material",
+       "is_correct": true
+      },
+      {
+       "text": "Because native speakers expect it",
+       "is_correct": false
+      },
+      {
+       "text": "Because writing is useless",
+       "is_correct": false
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "Préparer un galop 3 : la séance, les binômes, la sécurité",
+   "description": "Quatre questions sur la capsule pédagogique : ce qu'on vérifie avant de monter, comment le groupe est organisé et comment se servir des cartes personnages.",
+   "mode": "qcm",
+   "wrong_answer_policy": "penalty",
+   "default_language": "fr",
+   "is_multilingual": true,
+   "title_translations": {
+    "en": "Preparing a Galop 3 session: the plan, the pairs, the safety",
+    "de": "Eine Galopp-3-Einheit vorbereiten: Plan, Paare, Sicherheit",
+    "es": "Preparar una sesión de Galop 3: el plan, las parejas, la seguridad"
+   },
+   "description_translations": {
+    "en": "Four questions on the teaching capsule: what is checked before mounting, how the group is organised and how to use the character cards.",
+    "de": "Vier Fragen zur Lehrkapsel: was vor dem Aufsitzen geprüft wird, wie die Gruppe organisiert ist und wie man die Charakterkarten nutzt.",
+    "es": "Cuatro preguntas sobre la cápsula didáctica: qué se comprueba antes de montar, cómo se organiza el grupo y cómo usar las cartas de personajes."
+   },
+   "timer_mode": "per_question",
+   "questions": [
+    {
+     "text_html": "<p>Que vérifie-t-on en binôme avant de monter ?</p>",
+     "time_limit_seconds": 30,
+     "points": 100,
+     "options": [
+      {
+       "text": "Les harnachements",
+       "is_correct": true
+      },
+      {
+       "text": "La météo",
+       "is_correct": false
+      },
+      {
+       "text": "Le planning des reprises",
+       "is_correct": false
+      },
+      {
+       "text": "Les assurances",
+       "is_correct": false
+      }
+     ]
+    },
+    {
+     "text_html": "<p>Combien de cavaliers compte le groupe décrit dans la capsule ?</p>",
+     "time_limit_seconds": 30,
+     "points": 100,
+     "options": [
+      {
+       "text": "Quatre",
+       "is_correct": false
+      },
+      {
+       "text": "Six",
+       "is_correct": false
+      },
+      {
+       "text": "Huit",
+       "is_correct": true
+      },
+      {
+       "text": "Douze",
+       "is_correct": false
+      }
+     ]
+    },
+    {
+     "text_html": "<p>Quel travail occupe la séquence de 10 à 25 minutes ?</p>",
+     "time_limit_seconds": 30,
+     "points": 100,
+     "options": [
+      {
+       "text": "L'équilibre au trot enlevé",
+       "is_correct": true
+      },
+      {
+       "text": "Le saut d'obstacles",
+       "is_correct": false
+      },
+      {
+       "text": "Le galop de course",
+       "is_correct": false
+      },
+      {
+       "text": "Le travail à la longe",
+       "is_correct": false
+      }
+     ]
+    },
+    {
+     "text_html": "<p>Comment préparer une séance avec les cartes personnages ?</p>",
+     "time_limit_seconds": 30,
+     "points": 100,
+     "options": [
+      {
+       "text": "Imprimer les cartes une par une",
+       "is_correct": false
+      },
+      {
+       "text": "Ouvrir le jeu complet et lancer le mode révision",
+       "is_correct": true
+      },
+      {
+       "text": "Tirer les cartes au hasard",
+       "is_correct": false
+      },
+      {
+       "text": "Écrire ses propres fiches à la place",
+       "is_correct": false
+      }
+     ]
+    }
+   ],
+   "wiki_title": "Capsule — Le cheval et le cavalier (Galop 3)"
+  }
+ ]
+}

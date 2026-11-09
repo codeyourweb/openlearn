@@ -31,6 +31,7 @@ from ..models import (
     User,
     Wiki,
     WikiPage,
+    WikiQuizLink,
     utcnow,
 )
 from ..schemas import QuizIn
@@ -126,11 +127,47 @@ def _install_wikis(db, author: User, entries: list[dict[str, Any]]) -> int:
     return created
 
 
+def _link_wiki(db, quiz: Quiz, slug: str | None, author: User, title: str | None = None) -> None:
+    """Attach the questionnaire to the wiki its questions were written for.
+
+    The link is what makes the pair visible: a wiki page lists its
+    questionnaires, and a questionnaire shows the wiki it illustrates. A slug
+    that names no wiki is a content mistake, so it is logged rather than
+    swallowed — CI catches it in ``validate_content`` before it ships.
+    """
+    if not slug and not title:
+        return
+    # Sessions run with autoflush off: the wikis installed moments ago in this
+    # same transaction are invisible to a query until they are flushed.
+    db.flush()
+    wiki = db.scalar(select(Wiki).where(Wiki.slug == slug)) if slug else None
+    if wiki is None and title:
+        # A wiki the operator created by hand (the DNS primer, a lesson capsule)
+        # is not in the package; its title is the only stable name it has.
+        wiki = db.scalar(select(Wiki).where(Wiki.title == title))
+    if wiki is None:
+        logger.warning("Quiz %r names an unknown wiki %r", quiz.title, slug or title)
+        return
+    already = db.scalar(
+        select(WikiQuizLink.id).where(
+            WikiQuizLink.wiki_id == wiki.id, WikiQuizLink.quiz_id == quiz.id
+        )
+    )
+    if already is None:
+        db.add(WikiQuizLink(wiki_id=wiki.id, quiz_id=quiz.id, created_by=author.id))
+
+
 def _install_quiz(db, author: User, entry: dict[str, Any], *, status: str = "public") -> Quiz | None:
-    existing = db.scalar(select(Quiz.id).where(Quiz.title == entry["title"]))
+    # `wiki`/`wiki_title` are seeding instructions, not fields of the questionnaire.
+    slug, title = entry.get("wiki"), entry.get("wiki_title")
+    payload = QuizIn(**{
+        key: value for key, value in entry.items() if key not in {"wiki", "wiki_title"}
+    })
+    existing = db.scalar(select(Quiz).where(Quiz.title == payload.title))
     if existing is not None:
+        # A re-run adds the link a previous version forgot, and changes nothing else.
+        _link_wiki(db, existing, slug, author, title)
         return None
-    payload = QuizIn(**entry)
     # `title` is NOT NULL: it has to exist before the first flush, otherwise the
     # row is rejected before `_apply_quiz` ever runs.
     quiz = Quiz(
@@ -150,6 +187,7 @@ def _install_quiz(db, author: User, entry: dict[str, Any], *, status: str = "pub
     quiz.is_public = status == "public"
     quiz.default_language = payload.default_language
     quiz.languages = sorted({payload.default_language, *payload.title_translations})
+    _link_wiki(db, quiz, slug, author, title)
     quiz.published_at = utcnow() if status == "public" else None
     quiz.content_hash = compute_content_hash(quiz)
     db.flush()
@@ -204,8 +242,13 @@ def seed_showcase(*, force: bool = False) -> dict[str, int]:
             return {"unchanged": 1}
         author = _author(db, settings.admin_email or "curator@example.com", "OpenLearn Curator")
 
-        for path in files:
-            document = _load(path)
+        # Wikis first: a questionnaire names the wiki it illustrates, and that
+        # name can only be resolved once the wiki exists. A file order that put
+        # `quizzes-*.json` before `wikis-*.json` used to leave every pair unlinked.
+        documents = [(_load(path), path) for path in files]
+        documents.sort(key=lambda item: (item[0].get("kind") or item[1].stem) != "wikis")
+
+        for document, path in documents:
             kind = document.get("kind") or path.stem
             if kind == "wikis":
                 stats["wikis"] += _install_wikis(db, author, document["items"])
@@ -243,6 +286,13 @@ def seed_showcase(*, force: bool = False) -> dict[str, int]:
 def validate_content() -> list[str]:
     """Parse every file and validate each payload; used by CI and the seeder."""
     problems: list[str] = []
+    known_wikis: set[str] = set()
+    for path in content_files():
+        document = _load(path)
+        if (document.get("kind") or path.stem) != "wikis":
+            continue
+        known_wikis |= {entry["slug"] for entry in document.get("items") or [] if entry.get("slug")}
+
     for path in content_files():
         document = _load(path)
         kind = document.get("kind") or path.stem
@@ -254,9 +304,18 @@ def validate_content() -> list[str]:
             where = f"{path.name}[{index}]"
             if kind in {"quizzes", "adventures"}:
                 try:
-                    QuizIn(**entry)
+                    QuizIn(**{
+                        key: value
+                        for key, value in entry.items()
+                        if key not in {"wiki", "wiki_title"}
+                    })
                 except Exception as exc:  # pydantic ValidationError
                     problems.append(f"{where}: {exc}")
+                slug = entry.get("wiki")
+                if slug and slug not in known_wikis:
+                    problems.append(f"{where}: names wiki {slug!r}, which no content file ships")
+                if not slug and not entry.get("wiki_title"):
+                    continue
             elif kind == "wikis":
                 for field in ("slug", "title", "pages"):
                     if field not in entry:
