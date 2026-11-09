@@ -9,14 +9,58 @@ single-node deployment.
 
 from __future__ import annotations
 
+import ipaddress
 import os
 import secrets
 from functools import lru_cache
 from pathlib import Path
+from urllib.parse import urlsplit
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
+
+_LOOPBACK_HOSTS = {"localhost", "127.0.0.1", "::1", "0.0.0.0"}
+
+
+def public_base_url_problem(value: str) -> str | None:
+    """Why the configured public address will not work from outside, if it won't.
+
+    Every mail this instance sends — verification, password reset — carries a
+    link built from ``public_base_url``. A link to the server's own hostname, to
+    a loopback address or to a plain-http port is dead for the person reading
+    the message, and nothing else in the application notices. Returned as a
+    sentence so it can be logged as-is; ``None`` means the value looks usable.
+    """
+    if not value:
+        return None
+    parsed = urlsplit(value)
+    if parsed.scheme not in {"http", "https"}:
+        return f"{value} has no http(s) scheme: browsers will not open the links built from it"
+    host = (parsed.hostname or "").lower()
+    if not host:
+        return f"{value} has no host"
+    if parsed.scheme == "http":
+        return (
+            f"{value} uses plain http: reset links sent by mail will be downgraded "
+            "or refused by mail clients and browsers"
+        )
+    if host in _LOOPBACK_HOSTS or host.endswith(".local") or host.endswith(".internal"):
+        return (
+            f"{value} points at {host}, a name only this machine resolves: reset and "
+            "share links will not open anywhere else"
+        )
+    try:
+        address = ipaddress.ip_address(host)
+    except ValueError:
+        address = None
+    if address is not None and not address.is_global:
+        return (
+            f"{value} points at {host}, a private address: reset and share links will "
+            "not open anywhere else"
+        )
+    return None
+
 
 
 class Settings(BaseSettings):

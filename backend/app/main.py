@@ -17,7 +17,7 @@ from sqlalchemy import select
 
 from . import collab
 from . import mcp as mcp_module
-from .config import BASE_DIR, settings
+from .config import BASE_DIR, public_base_url_problem, settings
 from .db import SessionLocal, init_db
 from .routers import (
     account_recovery,
@@ -46,8 +46,18 @@ from .seo import router as seo_router
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s %(message)s")
 logger = logging.getLogger("openlearn")
 
+
 FRONTEND_DIR = BASE_DIR / "frontend"
 MAX_JSON_BODY = 2 * 1024 * 1024  # quiz documents stay well under 2 MB
+
+
+def warn_about_unreachable_public_base() -> None:
+    """Say at startup whether outgoing links point somewhere a reader can open."""
+    problem = public_base_url_problem(settings.public_base_url)
+    if problem:
+        logger.warning("OL_PUBLIC_BASE_URL: %s", problem)
+    elif settings.public_base_url:
+        logger.info("Public links will use %s", settings.public_base_url.rstrip("/"))
 
 
 def create_app() -> FastAPI:
@@ -172,6 +182,9 @@ def create_app() -> FastAPI:
                 "unless %s accepts anonymous requests",
                 settings.ai_base_url,
             )
+        # Every reset and verification mail quotes this address; a wrong one is
+        # only discovered by the person who clicks the dead link.
+        warn_about_unreachable_public_base()
         logger.info(
             "OpenLearn ready (database=%s, demo=%s)", settings.database_url, settings.demo_mode
         )
