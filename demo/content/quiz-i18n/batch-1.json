@@ -1,0 +1,428 @@
+[
+  {
+    "index": 0,
+    "questions": {
+      "0": {
+        "en": {
+          "text": "<p>Which server holds the zone and is the only one that can answer “here is the address”?</p>",
+          "options": [
+            "The ISP's recursive resolver",
+            "The root server",
+            "The authoritative server",
+            "The browser cache"
+          ]
+        },
+        "de": {
+          "text": "<p>Welcher Server hält die Zone und kann allein antworten „hier ist die Adresse“?</p>",
+          "options": [
+            "Der rekursive Resolver des Providers",
+            "Der Root-Server",
+            "Der autoritative Server",
+            "Der Browser-Cache"
+          ]
+        },
+        "es": {
+          "text": "<p>¿Qué servidor tiene la zona y es el único que puede responder «aquí está la dirección»?</p>",
+          "options": [
+            "El resolutor recursivo del proveedor de acceso",
+            "El servidor raíz",
+            "El servidor autoritativo",
+            "La caché del navegador"
+          ]
+        }
+      },
+      "1": {
+        "en": {
+          "text": "<p>What does the <code>NXDOMAIN</code> status mean in a <code>dig</code> answer?</p>",
+          "options": [
+            "The query succeeded but the answer is empty",
+            "The name asked for does not exist",
+            "The server could not answer",
+            "The zone is signed with DNSSEC"
+          ]
+        },
+        "de": {
+          "text": "<p>Was bedeutet der Status <code>NXDOMAIN</code> in einer <code>dig</code>-Antwort?</p>",
+          "options": [
+            "Die Abfrage war erfolgreich, aber die Antwort ist leer",
+            "Der abgefragte Name existiert nicht",
+            "Der Server konnte nicht antworten",
+            "Die Zone ist mit DNSSEC signiert"
+          ]
+        },
+        "es": {
+          "text": "<p>¿Qué significa el estado <code>NXDOMAIN</code> en una respuesta de <code>dig</code>?</p>",
+          "options": [
+            "La consulta se completó pero la respuesta está vacía",
+            "El nombre consultado no existe",
+            "El servidor no pudo responder",
+            "La zona está firmada con DNSSEC"
+          ]
+        }
+      },
+      "2": {
+        "en": {
+          "text": "<p>Which record type maps a name to an IPv6 address?</p>",
+          "options": ["A", "AAAA", "CNAME", "MX"]
+        },
+        "de": {
+          "text": "<p>Welcher Record-Typ verknüpft einen Namen mit einer IPv6-Adresse?</p>",
+          "options": ["A", "AAAA", "CNAME", "MX"]
+        },
+        "es": {
+          "text": "<p>¿Qué tipo de registro asocia un nombre con una dirección IPv6?</p>",
+          "options": ["A", "AAAA", "CNAME", "MX"]
+        }
+      },
+      "3": {
+        "en": {
+          "text": "<p>Why is a CNAME not placed at the apex of a domain?</p>",
+          "options": [
+            "Because the apex is always IPv6",
+            "Because a CNAME cannot coexist with any other record, and the apex already carries SOA and NS",
+            "Because a CNAME costs more",
+            "Because browsers refuse CNAMEs"
+          ]
+        },
+        "de": {
+          "text": "<p>Warum setzt man keinen CNAME an die Wurzel einer Domain?</p>",
+          "options": [
+            "Weil die Wurzel immer IPv6 ist",
+            "Weil ein CNAME nicht mit einem anderen Record koexistieren kann und die Wurzel bereits SOA und NS trägt",
+            "Weil ein CNAME teurer ist",
+            "Weil Browser CNAMEs ablehnen"
+          ]
+        },
+        "es": {
+          "text": "<p>¿Por qué no se pone un CNAME en la raíz de un dominio?</p>",
+          "options": [
+            "Porque la raíz siempre está en IPv6",
+            "Porque un CNAME no puede convivir con otro registro y la raíz ya lleva SOA y NS",
+            "Porque un CNAME cuesta más",
+            "Porque los navegadores rechazan los CNAME"
+          ]
+        }
+      },
+      "4": {
+        "en": {
+          "text": "<p>What is a record's TTL for?</p>",
+          "options": [
+            "It encrypts the answer",
+            "It sets how long a resolver keeps the answer in its cache",
+            "It counts requests per second",
+            "It names the mail server"
+          ]
+        },
+        "de": {
+          "text": "<p>Wozu dient die TTL eines Records?</p>",
+          "options": [
+            "Sie verschlüsselt die Antwort",
+            "Sie legt fest, wie lange ein Resolver die Antwort im Cache behält",
+            "Sie zählt die Anfragen pro Sekunde",
+            "Sie bezeichnet den Mailserver"
+          ]
+        },
+        "es": {
+          "text": "<p>¿Para qué sirve el TTL de un registro?</p>",
+          "options": [
+            "Cifra la respuesta",
+            "Fija cuánto tiempo guarda un resolutor la respuesta en su caché",
+            "Cuenta las peticiones por segundo",
+            "Designa el servidor de correo"
+          ]
+        }
+      },
+      "5": {
+        "en": {
+          "text": "<p>During an incident, which TTL should be set before changing critical records?</p>",
+          "options": [
+            "60 s, then wait for the old TTL to expire",
+            "3600 s to stabilise the zone",
+            "0 s to cut over at once",
+            "86400 s to avoid changes"
+          ]
+        },
+        "de": {
+          "text": "<p>Welche TTL sollte man bei einem Vorfall setzen, bevor man kritische Records ändert?</p>",
+          "options": [
+            "60 s, dann das Ablaufen der alten TTL abwarten",
+            "3600 s, um die Zone zu stabilisieren",
+            "0 s, um sofort umzuschalten",
+            "86400 s, um Änderungen zu vermeiden"
+          ]
+        },
+        "es": {
+          "text": "<p>Durante un incidente, ¿qué TTL conviene poner antes de modificar registros críticos?</p>",
+          "options": [
+            "60 s y esperar a que expire el TTL antiguo",
+            "3600 s para estabilizar la zona",
+            "0 s para cortar de inmediato",
+            "86400 s para evitar cambios"
+          ]
+        }
+      }
+    }
+  },
+  {
+    "index": 1,
+    "questions": {
+      "0": {
+        "en": {
+          "text": "<p>What happens on 17 June 1789?</p>",
+          "options": [
+            "The Estates General open at Versailles",
+            "The Third Estate deputies declare themselves a National Assembly",
+            "The Bastille is stormed",
+            "The king is arrested at Varennes"
+          ]
+        },
+        "de": {
+          "text": "<p>Was geschieht am 17. Juni 1789?</p>",
+          "options": [
+            "Die Generalstände treten in Versailles zusammen",
+            "Die Abgeordneten des Dritten Standes erklären sich zur Nationalversammlung",
+            "Die Bastille wird erstürmt",
+            "Der König wird in Varennes verhaftet"
+          ]
+        },
+        "es": {
+          "text": "<p>¿Qué ocurre el 17 de junio de 1789?</p>",
+          "options": [
+            "Se abren los Estados Generales en Versalles",
+            "Los diputados del Tercer Estado se proclaman Asamblea Nacional",
+            "Se toma la Bastilla",
+            "El rey es detenido en Varennes"
+          ]
+        }
+      },
+      "1": {
+        "en": {
+          "text": "<p>Which oath do the deputies swear on 20 June 1789?</p>",
+          "options": ["The Tennis Court Oath", "The Varennes oath", "The 14 July oath", "The Brumaire oath"]
+        },
+        "de": {
+          "text": "<p>Welchen Eid leisten die Abgeordneten am 20. Juni 1789?</p>",
+          "options": ["Den Ballhausschwur", "Den Eid von Varennes", "Den Eid vom 14. Juli", "Den Eid von Brumaire"]
+        },
+        "es": {
+          "text": "<p>¿Qué juramento prestan los diputados el 20 de junio de 1789?</p>",
+          "options": [
+            "El Juramento del Juego de Pelota",
+            "El juramento de Varennes",
+            "El juramento del 14 de julio",
+            "El juramento de Brumario"
+          ]
+        }
+      },
+      "2": {
+        "en": {
+          "text": "<p>How many prisoners did the Bastille hold on 14 July 1789?</p>",
+          "options": ["None", "Seven", "About a hundred", "Twelve"]
+        },
+        "de": {
+          "text": "<p>Wie viele Gefangene hatte die Bastille am 14. Juli 1789?</p>",
+          "options": ["Keinen", "Sieben", "Etwa hundert", "Zwölf"]
+        },
+        "es": {
+          "text": "<p>¿Cuántos prisioneros tenía la Bastilla el 14 de julio de 1789?</p>",
+          "options": ["Ninguno", "Siete", "Unos cien", "Doce"]
+        }
+      },
+      "3": {
+        "en": {
+          "text": "<p>Where is Louis XVI arrested in June 1791?</p>",
+          "options": ["At Versailles", "At Varennes", "At Lyon", "At Toulon"]
+        },
+        "de": {
+          "text": "<p>Wo wird Ludwig XVI. im Juni 1791 verhaftet?</p>",
+          "options": ["In Versailles", "In Varennes", "In Lyon", "In Toulon"]
+        },
+        "es": {
+          "text": "<p>¿Dónde es detenido Luis XVI en junio de 1791?</p>",
+          "options": ["En Versalles", "En Varennes", "En Lyon", "En Tolón"]
+        }
+      },
+      "4": {
+        "en": {
+          "text": "<p>In which year is the Civil Code promulgated?</p>",
+          "options": ["1789", "1793", "1804", "1815"]
+        },
+        "de": {
+          "text": "<p>In welchem Jahr wird der Code civil erlassen?</p>",
+          "options": ["1789", "1793", "1804", "1815"]
+        },
+        "es": {
+          "text": "<p>¿En qué año se promulga el Código Civil?</p>",
+          "options": ["1789", "1793", "1804", "1815"]
+        }
+      },
+      "5": {
+        "en": {
+          "text": "<p>Where do the words “right” and “left” in politics come from?</p>",
+          "options": [
+            "From where the deputies sat relative to the president of the Assembly",
+            "From the two wings of the Bastille",
+            "From royalist parties",
+            "From the revolutionary calendar"
+          ]
+        },
+        "de": {
+          "text": "<p>Woher kommen die Wörter „rechts“ und „links“ in der Politik?</p>",
+          "options": [
+            "Von der Sitzordnung der Abgeordneten gegenüber dem Präsidenten der Versammlung",
+            "Von den zwei Flügeln der Bastille",
+            "Von royalistischen Parteien",
+            "Vom Revolutionskalender"
+          ]
+        },
+        "es": {
+          "text": "<p>¿De dónde vienen las palabras «derecha» e «izquierda» en política?</p>",
+          "options": [
+            "Del lugar donde se sentaban los diputados respecto al presidente de la Asamblea",
+            "De las dos alas de la Bastilla",
+            "De los partidos realistas",
+            "Del calendario revolucionario"
+          ]
+        }
+      }
+    }
+  },
+  {
+    "index": 2,
+    "questions": {
+      "0": {
+        "en": {
+          "text": "<p>Which is the longest river entirely within France?</p>",
+          "options": ["The Seine", "The Loire", "The Rhône", "The Garonne"]
+        },
+        "de": {
+          "text": "<p>Welcher ist der längste Fluss, der vollständig in Frankreich liegt?</p>",
+          "options": ["Die Seine", "Die Loire", "Die Rhone", "Die Garonne"]
+        },
+        "es": {
+          "text": "<p>¿Cuál es el río más largo enteramente francés?</p>",
+          "options": ["El Sena", "El Loira", "El Ródano", "El Garona"]
+        }
+      },
+      "1": {
+        "en": {
+          "text": "<p>Which sea does the Rhône flow into?</p>",
+          "options": ["The Atlantic", "The Channel", "The Mediterranean", "The North Sea"]
+        },
+        "de": {
+          "text": "<p>In welches Meer mündet die Rhone?</p>",
+          "options": ["In den Atlantik", "In den Ärmelkanal", "In das Mittelmeer", "In die Nordsee"]
+        },
+        "es": {
+          "text": "<p>¿En qué mar desemboca el Ródano?</p>",
+          "options": ["En el Atlántico", "En el Canal de la Mancha", "En el Mediterráneo", "En el mar del Norte"]
+        }
+      },
+      "2": {
+        "en": {
+          "text": "<p>What characterises the middle course of a river?</p>",
+          "options": [
+            "A narrow valley and pebbles",
+            "Meanders and alluvial deposits",
+            "A delta only",
+            "A very steep gradient"
+          ]
+        },
+        "de": {
+          "text": "<p>Was kennzeichnet den Mittellauf eines Flusses?</p>",
+          "options": [
+            "Ein enges Tal und Geröll",
+            "Mäander und Schwemmsedimente",
+            "Ausschließlich ein Delta",
+            "Ein sehr starkes Gefälle"
+          ]
+        },
+        "es": {
+          "text": "<p>¿Qué caracteriza el curso medio de un río?</p>",
+          "options": [
+            "Un valle estrecho y cantos rodados",
+            "Meandros y depósitos aluviales",
+            "Únicamente un delta",
+            "Una pendiente muy fuerte"
+          ]
+        }
+      },
+      "3": {
+        "en": {
+          "text": "<p>What is a catchment basin?</p>",
+          "options": [
+            "The river's floodplain",
+            "The area whose water all ends up in the same river",
+            "The delta at the mouth",
+            "The network of navigable tributaries"
+          ]
+        },
+        "de": {
+          "text": "<p>Was ist ein Einzugsgebiet?</p>",
+          "options": [
+            "Das Überschwemmungsbett des Flusses",
+            "Das Gebiet, dessen Wasser alle im selben Fluss endet",
+            "Das Delta an der Mündung",
+            "Das Netz der schiffbaren Nebenflüsse"
+          ]
+        },
+        "es": {
+          "text": "<p>¿Qué es una cuenca hidrográfica?</p>",
+          "options": [
+            "El cauce de inundación del río",
+            "La zona cuyas aguas acaban todas en el mismo río",
+            "El delta en la desembocadura",
+            "La red de afluentes navegables"
+          ]
+        }
+      }
+    }
+  },
+  {
+    "index": 3,
+    "questions": {
+      "0": {
+        "en": {
+          "text": "<p>What kind of watercourse would you rather follow on foot?</p>",
+          "options": ["A mountain torrent", "A lowland river", "A great river", "A shady canal"]
+        },
+        "de": {
+          "text": "<p>Welche Art von Wasserlauf würden Sie lieber zu Fuß begleiten?</p>",
+          "options": ["Einen Bergbach", "Einen Fluss im Flachland", "Einen großen Strom", "Einen schattigen Kanal"]
+        },
+        "es": {
+          "text": "<p>¿Qué tipo de curso de agua preferiría seguir a pie?</p>",
+          "options": ["Un torrente de montaña", "Un río de llanura", "Un gran río", "Un canal con sombra"]
+        }
+      },
+      "1": {
+        "en": {
+          "text": "<p>Which season would you choose for a three-day descent?</p>",
+          "options": ["Spring", "Summer", "Autumn", "Winter"]
+        },
+        "de": {
+          "text": "<p>Welche Jahreszeit würden Sie für eine dreitägige Talfahrt wählen?</p>",
+          "options": ["Frühling", "Sommer", "Herbst", "Winter"]
+        },
+        "es": {
+          "text": "<p>¿Qué estación elegiría para un descenso de tres días?</p>",
+          "options": ["Primavera", "Verano", "Otoño", "Invierno"]
+        }
+      },
+      "2": {
+        "en": {
+          "text": "<p>What matters most to you by the water?</p>",
+          "options": ["Calm", "Swimming", "The landscape", "Fishing"]
+        },
+        "de": {
+          "text": "<p>Was zählt für Sie am Wasser am meisten?</p>",
+          "options": ["Die Ruhe", "Das Baden", "Die Landschaft", "Das Angeln"]
+        },
+        "es": {
+          "text": "<p>¿Qué es lo que más le importa junto al agua?</p>",
+          "options": ["La calma", "El baño", "El paisaje", "La pesca"]
+        }
+      }
+    }
+  }
+]

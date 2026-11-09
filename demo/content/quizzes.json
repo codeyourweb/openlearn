@@ -9,10 +9,13 @@
       "default_language": "en",
       "title_translations": {
         "fr": "Fondamentaux de l'intelligence artificielle",
-        "de": "Grundlagen der künstlichen Intelligenz"
+        "de": "Grundlagen der künstlichen Intelligenz",
+        "es": "Fundamentos de la inteligencia artificial"
       },
       "description_translations": {
-        "fr": "Dix questions sur la construction, l'entraînement et l'évaluation des systèmes d'IA modernes."
+        "fr": "Dix questions sur la construction, l'entraînement et l'évaluation des systèmes d'IA modernes.",
+        "de": "Zehn Fragen dazu, wie moderne KI-Systeme gebaut, trainiert und bewertet werden — ohne Mathematik.",
+        "es": "Diez preguntas sobre cómo se construyen, entrenan y evalúan los sistemas de IA modernos, sin matemáticas."
       },
       "timer_mode": "per_question",
       "questions": [
@@ -23,21 +26,46 @@
           "options": [
             {
               "text": "Statistical patterns of tokens in a very large text corpus",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "Les régularités statistiques des jetons d'un très vaste corpus de textes",
+                "de": "Statistische Muster von Tokens in einem sehr großen Textkorpus",
+                "es": "Los patrones estadísticos de los tokens de un corpus de texto muy grande"
+              }
             },
             {
               "text": "A database of verified facts it can query",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Une base de faits vérifiés qu'il peut interroger",
+                "de": "Eine Datenbank geprüfter Fakten, die es abfragen kann",
+                "es": "Una base de datos de hechos verificados que puede consultar"
+              }
             },
             {
               "text": "The grammar rules written by its developers",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Les règles de grammaire écrites par ses développeurs",
+                "de": "Die von seinen Entwicklern geschriebenen Grammatikregeln",
+                "es": "Las reglas gramaticales escritas por sus desarrolladores"
+              }
             },
             {
               "text": "A copy of the websites it was allowed to read",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Une copie des sites qu'il a été autorisé à lire",
+                "de": "Eine Kopie der Websites, die es lesen durfte",
+                "es": "Una copia de los sitios web que se le permitió leer"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Qu'apprend réellement un <b>grand modèle de langage</b> pendant son entraînement ?</p>",
+            "de": "<p>Was lernt ein <b>großes Sprachmodell</b> beim Training tatsächlich?</p>",
+            "es": "<p>¿Qué aprende realmente un <b>gran modelo de lenguaje</b> durante su entrenamiento?</p>"
+          }
         },
         {
           "text_html": "<p>Which statement about <b>hallucinations</b> is correct?</p>",
@@ -46,21 +74,46 @@
           "options": [
             {
               "text": "A model can produce a fluent answer that is simply false",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "Un modèle peut produire une réponse fluide et tout simplement fausse",
+                "de": "Ein Modell kann eine flüssige Antwort geben, die schlicht falsch ist",
+                "es": "Un modelo puede producir una respuesta fluida y sencillamente falsa"
+              }
             },
             {
               "text": "They only happen when the temperature is set to zero",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Elles n'arrivent que si la température est réglée à zéro",
+                "de": "Sie treten nur auf, wenn die Temperatur auf null steht",
+                "es": "Solo ocurren cuando la temperatura está a cero"
+              }
             },
             {
               "text": "They are impossible once the model is fine-tuned",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Elles sont impossibles une fois le modèle affiné",
+                "de": "Sie sind nach dem Fine-Tuning unmöglich",
+                "es": "Son imposibles una vez ajustado el modelo"
+              }
             },
             {
               "text": "They are caused by a missing internet connection",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Elles sont causées par une absence de connexion Internet",
+                "de": "Sie entstehen durch eine fehlende Internetverbindung",
+                "es": "Las causa una conexión a internet ausente"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Quelle affirmation sur les <b>hallucinations</b> est exacte ?</p>",
+            "de": "<p>Welche Aussage über <b>Halluzinationen</b> ist richtig?</p>",
+            "es": "<p>¿Qué afirmación sobre las <b>alucinaciones</b> es correcta?</p>"
+          }
         },
         {
           "text_html": "<p>What is the purpose of a <b>system prompt</b>?</p>",
@@ -69,21 +122,46 @@
           "options": [
             {
               "text": "Frame the assistant's role and constraints before the user speaks",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "Cadrer le rôle et les contraintes de l'assistant avant que l'utilisateur parle",
+                "de": "Rolle und Grenzen des Assistenten festlegen, bevor der Nutzer spricht",
+                "es": "Enmarcar el papel y las restricciones del asistente antes de que hable el usuario"
+              }
             },
             {
               "text": "Store the user's previous conversations permanently",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Conserver définitivement les conversations précédentes de l'utilisateur",
+                "de": "Die früheren Gespräche des Nutzers dauerhaft speichern",
+                "es": "Guardar de forma permanente las conversaciones anteriores del usuario"
+              }
             },
             {
               "text": "Speed up the generation by shortening the context",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Accélérer la génération en raccourcissant le contexte",
+                "de": "Die Generierung durch Kürzen des Kontexts beschleunigen",
+                "es": "Acelerar la generación acortando el contexto"
+              }
             },
             {
               "text": "Encrypt the exchanges with the provider",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Chiffrer les échanges avec le fournisseur",
+                "de": "Die Verbindung zum Anbieter verschlüsseln",
+                "es": "Cifrar los intercambios con el proveedor"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>À quoi sert un <b>prompt système</b> ?</p>",
+            "de": "<p>Wozu dient ein <b>System-Prompt</b>?</p>",
+            "es": "<p>¿Para qué sirve un <b>prompt de sistema</b>?</p>"
+          }
         },
         {
           "text_html": "<p>Which pair of techniques is used to adapt a pre-trained model to a specific task <i>without</i> retraining all of its weights?</p>",
@@ -92,21 +170,46 @@
           "options": [
             {
               "text": "Fine-tuning on a small dataset and parameter-efficient adapters (LoRA)",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "L'affinage sur un petit jeu de données et les adaptateurs économes en paramètres (LoRA)",
+                "de": "Fine-Tuning auf einem kleinen Datensatz und parameter-effiziente Adapter (LoRA)",
+                "es": "El ajuste fino con un conjunto de datos pequeño y adaptadores eficientes en parámetros (LoRA)"
+              }
             },
             {
               "text": "Increasing the temperature and the maximum number of tokens",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Augmenter la température et le nombre maximal de jetons",
+                "de": "Temperatur und maximale Tokenzahl erhöhen",
+                "es": "Aumentar la temperatura y el número máximo de tokens"
+              }
             },
             {
               "text": "Rebuilding the tokenizer and the embeddings from scratch",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Reconstruire le tokenizer et les plongements de zéro",
+                "de": "Tokenizer und Embeddings von Grund auf neu bauen",
+                "es": "Reconstruir el tokenizador y los embeddings desde cero"
+              }
             },
             {
               "text": "Running the model twice and averaging the two answers",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Faire tourner le modèle deux fois et moyenner les deux réponses",
+                "de": "Das Modell zweimal laufen lassen und die Antworten mitteln",
+                "es": "Ejecutar el modelo dos veces y promediar las respuestas"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Quel couple de techniques permet d'adapter un modèle pré-entraîné à une tâche précise <i>sans</i> réentraîner tous ses poids ?</p>",
+            "de": "<p>Welches Technikpaar passt ein vortrainiertes Modell an eine bestimmte Aufgabe an, <i>ohne</i> alle Gewichte neu zu trainieren?</p>",
+            "es": "<p>¿Qué par de técnicas adapta un modelo preentrenado a una tarea concreta <i>sin</i> reentrenar todos sus pesos?</p>"
+          }
         },
         {
           "text_html": "<p>What does <b>RAG</b> (retrieval-augmented generation) add to a model?</p>",
@@ -115,21 +218,46 @@
           "options": [
             {
               "text": "Relevant documents are retrieved and placed in the context before answering",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "Des documents pertinents sont retrouvés et placés dans le contexte avant la réponse",
+                "de": "Relevante Dokumente werden abgerufen und vor der Antwort in den Kontext gelegt",
+                "es": "Se recuperan documentos relevantes y se colocan en el contexto antes de responder"
+              }
             },
             {
               "text": "The model is retrained on every question",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Le modèle est réentraîné à chaque question",
+                "de": "Das Modell wird bei jeder Frage neu trainiert",
+                "es": "El modelo se reentrena con cada pregunta"
+              }
             },
             {
               "text": "Answers are cached to save money",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Les réponses sont mises en cache pour économiser",
+                "de": "Antworten werden zwischengespeichert, um Kosten zu sparen",
+                "es": "Las respuestas se guardan en caché para ahorrar"
+              }
             },
             {
               "text": "The model can browse the web without any index",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Le modèle peut parcourir le web sans aucun index",
+                "de": "Das Modell kann ohne jeden Index im Web surfen",
+                "es": "El modelo puede navegar por la web sin ningún índice"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Qu'apporte le <b>RAG</b> (génération augmentée par recherche) à un modèle ?</p>",
+            "de": "<p>Was fügt <b>RAG</b> (retrieval-augmented generation) einem Modell hinzu?</p>",
+            "es": "<p>¿Qué aporta <b>RAG</b> (generación aumentada por recuperación) a un modelo?</p>"
+          }
         }
       ]
     },
@@ -141,7 +269,8 @@
       "default_language": "en",
       "title_translations": {
         "fr": "Sciences : le système solaire",
-        "es": "Ciencia: el sistema solar"
+        "es": "Ciencia: el sistema solar",
+        "de": "Wissenschaft: Das Sonnensystem"
       },
       "timer_mode": "per_question",
       "questions": [
@@ -152,21 +281,46 @@
           "options": [
             {
               "text": "Jupiter",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "Jupiter",
+                "de": "Jupiter",
+                "es": "Júpiter"
+              }
             },
             {
               "text": "Mercury",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Mercure",
+                "de": "Merkur",
+                "es": "Mercurio"
+              }
             },
             {
               "text": "Earth",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "La Terre",
+                "de": "Erde",
+                "es": "La Tierra"
+              }
             },
             {
               "text": "Mars",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Mars",
+                "de": "Mars",
+                "es": "Marte"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Quelle planète a le jour le plus court ?</p>",
+            "de": "<p>Welcher Planet hat den kürzesten Tag?</p>",
+            "es": "<p>¿Qué planeta tiene el día más corto?</p>"
+          }
         },
         {
           "text_html": "<p>Select <b>all</b> planets that have rings.</p>",
@@ -176,21 +330,46 @@
           "options": [
             {
               "text": "Saturn",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "Saturne",
+                "de": "Saturn",
+                "es": "Saturno"
+              }
             },
             {
               "text": "Jupiter",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "Jupiter",
+                "de": "Jupiter",
+                "es": "Júpiter"
+              }
             },
             {
               "text": "Uranus",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "Uranus",
+                "de": "Uranus",
+                "es": "Urano"
+              }
             },
             {
               "text": "Mars",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Mars",
+                "de": "Mars",
+                "es": "Marte"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Sélectionnez <b>toutes</b> les planètes qui ont des anneaux.</p>",
+            "de": "<p>Wählen Sie <b>alle</b> Planeten mit Ringen aus.</p>",
+            "es": "<p>Seleccione <b>todos</b> los planetas que tienen anillos.</p>"
+          }
         },
         {
           "text_html": "<p>What is the main reason Venus is hotter than Mercury, although it is farther from the Sun?</p>",
@@ -199,21 +378,46 @@
           "options": [
             {
               "text": "A runaway greenhouse effect driven by its dense CO₂ atmosphere",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "Un effet de serre emballé, dû à son atmosphère dense de CO₂",
+                "de": "Ein außer Kontrolle geratener Treibhauseffekt durch ihre dichte CO₂-Atmosphäre",
+                "es": "Un efecto invernadero desbocado debido a su densa atmósfera de CO₂"
+              }
             },
             {
               "text": "Its surface is made of radioactive rock",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Sa surface est faite de roche radioactive",
+                "de": "Ihre Oberfläche besteht aus radioaktivem Gestein",
+                "es": "Su superficie está hecha de roca radiactiva"
+              }
             },
             {
               "text": "It rotates faster than Mercury",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Elle tourne plus vite que Mercure",
+                "de": "Sie dreht sich schneller als der Merkur",
+                "es": "Rota más rápido que Mercurio"
+              }
             },
             {
               "text": "It is closer to the Sun than Mercury",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Elle est plus proche du Soleil que Mercure",
+                "de": "Sie ist näher an der Sonne als der Merkur",
+                "es": "Está más cerca del Sol que Mercurio"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Pourquoi Vénus est-elle plus chaude que Mercure, alors qu'elle est plus loin du Soleil ?</p>",
+            "de": "<p>Warum ist die Venus heißer als der Merkur, obwohl sie weiter von der Sonne entfernt ist?</p>",
+            "es": "<p>¿Cuál es la razón principal de que Venus sea más caliente que Mercurio, aunque esté más lejos del Sol?</p>"
+          }
         },
         {
           "text_html": "<p>Which of these is <i>not</i> a dwarf planet?</p>",
@@ -222,23 +426,53 @@
           "options": [
             {
               "text": "Titan",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "Titan",
+                "de": "Titan",
+                "es": "Titán"
+              }
             },
             {
               "text": "Pluto",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Pluton",
+                "de": "Pluto",
+                "es": "Plutón"
+              }
             },
             {
               "text": "Eris",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Éris",
+                "de": "Eris",
+                "es": "Eris"
+              }
             },
             {
               "text": "Ceres",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Cérès",
+                "de": "Ceres",
+                "es": "Ceres"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Lequel de ces astres n'est <i>pas</i> une planète naine ?</p>",
+            "de": "<p>Welcher davon ist <i>kein</i> Zwergplanet?</p>",
+            "es": "<p>¿Cuál de estos <i>no</i> es un planeta enano?</p>"
+          }
         }
-      ]
+      ],
+      "description_translations": {
+        "fr": "Huit questions sur les planètes, leurs lunes et l'échelle du système solaire.",
+        "de": "Acht Fragen zu den Planeten, ihren Monden und den Ausmaßen des Sonnensystems.",
+        "es": "Ocho preguntas sobre los planetas, sus lunas y la escala del sistema solar."
+      }
     }
   ]
 }

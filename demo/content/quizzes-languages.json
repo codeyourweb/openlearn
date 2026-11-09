@@ -26,21 +26,46 @@
           "options": [
             {
               "text": "She has been living in Lyon since 2019.",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "She has been living in Lyon since 2019.",
+                "de": "She has been living in Lyon since 2019.",
+                "es": "She has been living in Lyon since 2019."
+              }
             },
             {
               "text": "She lives in Lyon since 2019.",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "She lives in Lyon since 2019.",
+                "de": "She lives in Lyon since 2019.",
+                "es": "She lives in Lyon since 2019."
+              }
             },
             {
               "text": "She is living in Lyon since 2019.",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "She is living in Lyon since 2019.",
+                "de": "She is living in Lyon since 2019.",
+                "es": "She is living in Lyon since 2019."
+              }
             },
             {
               "text": "She has been living in Lyon for 2019.",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "She has been living in Lyon for 2019.",
+                "de": "She has been living in Lyon for 2019.",
+                "es": "She has been living in Lyon for 2019."
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Quelle phrase est correcte ?</p>",
+            "de": "<p>Welcher Satz ist korrekt?</p>",
+            "es": "<p>¿Qué oración es correcta?</p>"
+          }
         },
         {
           "text_html": "<p>Complete: <i>I'm good ___ mathematics.</i></p>",
@@ -49,21 +74,46 @@
           "options": [
             {
               "text": "at",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "at",
+                "de": "at",
+                "es": "at"
+              }
             },
             {
               "text": "in",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "in",
+                "de": "in",
+                "es": "in"
+              }
             },
             {
               "text": "on",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "on",
+                "de": "on",
+                "es": "on"
+              }
             },
             {
               "text": "to",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "to",
+                "de": "to",
+                "es": "to"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Complétez : <i>I'm good ___ mathematics.</i></p>",
+            "de": "<p>Ergänzen Sie: <i>I'm good ___ mathematics.</i></p>",
+            "es": "<p>Complete: <i>I'm good ___ mathematics.</i></p>"
+          }
         },
         {
           "text_html": "<p>Select <b>all</b> sentences that use the present perfect correctly.</p>",
@@ -73,21 +123,46 @@
           "options": [
             {
               "text": "I have just finished my homework.",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "I have just finished my homework.",
+                "de": "I have just finished my homework.",
+                "es": "I have just finished my homework."
+              }
             },
             {
               "text": "They have lived here for ten years.",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "They have lived here for ten years.",
+                "de": "They have lived here for ten years.",
+                "es": "They have lived here for ten years."
+              }
             },
             {
               "text": "Have you ever been to Dublin?",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "Have you ever been to Dublin?",
+                "de": "Have you ever been to Dublin?",
+                "es": "Have you ever been to Dublin?"
+              }
             },
             {
               "text": "I have seen him yesterday.",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "I have seen him yesterday.",
+                "de": "I have seen him yesterday.",
+                "es": "I have seen him yesterday."
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Sélectionnez <b>toutes</b> les phrases qui emploient correctement le present perfect.</p>",
+            "de": "<p>Wählen Sie <b>alle</b> Sätze aus, die das Present Perfect korrekt verwenden.</p>",
+            "es": "<p>Seleccione <b>todas</b> las oraciones que usan correctamente el present perfect.</p>"
+          }
         },
         {
           "text_html": "<p>The English word <i>actually</i> means...</p>",
@@ -96,21 +171,46 @@
           "options": [
             {
               "text": "in fact",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "en fait",
+                "de": "tatsächlich",
+                "es": "en realidad"
+              }
             },
             {
               "text": "right now",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "tout de suite",
+                "de": "sofort",
+                "es": "ahora mismo"
+              }
             },
             {
               "text": "finally",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "finalement",
+                "de": "schließlich",
+                "es": "finalmente"
+              }
             },
             {
               "text": "probably",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "probablement",
+                "de": "wahrscheinlich",
+                "es": "probablemente"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Le mot anglais <i>actually</i> signifie...</p>",
+            "de": "<p>Das englische Wort <i>actually</i> bedeutet...</p>",
+            "es": "<p>La palabra inglesa <i>actually</i> significa...</p>"
+          }
         },
         {
           "text_html": "<p>Complete: <i>I look forward to ___ from you.</i></p>",
@@ -119,21 +219,46 @@
           "options": [
             {
               "text": "hearing",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "hearing",
+                "de": "hearing",
+                "es": "hearing"
+              }
             },
             {
               "text": "hear",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "hear",
+                "de": "hear",
+                "es": "hear"
+              }
             },
             {
               "text": "heard",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "heard",
+                "de": "heard",
+                "es": "heard"
+              }
             },
             {
               "text": "be hearing",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "be hearing",
+                "de": "be hearing",
+                "es": "be hearing"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Complétez : <i>I look forward to ___ from you.</i></p>",
+            "de": "<p>Ergänzen Sie: <i>I look forward to ___ from you.</i></p>",
+            "es": "<p>Complete: <i>I look forward to ___ from you.</i></p>"
+          }
         },
         {
           "text_html": "<p>Reported speech: <i>He said he ___ tired.</i></p>",
@@ -142,21 +267,46 @@
           "options": [
             {
               "text": "was",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "was",
+                "de": "was",
+                "es": "was"
+              }
             },
             {
               "text": "is",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "is",
+                "de": "is",
+                "es": "is"
+              }
             },
             {
               "text": "has been",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "has been",
+                "de": "has been",
+                "es": "has been"
+              }
             },
             {
               "text": "will be",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "will be",
+                "de": "will be",
+                "es": "will be"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Discours rapporté : <i>He said he ___ tired.</i></p>",
+            "de": "<p>Indirekte Rede: <i>He said he ___ tired.</i></p>",
+            "es": "<p>Estilo indirecto: <i>He said he ___ tired.</i></p>"
+          }
         },
         {
           "text_html": "<p>What does <i>used to</i> express in <i>I used to play tennis</i>?</p>",
@@ -165,21 +315,46 @@
           "options": [
             {
               "text": "A past habit that no longer happens",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "Une habitude passée qui n'a plus cours",
+                "de": "Eine vergangene Gewohnheit, die nicht mehr besteht",
+                "es": "Un hábito pasado que ya no ocurre"
+              }
             },
             {
               "text": "A plan for the near future",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Un projet pour le futur proche",
+                "de": "Einen Plan für die nahe Zukunft",
+                "es": "Un plan para el futuro próximo"
+              }
             },
             {
               "text": "A present obligation",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Une obligation présente",
+                "de": "Eine gegenwärtige Verpflichtung",
+                "es": "Una obligación presente"
+              }
             },
             {
               "text": "A polite request",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Une demande polie",
+                "de": "Eine höfliche Bitte",
+                "es": "Una petición cortés"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Qu'exprime <i>used to</i> dans <i>I used to play tennis</i> ?</p>",
+            "de": "<p>Was drückt <i>used to</i> in <i>I used to play tennis</i> aus?</p>",
+            "es": "<p>¿Qué expresa <i>used to</i> en <i>I used to play tennis</i>?</p>"
+          }
         },
         {
           "text_html": "<p>Complete: <i>This exam is ___ than the last one.</i></p>",
@@ -188,21 +363,46 @@
           "options": [
             {
               "text": "easier",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "easier",
+                "de": "easier",
+                "es": "easier"
+              }
             },
             {
               "text": "more easy",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "more easy",
+                "de": "more easy",
+                "es": "more easy"
+              }
             },
             {
               "text": "easiest",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "easiest",
+                "de": "easiest",
+                "es": "easiest"
+              }
             },
             {
               "text": "more easier",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "more easier",
+                "de": "more easier",
+                "es": "more easier"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Complétez : <i>This exam is ___ than the last one.</i></p>",
+            "de": "<p>Ergänzen Sie: <i>This exam is ___ than the last one.</i></p>",
+            "es": "<p>Complete: <i>This exam is ___ than the last one.</i></p>"
+          }
         },
         {
           "text_html": "<p>Which of these nouns is countable?</p>",
@@ -211,21 +411,46 @@
           "options": [
             {
               "text": "suggestion",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "suggestion",
+                "de": "suggestion",
+                "es": "suggestion"
+              }
             },
             {
               "text": "advice",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "advice",
+                "de": "advice",
+                "es": "advice"
+              }
             },
             {
               "text": "information",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "information",
+                "de": "information",
+                "es": "information"
+              }
             },
             {
               "text": "furniture",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "furniture",
+                "de": "furniture",
+                "es": "furniture"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Lequel de ces noms est dénombrable ?</p>",
+            "de": "<p>Welches dieser Substantive ist zählbar?</p>",
+            "es": "<p>¿Cuál de estos sustantivos es contable?</p>"
+          }
         }
       ]
     },
@@ -254,21 +479,46 @@
           "options": [
             {
               "text": "With paper flashcards",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Avec des cartes en papier",
+                "de": "Mit Karteikarten aus Papier",
+                "es": "Con tarjetas de papel"
+              }
             },
             {
               "text": "With a spaced-repetition app",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Avec une application de répétition espacée",
+                "de": "Mit einer App für verteilte Wiederholung",
+                "es": "Con una aplicación de repetición espaciada"
+              }
             },
             {
               "text": "By reading German articles",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "En lisant des articles en allemand",
+                "de": "Durch Lesen deutscher Artikel",
+                "es": "Leyendo artículos en alemán"
+              }
             },
             {
               "text": "By listening to podcasts",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "En écoutant des podcasts",
+                "de": "Durch Hören von Podcasts",
+                "es": "Escuchando pódcasts"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Comment préférez-vous mémoriser de nouveaux mots allemands ?</p>",
+            "de": "<p>Wie merken Sie sich neue deutsche Wörter am liebsten?</p>",
+            "es": "<p>¿Cómo prefiere memorizar palabras alemanas nuevas?</p>"
+          }
         },
         {
           "text_html": "<p>Which skill would you like to improve first?</p>",
@@ -277,21 +527,46 @@
           "options": [
             {
               "text": "Speaking",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "L'oral",
+                "de": "Sprechen",
+                "es": "Hablar"
+              }
             },
             {
               "text": "Listening",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "La compréhension orale",
+                "de": "Hören",
+                "es": "Escuchar"
+              }
             },
             {
               "text": "Reading",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "La lecture",
+                "de": "Lesen",
+                "es": "Leer"
+              }
             },
             {
               "text": "Writing",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "L'écrit",
+                "de": "Schreiben",
+                "es": "Escribir"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Quelle compétence aimeriez-vous améliorer en premier ?</p>",
+            "de": "<p>Welche Fähigkeit möchten Sie zuerst verbessern?</p>",
+            "es": "<p>¿Qué destreza le gustaría mejorar primero?</p>"
+          }
         },
         {
           "text_html": "<p>Which German word do you find hardest to pronounce?</p>",
@@ -300,21 +575,46 @@
           "options": [
             {
               "text": "Eichhörnchen",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Eichhörnchen",
+                "de": "Eichhörnchen",
+                "es": "Eichhörnchen"
+              }
             },
             {
               "text": "Streichholzschächtelchen",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Streichholzschächtelchen",
+                "de": "Streichholzschächtelchen",
+                "es": "Streichholzschächtelchen"
+              }
             },
             {
               "text": "Quietscheentchen",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Quietscheentchen",
+                "de": "Quietscheentchen",
+                "es": "Quietscheentchen"
+              }
             },
             {
               "text": "Schleswig-Holstein",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Schleswig-Holstein",
+                "de": "Schleswig-Holstein",
+                "es": "Schleswig-Holstein"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Quel mot allemand trouvez-vous le plus difficile à prononcer ?</p>",
+            "de": "<p>Welches deutsche Wort finden Sie am schwersten auszusprechen?</p>",
+            "es": "<p>¿Qué palabra alemana le resulta más difícil de pronunciar?</p>"
+          }
         },
         {
           "text_html": "<p>How much time can you give to German on a normal day?</p>",
@@ -323,21 +623,46 @@
           "options": [
             {
               "text": "Less than 15 minutes",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Moins de 15 minutes",
+                "de": "Weniger als 15 Minuten",
+                "es": "Menos de 15 minutos"
+              }
             },
             {
               "text": "15 to 30 minutes",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "De 15 à 30 minutes",
+                "de": "15 bis 30 Minuten",
+                "es": "De 15 a 30 minutos"
+              }
             },
             {
               "text": "30 to 60 minutes",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "De 30 à 60 minutes",
+                "de": "30 bis 60 Minuten",
+                "es": "De 30 a 60 minutos"
+              }
             },
             {
               "text": "More than an hour",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Plus d'une heure",
+                "de": "Mehr als eine Stunde",
+                "es": "Más de una hora"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Combien de temps pouvez-vous consacrer à l'allemand un jour ordinaire ?</p>",
+            "de": "<p>Wie viel Zeit können Sie an einem normalen Tag für Deutsch aufbringen?</p>",
+            "es": "<p>¿Cuánto tiempo puede dedicar al alemán en un día normal?</p>"
+          }
         },
         {
           "text_html": "<p>Which everyday situation would you most like to practise?</p>",
@@ -346,21 +671,46 @@
           "options": [
             {
               "text": "Ordering in a café",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Commander dans un café",
+                "de": "Im Café bestellen",
+                "es": "Pedir en una cafetería"
+              }
             },
             {
               "text": "Asking for directions",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Demander son chemin",
+                "de": "Nach dem Weg fragen",
+                "es": "Preguntar el camino"
+              }
             },
             {
               "text": "A job interview",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Un entretien d'embauche",
+                "de": "Ein Vorstellungsgespräch",
+                "es": "Una entrevista de trabajo"
+              }
             },
             {
               "text": "Renting a flat",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Louer un appartement",
+                "de": "Eine Wohnung mieten",
+                "es": "Alquilar un piso"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Quelle situation du quotidien aimeriez-vous le plus travailler ?</p>",
+            "de": "<p>Welche Alltagssituation würden Sie am liebsten üben?</p>",
+            "es": "<p>¿Qué situación cotidiana le gustaría practicar más?</p>"
+          }
         },
         {
           "text_html": "<p>What helps you remember a word best?</p>",
@@ -369,21 +719,46 @@
           "options": [
             {
               "text": "A picture",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Une image",
+                "de": "Ein Bild",
+                "es": "Una imagen"
+              }
             },
             {
               "text": "An example sentence",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Une phrase d'exemple",
+                "de": "Ein Beispielsatz",
+                "es": "Una frase de ejemplo"
+              }
             },
             {
               "text": "Its translation",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Sa traduction",
+                "de": "Die Übersetzung",
+                "es": "Su traducción"
+              }
             },
             {
               "text": "Its etymology",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Son étymologie",
+                "de": "Die Etymologie",
+                "es": "Su etimología"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Qu'est-ce qui vous aide le mieux à retenir un mot ?</p>",
+            "de": "<p>Was hilft Ihnen am besten, ein Wort zu behalten?</p>",
+            "es": "<p>¿Qué le ayuda más a recordar una palabra?</p>"
+          }
         },
         {
           "text_html": "<p>Which learning format suits you best?</p>",
@@ -392,21 +767,46 @@
           "options": [
             {
               "text": "A short lesson every day",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Une courte leçon chaque jour",
+                "de": "Eine kurze Lektion jeden Tag",
+                "es": "Una lección corta cada día"
+              }
             },
             {
               "text": "One long session each week",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Une longue séance par semaine",
+                "de": "Eine lange Einheit pro Woche",
+                "es": "Una sesión larga por semana"
+              }
             },
             {
               "text": "A conversation group",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Un groupe de conversation",
+                "de": "Eine Konversationsgruppe",
+                "es": "Un grupo de conversación"
+              }
             },
             {
               "text": "A grammar workbook",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Un cahier de grammaire",
+                "de": "Ein Grammatikarbeitsheft",
+                "es": "Un cuaderno de gramática"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Quel format d'apprentissage vous convient le mieux ?</p>",
+            "de": "<p>Welches Lernformat passt am besten zu Ihnen?</p>",
+            "es": "<p>¿Qué formato de aprendizaje le conviene más?</p>"
+          }
         },
         {
           "text_html": "<p>Which German-speaking city would you most like to visit?</p>",
@@ -415,21 +815,46 @@
           "options": [
             {
               "text": "Berlin",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Berlin",
+                "de": "Berlin",
+                "es": "Berlín"
+              }
             },
             {
               "text": "Vienna",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Vienne",
+                "de": "Wien",
+                "es": "Viena"
+              }
             },
             {
               "text": "Zurich",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Zurich",
+                "de": "Zürich",
+                "es": "Zúrich"
+              }
             },
             {
               "text": "Hamburg",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Hambourg",
+                "de": "Hamburg",
+                "es": "Hamburgo"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Quelle ville germanophone aimeriez-vous le plus visiter ?</p>",
+            "de": "<p>Welche deutschsprachige Stadt würden Sie am liebsten besuchen?</p>",
+            "es": "<p>¿Qué ciudad germanoparlante le gustaría más visitar?</p>"
+          }
         }
       ]
     }

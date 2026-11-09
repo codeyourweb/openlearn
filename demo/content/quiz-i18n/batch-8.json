@@ -1,0 +1,508 @@
+[
+  {
+    "file": "quizzes-science.json",
+    "index": 0,
+    "questions": {
+      "0": {
+        "fr": { "text": "<p>Quel organite produit la majeure partie de l'ATP d'une cellule ?</p>", "options": ["La mitochondrie", "Le ribosome", "L'appareil de Golgi", "Le lysosome"] },
+        "de": { "text": "<p>Welches Organell erzeugt den Großteil des ATP einer Zelle?</p>", "options": ["Das Mitochondrium", "Das Ribosom", "Der Golgi-Apparat", "Das Lysosom"] },
+        "es": { "text": "<p>¿Qué orgánulo produce la mayor parte del ATP de una célula?</p>", "options": ["La mitocondria", "El ribosoma", "El aparato de Golgi", "El lisosoma"] }
+      },
+      "1": {
+        "fr": {
+          "text": "<p>Sélectionnez <b>toutes</b> les structures présentes dans une cellule humaine mais <i>pas</i> dans une bactérie.</p>",
+          "options": ["Un noyau", "Des mitochondries", "Le réticulum endoplasmique", "Des ribosomes"]
+        },
+        "de": {
+          "text": "<p>Wählen Sie <b>alle</b> Strukturen aus, die in einer menschlichen Zelle vorkommen, <i>nicht</i> aber in einem Bakterium.</p>",
+          "options": ["Einen Zellkern", "Mitochondrien", "Das endoplasmatische Retikulum", "Ribosomen"]
+        },
+        "es": {
+          "text": "<p>Seleccione <b>todas</b> las estructuras presentes en una célula humana pero <i>no</i> en una bacteria.</p>",
+          "options": ["Un núcleo", "Mitocondrias", "El retículo endoplasmático", "Ribosomas"]
+        }
+      },
+      "2": {
+        "fr": {
+          "text": "<p>Quelle est la fonction principale d'un ribosome ?</p>",
+          "options": ["Assembler des protéines à partir d'acides aminés", "Décomposer les acides gras", "Stocker l'information génétique", "Trier les molécules pour le transport"]
+        },
+        "de": {
+          "text": "<p>Was ist die Hauptaufgabe eines Ribosoms?</p>",
+          "options": ["Proteine aus Aminosäuren zusammenbauen", "Fettsäuren abbauen", "Genetische Information speichern", "Moleküle für den Transport sortieren"]
+        },
+        "es": {
+          "text": "<p>¿Cuál es la función principal de un ribosoma?</p>",
+          "options": ["Ensamblar proteínas a partir de aminoácidos", "Descomponer ácidos grasos", "Almacenar la información genética", "Clasificar moléculas para su transporte"]
+        }
+      },
+      "3": {
+        "fr": {
+          "text": "<p>Quelle molécule transporte les instructions d'un gène du noyau jusqu'à un ribosome ?</p>",
+          "options": ["L'ARN messager", "L'ARN de transfert", "L'ADN polymérase", "L'ATP"]
+        },
+        "de": {
+          "text": "<p>Welches Molekül bringt die Anweisungen eines Gens vom Zellkern zum Ribosom?</p>",
+          "options": ["Die Messenger-RNA", "Die Transfer-RNA", "Die DNA-Polymerase", "ATP"]
+        },
+        "es": {
+          "text": "<p>¿Qué molécula lleva las instrucciones de un gen del núcleo al ribosoma?</p>",
+          "options": ["El ARN mensajero", "El ARN de transferencia", "La ADN polimerasa", "El ATP"]
+        }
+      },
+      "4": {
+        "fr": {
+          "text": "<p>La membrane cellulaire est principalement constituée de...</p>",
+          "options": ["Une bicouche de phospholipides parsemée de protéines", "Une paroi de cellulose", "Une seule couche de cholestérol", "Un maillage de fibres de chitine"]
+        },
+        "de": {
+          "text": "<p>Die Zellmembran besteht hauptsächlich aus...</p>",
+          "options": ["Einer mit Proteinen besetzten Doppelschicht aus Phospholipiden", "Einer Zellwand aus Zellulose", "Einer einzigen Cholesterinschicht", "Einem Geflecht aus Chitinfasern"]
+        },
+        "es": {
+          "text": "<p>La membrana celular está formada principalmente por...</p>",
+          "options": ["Una bicapa de fosfolípidos salpicada de proteínas", "Una pared de celulosa", "Una sola capa de colesterol", "Una malla de fibras de quitina"]
+        }
+      },
+      "5": {
+        "fr": {
+          "text": "<p>Quel organite emballe les protéines dans des vésicules pour la sécrétion ?</p>",
+          "options": ["L'appareil de Golgi", "Le réticulum endoplasmique lisse", "Le nucléole", "Le peroxysome"]
+        },
+        "de": {
+          "text": "<p>Welches Organell verpackt Proteine in Vesikel zur Ausschüttung?</p>",
+          "options": ["Der Golgi-Apparat", "Das glatte endoplasmatische Retikulum", "Der Nucleolus", "Das Peroxisom"]
+        },
+        "es": {
+          "text": "<p>¿Qué orgánulo empaqueta las proteínas en vesículas para su secreción?</p>",
+          "options": ["El aparato de Golgi", "El retículo endoplasmático liso", "El nucléolo", "El peroxisoma"]
+        }
+      },
+      "6": {
+        "fr": {
+          "text": "<p>Pendant la mitose, à quelle phase les chromosomes s'alignent-ils sur l'équateur de la cellule ?</p>",
+          "options": ["La métaphase", "La prophase", "L'anaphase", "La télophase"]
+        },
+        "de": {
+          "text": "<p>In welcher Phase der Mitose ordnen sich die Chromosomen am Äquator der Zelle an?</p>",
+          "options": ["In der Metaphase", "In der Prophase", "In der Anaphase", "In der Telophase"]
+        },
+        "es": {
+          "text": "<p>Durante la mitosis, ¿en qué fase se alinean los cromosomas en el ecuador de la célula?</p>",
+          "options": ["En la metafase", "En la profase", "En la anafase", "En la telofase"]
+        }
+      },
+      "7": {
+        "fr": {
+          "text": "<p>Que font les lysosomes ?</p>",
+          "options": ["Ils digèrent les déchets et les composants cellulaires usés grâce à des enzymes", "Ils synthétisent les lipides et les stéroïdes", "Ils copient l'ADN avant la division", "Ils ancrent la cellule à ses voisines"]
+        },
+        "de": {
+          "text": "<p>Was tun Lysosomen?</p>",
+          "options": ["Sie verdauen Abfall und verbrauchte Zellbestandteile mit Enzymen", "Sie synthetisieren Lipide und Steroide", "Sie kopieren die DNA vor der Teilung", "Sie verankern die Zelle an ihren Nachbarn"]
+        },
+        "es": {
+          "text": "<p>¿Qué hacen los lisosomas?</p>",
+          "options": ["Digerir desechos y componentes celulares gastados con enzimas", "Sintetizar lípidos y esteroides", "Copiar el ADN antes de la división", "Anclar la célula a sus vecinas"]
+        }
+      },
+      "8": {
+        "fr": {
+          "text": "<p>Que manque-t-il aux globules rouges humains matures ?</p>",
+          "options": ["Un noyau", "Une membrane cellulaire", "L'hémoglobine", "Le cytoplasme"]
+        },
+        "de": {
+          "text": "<p>Was fehlt reifen menschlichen roten Blutkörperchen?</p>",
+          "options": ["Ein Zellkern", "Eine Zellmembran", "Hämoglobin", "Zytoplasma"]
+        },
+        "es": {
+          "text": "<p>¿De qué carecen los glóbulos rojos humanos maduros?</p>",
+          "options": ["Un núcleo", "Una membrana celular", "Hemoglobina", "Citoplasma"]
+        }
+      }
+    }
+  },
+  {
+    "file": "quizzes-science.json",
+    "index": 1,
+    "questions": {
+      "0": {
+        "fr": { "text": "<p>Quelle est l'unité SI de la force ?</p>", "options": ["Le newton", "Le joule", "Le watt", "Le pascal"] },
+        "de": { "text": "<p>Was ist die SI-Einheit der Kraft?</p>", "options": ["Das Newton", "Das Joule", "Das Watt", "Das Pascal"] },
+        "es": { "text": "<p>¿Cuál es la unidad SI de fuerza?</p>", "options": ["El newton", "El julio", "El vatio", "El pascal"] }
+      },
+      "1": {
+        "fr": {
+          "text": "<p>Un objet se déplace à vitesse constante. Quelle est la force nette qui s'exerce sur lui ?</p>",
+          "options": ["Nulle", "Une force constante dans le sens du mouvement", "Une force égale à son poids", "Une force qui augmente avec sa vitesse"]
+        },
+        "de": {
+          "text": "<p>Ein Körper bewegt sich mit konstanter Geschwindigkeit. Wie groß ist die resultierende Kraft auf ihn?</p>",
+          "options": ["Null", "Eine konstante Kraft in Bewegungsrichtung", "Eine Kraft gleich seiner Gewichtskraft", "Eine Kraft, die mit seiner Geschwindigkeit wächst"]
+        },
+        "es": {
+          "text": "<p>Un objeto se mueve a velocidad constante. ¿Cuál es la fuerza neta que actúa sobre él?</p>",
+          "options": ["Cero", "Una fuerza constante en la dirección del movimiento", "Una fuerza igual a su peso", "Una fuerza que crece con su velocidad"]
+        }
+      },
+      "2": {
+        "fr": {
+          "text": "<p>Sélectionnez <b>toutes</b> les grandeurs vectorielles.</p>",
+          "options": ["La vitesse (velocity)", "L'accélération", "La force", "La vitesse (speed)"]
+        },
+        "de": {
+          "text": "<p>Wählen Sie <b>alle</b> vektoriellen Größen aus.</p>",
+          "options": ["Die Geschwindigkeit (velocity)", "Die Beschleunigung", "Die Kraft", "Die Geschwindigkeit (speed)"]
+        },
+        "es": {
+          "text": "<p>Seleccione <b>todas</b> las magnitudes vectoriales.</p>",
+          "options": ["La velocidad (velocity)", "La aceleración", "La fuerza", "La rapidez (speed)"]
+        }
+      },
+      "3": {
+        "fr": {
+          "text": "<p>La troisième loi de Newton énonce que...</p>",
+          "options": ["Toute action entraîne une réaction égale et opposée", "La force est égale à la masse fois l'accélération", "Un objet reste au repos tant qu'on ne le pousse pas", "L'énergie se conserve toujours"]
+        },
+        "de": {
+          "text": "<p>Das dritte newtonsche Gesetz besagt, dass...</p>",
+          "options": ["Jede Kraft eine gleich große, entgegengesetzte Reaktion hervorruft", "Kraft gleich Masse mal Beschleunigung ist", "Ein Körper in Ruhe bleibt, solange er nicht gestoßen wird", "Energie immer erhalten bleibt"]
+        },
+        "es": {
+          "text": "<p>La tercera ley de Newton afirma que...</p>",
+          "options": ["Toda acción produce una reacción igual y opuesta", "La fuerza es igual a la masa por la aceleración", "Un objeto permanece en reposo salvo que se le empuje", "La energía siempre se conserva"]
+        }
+      },
+      "4": {
+        "fr": { "text": "<p>Un objet de 2 kg accélère à 3 m/s². Quelle force nette s'exerce sur lui ?</p>", "options": ["6 N", "1,5 N", "5 N", "9 N"] },
+        "de": { "text": "<p>Ein Körper von 2 kg beschleunigt mit 3 m/s². Welche resultierende Kraft wirkt auf ihn?</p>", "options": ["6 N", "1,5 N", "5 N", "9 N"] },
+        "es": { "text": "<p>Un objeto de 2 kg acelera a 3 m/s². ¿Qué fuerza neta actúa sobre él?</p>", "options": ["6 N", "1,5 N", "5 N", "9 N"] }
+      },
+      "5": {
+        "fr": {
+          "text": "<p>Quelle énergie est stockée dans un ressort tendu ?</p>",
+          "options": ["L'énergie potentielle élastique", "L'énergie cinétique", "L'énergie chimique", "L'énergie thermique"]
+        },
+        "de": {
+          "text": "<p>Welche Energie ist in einer gespannten Feder gespeichert?</p>",
+          "options": ["Elastische potenzielle Energie", "Kinetische Energie", "Chemische Energie", "Thermische Energie"]
+        },
+        "es": {
+          "text": "<p>¿Qué energía se almacena en un muelle estirado?</p>",
+          "options": ["Energía potencial elástica", "Energía cinética", "Energía química", "Energía térmica"]
+        }
+      },
+      "6": {
+        "fr": {
+          "text": "<p>Sur la Lune, comment la masse et le poids d'un astronaute se comparent-ils à ceux sur Terre ?</p>",
+          "options": ["La masse est inchangée et le poids est plus faible", "Les deux sont plus faibles", "Les deux sont inchangés", "La masse est plus faible et le poids inchangé"]
+        },
+        "de": {
+          "text": "<p>Wie verhalten sich Masse und Gewicht eines Astronauten auf dem Mond im Vergleich zur Erde?</p>",
+          "options": ["Die Masse bleibt gleich, das Gewicht ist geringer", "Beides ist geringer", "Beides bleibt gleich", "Die Masse ist geringer, das Gewicht gleich"]
+        },
+        "es": {
+          "text": "<p>En la Luna, ¿cómo se comparan la masa y el peso de un astronauta con los de la Tierra?</p>",
+          "options": ["La masa no cambia y el peso es menor", "Ambos son menores", "Ambos son iguales", "La masa es menor y el peso no cambia"]
+        }
+      },
+      "7": {
+        "fr": {
+          "text": "<p>Qu'énonce la conservation de l'énergie ?</p>",
+          "options": ["L'énergie peut changer de forme mais ne peut être ni créée ni détruite", "L'énergie diminue toujours dans un système fermé", "L'énergie peut être créée en fournissant un travail", "L'énergie est un autre nom pour la force"]
+        },
+        "de": {
+          "text": "<p>Was besagt die Energieerhaltung?</p>",
+          "options": ["Energie kann ihre Form ändern, aber nicht erzeugt oder vernichtet werden", "Energie nimmt in einem geschlossenen System immer ab", "Energie kann durch Arbeit erzeugt werden", "Energie ist ein anderer Name für Kraft"]
+        },
+        "es": {
+          "text": "<p>¿Qué afirma la conservación de la energía?</p>",
+          "options": ["La energía puede cambiar de forma pero no crearse ni destruirse", "La energía siempre disminuye en un sistema cerrado", "La energía puede crearse realizando trabajo", "La energía es otro nombre para la fuerza"]
+        }
+      },
+      "8": {
+        "fr": {
+          "text": "<p>Une balle lancée verticalement atteint le sommet de sa trajectoire. Quelles sont sa vitesse et son accélération à cet instant ?</p>",
+          "options": ["La vitesse est nulle et l'accélération est dirigée vers le bas", "Les deux sont nulles", "La vitesse est dirigée vers le bas et l'accélération est nulle", "Les deux sont dirigées vers le haut"]
+        },
+        "de": {
+          "text": "<p>Ein senkrecht nach oben geworfener Ball hat den höchsten Punkt erreicht. Wie sind Geschwindigkeit und Beschleunigung in diesem Moment?</p>",
+          "options": ["Die Geschwindigkeit ist null, die Beschleunigung zeigt nach unten", "Beide sind null", "Die Geschwindigkeit zeigt nach unten, die Beschleunigung ist null", "Beide zeigen nach oben"]
+        },
+        "es": {
+          "text": "<p>Una pelota lanzada verticalmente ha alcanzado lo más alto de su trayectoria. ¿Cómo son su velocidad y su aceleración en ese instante?</p>",
+          "options": ["La velocidad es cero y la aceleración apunta hacia abajo", "Ambas son cero", "La velocidad apunta hacia abajo y la aceleración es cero", "Ambas apuntan hacia arriba"]
+        }
+      },
+      "9": {
+        "fr": {
+          "text": "<p>Dans le vide, pourquoi un objet lourd ne tombe-t-il pas plus vite qu'un objet léger ?</p>",
+          "options": ["Les deux tombent avec la même accélération, car il n'y a pas de résistance de l'air", "La gravité attire plus fort les objets légers", "Les objets plus lourds ont plus d'inertie et tombent donc plus lentement", "Le vide supprime la gravité"]
+        },
+        "de": {
+          "text": "<p>Warum fällt im Vakuum ein schwerer Körper nicht schneller als ein leichter?</p>",
+          "options": ["Beide fallen mit derselben Beschleunigung, da es keinen Luftwiderstand gibt", "Die Schwerkraft zieht leichtere Körper stärker an", "Schwerere Körper haben mehr Trägheit und fallen daher langsamer", "Das Vakuum hebt die Schwerkraft auf"]
+        },
+        "es": {
+          "text": "<p>En el vacío, ¿por qué un objeto pesado no cae más rápido que uno ligero?</p>",
+          "options": ["Ambos caen con la misma aceleración, porque no hay resistencia del aire", "La gravedad atrae con más fuerza a los objetos ligeros", "Los objetos más pesados tienen más inercia y por eso caen más despacio", "El vacío elimina la gravedad"]
+        }
+      }
+    }
+  },
+  {
+    "file": "quizzes-tech.json",
+    "index": 0,
+    "questions": {
+      "0": {
+        "fr": {
+          "text": "<p>Qu'indique le <b>S</b> de HTTPS ?</p>",
+          "options": ["Le trafic est chiffré avec TLS", "Le site a été audité et ne contient pas de logiciel malveillant", "Le site est hébergé sur un serveur privé", "La page est statique et ne peut pas être modifiée"]
+        },
+        "de": {
+          "text": "<p>Was zeigt das <b>S</b> in HTTPS an?</p>",
+          "options": ["Der Datenverkehr ist mit TLS verschlüsselt", "Die Website wurde geprüft und enthält keine Schadsoftware", "Die Website liegt auf einem privaten Server", "Die Seite ist statisch und kann nicht verändert werden"]
+        },
+        "es": {
+          "text": "<p>¿Qué indica la <b>S</b> de HTTPS?</p>",
+          "options": ["El tráfico está cifrado con TLS", "El sitio ha sido auditado y no contiene malware", "El sitio está alojado en un servidor privado", "La página es estática y no puede modificarse"]
+        }
+      },
+      "1": {
+        "fr": {
+          "text": "<p>Sélectionnez <b>toutes</b> les bonnes pratiques de mot de passe.</p>",
+          "options": ["Utiliser un mot de passe différent pour chaque compte", "Stocker les mots de passe dans un gestionnaire", "Activer l'authentification à deux facteurs", "Réutiliser un mot de passe très solide partout"]
+        },
+        "de": {
+          "text": "<p>Wählen Sie <b>alle</b> guten Passwortpraktiken aus.</p>",
+          "options": ["Für jedes Konto ein anderes Passwort verwenden", "Passwörter in einem Passwortmanager speichern", "Zwei-Faktor-Authentifizierung einschalten", "Ein sehr starkes Passwort überall wiederverwenden"]
+        },
+        "es": {
+          "text": "<p>Seleccione <b>todas</b> las buenas prácticas de contraseñas.</p>",
+          "options": ["Usar una contraseña distinta para cada cuenta", "Guardar las contraseñas en un gestor", "Activar la autenticación en dos pasos", "Reutilizar una contraseña muy fuerte en todas partes"]
+        }
+      },
+      "2": {
+        "fr": {
+          "text": "<p>Qu'est-ce que le <b>hameçonnage</b> (phishing) ?</p>",
+          "options": ["Un message qui se fait passer pour un tiers de confiance afin de voler des identifiants", "Un flot de trafic qui sature un serveur", "Un programme qui chiffre des fichiers contre une rançon", "Une faiblesse dans une bibliothèque logicielle obsolète"]
+        },
+        "de": {
+          "text": "<p>Was ist <b>Phishing</b>?</p>",
+          "options": ["Eine Nachricht, die sich als vertrauenswürdige Stelle ausgibt, um Zugangsdaten zu stehlen", "Eine Flut von Anfragen, die einen Server überlastet", "Ein Programm, das Dateien gegen Lösegeld verschlüsselt", "Eine Schwachstelle in einer veralteten Softwarebibliothek"]
+        },
+        "es": {
+          "text": "<p>¿Qué es el <b>phishing</b>?</p>",
+          "options": ["Un mensaje que suplanta a una parte de confianza para robar credenciales", "Una avalancha de tráfico que satura un servidor", "Un programa que cifra archivos para pedir un rescate", "Una debilidad en una biblioteca de software obsoleta"]
+        }
+      },
+      "3": {
+        "fr": {
+          "text": "<p>Qu'ajoute l'authentification à deux facteurs à une connexion ?</p>",
+          "options": ["Une seconde preuve d'identité venue d'une source indépendante", "Un mot de passe plus long", "Une adresse de secours", "Le chiffrement du disque dur"]
+        },
+        "de": {
+          "text": "<p>Was fügt die Zwei-Faktor-Authentifizierung einer Anmeldung hinzu?</p>",
+          "options": ["Einen zweiten Identitätsnachweis aus einer unabhängigen Quelle", "Ein längeres Passwort", "Eine Ersatz-E-Mail-Adresse", "Die Verschlüsselung der Festplatte"]
+        },
+        "es": {
+          "text": "<p>¿Qué añade la autenticación en dos pasos a un inicio de sesión?</p>",
+          "options": ["Una segunda prueba de identidad de una fuente independiente", "Una contraseña más larga", "Una dirección de correo de respaldo", "El cifrado del disco duro"]
+        }
+      },
+      "4": {
+        "fr": {
+          "text": "<p>Quel détail doit le plus vous faire douter d'un courriel qui vous demande de vous connecter ?</p>",
+          "options": ["Un lien dont le domaine n'est pas le vrai domaine de l'organisation", "Une signature en texte brut qui contient un numéro de téléphone", "Un message envoyé aussi à plusieurs collègues", "Un objet écrit en majuscules"]
+        },
+        "de": {
+          "text": "<p>Welches Detail sollte Sie am meisten an einer E-Mail zweifeln lassen, die Sie zum Anmelden auffordert?</p>",
+          "options": ["Ein Link, dessen Domain nicht die echte Domain der Organisation ist", "Eine reine Textsignatur mit Telefonnummer", "Eine Nachricht, die auch an mehrere Kollegen ging", "Eine Betreffzeile in Großbuchstaben"]
+        },
+        "es": {
+          "text": "<p>¿Qué detalle debe hacerle dudar más de un correo que le pide iniciar sesión?</p>",
+          "options": ["Un enlace cuyo dominio no es el dominio real de la organización", "Una firma en texto plano que incluye un teléfono", "Un mensaje enviado también a varios compañeros", "Un asunto escrito en mayúsculas"]
+        }
+      },
+      "5": {
+        "fr": {
+          "text": "<p>Qu'est-ce qu'une attaque par force brute ?</p>",
+          "options": ["Essayer de nombreux mots de passe jusqu'à ce que l'un fonctionne", "Deviner un mot de passe à partir d'un profil sur les réseaux sociaux", "Intercepter le trafic sur un réseau public", "Amener un employé à lire un code à voix haute"]
+        },
+        "de": {
+          "text": "<p>Was ist ein Brute-Force-Angriff?</p>",
+          "options": ["Viele Passwörter durchprobieren, bis eines funktioniert", "Ein Passwort aus einem Social-Media-Profil erraten", "Den Datenverkehr in einem öffentlichen Netz abfangen", "Einen Mitarbeiter dazu bringen, einen Code vorzulesen"]
+        },
+        "es": {
+          "text": "<p>¿Qué es un ataque de fuerza bruta?</p>",
+          "options": ["Probar muchas contraseñas hasta que una funcione", "Adivinar una contraseña a partir de un perfil en redes sociales", "Interceptar el tráfico en una red pública", "Convencer a un empleado de que lea un código en voz alta"]
+        }
+      },
+      "6": {
+        "fr": {
+          "text": "<p>Pourquoi un réseau Wi-Fi public non chiffré est-il risqué ?</p>",
+          "options": ["D'autres utilisateurs du réseau peuvent intercepter votre trafic", "Il installe toujours un logiciel malveillant dès la connexion", "Il désactive HTTPS dans votre navigateur", "Il stocke votre mot de passe sur le routeur"]
+        },
+        "de": {
+          "text": "<p>Warum ist ein unverschlüsseltes öffentliches WLAN riskant?</p>",
+          "options": ["Andere Nutzer im Netz können Ihren Datenverkehr abfangen", "Es installiert bei Verbindung immer Schadsoftware", "Es schaltet HTTPS im Browser ab", "Es speichert Ihr Passwort auf dem Router"]
+        },
+        "es": {
+          "text": "<p>¿Por qué es arriesgada una red Wi-Fi pública sin cifrar?</p>",
+          "options": ["Otros usuarios de la red pueden interceptar su tráfico", "Siempre instala malware en cuanto se conecta", "Desactiva HTTPS en su navegador", "Guarda su contraseña en el router"]
+        }
+      },
+      "7": {
+        "fr": {
+          "text": "<p>Comment un gestionnaire de mots de passe protège-t-il vos identifiants ?</p>",
+          "options": ["Il les stocke chiffrés et les déverrouille avec un mot de passe maître", "Il les écrit dans un fichier texte de votre dossier personnel", "Il vous les envoie par courriel en sauvegarde", "Il réutilise un même mot de passe sur tous les sites"]
+        },
+        "de": {
+          "text": "<p>Wie schützt ein Passwortmanager Ihre Zugangsdaten?</p>",
+          "options": ["Er speichert sie verschlüsselt und öffnet sie mit einem Master-Passwort", "Er schreibt sie in eine Textdatei in Ihrem Benutzerordner", "Er schickt sie Ihnen als Sicherung per E-Mail", "Er verwendet ein einziges Passwort für alle Websites"]
+        },
+        "es": {
+          "text": "<p>¿Cómo protege un gestor de contraseñas sus credenciales?</p>",
+          "options": ["Las guarda cifradas y las desbloquea con una contraseña maestra", "Las escribe en un archivo de texto de su carpeta personal", "Se las envía por correo como copia de seguridad", "Reutiliza una sola contraseña en todos los sitios"]
+        }
+      },
+      "8": {
+        "fr": { "text": "<p>Lequel de ces mots de passe est le plus solide ?</p>", "options": ["kR7#vQ2$mZ9!pL4x", "P@ssw0rd2024", "Fluffy2009", "qwerty123456"] },
+        "de": { "text": "<p>Welches dieser Passwörter ist am stärksten?</p>", "options": ["kR7#vQ2$mZ9!pL4x", "P@ssw0rd2024", "Fluffy2009", "qwerty123456"] },
+        "es": { "text": "<p>¿Cuál de estas contraseñas es la más fuerte?</p>", "options": ["kR7#vQ2$mZ9!pL4x", "P@ssw0rd2024", "Fluffy2009", "qwerty123456"] }
+      }
+    }
+  },
+  {
+    "file": "quizzes-tech.json",
+    "index": 1,
+    "questions": {
+      "0": {
+        "fr": {
+          "text": "<p>Que savait réellement faire le perceptron de Rosenblatt (1958) ?</p>",
+          "options": ["Apprendre une frontière de décision linéaire à partir d'exemples étiquetés", "Traduire d'une langue à l'autre", "Générer des images photoréalistes", "Jouer aux échecs au niveau mondial"]
+        },
+        "de": {
+          "text": "<p>Was konnte Rosenblatts Perzeptron (1958) tatsächlich?</p>",
+          "options": ["Eine lineare Entscheidungsgrenze aus gelabelten Beispielen lernen", "Zwischen Sprachen übersetzen", "Fotorealistische Bilder erzeugen", "Weltklasse-Schach spielen"]
+        },
+        "es": {
+          "text": "<p>¿Qué sabía hacer realmente el perceptrón de Rosenblatt (1958)?</p>",
+          "options": ["Aprender una frontera de decisión lineal a partir de ejemplos etiquetados", "Traducir entre idiomas", "Generar imágenes fotorrealistas", "Jugar al ajedrez de nivel mundial"]
+        }
+      },
+      "1": {
+        "fr": {
+          "text": "<p>Qu'est-ce qu'une <b>couche cachée</b> dans un réseau de neurones ?</p>",
+          "options": ["Une couche d'unités entre l'entrée et la sortie", "Une couche supprimée après l'entraînement", "La couche qui stocke les données d'entraînement", "Une copie en cache des poids du modèle"]
+        },
+        "de": {
+          "text": "<p>Was ist eine <b>verborgene Schicht</b> in einem neuronalen Netz?</p>",
+          "options": ["Eine Schicht von Einheiten zwischen Eingabe und Ausgabe", "Eine Schicht, die nach dem Training verworfen wird", "Die Schicht, die die Trainingsdaten speichert", "Eine zwischengespeicherte Kopie der Modellgewichte"]
+        },
+        "es": {
+          "text": "<p>¿Qué es una <b>capa oculta</b> en una red neuronal?</p>",
+          "options": ["Una capa de unidades entre la entrada y la salida", "Una capa que se descarta tras el entrenamiento", "La capa que almacena los datos de entrenamiento", "Una copia en caché de los pesos del modelo"]
+        }
+      },
+      "2": {
+        "fr": {
+          "text": "<p>Sélectionnez <b>tous</b> les composants de l'architecture Transformer introduite en 2017.</p>",
+          "options": ["L'auto-attention", "Les encodages positionnels", "Les couches feed-forward", "Le pooling convolutif"]
+        },
+        "de": {
+          "text": "<p>Wählen Sie <b>alle</b> Bestandteile der 2017 vorgestellten Transformer-Architektur aus.</p>",
+          "options": ["Self-Attention", "Positionskodierungen", "Feed-Forward-Schichten", "Convolutional Pooling"]
+        },
+        "es": {
+          "text": "<p>Seleccione <b>todos</b> los componentes de la arquitectura Transformer presentada en 2017.</p>",
+          "options": ["La autoatención", "Los codificadores posicionales", "Las capas feed-forward", "El pooling convolucional"]
+        }
+      },
+      "3": {
+        "fr": {
+          "text": "<p>Que permet un mécanisme d'attention à un modèle ?</p>",
+          "options": ["Pondérer la pertinence de chaque jeton par rapport à tous les autres", "Compresser toute l'entrée en un seul nombre", "Ignorer l'entraînement pour les mots qu'il connaît déjà", "Récupérer des documents sur Internet"]
+        },
+        "de": {
+          "text": "<p>Was ermöglicht ein Attention-Mechanismus einem Modell?</p>",
+          "options": ["Die Relevanz jedes Tokens gegenüber allen anderen zu gewichten", "Die gesamte Eingabe zu einer einzigen Zahl zu komprimieren", "Das Training für bereits bekannte Wörter zu überspringen", "Dokumente aus dem Internet abzurufen"]
+        },
+        "es": {
+          "text": "<p>¿Qué permite un mecanismo de atención a un modelo?</p>",
+          "options": ["Ponderar la relevancia de cada token respecto a todos los demás", "Comprimir toda la entrada en un solo número", "Saltarse el entrenamiento de las palabras que ya conoce", "Recuperar documentos de internet"]
+        }
+      },
+      "4": {
+        "fr": {
+          "text": "<p>Qu'est-ce qu'un <b>jeton</b> pour un grand modèle de langage ?</p>",
+          "options": ["Une unité de texte plus petite que le mot, que le modèle lit et prédit", "Un mot entier, dans tous les cas", "Une ligne du fichier d'entraînement", "Un octet des poids du modèle"]
+        },
+        "de": {
+          "text": "<p>Was ist ein <b>Token</b> für ein großes Sprachmodell?</p>",
+          "options": ["Eine Texteinheit unterhalb der Wortebene, die das Modell liest und vorhersagt", "Immer ein ganzes Wort", "Eine Zeile der Trainingsdatei", "Ein Byte der Modellgewichte"]
+        },
+        "es": {
+          "text": "<p>¿Qué es un <b>token</b> para un gran modelo de lenguaje?</p>",
+          "options": ["Una unidad de texto menor que la palabra que el modelo lee y predice", "Siempre una palabra completa", "Una línea del archivo de entrenamiento", "Un byte de los pesos del modelo"]
+        }
+      },
+      "5": {
+        "fr": {
+          "text": "<p>Qu'est-ce que le surapprentissage ?</p>",
+          "options": ["Le modèle mémorise ses données d'entraînement et généralise mal", "Le modèle est trop petit pour apprendre quoi que ce soit", "Le jeu d'entraînement contient trop de langues", "Le modèle répond trop lentement"]
+        },
+        "de": {
+          "text": "<p>Was ist Overfitting?</p>",
+          "options": ["Das Modell merkt sich seine Trainingsdaten und generalisiert schlecht", "Das Modell ist zu klein, um etwas zu lernen", "Der Trainingssatz enthält zu viele Sprachen", "Das Modell antwortet zu langsam"]
+        },
+        "es": {
+          "text": "<p>¿Qué es el sobreajuste?</p>",
+          "options": ["El modelo memoriza sus datos de entrenamiento y generaliza mal", "El modelo es demasiado pequeño para aprender nada", "El conjunto de entrenamiento contiene demasiados idiomas", "El modelo responde demasiado despacio"]
+        }
+      },
+      "6": {
+        "fr": {
+          "text": "<p>Que modifie le réglage de <b>température</b> pendant la génération ?</p>",
+          "options": ["Le caractère aléatoire du choix du jeton suivant", "Le nombre de jetons que le modèle peut lire d'un coup", "La durée de l'entraînement", "Le coût de chaque appel"]
+        },
+        "de": {
+          "text": "<p>Was ändert die Einstellung der <b>Temperatur</b> während der Generierung?</p>",
+          "options": ["Wie zufällig das nächste Token gewählt wird", "Wie viele Tokens das Modell auf einmal lesen kann", "Wie lange das Training dauert", "Wie viel jeder Aufruf kostet"]
+        },
+        "es": {
+          "text": "<p>¿Qué cambia el ajuste de <b>temperatura</b> durante la generación?</p>",
+          "options": ["Lo aleatoria que es la elección del siguiente token", "Cuántos tokens puede leer el modelo a la vez", "Cuánto dura el entrenamiento", "Cuánto cuesta cada llamada"]
+        }
+      },
+      "7": {
+        "fr": {
+          "text": "<p>Quel est le rôle d'une fonction de perte à l'entraînement ?</p>",
+          "options": ["Elle mesure l'erreur que l'optimiseur cherche à réduire", "Elle stocke les paramètres du modèle", "Elle nettoie et déduplique les données d'entraînement", "Elle limite la longueur de la sortie"]
+        },
+        "de": {
+          "text": "<p>Welche Rolle spielt eine Verlustfunktion beim Training?</p>",
+          "options": ["Sie misst den Fehler, den der Optimierer zu verringern versucht", "Sie speichert die Parameter des Modells", "Sie bereinigt und entdoppelt die Trainingsdaten", "Sie begrenzt die Länge der Ausgabe"]
+        },
+        "es": {
+          "text": "<p>¿Cuál es el papel de una función de pérdida en el entrenamiento?</p>",
+          "options": ["Mide el error que el optimizador intenta reducir", "Almacena los parámetros del modelo", "Limpia y deduplica los datos de entrenamiento", "Limita la longitud de la salida"]
+        }
+      },
+      "8": {
+        "fr": {
+          "text": "<p>Pourquoi un modèle de langage a-t-il une fenêtre de contexte ?</p>",
+          "options": ["Il ne peut prendre en compte qu'un nombre fixe de jetons à la fois", "Il oublie tout dès qu'il a répondu", "Il ne peut pas lire un texte plus long qu'une phrase", "Il garde sa mémoire sur le disque"]
+        },
+        "de": {
+          "text": "<p>Warum hat ein Sprachmodell ein Kontextfenster?</p>",
+          "options": ["Es kann nur eine feste Anzahl von Tokens gleichzeitig berücksichtigen", "Es vergisst alles, sobald es geantwortet hat", "Es kann keinen längeren Text als einen Satz lesen", "Es bewahrt sein Gedächtnis auf der Festplatte"]
+        },
+        "es": {
+          "text": "<p>¿Por qué un modelo de lenguaje tiene una ventana de contexto?</p>",
+          "options": ["Solo puede atender a un número fijo de tokens a la vez", "Olvida todo en cuanto responde", "No puede leer texto más largo que una frase", "Guarda su memoria en el disco"]
+        }
+      }
+    }
+  }
+]

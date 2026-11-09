@@ -26,21 +26,46 @@
           "options": [
             {
               "text": "The traffic is encrypted with TLS",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "Le trafic est chiffré avec TLS",
+                "de": "Der Datenverkehr ist mit TLS verschlüsselt",
+                "es": "El tráfico está cifrado con TLS"
+              }
             },
             {
               "text": "The site has been audited and contains no malware",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Le site a été audité et ne contient pas de logiciel malveillant",
+                "de": "Die Website wurde geprüft und enthält keine Schadsoftware",
+                "es": "El sitio ha sido auditado y no contiene malware"
+              }
             },
             {
               "text": "The site is hosted on a private server",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Le site est hébergé sur un serveur privé",
+                "de": "Die Website liegt auf einem privaten Server",
+                "es": "El sitio está alojado en un servidor privado"
+              }
             },
             {
               "text": "The page is static and cannot be modified",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "La page est statique et ne peut pas être modifiée",
+                "de": "Die Seite ist statisch und kann nicht verändert werden",
+                "es": "La página es estática y no puede modificarse"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Qu'indique le <b>S</b> de HTTPS ?</p>",
+            "de": "<p>Was zeigt das <b>S</b> in HTTPS an?</p>",
+            "es": "<p>¿Qué indica la <b>S</b> de HTTPS?</p>"
+          }
         },
         {
           "text_html": "<p>Select <b>all</b> sound password practices.</p>",
@@ -50,21 +75,46 @@
           "options": [
             {
               "text": "Use a different password for every account",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "Utiliser un mot de passe différent pour chaque compte",
+                "de": "Für jedes Konto ein anderes Passwort verwenden",
+                "es": "Usar una contraseña distinta para cada cuenta"
+              }
             },
             {
               "text": "Store passwords in a password manager",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "Stocker les mots de passe dans un gestionnaire",
+                "de": "Passwörter in einem Passwortmanager speichern",
+                "es": "Guardar las contraseñas en un gestor"
+              }
             },
             {
               "text": "Turn on two-factor authentication",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "Activer l'authentification à deux facteurs",
+                "de": "Zwei-Faktor-Authentifizierung einschalten",
+                "es": "Activar la autenticación en dos pasos"
+              }
             },
             {
               "text": "Reuse one very strong password everywhere",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Réutiliser un mot de passe très solide partout",
+                "de": "Ein sehr starkes Passwort überall wiederverwenden",
+                "es": "Reutilizar una contraseña muy fuerte en todas partes"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Sélectionnez <b>toutes</b> les bonnes pratiques de mot de passe.</p>",
+            "de": "<p>Wählen Sie <b>alle</b> guten Passwortpraktiken aus.</p>",
+            "es": "<p>Seleccione <b>todas</b> las buenas prácticas de contraseñas.</p>"
+          }
         },
         {
           "text_html": "<p>What is <b>phishing</b>?</p>",
@@ -73,21 +123,46 @@
           "options": [
             {
               "text": "A message impersonating a trusted party to steal credentials",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "Un message qui se fait passer pour un tiers de confiance afin de voler des identifiants",
+                "de": "Eine Nachricht, die sich als vertrauenswürdige Stelle ausgibt, um Zugangsdaten zu stehlen",
+                "es": "Un mensaje que suplanta a una parte de confianza para robar credenciales"
+              }
             },
             {
               "text": "A flood of traffic that overwhelms a server",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Un flot de trafic qui sature un serveur",
+                "de": "Eine Flut von Anfragen, die einen Server überlastet",
+                "es": "Una avalancha de tráfico que satura un servidor"
+              }
             },
             {
               "text": "A program that encrypts files for ransom",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Un programme qui chiffre des fichiers contre une rançon",
+                "de": "Ein Programm, das Dateien gegen Lösegeld verschlüsselt",
+                "es": "Un programa que cifra archivos para pedir un rescate"
+              }
             },
             {
               "text": "A weakness in an outdated software library",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Une faiblesse dans une bibliothèque logicielle obsolète",
+                "de": "Eine Schwachstelle in einer veralteten Softwarebibliothek",
+                "es": "Una debilidad en una biblioteca de software obsoleta"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Qu'est-ce que le <b>hameçonnage</b> (phishing) ?</p>",
+            "de": "<p>Was ist <b>Phishing</b>?</p>",
+            "es": "<p>¿Qué es el <b>phishing</b>?</p>"
+          }
         },
         {
           "text_html": "<p>What does two-factor authentication add to a login?</p>",
@@ -96,21 +171,46 @@
           "options": [
             {
               "text": "A second proof of identity from an independent source",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "Une seconde preuve d'identité venue d'une source indépendante",
+                "de": "Einen zweiten Identitätsnachweis aus einer unabhängigen Quelle",
+                "es": "Una segunda prueba de identidad de una fuente independiente"
+              }
             },
             {
               "text": "A longer password",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Un mot de passe plus long",
+                "de": "Ein längeres Passwort",
+                "es": "Una contraseña más larga"
+              }
             },
             {
               "text": "A backup email address",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Une adresse de secours",
+                "de": "Eine Ersatz-E-Mail-Adresse",
+                "es": "Una dirección de correo de respaldo"
+              }
             },
             {
               "text": "Encryption of the hard drive",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Le chiffrement du disque dur",
+                "de": "Die Verschlüsselung der Festplatte",
+                "es": "El cifrado del disco duro"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Qu'ajoute l'authentification à deux facteurs à une connexion ?</p>",
+            "de": "<p>Was fügt die Zwei-Faktor-Authentifizierung einer Anmeldung hinzu?</p>",
+            "es": "<p>¿Qué añade la autenticación en dos pasos a un inicio de sesión?</p>"
+          }
         },
         {
           "text_html": "<p>Which detail should most make you doubt an email asking you to log in?</p>",
@@ -119,21 +219,46 @@
           "options": [
             {
               "text": "A link whose domain is not the organisation's real domain",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "Un lien dont le domaine n'est pas le vrai domaine de l'organisation",
+                "de": "Ein Link, dessen Domain nicht die echte Domain der Organisation ist",
+                "es": "Un enlace cuyo dominio no es el dominio real de la organización"
+              }
             },
             {
               "text": "A plain-text signature that includes a phone number",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Une signature en texte brut qui contient un numéro de téléphone",
+                "de": "Eine reine Textsignatur mit Telefonnummer",
+                "es": "Una firma en texto plano que incluye un teléfono"
+              }
             },
             {
               "text": "A message also sent to several colleagues",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Un message envoyé aussi à plusieurs collègues",
+                "de": "Eine Nachricht, die auch an mehrere Kollegen ging",
+                "es": "Un mensaje enviado también a varios compañeros"
+              }
             },
             {
               "text": "A subject line written in capitals",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Un objet écrit en majuscules",
+                "de": "Eine Betreffzeile in Großbuchstaben",
+                "es": "Un asunto escrito en mayúsculas"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Quel détail doit le plus vous faire douter d'un courriel qui vous demande de vous connecter ?</p>",
+            "de": "<p>Welches Detail sollte Sie am meisten an einer E-Mail zweifeln lassen, die Sie zum Anmelden auffordert?</p>",
+            "es": "<p>¿Qué detalle debe hacerle dudar más de un correo que le pide iniciar sesión?</p>"
+          }
         },
         {
           "text_html": "<p>What is a brute-force attack?</p>",
@@ -142,21 +267,46 @@
           "options": [
             {
               "text": "Trying many password guesses until one works",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "Essayer de nombreux mots de passe jusqu'à ce que l'un fonctionne",
+                "de": "Viele Passwörter durchprobieren, bis eines funktioniert",
+                "es": "Probar muchas contraseñas hasta que una funcione"
+              }
             },
             {
               "text": "Guessing a password from a social media profile",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Deviner un mot de passe à partir d'un profil sur les réseaux sociaux",
+                "de": "Ein Passwort aus einem Social-Media-Profil erraten",
+                "es": "Adivinar una contraseña a partir de un perfil en redes sociales"
+              }
             },
             {
               "text": "Intercepting traffic on a public network",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Intercepter le trafic sur un réseau public",
+                "de": "Den Datenverkehr in einem öffentlichen Netz abfangen",
+                "es": "Interceptar el tráfico en una red pública"
+              }
             },
             {
               "text": "Talking an employee into reading out a code",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Amener un employé à lire un code à voix haute",
+                "de": "Einen Mitarbeiter dazu bringen, einen Code vorzulesen",
+                "es": "Convencer a un empleado de que lea un código en voz alta"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Qu'est-ce qu'une attaque par force brute ?</p>",
+            "de": "<p>Was ist ein Brute-Force-Angriff?</p>",
+            "es": "<p>¿Qué es un ataque de fuerza bruta?</p>"
+          }
         },
         {
           "text_html": "<p>Why is an unencrypted public Wi-Fi network risky?</p>",
@@ -165,21 +315,46 @@
           "options": [
             {
               "text": "Other users on the network may intercept your traffic",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "D'autres utilisateurs du réseau peuvent intercepter votre trafic",
+                "de": "Andere Nutzer im Netz können Ihren Datenverkehr abfangen",
+                "es": "Otros usuarios de la red pueden interceptar su tráfico"
+              }
             },
             {
               "text": "It always installs malware as soon as you connect",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Il installe toujours un logiciel malveillant dès la connexion",
+                "de": "Es installiert bei Verbindung immer Schadsoftware",
+                "es": "Siempre instala malware en cuanto se conecta"
+              }
             },
             {
               "text": "It disables HTTPS in your browser",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Il désactive HTTPS dans votre navigateur",
+                "de": "Es schaltet HTTPS im Browser ab",
+                "es": "Desactiva HTTPS en su navegador"
+              }
             },
             {
               "text": "It stores your password on the router",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Il stocke votre mot de passe sur le routeur",
+                "de": "Es speichert Ihr Passwort auf dem Router",
+                "es": "Guarda su contraseña en el router"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Pourquoi un réseau Wi-Fi public non chiffré est-il risqué ?</p>",
+            "de": "<p>Warum ist ein unverschlüsseltes öffentliches WLAN riskant?</p>",
+            "es": "<p>¿Por qué es arriesgada una red Wi-Fi pública sin cifrar?</p>"
+          }
         },
         {
           "text_html": "<p>How does a password manager protect your credentials?</p>",
@@ -188,21 +363,46 @@
           "options": [
             {
               "text": "It stores them encrypted and unlocks them with one master password",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "Il les stocke chiffrés et les déverrouille avec un mot de passe maître",
+                "de": "Er speichert sie verschlüsselt und öffnet sie mit einem Master-Passwort",
+                "es": "Las guarda cifradas y las desbloquea con una contraseña maestra"
+              }
             },
             {
               "text": "It writes them to a text file in your home folder",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Il les écrit dans un fichier texte de votre dossier personnel",
+                "de": "Er schreibt sie in eine Textdatei in Ihrem Benutzerordner",
+                "es": "Las escribe en un archivo de texto de su carpeta personal"
+              }
             },
             {
               "text": "It emails them to you as a backup",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Il vous les envoie par courriel en sauvegarde",
+                "de": "Er schickt sie Ihnen als Sicherung per E-Mail",
+                "es": "Se las envía por correo como copia de seguridad"
+              }
             },
             {
               "text": "It reuses a single password across sites",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Il réutilise un même mot de passe sur tous les sites",
+                "de": "Er verwendet ein einziges Passwort für alle Websites",
+                "es": "Reutiliza una sola contraseña en todos los sitios"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Comment un gestionnaire de mots de passe protège-t-il vos identifiants ?</p>",
+            "de": "<p>Wie schützt ein Passwortmanager Ihre Zugangsdaten?</p>",
+            "es": "<p>¿Cómo protege un gestor de contraseñas sus credenciales?</p>"
+          }
         },
         {
           "text_html": "<p>Which of these is the strongest password?</p>",
@@ -211,21 +411,46 @@
           "options": [
             {
               "text": "kR7#vQ2$mZ9!pL4x",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "kR7#vQ2$mZ9!pL4x",
+                "de": "kR7#vQ2$mZ9!pL4x",
+                "es": "kR7#vQ2$mZ9!pL4x"
+              }
             },
             {
               "text": "P@ssw0rd2024",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "P@ssw0rd2024",
+                "de": "P@ssw0rd2024",
+                "es": "P@ssw0rd2024"
+              }
             },
             {
               "text": "Fluffy2009",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Fluffy2009",
+                "de": "Fluffy2009",
+                "es": "Fluffy2009"
+              }
             },
             {
               "text": "qwerty123456",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "qwerty123456",
+                "de": "qwerty123456",
+                "es": "qwerty123456"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Lequel de ces mots de passe est le plus solide ?</p>",
+            "de": "<p>Welches dieser Passwörter ist am stärksten?</p>",
+            "es": "<p>¿Cuál de estas contraseñas es la más fuerte?</p>"
+          }
         }
       ]
     },
@@ -254,21 +479,46 @@
           "options": [
             {
               "text": "Learn a linear decision boundary from labelled examples",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "Apprendre une frontière de décision linéaire à partir d'exemples étiquetés",
+                "de": "Eine lineare Entscheidungsgrenze aus gelabelten Beispielen lernen",
+                "es": "Aprender una frontera de decisión lineal a partir de ejemplos etiquetados"
+              }
             },
             {
               "text": "Translate between languages",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Traduire d'une langue à l'autre",
+                "de": "Zwischen Sprachen übersetzen",
+                "es": "Traducir entre idiomas"
+              }
             },
             {
               "text": "Generate photorealistic images",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Générer des images photoréalistes",
+                "de": "Fotorealistische Bilder erzeugen",
+                "es": "Generar imágenes fotorrealistas"
+              }
             },
             {
               "text": "Play world-class chess",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Jouer aux échecs au niveau mondial",
+                "de": "Weltklasse-Schach spielen",
+                "es": "Jugar al ajedrez de nivel mundial"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Que savait réellement faire le perceptron de Rosenblatt (1958) ?</p>",
+            "de": "<p>Was konnte Rosenblatts Perzeptron (1958) tatsächlich?</p>",
+            "es": "<p>¿Qué sabía hacer realmente el perceptrón de Rosenblatt (1958)?</p>"
+          }
         },
         {
           "text_html": "<p>What is a <b>hidden layer</b> in a neural network?</p>",
@@ -277,21 +527,46 @@
           "options": [
             {
               "text": "A layer of units between the input and the output",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "Une couche d'unités entre l'entrée et la sortie",
+                "de": "Eine Schicht von Einheiten zwischen Eingabe und Ausgabe",
+                "es": "Una capa de unidades entre la entrada y la salida"
+              }
             },
             {
               "text": "A layer that is discarded after training",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Une couche supprimée après l'entraînement",
+                "de": "Eine Schicht, die nach dem Training verworfen wird",
+                "es": "Una capa que se descarta tras el entrenamiento"
+              }
             },
             {
               "text": "The layer that stores the training data",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "La couche qui stocke les données d'entraînement",
+                "de": "Die Schicht, die die Trainingsdaten speichert",
+                "es": "La capa que almacena los datos de entrenamiento"
+              }
             },
             {
               "text": "A cached copy of the model weights",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Une copie en cache des poids du modèle",
+                "de": "Eine zwischengespeicherte Kopie der Modellgewichte",
+                "es": "Una copia en caché de los pesos del modelo"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Qu'est-ce qu'une <b>couche cachée</b> dans un réseau de neurones ?</p>",
+            "de": "<p>Was ist eine <b>verborgene Schicht</b> in einem neuronalen Netz?</p>",
+            "es": "<p>¿Qué es una <b>capa oculta</b> en una red neuronal?</p>"
+          }
         },
         {
           "text_html": "<p>Select <b>all</b> components of the Transformer architecture introduced in 2017.</p>",
@@ -301,21 +576,46 @@
           "options": [
             {
               "text": "Self-attention",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "L'auto-attention",
+                "de": "Self-Attention",
+                "es": "La autoatención"
+              }
             },
             {
               "text": "Positional encodings",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "Les encodages positionnels",
+                "de": "Positionskodierungen",
+                "es": "Los codificadores posicionales"
+              }
             },
             {
               "text": "Feed-forward layers",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "Les couches feed-forward",
+                "de": "Feed-Forward-Schichten",
+                "es": "Las capas feed-forward"
+              }
             },
             {
               "text": "Convolutional pooling",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Le pooling convolutif",
+                "de": "Convolutional Pooling",
+                "es": "El pooling convolucional"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Sélectionnez <b>tous</b> les composants de l'architecture Transformer introduite en 2017.</p>",
+            "de": "<p>Wählen Sie <b>alle</b> Bestandteile der 2017 vorgestellten Transformer-Architektur aus.</p>",
+            "es": "<p>Seleccione <b>todos</b> los componentes de la arquitectura Transformer presentada en 2017.</p>"
+          }
         },
         {
           "text_html": "<p>What does an attention mechanism let a model do?</p>",
@@ -324,21 +624,46 @@
           "options": [
             {
               "text": "Weigh how relevant each token is to every other token",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "Pondérer la pertinence de chaque jeton par rapport à tous les autres",
+                "de": "Die Relevanz jedes Tokens gegenüber allen anderen zu gewichten",
+                "es": "Ponderar la relevancia de cada token respecto a todos los demás"
+              }
             },
             {
               "text": "Compress the whole input into a single number",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Compresser toute l'entrée en un seul nombre",
+                "de": "Die gesamte Eingabe zu einer einzigen Zahl zu komprimieren",
+                "es": "Comprimir toda la entrada en un solo número"
+              }
             },
             {
               "text": "Skip training for words it already knows",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Ignorer l'entraînement pour les mots qu'il connaît déjà",
+                "de": "Das Training für bereits bekannte Wörter zu überspringen",
+                "es": "Saltarse el entrenamiento de las palabras que ya conoce"
+              }
             },
             {
               "text": "Retrieve documents from the internet",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Récupérer des documents sur Internet",
+                "de": "Dokumente aus dem Internet abzurufen",
+                "es": "Recuperar documentos de internet"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Que permet un mécanisme d'attention à un modèle ?</p>",
+            "de": "<p>Was ermöglicht ein Attention-Mechanismus einem Modell?</p>",
+            "es": "<p>¿Qué permite un mecanismo de atención a un modelo?</p>"
+          }
         },
         {
           "text_html": "<p>What is a <b>token</b> for a large language model?</p>",
@@ -347,21 +672,46 @@
           "options": [
             {
               "text": "A sub-word unit of text that the model reads and predicts",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "Une unité de texte plus petite que le mot, que le modèle lit et prédit",
+                "de": "Eine Texteinheit unterhalb der Wortebene, die das Modell liest und vorhersagt",
+                "es": "Una unidad de texto menor que la palabra que el modelo lee y predice"
+              }
             },
             {
               "text": "A whole word, in every case",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Un mot entier, dans tous les cas",
+                "de": "Immer ein ganzes Wort",
+                "es": "Siempre una palabra completa"
+              }
             },
             {
               "text": "One line of the training file",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Une ligne du fichier d'entraînement",
+                "de": "Eine Zeile der Trainingsdatei",
+                "es": "Una línea del archivo de entrenamiento"
+              }
             },
             {
               "text": "A byte of the model's weights",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Un octet des poids du modèle",
+                "de": "Ein Byte der Modellgewichte",
+                "es": "Un byte de los pesos del modelo"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Qu'est-ce qu'un <b>jeton</b> pour un grand modèle de langage ?</p>",
+            "de": "<p>Was ist ein <b>Token</b> für ein großes Sprachmodell?</p>",
+            "es": "<p>¿Qué es un <b>token</b> para un gran modelo de lenguaje?</p>"
+          }
         },
         {
           "text_html": "<p>What is overfitting?</p>",
@@ -370,21 +720,46 @@
           "options": [
             {
               "text": "The model memorises its training data and generalises poorly",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "Le modèle mémorise ses données d'entraînement et généralise mal",
+                "de": "Das Modell merkt sich seine Trainingsdaten und generalisiert schlecht",
+                "es": "El modelo memoriza sus datos de entrenamiento y generaliza mal"
+              }
             },
             {
               "text": "The model is too small to learn anything",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Le modèle est trop petit pour apprendre quoi que ce soit",
+                "de": "Das Modell ist zu klein, um etwas zu lernen",
+                "es": "El modelo es demasiado pequeño para aprender nada"
+              }
             },
             {
               "text": "The training set contains too many languages",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Le jeu d'entraînement contient trop de langues",
+                "de": "Der Trainingssatz enthält zu viele Sprachen",
+                "es": "El conjunto de entrenamiento contiene demasiados idiomas"
+              }
             },
             {
               "text": "The model answers too slowly",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Le modèle répond trop lentement",
+                "de": "Das Modell antwortet zu langsam",
+                "es": "El modelo responde demasiado despacio"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Qu'est-ce que le surapprentissage ?</p>",
+            "de": "<p>Was ist Overfitting?</p>",
+            "es": "<p>¿Qué es el sobreajuste?</p>"
+          }
         },
         {
           "text_html": "<p>What does the <b>temperature</b> setting change during generation?</p>",
@@ -393,21 +768,46 @@
           "options": [
             {
               "text": "How random the choice of the next token is",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "Le caractère aléatoire du choix du jeton suivant",
+                "de": "Wie zufällig das nächste Token gewählt wird",
+                "es": "Lo aleatoria que es la elección del siguiente token"
+              }
             },
             {
               "text": "How many tokens the model can read at once",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Le nombre de jetons que le modèle peut lire d'un coup",
+                "de": "Wie viele Tokens das Modell auf einmal lesen kann",
+                "es": "Cuántos tokens puede leer el modelo a la vez"
+              }
             },
             {
               "text": "How long the model trains for",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "La durée de l'entraînement",
+                "de": "Wie lange das Training dauert",
+                "es": "Cuánto dura el entrenamiento"
+              }
             },
             {
               "text": "How much each call costs",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Le coût de chaque appel",
+                "de": "Wie viel jeder Aufruf kostet",
+                "es": "Cuánto cuesta cada llamada"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Que modifie le réglage de <b>température</b> pendant la génération ?</p>",
+            "de": "<p>Was ändert die Einstellung der <b>Temperatur</b> während der Generierung?</p>",
+            "es": "<p>¿Qué cambia el ajuste de <b>temperatura</b> durante la generación?</p>"
+          }
         },
         {
           "text_html": "<p>What is the role of a loss function in training?</p>",
@@ -416,21 +816,46 @@
           "options": [
             {
               "text": "It measures the error that the optimiser tries to reduce",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "Elle mesure l'erreur que l'optimiseur cherche à réduire",
+                "de": "Sie misst den Fehler, den der Optimierer zu verringern versucht",
+                "es": "Mide el error que el optimizador intenta reducir"
+              }
             },
             {
               "text": "It stores the model's parameters",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Elle stocke les paramètres du modèle",
+                "de": "Sie speichert die Parameter des Modells",
+                "es": "Almacena los parámetros del modelo"
+              }
             },
             {
               "text": "It cleans and deduplicates the training data",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Elle nettoie et déduplique les données d'entraînement",
+                "de": "Sie bereinigt und entdoppelt die Trainingsdaten",
+                "es": "Limpia y deduplica los datos de entrenamiento"
+              }
             },
             {
               "text": "It limits the length of the output",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Elle limite la longueur de la sortie",
+                "de": "Sie begrenzt die Länge der Ausgabe",
+                "es": "Limita la longitud de la salida"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Quel est le rôle d'une fonction de perte à l'entraînement ?</p>",
+            "de": "<p>Welche Rolle spielt eine Verlustfunktion beim Training?</p>",
+            "es": "<p>¿Cuál es el papel de una función de pérdida en el entrenamiento?</p>"
+          }
         },
         {
           "text_html": "<p>Why does a language model have a context window?</p>",
@@ -439,21 +864,46 @@
           "options": [
             {
               "text": "It can only attend to a fixed number of tokens at once",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "Il ne peut prendre en compte qu'un nombre fixe de jetons à la fois",
+                "de": "Es kann nur eine feste Anzahl von Tokens gleichzeitig berücksichtigen",
+                "es": "Solo puede atender a un número fijo de tokens a la vez"
+              }
             },
             {
               "text": "It forgets everything as soon as it answers",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Il oublie tout dès qu'il a répondu",
+                "de": "Es vergisst alles, sobald es geantwortet hat",
+                "es": "Olvida todo en cuanto responde"
+              }
             },
             {
               "text": "It cannot read text longer than a sentence",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Il ne peut pas lire un texte plus long qu'une phrase",
+                "de": "Es kann keinen längeren Text als einen Satz lesen",
+                "es": "No puede leer texto más largo que una frase"
+              }
             },
             {
               "text": "It keeps its memory on disk",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Il garde sa mémoire sur le disque",
+                "de": "Es bewahrt sein Gedächtnis auf der Festplatte",
+                "es": "Guarda su memoria en el disco"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Pourquoi un modèle de langage a-t-il une fenêtre de contexte ?</p>",
+            "de": "<p>Warum hat ein Sprachmodell ein Kontextfenster?</p>",
+            "es": "<p>¿Por qué un modelo de lenguaje tiene una ventana de contexto?</p>"
+          }
         }
       ]
     }

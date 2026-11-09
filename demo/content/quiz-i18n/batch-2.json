@@ -1,0 +1,493 @@
+[
+  {
+    "index": 4,
+    "questions": {
+      "0": {
+        "fr": {
+          "text": "<p>En quoi le climat se distingue-t-il de la météo ?</p>",
+          "options": [
+            "Le climat est la statistique des états du temps sur des décennies",
+            "Le climat est la météo d'un autre lieu",
+            "Le climat ne change qu'en hiver",
+            "Il n'y a aucune différence"
+          ]
+        },
+        "en": {
+          "text": "<p>How does climate differ from weather?</p>",
+          "options": [
+            "Climate is the statistics of weather conditions over decades",
+            "Climate is the weather somewhere else",
+            "Climate only changes in winter",
+            "There is no difference"
+          ]
+        },
+        "es": {
+          "text": "<p>¿En qué se diferencia el clima del tiempo atmosférico?</p>",
+          "options": [
+            "El clima es la estadística de los estados del tiempo durante décadas",
+            "El clima es el tiempo de otro lugar",
+            "El clima solo cambia en invierno",
+            "No hay ninguna diferencia"
+          ]
+        }
+      },
+      "1": {
+        "fr": {
+          "text": "<p>Quelle période de référence l'Organisation météorologique mondiale utilise-t-elle actuellement ?</p>",
+          "options": ["1961–1990", "1981–2010", "1991–2020", "2001–2030"]
+        },
+        "en": {
+          "text": "<p>Which reference period does the World Meteorological Organization currently use?</p>",
+          "options": ["1961–1990", "1981–2010", "1991–2020", "2001–2030"]
+        },
+        "es": {
+          "text": "<p>¿Qué periodo de referencia utiliza actualmente la Organización Meteorológica Mundial?</p>",
+          "options": ["1961–1990", "1981–2010", "1991–2020", "2001–2030"]
+        }
+      },
+      "2": {
+        "fr": {
+          "text": "<p>Que montre la courbe de Keeling ?</p>",
+          "options": [
+            "La hausse de la concentration de CO2, avec un cycle annuel en dents de scie",
+            "La température des océans",
+            "Le nombre de taches solaires",
+            "Le niveau de la mer depuis 1900"
+          ]
+        },
+        "en": {
+          "text": "<p>What does the Keeling curve show?</p>",
+          "options": [
+            "The rise in CO2 concentration, with an annual sawtooth",
+            "Ocean temperature",
+            "The number of sunspots",
+            "Sea level since 1900"
+          ]
+        },
+        "es": {
+          "text": "<p>¿Qué muestra la curva de Keeling?</p>",
+          "options": [
+            "El aumento de la concentración de CO2, con un serrado anual",
+            "La temperatura de los océanos",
+            "El número de manchas solares",
+            "El nivel del mar desde 1900"
+          ]
+        }
+      },
+      "3": {
+        "fr": {
+          "text": "<p>De combien de vapeur d'eau supplémentaire l'air plus chaud peut-il à peu près se charger par degré Celsius ?</p>",
+          "options": ["Environ 1 %", "Environ 3 %", "Environ 7 %", "Environ 20 %"]
+        },
+        "en": {
+          "text": "<p>How much more water vapour can warmer air hold per degree Celsius, roughly?</p>",
+          "options": ["About 1 %", "About 3 %", "About 7 %", "About 20 %"]
+        },
+        "es": {
+          "text": "<p>¿Cuánto más vapor de agua puede contener aproximadamente el aire más cálido por grado Celsius?</p>",
+          "options": ["Alrededor del 1 %", "Alrededor del 3 %", "Alrededor del 7 %", "Alrededor del 20 %"]
+        }
+      },
+      "4": {
+        "fr": {
+          "text": "<p>Qui a démontré expérimentalement l'absorption du rayonnement thermique au XIXe siècle ?</p>",
+          "options": ["Svante Arrhenius", "John Tyndall", "Charles Keeling", "Joseph Fourier"]
+        },
+        "en": {
+          "text": "<p>Who demonstrated the absorption of thermal radiation experimentally in the 19th century?</p>",
+          "options": ["Svante Arrhenius", "John Tyndall", "Charles Keeling", "Joseph Fourier"]
+        },
+        "es": {
+          "text": "<p>¿Quién demostró experimentalmente la absorción de la radiación térmica en el siglo XIX?</p>",
+          "options": ["Svante Arrhenius", "John Tyndall", "Charles Keeling", "Joseph Fourier"]
+        }
+      },
+      "5": {
+        "fr": {
+          "text": "<p>Quand l'accord de Paris a-t-il été conclu ?</p>",
+          "options": ["1992", "1997", "2009", "2015"]
+        },
+        "en": {
+          "text": "<p>When was the Paris Agreement concluded?</p>",
+          "options": ["1992", "1997", "2009", "2015"]
+        },
+        "es": {
+          "text": "<p>¿Cuándo se concluyó el Acuerdo de París?</p>",
+          "options": ["1992", "1997", "2009", "2015"]
+        }
+      }
+    }
+  },
+  {
+    "index": 5,
+    "questions": {
+      "0": {
+        "fr": {
+          "text": "<p>Qui a publié le modèle relationnel en 1970 ?</p>",
+          "options": ["Edgar F. Codd", "Donald Knuth", "Charles Bachman", "Jim Gray"]
+        },
+        "en": {
+          "text": "<p>Who published the relational model in 1970?</p>",
+          "options": ["Edgar F. Codd", "Donald Knuth", "Charles Bachman", "Jim Gray"]
+        },
+        "de": {
+          "text": "<p>Wer veröffentlichte 1970 das relationale Modell?</p>",
+          "options": ["Edgar F. Codd", "Donald Knuth", "Charles Bachman", "Jim Gray"]
+        }
+      },
+      "1": {
+        "fr": {
+          "text": "<p>Que garantit une clé primaire ?</p>",
+          "options": [
+            "Que la ligne est identifiée de façon unique et non nulle",
+            "Que la table a peu de colonnes",
+            "Que les requêtes sont plus rapides",
+            "Que les données sont chiffrées"
+          ]
+        },
+        "en": {
+          "text": "<p>What does a primary key guarantee?</p>",
+          "options": [
+            "That the row is identified uniquely and is never null",
+            "That the table has few columns",
+            "That queries are faster",
+            "That the data is encrypted"
+          ]
+        },
+        "de": {
+          "text": "<p>Was garantiert ein Primärschlüssel?</p>",
+          "options": [
+            "Dass die Zeile eindeutig und nie leer identifiziert wird",
+            "Dass die Tabelle wenige Spalten hat",
+            "Dass die Abfragen schneller sind",
+            "Dass die Daten verschlüsselt sind"
+          ]
+        }
+      },
+      "2": {
+        "fr": {
+          "text": "<p>Qu'est-ce qui caractérise une clé de substitution ?</p>",
+          "options": [
+            "C'est une donnée du monde réel, comme l'ISBN",
+            "C'est un nombre inventé, sans signification, généré par le système",
+            "C'est toujours une date",
+            "C'est une clé étrangère"
+          ]
+        },
+        "en": {
+          "text": "<p>What characterises a surrogate key?</p>",
+          "options": [
+            "It is real-world data, such as an ISBN",
+            "It is an invented number with no meaning, generated by the system",
+            "It is always a date",
+            "It is a foreign key"
+          ]
+        },
+        "de": {
+          "text": "<p>Was kennzeichnet einen Surrogatschlüssel?</p>",
+          "options": [
+            "Er ist ein reales Datum wie eine ISBN",
+            "Er ist eine erfundene Zahl ohne Bedeutung, vom System erzeugt",
+            "Er ist immer ein Datum",
+            "Er ist ein Fremdschlüssel"
+          ]
+        }
+      },
+      "3": {
+        "fr": {
+          "text": "<p>Qu'élimine la troisième forme normale ?</p>",
+          "options": [
+            "Les valeurs répétées dans une cellule",
+            "Les dépendances partielles à la clé",
+            "Les dépendances transitives entre colonnes non clés",
+            "Les clés étrangères"
+          ]
+        },
+        "en": {
+          "text": "<p>What does third normal form remove?</p>",
+          "options": [
+            "Repeated values inside a cell",
+            "Partial dependencies on the key",
+            "Transitive dependencies between non-key columns",
+            "Foreign keys"
+          ]
+        },
+        "de": {
+          "text": "<p>Was beseitigt die dritte Normalform?</p>",
+          "options": [
+            "Wiederholte Werte in einer Zelle",
+            "Partielle Abhängigkeiten vom Schlüssel",
+            "Transitive Abhängigkeiten zwischen Nichtschlüsselspalten",
+            "Fremdschlüssel"
+          ]
+        }
+      },
+      "4": {
+        "fr": {
+          "text": "<p>Que signifie le A d'ACID ?</p>",
+          "options": ["Atomicité", "Isolation", "Agrégation", "Autorisation"]
+        },
+        "en": {
+          "text": "<p>What does the A in ACID stand for?</p>",
+          "options": ["Atomicity", "Isolation", "Aggregation", "Authorisation"]
+        },
+        "de": {
+          "text": "<p>Wofür steht das A in ACID?</p>",
+          "options": ["Atomarität", "Isolation", "Aggregation", "Autorisierung"]
+        }
+      },
+      "5": {
+        "fr": {
+          "text": "<p>Quelle structure utilisent presque tous les index relationnels ?</p>",
+          "options": ["Des tables de hachage", "Des arbres B", "Des listes chaînées", "Des graphes orientés"]
+        },
+        "en": {
+          "text": "<p>Which structure do almost all relational indexes use?</p>",
+          "options": ["Hash tables", "B-trees", "Linked lists", "Directed graphs"]
+        },
+        "de": {
+          "text": "<p>Welche Struktur nutzen fast alle relationalen Indizes?</p>",
+          "options": ["Hash-Tabellen", "B-Bäume", "Verkettete Listen", "Gerichtete Graphen"]
+        }
+      }
+    }
+  },
+  {
+    "index": 6,
+    "questions": {
+      "0": {
+        "fr": {
+          "text": "<p>Qu'est-ce qui tient Internet ensemble ?</p>",
+          "options": [
+            "Une entreprise unique",
+            "Un petit nombre de protocoles partagés",
+            "Une agence des Nations unies",
+            "Un interrupteur central"
+          ]
+        },
+        "de": {
+          "text": "<p>Was hält das Internet zusammen?</p>",
+          "options": [
+            "Ein einziges Unternehmen",
+            "Eine kleine Zahl gemeinsamer Protokolle",
+            "Eine UN-Agentur",
+            "Ein Hauptschalter"
+          ]
+        },
+        "es": {
+          "text": "<p>¿Qué mantiene unido a internet?</p>",
+          "options": [
+            "Una sola empresa",
+            "Un pequeño número de protocolos compartidos",
+            "Una agencia de las Naciones Unidas",
+            "Un interruptor maestro"
+          ]
+        }
+      },
+      "1": {
+        "fr": {
+          "text": "<p>Pourquoi la commutation de paquets l'emporte-t-elle sur la réservation d'un circuit ?</p>",
+          "options": [
+            "Elle est plus facile à facturer",
+            "Elle partage la capacité : un lien n'est occupé que pendant l'envoi des données",
+            "Elle n'a pas besoin d'adresses",
+            "Elle chiffre chaque paquet"
+          ]
+        },
+        "de": {
+          "text": "<p>Warum ist Paketvermittlung besser als das Reservieren einer Leitung?</p>",
+          "options": [
+            "Sie ist leichter abzurechnen",
+            "Sie teilt die Kapazität: eine Leitung ist nur belegt, solange Daten gesendet werden",
+            "Sie braucht keine Adressen",
+            "Sie verschlüsselt jedes Paket"
+          ]
+        },
+        "es": {
+          "text": "<p>¿Por qué la conmutación de paquetes supera la reserva de un circuito?</p>",
+          "options": [
+            "Es más fácil de facturar",
+            "Comparte la capacidad: un enlace solo está ocupado mientras se envían datos",
+            "No necesita direcciones",
+            "Cifra cada paquete"
+          ]
+        }
+      },
+      "2": {
+        "fr": {
+          "text": "<p>Que fait BGP entre les réseaux ?</p>",
+          "options": [
+            "Il trouve le chemin le plus court",
+            "Il annonce les blocs d'adresses joignables et suit les relations commerciales",
+            "Il traduit les noms en adresses",
+            "Il compresse le trafic"
+          ]
+        },
+        "de": {
+          "text": "<p>Was macht BGP zwischen Netzen?</p>",
+          "options": [
+            "Es findet den kürzesten Pfad",
+            "Es kündigt erreichbare Adressblöcke an und folgt Geschäftsbeziehungen",
+            "Es übersetzt Namen in Adressen",
+            "Es komprimiert den Verkehr"
+          ]
+        },
+        "es": {
+          "text": "<p>¿Qué hace BGP entre redes?</p>",
+          "options": [
+            "Encuentra la ruta más corta",
+            "Anuncia bloques de direcciones alcanzables y sigue relaciones comerciales",
+            "Traduce nombres en direcciones",
+            "Comprime el tráfico"
+          ]
+        }
+      },
+      "3": {
+        "fr": {
+          "text": "<p>Quel organisme publie les normes techniques sous forme de RFC ?</p>",
+          "options": ["ICANN", "W3C", "IETF", "Les registres régionaux"]
+        },
+        "de": {
+          "text": "<p>Welche Organisation veröffentlicht die technischen Standards als RFCs?</p>",
+          "options": ["ICANN", "W3C", "IETF", "Die regionalen Registries"]
+        },
+        "es": {
+          "text": "<p>¿Qué organismo publica los estándares técnicos como RFC?</p>",
+          "options": ["ICANN", "W3C", "IETF", "Los registros regionales"]
+        }
+      },
+      "4": {
+        "fr": {
+          "text": "<p>Que signifient les codes de statut 3xx en HTTP ?</p>",
+          "options": ["Succès", "Redirection", "Erreur du client", "Erreur du serveur"]
+        },
+        "de": {
+          "text": "<p>Was bedeuten die Statuscodes 3xx in HTTP?</p>",
+          "options": ["Erfolg", "Weiterleitung", "Client-Fehler", "Server-Fehler"]
+        },
+        "es": {
+          "text": "<p>¿Qué significan los códigos de estado 3xx en HTTP?</p>",
+          "options": ["Éxito", "Redirección", "Error del cliente", "Error del servidor"]
+        }
+      },
+      "5": {
+        "fr": {
+          "text": "<p>Où commence la résolution quand un appareil cherche un nom ?</p>",
+          "options": [
+            "À un serveur racine",
+            "À un résolveur récursif, généralement celui du fournisseur d'accès ou d'un service public",
+            "Au serveur faisant autorité du domaine",
+            "Uniquement dans le fichier hosts local"
+          ]
+        },
+        "de": {
+          "text": "<p>Wo beginnt die Auflösung, wenn ein Gerät einen Namen sucht?</p>",
+          "options": [
+            "Bei einem Root-Server",
+            "Bei einem rekursiven Resolver, meist vom Provider oder einem öffentlichen Dienst",
+            "Beim autoritativen Server der Domain",
+            "Nur in der lokalen hosts-Datei"
+          ]
+        },
+        "es": {
+          "text": "<p>¿Dónde empieza la resolución cuando un dispositivo busca un nombre?</p>",
+          "options": [
+            "En un servidor raíz",
+            "En un resolutor recursivo, normalmente del proveedor de acceso o de un servicio público",
+            "En el servidor autoritativo del dominio",
+            "Solo en el archivo hosts local"
+          ]
+        }
+      }
+    }
+  },
+  {
+    "index": 7,
+    "questions": {
+      "0": {
+        "fr": {
+          "text": "<p>Internet n'a pas de propriétaire unique.</p>",
+          "options": ["Oui", "Non"]
+        },
+        "de": {
+          "text": "<p>Das Internet hat keinen einzigen Eigentümer.</p>",
+          "options": ["Ja", "Nein"]
+        },
+        "es": {
+          "text": "<p>Internet no tiene un único propietario.</p>",
+          "options": ["Sí", "No"]
+        }
+      },
+      "1": {
+        "fr": {
+          "text": "<p>Un fichier est envoyé comme un flux continu unique, de l'expéditeur au destinataire.</p>",
+          "options": ["Oui", "Non"]
+        },
+        "de": {
+          "text": "<p>Eine Datei wird als ein durchgehender Strom vom Absender zum Empfänger gesendet.</p>",
+          "options": ["Ja", "Nein"]
+        },
+        "es": {
+          "text": "<p>Un archivo se envía como un único flujo continuo del emisor al receptor.</p>",
+          "options": ["Sí", "No"]
+        }
+      },
+      "2": {
+        "fr": {
+          "text": "<p>Les paquets d'un même fichier peuvent arriver dans le désordre.</p>",
+          "options": ["Oui", "Non"]
+        },
+        "de": {
+          "text": "<p>Pakete derselben Datei können in falscher Reihenfolge ankommen.</p>",
+          "options": ["Ja", "Nein"]
+        },
+        "es": {
+          "text": "<p>Los paquetes de un mismo archivo pueden llegar desordenados.</p>",
+          "options": ["Sí", "No"]
+        }
+      },
+      "3": {
+        "fr": {
+          "text": "<p>BGP choisit toujours le chemin le plus court entre deux réseaux.</p>",
+          "options": ["Oui", "Non"]
+        },
+        "de": {
+          "text": "<p>BGP wählt immer den kürzesten Pfad zwischen zwei Netzen.</p>",
+          "options": ["Ja", "Nein"]
+        },
+        "es": {
+          "text": "<p>BGP elige siempre la ruta más corta entre dos redes.</p>",
+          "options": ["Sí", "No"]
+        }
+      },
+      "4": {
+        "fr": {
+          "text": "<p>Le DNS est une base de données centrale que chaque machine interroge.</p>",
+          "options": ["Oui", "Non"]
+        },
+        "de": {
+          "text": "<p>DNS ist eine zentrale Datenbank, die jede Maschine abfragt.</p>",
+          "options": ["Ja", "Nein"]
+        },
+        "es": {
+          "text": "<p>El DNS es una base de datos central que consulta cada máquina.</p>",
+          "options": ["Sí", "No"]
+        }
+      },
+      "5": {
+        "fr": {
+          "text": "<p>HTTP est un protocole texte avec des méthodes, des chemins et des en-têtes.</p>",
+          "options": ["Oui", "Non"]
+        },
+        "de": {
+          "text": "<p>HTTP ist ein Textprotokoll mit Methoden, Pfaden und Kopfzeilen.</p>",
+          "options": ["Ja", "Nein"]
+        },
+        "es": {
+          "text": "<p>HTTP es un protocolo de texto con métodos, rutas y cabeceras.</p>",
+          "options": ["Sí", "No"]
+        }
+      }
+    }
+  }
+]

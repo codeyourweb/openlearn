@@ -26,21 +26,46 @@
           "options": [
             {
               "text": "The mitochondrion",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "La mitochondrie",
+                "de": "Das Mitochondrium",
+                "es": "La mitocondria"
+              }
             },
             {
               "text": "The ribosome",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Le ribosome",
+                "de": "Das Ribosom",
+                "es": "El ribosoma"
+              }
             },
             {
               "text": "The Golgi apparatus",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "L'appareil de Golgi",
+                "de": "Der Golgi-Apparat",
+                "es": "El aparato de Golgi"
+              }
             },
             {
               "text": "The lysosome",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Le lysosome",
+                "de": "Das Lysosom",
+                "es": "El lisosoma"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Quel organite produit la majeure partie de l'ATP d'une cellule ?</p>",
+            "de": "<p>Welches Organell erzeugt den Großteil des ATP einer Zelle?</p>",
+            "es": "<p>¿Qué orgánulo produce la mayor parte del ATP de una célula?</p>"
+          }
         },
         {
           "text_html": "<p>Select <b>all</b> structures found in a human cell but <i>not</i> in a bacterium.</p>",
@@ -50,21 +75,46 @@
           "options": [
             {
               "text": "A nucleus",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "Un noyau",
+                "de": "Einen Zellkern",
+                "es": "Un núcleo"
+              }
             },
             {
               "text": "Mitochondria",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "Des mitochondries",
+                "de": "Mitochondrien",
+                "es": "Mitocondrias"
+              }
             },
             {
               "text": "The endoplasmic reticulum",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "Le réticulum endoplasmique",
+                "de": "Das endoplasmatische Retikulum",
+                "es": "El retículo endoplasmático"
+              }
             },
             {
               "text": "Ribosomes",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Des ribosomes",
+                "de": "Ribosomen",
+                "es": "Ribosomas"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Sélectionnez <b>toutes</b> les structures présentes dans une cellule humaine mais <i>pas</i> dans une bactérie.</p>",
+            "de": "<p>Wählen Sie <b>alle</b> Strukturen aus, die in einer menschlichen Zelle vorkommen, <i>nicht</i> aber in einem Bakterium.</p>",
+            "es": "<p>Seleccione <b>todas</b> las estructuras presentes en una célula humana pero <i>no</i> en una bacteria.</p>"
+          }
         },
         {
           "text_html": "<p>What is the main job of a ribosome?</p>",
@@ -73,21 +123,46 @@
           "options": [
             {
               "text": "Assembling proteins from amino acids",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "Assembler des protéines à partir d'acides aminés",
+                "de": "Proteine aus Aminosäuren zusammenbauen",
+                "es": "Ensamblar proteínas a partir de aminoácidos"
+              }
             },
             {
               "text": "Breaking down fatty acids",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Décomposer les acides gras",
+                "de": "Fettsäuren abbauen",
+                "es": "Descomponer ácidos grasos"
+              }
             },
             {
               "text": "Storing genetic information",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Stocker l'information génétique",
+                "de": "Genetische Information speichern",
+                "es": "Almacenar la información genética"
+              }
             },
             {
               "text": "Sorting molecules for transport",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Trier les molécules pour le transport",
+                "de": "Moleküle für den Transport sortieren",
+                "es": "Clasificar moléculas para su transporte"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Quelle est la fonction principale d'un ribosome ?</p>",
+            "de": "<p>Was ist die Hauptaufgabe eines Ribosoms?</p>",
+            "es": "<p>¿Cuál es la función principal de un ribosoma?</p>"
+          }
         },
         {
           "text_html": "<p>Which molecule carries a gene's instructions from the nucleus to a ribosome?</p>",
@@ -96,21 +171,46 @@
           "options": [
             {
               "text": "Messenger RNA",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "L'ARN messager",
+                "de": "Die Messenger-RNA",
+                "es": "El ARN mensajero"
+              }
             },
             {
               "text": "Transfer RNA",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "L'ARN de transfert",
+                "de": "Die Transfer-RNA",
+                "es": "El ARN de transferencia"
+              }
             },
             {
               "text": "DNA polymerase",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "L'ADN polymérase",
+                "de": "Die DNA-Polymerase",
+                "es": "La ADN polimerasa"
+              }
             },
             {
               "text": "ATP",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "L'ATP",
+                "de": "ATP",
+                "es": "El ATP"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Quelle molécule transporte les instructions d'un gène du noyau jusqu'à un ribosome ?</p>",
+            "de": "<p>Welches Molekül bringt die Anweisungen eines Gens vom Zellkern zum Ribosom?</p>",
+            "es": "<p>¿Qué molécula lleva las instrucciones de un gen del núcleo al ribosoma?</p>"
+          }
         },
         {
           "text_html": "<p>The cell membrane is mainly made of...</p>",
@@ -119,21 +219,46 @@
           "options": [
             {
               "text": "A phospholipid bilayer studded with proteins",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "Une bicouche de phospholipides parsemée de protéines",
+                "de": "Einer mit Proteinen besetzten Doppelschicht aus Phospholipiden",
+                "es": "Una bicapa de fosfolípidos salpicada de proteínas"
+              }
             },
             {
               "text": "A wall of cellulose",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Une paroi de cellulose",
+                "de": "Einer Zellwand aus Zellulose",
+                "es": "Una pared de celulosa"
+              }
             },
             {
               "text": "A single layer of cholesterol",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Une seule couche de cholestérol",
+                "de": "Einer einzigen Cholesterinschicht",
+                "es": "Una sola capa de colesterol"
+              }
             },
             {
               "text": "A mesh of chitin fibres",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Un maillage de fibres de chitine",
+                "de": "Einem Geflecht aus Chitinfasern",
+                "es": "Una malla de fibras de quitina"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>La membrane cellulaire est principalement constituée de...</p>",
+            "de": "<p>Die Zellmembran besteht hauptsächlich aus...</p>",
+            "es": "<p>La membrana celular está formada principalmente por...</p>"
+          }
         },
         {
           "text_html": "<p>Which organelle packages proteins into vesicles for secretion?</p>",
@@ -142,21 +267,46 @@
           "options": [
             {
               "text": "The Golgi apparatus",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "L'appareil de Golgi",
+                "de": "Der Golgi-Apparat",
+                "es": "El aparato de Golgi"
+              }
             },
             {
               "text": "The smooth endoplasmic reticulum",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Le réticulum endoplasmique lisse",
+                "de": "Das glatte endoplasmatische Retikulum",
+                "es": "El retículo endoplasmático liso"
+              }
             },
             {
               "text": "The nucleolus",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Le nucléole",
+                "de": "Der Nucleolus",
+                "es": "El nucléolo"
+              }
             },
             {
               "text": "The peroxisome",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Le peroxysome",
+                "de": "Das Peroxisom",
+                "es": "El peroxisoma"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Quel organite emballe les protéines dans des vésicules pour la sécrétion ?</p>",
+            "de": "<p>Welches Organell verpackt Proteine in Vesikel zur Ausschüttung?</p>",
+            "es": "<p>¿Qué orgánulo empaqueta las proteínas en vesículas para su secreción?</p>"
+          }
         },
         {
           "text_html": "<p>During mitosis, chromosomes line up along the cell's equator in which phase?</p>",
@@ -165,21 +315,46 @@
           "options": [
             {
               "text": "Metaphase",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "La métaphase",
+                "de": "In der Metaphase",
+                "es": "En la metafase"
+              }
             },
             {
               "text": "Prophase",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "La prophase",
+                "de": "In der Prophase",
+                "es": "En la profase"
+              }
             },
             {
               "text": "Anaphase",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "L'anaphase",
+                "de": "In der Anaphase",
+                "es": "En la anafase"
+              }
             },
             {
               "text": "Telophase",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "La télophase",
+                "de": "In der Telophase",
+                "es": "En la telofase"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Pendant la mitose, à quelle phase les chromosomes s'alignent-ils sur l'équateur de la cellule ?</p>",
+            "de": "<p>In welcher Phase der Mitose ordnen sich die Chromosomen am Äquator der Zelle an?</p>",
+            "es": "<p>Durante la mitosis, ¿en qué fase se alinean los cromosomas en el ecuador de la célula?</p>"
+          }
         },
         {
           "text_html": "<p>What do lysosomes do?</p>",
@@ -188,21 +363,46 @@
           "options": [
             {
               "text": "Digest waste and worn-out cell components with enzymes",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "Ils digèrent les déchets et les composants cellulaires usés grâce à des enzymes",
+                "de": "Sie verdauen Abfall und verbrauchte Zellbestandteile mit Enzymen",
+                "es": "Digerir desechos y componentes celulares gastados con enzimas"
+              }
             },
             {
               "text": "Synthesise lipids and steroids",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Ils synthétisent les lipides et les stéroïdes",
+                "de": "Sie synthetisieren Lipide und Steroide",
+                "es": "Sintetizar lípidos y esteroides"
+              }
             },
             {
               "text": "Copy DNA before division",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Ils copient l'ADN avant la division",
+                "de": "Sie kopieren die DNA vor der Teilung",
+                "es": "Copiar el ADN antes de la división"
+              }
             },
             {
               "text": "Anchor the cell to its neighbours",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Ils ancrent la cellule à ses voisines",
+                "de": "Sie verankern die Zelle an ihren Nachbarn",
+                "es": "Anclar la célula a sus vecinas"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Que font les lysosomes ?</p>",
+            "de": "<p>Was tun Lysosomen?</p>",
+            "es": "<p>¿Qué hacen los lisosomas?</p>"
+          }
         },
         {
           "text_html": "<p>Mature human red blood cells lack which of the following?</p>",
@@ -211,21 +411,46 @@
           "options": [
             {
               "text": "A nucleus",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "Un noyau",
+                "de": "Ein Zellkern",
+                "es": "Un núcleo"
+              }
             },
             {
               "text": "A cell membrane",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Une membrane cellulaire",
+                "de": "Eine Zellmembran",
+                "es": "Una membrana celular"
+              }
             },
             {
               "text": "Haemoglobin",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "L'hémoglobine",
+                "de": "Hämoglobin",
+                "es": "Hemoglobina"
+              }
             },
             {
               "text": "Cytoplasm",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Le cytoplasme",
+                "de": "Zytoplasma",
+                "es": "Citoplasma"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Que manque-t-il aux globules rouges humains matures ?</p>",
+            "de": "<p>Was fehlt reifen menschlichen roten Blutkörperchen?</p>",
+            "es": "<p>¿De qué carecen los glóbulos rojos humanos maduros?</p>"
+          }
         }
       ]
     },
@@ -254,21 +479,46 @@
           "options": [
             {
               "text": "The newton",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "Le newton",
+                "de": "Das Newton",
+                "es": "El newton"
+              }
             },
             {
               "text": "The joule",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Le joule",
+                "de": "Das Joule",
+                "es": "El julio"
+              }
             },
             {
               "text": "The watt",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Le watt",
+                "de": "Das Watt",
+                "es": "El vatio"
+              }
             },
             {
               "text": "The pascal",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Le pascal",
+                "de": "Das Pascal",
+                "es": "El pascal"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Quelle est l'unité SI de la force ?</p>",
+            "de": "<p>Was ist die SI-Einheit der Kraft?</p>",
+            "es": "<p>¿Cuál es la unidad SI de fuerza?</p>"
+          }
         },
         {
           "text_html": "<p>An object moves at constant velocity. What is the net force acting on it?</p>",
@@ -277,21 +527,46 @@
           "options": [
             {
               "text": "Zero",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "Nulle",
+                "de": "Null",
+                "es": "Cero"
+              }
             },
             {
               "text": "A constant force in the direction of motion",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Une force constante dans le sens du mouvement",
+                "de": "Eine konstante Kraft in Bewegungsrichtung",
+                "es": "Una fuerza constante en la dirección del movimiento"
+              }
             },
             {
               "text": "A force equal to its weight",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Une force égale à son poids",
+                "de": "Eine Kraft gleich seiner Gewichtskraft",
+                "es": "Una fuerza igual a su peso"
+              }
             },
             {
               "text": "A force that grows with its speed",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Une force qui augmente avec sa vitesse",
+                "de": "Eine Kraft, die mit seiner Geschwindigkeit wächst",
+                "es": "Una fuerza que crece con su velocidad"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Un objet se déplace à vitesse constante. Quelle est la force nette qui s'exerce sur lui ?</p>",
+            "de": "<p>Ein Körper bewegt sich mit konstanter Geschwindigkeit. Wie groß ist die resultierende Kraft auf ihn?</p>",
+            "es": "<p>Un objeto se mueve a velocidad constante. ¿Cuál es la fuerza neta que actúa sobre él?</p>"
+          }
         },
         {
           "text_html": "<p>Select <b>all</b> vector quantities.</p>",
@@ -301,21 +576,46 @@
           "options": [
             {
               "text": "Velocity",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "La vitesse (velocity)",
+                "de": "Die Geschwindigkeit (velocity)",
+                "es": "La velocidad (velocity)"
+              }
             },
             {
               "text": "Acceleration",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "L'accélération",
+                "de": "Die Beschleunigung",
+                "es": "La aceleración"
+              }
             },
             {
               "text": "Force",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "La force",
+                "de": "Die Kraft",
+                "es": "La fuerza"
+              }
             },
             {
               "text": "Speed",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "La vitesse (speed)",
+                "de": "Die Geschwindigkeit (speed)",
+                "es": "La rapidez (speed)"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Sélectionnez <b>toutes</b> les grandeurs vectorielles.</p>",
+            "de": "<p>Wählen Sie <b>alle</b> vektoriellen Größen aus.</p>",
+            "es": "<p>Seleccione <b>todas</b> las magnitudes vectoriales.</p>"
+          }
         },
         {
           "text_html": "<p>Newton's third law states that...</p>",
@@ -324,21 +624,46 @@
           "options": [
             {
               "text": "Every action has an equal and opposite reaction",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "Toute action entraîne une réaction égale et opposée",
+                "de": "Jede Kraft eine gleich große, entgegengesetzte Reaktion hervorruft",
+                "es": "Toda acción produce una reacción igual y opuesta"
+              }
             },
             {
               "text": "Force equals mass times acceleration",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "La force est égale à la masse fois l'accélération",
+                "de": "Kraft gleich Masse mal Beschleunigung ist",
+                "es": "La fuerza es igual a la masa por la aceleración"
+              }
             },
             {
               "text": "An object stays at rest unless pushed",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Un objet reste au repos tant qu'on ne le pousse pas",
+                "de": "Ein Körper in Ruhe bleibt, solange er nicht gestoßen wird",
+                "es": "Un objeto permanece en reposo salvo que se le empuje"
+              }
             },
             {
               "text": "Energy is always conserved",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "L'énergie se conserve toujours",
+                "de": "Energie immer erhalten bleibt",
+                "es": "La energía siempre se conserva"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>La troisième loi de Newton énonce que...</p>",
+            "de": "<p>Das dritte newtonsche Gesetz besagt, dass...</p>",
+            "es": "<p>La tercera ley de Newton afirma que...</p>"
+          }
         },
         {
           "text_html": "<p>A 2 kg object accelerates at 3 m/s². What net force acts on it?</p>",
@@ -347,21 +672,46 @@
           "options": [
             {
               "text": "6 N",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "6 N",
+                "de": "6 N",
+                "es": "6 N"
+              }
             },
             {
               "text": "1.5 N",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "1,5 N",
+                "de": "1,5 N",
+                "es": "1,5 N"
+              }
             },
             {
               "text": "5 N",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "5 N",
+                "de": "5 N",
+                "es": "5 N"
+              }
             },
             {
               "text": "9 N",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "9 N",
+                "de": "9 N",
+                "es": "9 N"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Un objet de 2 kg accélère à 3 m/s². Quelle force nette s'exerce sur lui ?</p>",
+            "de": "<p>Ein Körper von 2 kg beschleunigt mit 3 m/s². Welche resultierende Kraft wirkt auf ihn?</p>",
+            "es": "<p>Un objeto de 2 kg acelera a 3 m/s². ¿Qué fuerza neta actúa sobre él?</p>"
+          }
         },
         {
           "text_html": "<p>What energy is stored in a stretched spring?</p>",
@@ -370,21 +720,46 @@
           "options": [
             {
               "text": "Elastic potential energy",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "L'énergie potentielle élastique",
+                "de": "Elastische potenzielle Energie",
+                "es": "Energía potencial elástica"
+              }
             },
             {
               "text": "Kinetic energy",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "L'énergie cinétique",
+                "de": "Kinetische Energie",
+                "es": "Energía cinética"
+              }
             },
             {
               "text": "Chemical energy",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "L'énergie chimique",
+                "de": "Chemische Energie",
+                "es": "Energía química"
+              }
             },
             {
               "text": "Thermal energy",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "L'énergie thermique",
+                "de": "Thermische Energie",
+                "es": "Energía térmica"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Quelle énergie est stockée dans un ressort tendu ?</p>",
+            "de": "<p>Welche Energie ist in einer gespannten Feder gespeichert?</p>",
+            "es": "<p>¿Qué energía se almacena en un muelle estirado?</p>"
+          }
         },
         {
           "text_html": "<p>On the Moon, how do an astronaut's mass and weight compare with Earth?</p>",
@@ -393,21 +768,46 @@
           "options": [
             {
               "text": "Mass is unchanged and weight is lower",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "La masse est inchangée et le poids est plus faible",
+                "de": "Die Masse bleibt gleich, das Gewicht ist geringer",
+                "es": "La masa no cambia y el peso es menor"
+              }
             },
             {
               "text": "Both are lower",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Les deux sont plus faibles",
+                "de": "Beides ist geringer",
+                "es": "Ambos son menores"
+              }
             },
             {
               "text": "Both are unchanged",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Les deux sont inchangés",
+                "de": "Beides bleibt gleich",
+                "es": "Ambos son iguales"
+              }
             },
             {
               "text": "Mass is lower and weight is unchanged",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "La masse est plus faible et le poids inchangé",
+                "de": "Die Masse ist geringer, das Gewicht gleich",
+                "es": "La masa es menor y el peso no cambia"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Sur la Lune, comment la masse et le poids d'un astronaute se comparent-ils à ceux sur Terre ?</p>",
+            "de": "<p>Wie verhalten sich Masse und Gewicht eines Astronauten auf dem Mond im Vergleich zur Erde?</p>",
+            "es": "<p>En la Luna, ¿cómo se comparan la masa y el peso de un astronauta con los de la Tierra?</p>"
+          }
         },
         {
           "text_html": "<p>What does the conservation of energy state?</p>",
@@ -416,21 +816,46 @@
           "options": [
             {
               "text": "Energy can change form but cannot be created or destroyed",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "L'énergie peut changer de forme mais ne peut être ni créée ni détruite",
+                "de": "Energie kann ihre Form ändern, aber nicht erzeugt oder vernichtet werden",
+                "es": "La energía puede cambiar de forma pero no crearse ni destruirse"
+              }
             },
             {
               "text": "Energy always decreases in a closed system",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "L'énergie diminue toujours dans un système fermé",
+                "de": "Energie nimmt in einem geschlossenen System immer ab",
+                "es": "La energía siempre disminuye en un sistema cerrado"
+              }
             },
             {
               "text": "Energy can be created by doing work",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "L'énergie peut être créée en fournissant un travail",
+                "de": "Energie kann durch Arbeit erzeugt werden",
+                "es": "La energía puede crearse realizando trabajo"
+              }
             },
             {
               "text": "Energy is another name for force",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "L'énergie est un autre nom pour la force",
+                "de": "Energie ist ein anderer Name für Kraft",
+                "es": "La energía es otro nombre para la fuerza"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Qu'énonce la conservation de l'énergie ?</p>",
+            "de": "<p>Was besagt die Energieerhaltung?</p>",
+            "es": "<p>¿Qué afirma la conservación de la energía?</p>"
+          }
         },
         {
           "text_html": "<p>A ball thrown straight up has reached the top of its flight. What are its velocity and acceleration at that instant?</p>",
@@ -439,21 +864,46 @@
           "options": [
             {
               "text": "Velocity is zero and acceleration points downwards",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "La vitesse est nulle et l'accélération est dirigée vers le bas",
+                "de": "Die Geschwindigkeit ist null, die Beschleunigung zeigt nach unten",
+                "es": "La velocidad es cero y la aceleración apunta hacia abajo"
+              }
             },
             {
               "text": "Both are zero",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Les deux sont nulles",
+                "de": "Beide sind null",
+                "es": "Ambas son cero"
+              }
             },
             {
               "text": "Velocity points downwards and acceleration is zero",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "La vitesse est dirigée vers le bas et l'accélération est nulle",
+                "de": "Die Geschwindigkeit zeigt nach unten, die Beschleunigung ist null",
+                "es": "La velocidad apunta hacia abajo y la aceleración es cero"
+              }
             },
             {
               "text": "Both point upwards",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Les deux sont dirigées vers le haut",
+                "de": "Beide zeigen nach oben",
+                "es": "Ambas apuntan hacia arriba"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Une balle lancée verticalement atteint le sommet de sa trajectoire. Quelles sont sa vitesse et son accélération à cet instant ?</p>",
+            "de": "<p>Ein senkrecht nach oben geworfener Ball hat den höchsten Punkt erreicht. Wie sind Geschwindigkeit und Beschleunigung in diesem Moment?</p>",
+            "es": "<p>Una pelota lanzada verticalmente ha alcanzado lo más alto de su trayectoria. ¿Cómo son su velocidad y su aceleración en ese instante?</p>"
+          }
         },
         {
           "text_html": "<p>In a vacuum, why does a heavy object not fall faster than a light one?</p>",
@@ -462,21 +912,46 @@
           "options": [
             {
               "text": "Both fall with the same acceleration, since there is no air resistance",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "Les deux tombent avec la même accélération, car il n'y a pas de résistance de l'air",
+                "de": "Beide fallen mit derselben Beschleunigung, da es keinen Luftwiderstand gibt",
+                "es": "Ambos caen con la misma aceleración, porque no hay resistencia del aire"
+              }
             },
             {
               "text": "Gravity pulls harder on lighter objects",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "La gravité attire plus fort les objets légers",
+                "de": "Die Schwerkraft zieht leichtere Körper stärker an",
+                "es": "La gravedad atrae con más fuerza a los objetos ligeros"
+              }
             },
             {
               "text": "Heavier objects have more inertia and therefore fall more slowly",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Les objets plus lourds ont plus d'inertie et tombent donc plus lentement",
+                "de": "Schwerere Körper haben mehr Trägheit und fallen daher langsamer",
+                "es": "Los objetos más pesados tienen más inercia y por eso caen más despacio"
+              }
             },
             {
               "text": "The vacuum removes gravity",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Le vide supprime la gravité",
+                "de": "Das Vakuum hebt die Schwerkraft auf",
+                "es": "El vacío elimina la gravedad"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Dans le vide, pourquoi un objet lourd ne tombe-t-il pas plus vite qu'un objet léger ?</p>",
+            "de": "<p>Warum fällt im Vakuum ein schwerer Körper nicht schneller als ein leichter?</p>",
+            "es": "<p>En el vacío, ¿por qué un objeto pesado no cae más rápido que uno ligero?</p>"
+          }
         }
       ]
     }

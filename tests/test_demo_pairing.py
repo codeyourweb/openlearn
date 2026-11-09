@@ -11,6 +11,15 @@ from app.demo.seed import _load, content_files
 from app.models import Quiz, Wiki, WikiQuizLink
 
 
+def _quizzes_documents() -> list[tuple[str, dict]]:
+    documents = []
+    for path in content_files():
+        document = _load(path)
+        if (document.get("kind") or path.stem) == "quizzes":
+            documents.append((path.name, document))
+    return documents
+
+
 def _pairing_entries() -> list[tuple[str, dict]]:
     pairs = []
     for path in content_files():
@@ -124,3 +133,30 @@ def test_a_questionnaire_naming_an_absent_wiki_is_skipped_not_fatal():
         db.commit()
         assert db.scalar(select(Quiz).where(Quiz.title == "Sonde de couplage")) is not None
         assert db.scalar(select(WikiQuizLink).join(Quiz).where(Quiz.title == "Sonde de couplage")) is None
+
+
+def test_every_demo_question_is_written_in_every_language_it_announces() -> None:
+    """A quiz that claims four languages must not answer in only one.
+
+    The demo package is the product's shop window: a German reader opening a
+    French questionnaire saw the French wording, because the translations were
+    never filled in. The package now carries them, and this test keeps them
+    from drifting away on the next edit.
+    """
+    missing: list[str] = []
+    for name, document in _quizzes_documents():
+        for index, quiz in enumerate(document.get("items") or []):
+            default = quiz["default_language"]
+            expected = (set(quiz.get("title_translations") or {}) | {default}) - {default}
+            for q_index, question in enumerate(quiz["questions"]):
+                found = set(question.get("translations") or {})
+                if expected - found:
+                    missing.append(f"{name} #{index} q{q_index}: {sorted(expected - found)}")
+                # Swipe answers are canonical yes/no markers, translated by the client.
+                if quiz["mode"] == "swipe":
+                    continue
+                for o_index, option in enumerate(question["options"]):
+                    found = set(option.get("translations") or {})
+                    if expected - found:
+                        missing.append(f"{name} #{index} q{q_index} a{o_index}: {sorted(expected - found)}")
+    assert not missing, "untranslated demo content: " + ", ".join(missing[:10])

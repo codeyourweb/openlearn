@@ -26,21 +26,46 @@
           "options": [
             {
               "text": "The Colorado",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "Le Colorado",
+                "de": "Der Colorado",
+                "es": "El Colorado"
+              }
             },
             {
               "text": "The Rio Grande",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Le Rio Grande",
+                "de": "Der Rio Grande",
+                "es": "El Río Grande"
+              }
             },
             {
               "text": "The Columbia",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "La Columbia",
+                "de": "Der Columbia",
+                "es": "El Columbia"
+              }
             },
             {
               "text": "The Missouri",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Le Missouri",
+                "de": "Der Missouri",
+                "es": "El Misuri"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Quel fleuve a creusé le Grand Canyon ?</p>",
+            "de": "<p>Welcher Fluss hat den Grand Canyon gegraben?</p>",
+            "es": "<p>¿Qué río excavó el Gran Cañón?</p>"
+          }
         },
         {
           "text_html": "<p>Select <b>all</b> countries that have a coastline on the Mediterranean Sea.</p>",
@@ -50,21 +75,46 @@
           "options": [
             {
               "text": "Spain",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "L'Espagne",
+                "de": "Spanien",
+                "es": "España"
+              }
             },
             {
               "text": "Egypt",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "L'Égypte",
+                "de": "Ägypten",
+                "es": "Egipto"
+              }
             },
             {
               "text": "Turkey",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "La Turquie",
+                "de": "Die Türkei",
+                "es": "Turquía"
+              }
             },
             {
               "text": "Portugal",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Le Portugal",
+                "de": "Portugal",
+                "es": "Portugal"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Sélectionnez <b>tous</b> les pays qui ont une côte sur la mer Méditerranée.</p>",
+            "de": "<p>Wählen Sie <b>alle</b> Länder mit einer Küste am Mittelmeer aus.</p>",
+            "es": "<p>Seleccione <b>todos</b> los países con costa en el mar Mediterráneo.</p>"
+          }
         },
         {
           "text_html": "<p>Which is the longest mountain range on land?</p>",
@@ -73,21 +123,46 @@
           "options": [
             {
               "text": "The Andes",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "Les Andes",
+                "de": "Die Anden",
+                "es": "Los Andes"
+              }
             },
             {
               "text": "The Himalayas",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "L'Himalaya",
+                "de": "Der Himalaya",
+                "es": "El Himalaya"
+              }
             },
             {
               "text": "The Rocky Mountains",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Les montagnes Rocheuses",
+                "de": "Die Rocky Mountains",
+                "es": "Las Montañas Rocosas"
+              }
             },
             {
               "text": "The Alps",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Les Alpes",
+                "de": "Die Alpen",
+                "es": "Los Alpes"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Quelle est la plus longue chaîne de montagnes terrestre ?</p>",
+            "de": "<p>Welches ist das längste Gebirge an Land?</p>",
+            "es": "<p>¿Cuál es la cordillera más larga del mundo en tierra?</p>"
+          }
         },
         {
           "text_html": "<p>What is a <b>fjord</b>?</p>",
@@ -96,21 +171,46 @@
           "options": [
             {
               "text": "A deep valley carved by a glacier and flooded by the sea",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "Une vallée profonde creusée par un glacier et envahie par la mer",
+                "de": "Ein tiefes, von einem Gletscher gegrabenes und vom Meer überflutetes Tal",
+                "es": "Un valle profundo excavado por un glaciar e invadido por el mar"
+              }
             },
             {
               "text": "A shallow lagoon enclosed by a coral reef",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Un lagon peu profond fermé par un récif corallien",
+                "de": "Eine flache Lagune, die ein Korallenriff einschließt",
+                "es": "Una laguna poco profunda encerrada por un arrecife de coral"
+              }
             },
             {
               "text": "A fan of sediment where a river reaches the sea",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Un cône de sédiments là où un fleuve atteint la mer",
+                "de": "Ein Sedimentfächer dort, wo ein Fluss das Meer erreicht",
+                "es": "Un abanico de sedimentos donde un río llega al mar"
+              }
             },
             {
               "text": "A lake formed in the crater of a volcano",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Un lac formé dans le cratère d'un volcan",
+                "de": "Ein See im Krater eines Vulkans",
+                "es": "Un lago formado en el cráter de un volcán"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Qu'est-ce qu'un <b>fjord</b> ?</p>",
+            "de": "<p>Was ist ein <b>Fjord</b>?</p>",
+            "es": "<p>¿Qué es un <b>fiordo</b>?</p>"
+          }
         },
         {
           "text_html": "<p>Which is the largest lake in Africa by surface area?</p>",
@@ -119,21 +219,46 @@
           "options": [
             {
               "text": "Lake Victoria",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "Le lac Victoria",
+                "de": "Der Victoriasee",
+                "es": "El lago Victoria"
+              }
             },
             {
               "text": "Lake Tanganyika",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Le lac Tanganyika",
+                "de": "Der Tanganjikasee",
+                "es": "El lago Tanganica"
+              }
             },
             {
               "text": "Lake Malawi",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Le lac Malawi",
+                "de": "Der Malawisee",
+                "es": "El lago Malaui"
+              }
             },
             {
               "text": "Lake Chad",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Le lac Tchad",
+                "de": "Der Tschadsee",
+                "es": "El lago Chad"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Quel est le plus grand lac d'Afrique par sa superficie ?</p>",
+            "de": "<p>Welcher ist der flächengrößte See Afrikas?</p>",
+            "es": "<p>¿Cuál es el lago más grande de África por superficie?</p>"
+          }
         },
         {
           "text_html": "<p>The Danube flows into which sea?</p>",
@@ -142,21 +267,46 @@
           "options": [
             {
               "text": "The Black Sea",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "La mer Noire",
+                "de": "In das Schwarze Meer",
+                "es": "En el mar Negro"
+              }
             },
             {
               "text": "The Baltic Sea",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "La mer Baltique",
+                "de": "In die Ostsee",
+                "es": "En el mar Báltico"
+              }
             },
             {
               "text": "The Caspian Sea",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "La mer Caspienne",
+                "de": "In das Kaspische Meer",
+                "es": "En el mar Caspio"
+              }
             },
             {
               "text": "The Adriatic Sea",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "La mer Adriatique",
+                "de": "In die Adria",
+                "es": "En el mar Adriático"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Dans quelle mer le Danube se jette-t-il ?</p>",
+            "de": "<p>In welches Meer mündet die Donau?</p>",
+            "es": "<p>¿En qué mar desemboca el Danubio?</p>"
+          }
         },
         {
           "text_html": "<p>Which line of latitude crosses Kenya, Indonesia and Brazil?</p>",
@@ -165,21 +315,46 @@
           "options": [
             {
               "text": "The Equator",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "L'équateur",
+                "de": "Der Äquator",
+                "es": "El ecuador"
+              }
             },
             {
               "text": "The Tropic of Cancer",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Le tropique du Cancer",
+                "de": "Der Wendekreis des Krebses",
+                "es": "El trópico de Cáncer"
+              }
             },
             {
               "text": "The Tropic of Capricorn",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Le tropique du Capricorne",
+                "de": "Der Wendekreis des Steinbocks",
+                "es": "El trópico de Capricornio"
+              }
             },
             {
               "text": "The Prime Meridian",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Le méridien de Greenwich",
+                "de": "Der Nullmeridian",
+                "es": "El meridiano de Greenwich"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Quelle ligne de latitude traverse le Kenya, l'Indonésie et le Brésil ?</p>",
+            "de": "<p>Welche Breitenlinie durchquert Kenia, Indonesien und Brasilien?</p>",
+            "es": "<p>¿Qué línea de latitud cruza Kenia, Indonesia y Brasil?</p>"
+          }
         },
         {
           "text_html": "<p>Which strait separates Europe from Africa?</p>",
@@ -188,21 +363,46 @@
           "options": [
             {
               "text": "The Strait of Gibraltar",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "Le détroit de Gibraltar",
+                "de": "Die Straße von Gibraltar",
+                "es": "El estrecho de Gibraltar"
+              }
             },
             {
               "text": "The Bosphorus",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Le Bosphore",
+                "de": "Der Bosporus",
+                "es": "El Bósforo"
+              }
             },
             {
               "text": "The Strait of Messina",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Le détroit de Messine",
+                "de": "Die Straße von Messina",
+                "es": "El estrecho de Mesina"
+              }
             },
             {
               "text": "The Strait of Otranto",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Le détroit d'Otrante",
+                "de": "Die Straße von Otranto",
+                "es": "El estrecho de Otranto"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Quel détroit sépare l'Europe de l'Afrique ?</p>",
+            "de": "<p>Welche Meerenge trennt Europa von Afrika?</p>",
+            "es": "<p>¿Qué estrecho separa Europa de África?</p>"
+          }
         },
         {
           "text_html": "<p>Mount Kilimanjaro, the highest peak in Africa, rises in which country?</p>",
@@ -211,21 +411,46 @@
           "options": [
             {
               "text": "Tanzania",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "La Tanzanie",
+                "de": "In Tansania",
+                "es": "Tanzania"
+              }
             },
             {
               "text": "Kenya",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Le Kenya",
+                "de": "In Kenia",
+                "es": "Kenia"
+              }
             },
             {
               "text": "Uganda",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "L'Ouganda",
+                "de": "In Uganda",
+                "es": "Uganda"
+              }
             },
             {
               "text": "Ethiopia",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "L'Éthiopie",
+                "de": "In Äthiopien",
+                "es": "Etiopía"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Le Kilimandjaro, plus haut sommet d'Afrique, s'élève dans quel pays ?</p>",
+            "de": "<p>In welchem Land erhebt sich der Kilimandscharo, der höchste Gipfel Afrikas?</p>",
+            "es": "<p>El Kilimanjaro, la cumbre más alta de África, se eleva en ¿qué país?</p>"
+          }
         }
       ]
     },
@@ -254,21 +479,46 @@
           "options": [
             {
               "text": "Florence",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "Florence",
+                "de": "In Florenz",
+                "es": "Florencia"
+              }
             },
             {
               "text": "Venice",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Venise",
+                "de": "In Venedig",
+                "es": "Venecia"
+              }
             },
             {
               "text": "Rome",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Rome",
+                "de": "In Rom",
+                "es": "Roma"
+              }
             },
             {
               "text": "Milan",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Milan",
+                "de": "In Mailand",
+                "es": "Milán"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Dans quelle ville la Renaissance italienne a-t-elle commencé ?</p>",
+            "de": "<p>In welcher Stadt begann die italienische Renaissance?</p>",
+            "es": "<p>¿En qué ciudad comenzó el Renacimiento italiano?</p>"
+          }
         },
         {
           "text_html": "<p>Who painted the ceiling of the Sistine Chapel?</p>",
@@ -277,21 +527,46 @@
           "options": [
             {
               "text": "Michelangelo",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "Michel-Ange",
+                "de": "Michelangelo",
+                "es": "Miguel Ángel"
+              }
             },
             {
               "text": "Raphael",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Raphaël",
+                "de": "Raffael",
+                "es": "Rafael"
+              }
             },
             {
               "text": "Leonardo da Vinci",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Léonard de Vinci",
+                "de": "Leonardo da Vinci",
+                "es": "Leonardo da Vinci"
+              }
             },
             {
               "text": "Sandro Botticelli",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Sandro Botticelli",
+                "de": "Sandro Botticelli",
+                "es": "Sandro Botticelli"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Qui a peint le plafond de la chapelle Sixtine ?</p>",
+            "de": "<p>Wer malte die Decke der Sixtinischen Kapelle?</p>",
+            "es": "<p>¿Quién pintó el techo de la Capilla Sixtina?</p>"
+          }
         },
         {
           "text_html": "<p>Select <b>all</b> paintings created by Leonardo da Vinci.</p>",
@@ -301,21 +576,46 @@
           "options": [
             {
               "text": "The Last Supper",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "La Cène",
+                "de": "Das Abendmahl",
+                "es": "La última cena"
+              }
             },
             {
               "text": "Mona Lisa",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "La Joconde",
+                "de": "Mona Lisa",
+                "es": "La Gioconda"
+              }
             },
             {
               "text": "The Virgin of the Rocks",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "La Vierge aux rochers",
+                "de": "Die Felsengrottenmadonna",
+                "es": "La Virgen de las rocas"
+              }
             },
             {
               "text": "The School of Athens",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "L'École d'Athènes",
+                "de": "Die Schule von Athen",
+                "es": "La escuela de Atenas"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Sélectionnez <b>toutes</b> les peintures réalisées par Léonard de Vinci.</p>",
+            "de": "<p>Wählen Sie <b>alle</b> von Leonardo da Vinci gemalten Werke aus.</p>",
+            "es": "<p>Seleccione <b>todas</b> las pinturas realizadas por Leonardo da Vinci.</p>"
+          }
         },
         {
           "text_html": "<p>What did Johannes Gutenberg's press introduce in Europe around 1450?</p>",
@@ -324,21 +624,46 @@
           "options": [
             {
               "text": "Printing with movable metal type",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "L'impression à caractères métalliques mobiles",
+                "de": "Den Druck mit beweglichen Metalllettern",
+                "es": "La impresión con tipos metálicos móviles"
+              }
             },
             {
               "text": "The first paper mill north of the Alps",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Le premier moulin à papier au nord des Alpes",
+                "de": "Die erste Papiermühle nördlich der Alpen",
+                "es": "El primer molino de papel al norte de los Alpes"
+              }
             },
             {
               "text": "Woodblock printing carved on single planks",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "L'impression sur bois gravée sur des planches uniques",
+                "de": "Holztafeldruck von einzelnen Platten",
+                "es": "La impresión xilográfica tallada en planchas únicas"
+              }
             },
             {
               "text": "The first public library",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "La première bibliothèque publique",
+                "de": "Die erste öffentliche Bibliothek",
+                "es": "La primera biblioteca pública"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Qu'a introduit l'imprimerie de Johannes Gutenberg en Europe vers 1450 ?</p>",
+            "de": "<p>Was brachte die Presse von Johannes Gutenberg um 1450 nach Europa?</p>",
+            "es": "<p>¿Qué introdujo la imprenta de Johannes Gutenberg en Europa hacia 1450?</p>"
+          }
         },
         {
           "text_html": "<p>Who wrote <i>The Prince</i> in 1513?</p>",
@@ -347,21 +672,46 @@
           "options": [
             {
               "text": "Niccolò Machiavelli",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "Nicolas Machiavel",
+                "de": "Niccolò Machiavelli",
+                "es": "Nicolás Maquiavelo"
+              }
             },
             {
               "text": "Dante Alighieri",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Dante Alighieri",
+                "de": "Dante Alighieri",
+                "es": "Dante Alighieri"
+              }
             },
             {
               "text": "Francesco Petrarca",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Francesco Petrarca",
+                "de": "Francesco Petrarca",
+                "es": "Francesco Petrarca"
+              }
             },
             {
               "text": "Baldassare Castiglione",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Baldassare Castiglione",
+                "de": "Baldassare Castiglione",
+                "es": "Baldassare Castiglione"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Qui a écrit <i>Le Prince</i> en 1513 ?</p>",
+            "de": "<p>Wer schrieb 1513 <i>Der Fürst</i>?</p>",
+            "es": "<p>¿Quién escribió <i>El príncipe</i> en 1513?</p>"
+          }
         },
         {
           "text_html": "<p>The Medici family of Florence is best remembered as...</p>",
@@ -370,21 +720,46 @@
           "options": [
             {
               "text": "Bankers who funded artists and architects",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "Des banquiers qui finançaient artistes et architectes",
+                "de": "Bankiers, die Künstler und Architekten finanzierten",
+                "es": "Banqueros que financiaban a artistas y arquitectos"
+              }
             },
             {
               "text": "A dynasty of Venetian doges",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Une dynastie de doges vénitiens",
+                "de": "Eine Dynastie venezianischer Dogen",
+                "es": "Una dinastía de dux venecianos"
+              }
             },
             {
               "text": "Mercenary captains in the pay of Milan",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Des capitaines mercenaires au service de Milan",
+                "de": "Söldnerhauptleute im Dienst Mailands",
+                "es": "Capitanes mercenarios al servicio de Milán"
+              }
             },
             {
               "text": "Printers who exported books to Germany",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Des imprimeurs qui exportaient des livres en Allemagne",
+                "de": "Drucker, die Bücher nach Deutschland exportierten",
+                "es": "Impresores que exportaban libros a Alemania"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>La famille Médicis de Florence est surtout connue comme...</p>",
+            "de": "<p>Die Familie Medici aus Florenz ist vor allem bekannt als...</p>",
+            "es": "<p>La familia Médici de Florencia se recuerda sobre todo como...</p>"
+          }
         },
         {
           "text_html": "<p>Which dome, completed in 1436, crowns Florence Cathedral?</p>",
@@ -393,21 +768,46 @@
           "options": [
             {
               "text": "Brunelleschi's dome",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "La coupole de Brunelleschi",
+                "de": "Die Kuppel von Brunelleschi",
+                "es": "La cúpula de Brunelleschi"
+              }
             },
             {
               "text": "Michelangelo's dome for St Peter's",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "La coupole de Michel-Ange pour Saint-Pierre",
+                "de": "Michelangelos Kuppel für Sankt Peter",
+                "es": "La cúpula de Miguel Ángel para San Pedro"
+              }
             },
             {
               "text": "The dome of the Pantheon",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "La coupole du Panthéon",
+                "de": "Die Kuppel des Pantheons",
+                "es": "La cúpula del Panteón"
+              }
             },
             {
               "text": "The dome of Hagia Sophia",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "La coupole de Sainte-Sophie",
+                "de": "Die Kuppel der Hagia Sophia",
+                "es": "La cúpula de Santa Sofía"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Quelle coupole, achevée en 1436, couronne la cathédrale de Florence ?</p>",
+            "de": "<p>Welche 1436 vollendete Kuppel krönt den Dom von Florenz?</p>",
+            "es": "<p>¿Qué cúpula, terminada en 1436, corona la catedral de Florencia?</p>"
+          }
         },
         {
           "text_html": "<p>Renaissance <b>humanism</b> placed its emphasis on...</p>",
@@ -416,21 +816,46 @@
           "options": [
             {
               "text": "The study of classical texts and human potential",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "L'étude des textes classiques et le potentiel humain",
+                "de": "Das Studium klassischer Texte und das menschliche Potenzial",
+                "es": "El estudio de los textos clásicos y el potencial humano"
+              }
             },
             {
               "text": "The rejection of all religious belief",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Le rejet de toute croyance religieuse",
+                "de": "Die Ablehnung jeden religiösen Glaubens",
+                "es": "El rechazo de toda creencia religiosa"
+              }
             },
             {
               "text": "The exclusive use of Latin in every discipline",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "L'usage exclusif du latin dans toutes les disciplines",
+                "de": "Die ausschließliche Verwendung von Latein in allen Fächern",
+                "es": "El uso exclusivo del latín en todas las disciplinas"
+              }
             },
             {
               "text": "Military training above letters",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "L'entraînement militaire avant les lettres",
+                "de": "Militärische Ausbildung vor den Geisteswissenschaften",
+                "es": "El entrenamiento militar por encima de las letras"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>L'<b>humanisme</b> de la Renaissance mettait l'accent sur...</p>",
+            "de": "<p>Der <b>Humanismus</b> der Renaissance legte den Schwerpunkt auf...</p>",
+            "es": "<p>El <b>humanismo</b> renacentista ponía el acento en...</p>"
+          }
         }
       ]
     }

@@ -1,0 +1,303 @@
+[
+  {
+    "file": "quizzes-languages.json",
+    "index": 0,
+    "questions": {
+      "0": {
+        "fr": {
+          "text": "<p>Quelle phrase est correcte ?</p>",
+          "options": [
+            "She has been living in Lyon since 2019.",
+            "She lives in Lyon since 2019.",
+            "She is living in Lyon since 2019.",
+            "She has been living in Lyon for 2019."
+          ]
+        },
+        "de": {
+          "text": "<p>Welcher Satz ist korrekt?</p>",
+          "options": [
+            "She has been living in Lyon since 2019.",
+            "She lives in Lyon since 2019.",
+            "She is living in Lyon since 2019.",
+            "She has been living in Lyon for 2019."
+          ]
+        },
+        "es": {
+          "text": "<p>¿Qué oración es correcta?</p>",
+          "options": [
+            "She has been living in Lyon since 2019.",
+            "She lives in Lyon since 2019.",
+            "She is living in Lyon since 2019.",
+            "She has been living in Lyon for 2019."
+          ]
+        }
+      },
+      "1": {
+        "fr": { "text": "<p>Complétez : <i>I'm good ___ mathematics.</i></p>", "options": ["at", "in", "on", "to"] },
+        "de": { "text": "<p>Ergänzen Sie: <i>I'm good ___ mathematics.</i></p>", "options": ["at", "in", "on", "to"] },
+        "es": { "text": "<p>Complete: <i>I'm good ___ mathematics.</i></p>", "options": ["at", "in", "on", "to"] }
+      },
+      "2": {
+        "fr": {
+          "text": "<p>Sélectionnez <b>toutes</b> les phrases qui emploient correctement le present perfect.</p>",
+          "options": [
+            "I have just finished my homework.",
+            "They have lived here for ten years.",
+            "Have you ever been to Dublin?",
+            "I have seen him yesterday."
+          ]
+        },
+        "de": {
+          "text": "<p>Wählen Sie <b>alle</b> Sätze aus, die das Present Perfect korrekt verwenden.</p>",
+          "options": [
+            "I have just finished my homework.",
+            "They have lived here for ten years.",
+            "Have you ever been to Dublin?",
+            "I have seen him yesterday."
+          ]
+        },
+        "es": {
+          "text": "<p>Seleccione <b>todas</b> las oraciones que usan correctamente el present perfect.</p>",
+          "options": [
+            "I have just finished my homework.",
+            "They have lived here for ten years.",
+            "Have you ever been to Dublin?",
+            "I have seen him yesterday."
+          ]
+        }
+      },
+      "3": {
+        "fr": {
+          "text": "<p>Le mot anglais <i>actually</i> signifie...</p>",
+          "options": ["en fait", "tout de suite", "finalement", "probablement"]
+        },
+        "de": {
+          "text": "<p>Das englische Wort <i>actually</i> bedeutet...</p>",
+          "options": ["tatsächlich", "sofort", "schließlich", "wahrscheinlich"]
+        },
+        "es": {
+          "text": "<p>La palabra inglesa <i>actually</i> significa...</p>",
+          "options": ["en realidad", "ahora mismo", "finalmente", "probablemente"]
+        }
+      },
+      "4": {
+        "fr": {
+          "text": "<p>Complétez : <i>I look forward to ___ from you.</i></p>",
+          "options": ["hearing", "hear", "heard", "be hearing"]
+        },
+        "de": {
+          "text": "<p>Ergänzen Sie: <i>I look forward to ___ from you.</i></p>",
+          "options": ["hearing", "hear", "heard", "be hearing"]
+        },
+        "es": {
+          "text": "<p>Complete: <i>I look forward to ___ from you.</i></p>",
+          "options": ["hearing", "hear", "heard", "be hearing"]
+        }
+      },
+      "5": {
+        "fr": {
+          "text": "<p>Discours rapporté : <i>He said he ___ tired.</i></p>",
+          "options": ["was", "is", "has been", "will be"]
+        },
+        "de": {
+          "text": "<p>Indirekte Rede: <i>He said he ___ tired.</i></p>",
+          "options": ["was", "is", "has been", "will be"]
+        },
+        "es": {
+          "text": "<p>Estilo indirecto: <i>He said he ___ tired.</i></p>",
+          "options": ["was", "is", "has been", "will be"]
+        }
+      },
+      "6": {
+        "fr": {
+          "text": "<p>Qu'exprime <i>used to</i> dans <i>I used to play tennis</i> ?</p>",
+          "options": [
+            "Une habitude passée qui n'a plus cours",
+            "Un projet pour le futur proche",
+            "Une obligation présente",
+            "Une demande polie"
+          ]
+        },
+        "de": {
+          "text": "<p>Was drückt <i>used to</i> in <i>I used to play tennis</i> aus?</p>",
+          "options": [
+            "Eine vergangene Gewohnheit, die nicht mehr besteht",
+            "Einen Plan für die nahe Zukunft",
+            "Eine gegenwärtige Verpflichtung",
+            "Eine höfliche Bitte"
+          ]
+        },
+        "es": {
+          "text": "<p>¿Qué expresa <i>used to</i> en <i>I used to play tennis</i>?</p>",
+          "options": [
+            "Un hábito pasado que ya no ocurre",
+            "Un plan para el futuro próximo",
+            "Una obligación presente",
+            "Una petición cortés"
+          ]
+        }
+      },
+      "7": {
+        "fr": {
+          "text": "<p>Complétez : <i>This exam is ___ than the last one.</i></p>",
+          "options": ["easier", "more easy", "easiest", "more easier"]
+        },
+        "de": {
+          "text": "<p>Ergänzen Sie: <i>This exam is ___ than the last one.</i></p>",
+          "options": ["easier", "more easy", "easiest", "more easier"]
+        },
+        "es": {
+          "text": "<p>Complete: <i>This exam is ___ than the last one.</i></p>",
+          "options": ["easier", "more easy", "easiest", "more easier"]
+        }
+      },
+      "8": {
+        "fr": {
+          "text": "<p>Lequel de ces noms est dénombrable ?</p>",
+          "options": ["suggestion", "advice", "information", "furniture"]
+        },
+        "de": {
+          "text": "<p>Welches dieser Substantive ist zählbar?</p>",
+          "options": ["suggestion", "advice", "information", "furniture"]
+        },
+        "es": {
+          "text": "<p>¿Cuál de estos sustantivos es contable?</p>",
+          "options": ["suggestion", "advice", "information", "furniture"]
+        }
+      }
+    }
+  },
+  {
+    "file": "quizzes-languages.json",
+    "index": 1,
+    "questions": {
+      "0": {
+        "fr": {
+          "text": "<p>Comment préférez-vous mémoriser de nouveaux mots allemands ?</p>",
+          "options": [
+            "Avec des cartes en papier",
+            "Avec une application de répétition espacée",
+            "En lisant des articles en allemand",
+            "En écoutant des podcasts"
+          ]
+        },
+        "de": {
+          "text": "<p>Wie merken Sie sich neue deutsche Wörter am liebsten?</p>",
+          "options": [
+            "Mit Karteikarten aus Papier",
+            "Mit einer App für verteilte Wiederholung",
+            "Durch Lesen deutscher Artikel",
+            "Durch Hören von Podcasts"
+          ]
+        },
+        "es": {
+          "text": "<p>¿Cómo prefiere memorizar palabras alemanas nuevas?</p>",
+          "options": [
+            "Con tarjetas de papel",
+            "Con una aplicación de repetición espaciada",
+            "Leyendo artículos en alemán",
+            "Escuchando pódcasts"
+          ]
+        }
+      },
+      "1": {
+        "fr": {
+          "text": "<p>Quelle compétence aimeriez-vous améliorer en premier ?</p>",
+          "options": ["L'oral", "La compréhension orale", "La lecture", "L'écrit"]
+        },
+        "de": {
+          "text": "<p>Welche Fähigkeit möchten Sie zuerst verbessern?</p>",
+          "options": ["Sprechen", "Hören", "Lesen", "Schreiben"]
+        },
+        "es": {
+          "text": "<p>¿Qué destreza le gustaría mejorar primero?</p>",
+          "options": ["Hablar", "Escuchar", "Leer", "Escribir"]
+        }
+      },
+      "2": {
+        "fr": {
+          "text": "<p>Quel mot allemand trouvez-vous le plus difficile à prononcer ?</p>",
+          "options": ["Eichhörnchen", "Streichholzschächtelchen", "Quietscheentchen", "Schleswig-Holstein"]
+        },
+        "de": {
+          "text": "<p>Welches deutsche Wort finden Sie am schwersten auszusprechen?</p>",
+          "options": ["Eichhörnchen", "Streichholzschächtelchen", "Quietscheentchen", "Schleswig-Holstein"]
+        },
+        "es": {
+          "text": "<p>¿Qué palabra alemana le resulta más difícil de pronunciar?</p>",
+          "options": ["Eichhörnchen", "Streichholzschächtelchen", "Quietscheentchen", "Schleswig-Holstein"]
+        }
+      },
+      "3": {
+        "fr": {
+          "text": "<p>Combien de temps pouvez-vous consacrer à l'allemand un jour ordinaire ?</p>",
+          "options": ["Moins de 15 minutes", "De 15 à 30 minutes", "De 30 à 60 minutes", "Plus d'une heure"]
+        },
+        "de": {
+          "text": "<p>Wie viel Zeit können Sie an einem normalen Tag für Deutsch aufbringen?</p>",
+          "options": ["Weniger als 15 Minuten", "15 bis 30 Minuten", "30 bis 60 Minuten", "Mehr als eine Stunde"]
+        },
+        "es": {
+          "text": "<p>¿Cuánto tiempo puede dedicar al alemán en un día normal?</p>",
+          "options": ["Menos de 15 minutos", "De 15 a 30 minutos", "De 30 a 60 minutos", "Más de una hora"]
+        }
+      },
+      "4": {
+        "fr": {
+          "text": "<p>Quelle situation du quotidien aimeriez-vous le plus travailler ?</p>",
+          "options": ["Commander dans un café", "Demander son chemin", "Un entretien d'embauche", "Louer un appartement"]
+        },
+        "de": {
+          "text": "<p>Welche Alltagssituation würden Sie am liebsten üben?</p>",
+          "options": ["Im Café bestellen", "Nach dem Weg fragen", "Ein Vorstellungsgespräch", "Eine Wohnung mieten"]
+        },
+        "es": {
+          "text": "<p>¿Qué situación cotidiana le gustaría practicar más?</p>",
+          "options": ["Pedir en una cafetería", "Preguntar el camino", "Una entrevista de trabajo", "Alquilar un piso"]
+        }
+      },
+      "5": {
+        "fr": {
+          "text": "<p>Qu'est-ce qui vous aide le mieux à retenir un mot ?</p>",
+          "options": ["Une image", "Une phrase d'exemple", "Sa traduction", "Son étymologie"]
+        },
+        "de": {
+          "text": "<p>Was hilft Ihnen am besten, ein Wort zu behalten?</p>",
+          "options": ["Ein Bild", "Ein Beispielsatz", "Die Übersetzung", "Die Etymologie"]
+        },
+        "es": {
+          "text": "<p>¿Qué le ayuda más a recordar una palabra?</p>",
+          "options": ["Una imagen", "Una frase de ejemplo", "Su traducción", "Su etimología"]
+        }
+      },
+      "6": {
+        "fr": {
+          "text": "<p>Quel format d'apprentissage vous convient le mieux ?</p>",
+          "options": ["Une courte leçon chaque jour", "Une longue séance par semaine", "Un groupe de conversation", "Un cahier de grammaire"]
+        },
+        "de": {
+          "text": "<p>Welches Lernformat passt am besten zu Ihnen?</p>",
+          "options": ["Eine kurze Lektion jeden Tag", "Eine lange Einheit pro Woche", "Eine Konversationsgruppe", "Ein Grammatikarbeitsheft"]
+        },
+        "es": {
+          "text": "<p>¿Qué formato de aprendizaje le conviene más?</p>",
+          "options": ["Una lección corta cada día", "Una sesión larga por semana", "Un grupo de conversación", "Un cuaderno de gramática"]
+        }
+      },
+      "7": {
+        "fr": {
+          "text": "<p>Quelle ville germanophone aimeriez-vous le plus visiter ?</p>",
+          "options": ["Berlin", "Vienne", "Zurich", "Hambourg"]
+        },
+        "de": {
+          "text": "<p>Welche deutschsprachige Stadt würden Sie am liebsten besuchen?</p>",
+          "options": ["Berlin", "Wien", "Zürich", "Hamburg"]
+        },
+        "es": {
+          "text": "<p>¿Qué ciudad germanoparlante le gustaría más visitar?</p>",
+          "options": ["Berlín", "Viena", "Zúrich", "Hamburgo"]
+        }
+      }
+    }
+  }
+]

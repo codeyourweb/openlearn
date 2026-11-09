@@ -1,0 +1,384 @@
+[
+  {
+    "index": 8,
+    "questions": {
+      "0": {
+        "fr": {
+          "text": "<p>Que reconnaissent les cellules de l'immunité innée ?</p>",
+          "options": [
+            "Un microbe précis",
+            "Des motifs moléculaires communs à des classes entières de microbes",
+            "Uniquement les cellules humaines",
+            "Les anticorps maternels"
+          ]
+        },
+        "de": {
+          "text": "<p>Was erkennen Zellen der angeborenen Immunität?</p>",
+          "options": [
+            "Einen bestimmten Erreger",
+            "Molekulare Muster, die ganzen Erregerklassen gemeinsam sind",
+            "Nur menschliche Zellen",
+            "Antikörper der Mutter"
+          ]
+        },
+        "es": {
+          "text": "<p>¿Qué reconocen las células de la inmunidad innata?</p>",
+          "options": [
+            "Un microbio concreto",
+            "Patrones moleculares comunes a clases enteras de microbios",
+            "Solo células humanas",
+            "Anticuerpos de la madre"
+          ]
+        }
+      },
+      "1": {
+        "fr": {
+          "text": "<p>Quels globules blancs sont les plus nombreux dans le sang ?</p>",
+          "options": ["Les lymphocytes", "Les neutrophiles", "Les éosinophiles", "Les monocytes"]
+        },
+        "de": {
+          "text": "<p>Welche weißen Blutkörperchen sind im Blut am häufigsten?</p>",
+          "options": ["Lymphozyten", "Neutrophile", "Eosinophile", "Monozyten"]
+        },
+        "es": {
+          "text": "<p>¿Qué glóbulos blancos son los más abundantes en la sangre?</p>",
+          "options": ["Los linfocitos", "Los neutrófilos", "Los eosinófilos", "Los monocitos"]
+        }
+      },
+      "2": {
+        "fr": {
+          "text": "<p>Comment le système adaptatif trouve-t-il un récepteur adapté à un nouvel agent pathogène ?</p>",
+          "options": [
+            "Il le conçoit de zéro",
+            "Il maintient une vaste bibliothèque aléatoire et sélectionne la rare cellule qui correspond",
+            "Il l'emprunte à une autre espèce",
+            "Il utilise le même récepteur pour tous les pathogènes"
+          ]
+        },
+        "de": {
+          "text": "<p>Wie findet das adaptive System einen Rezeptor, der zu einem neuen Erreger passt?</p>",
+          "options": [
+            "Es entwirft ihn von Grund auf",
+            "Es unterhält eine riesige Zufallsbibliothek und wählt die seltene passende Zelle aus",
+            "Es leiht ihn von einer anderen Art",
+            "Es nutzt denselben Rezeptor für jeden Erreger"
+          ]
+        },
+        "es": {
+          "text": "<p>¿Cómo encuentra el sistema adaptativo un receptor que encaje con un patógeno nuevo?</p>",
+          "options": [
+            "Lo diseña desde cero",
+            "Mantiene una vasta biblioteca aleatoria y selecciona la rara célula que coincide",
+            "Lo toma prestado de otra especie",
+            "Usa el mismo receptor para todos los patógenos"
+          ]
+        }
+      },
+      "3": {
+        "fr": {
+          "text": "<p>Combien de chaînes protéiques compte un anticorps ?</p>",
+          "options": ["Deux", "Trois", "Quatre", "Cinq"]
+        },
+        "de": {
+          "text": "<p>Aus wie vielen Proteinketten besteht ein Antikörper?</p>",
+          "options": ["Aus zwei", "Aus drei", "Aus vier", "Aus fünf"]
+        },
+        "es": {
+          "text": "<p>¿Cuántas cadenas proteicas tiene un anticuerpo?</p>",
+          "options": ["Dos", "Tres", "Cuatro", "Cinco"]
+        }
+      },
+      "4": {
+        "fr": {
+          "text": "<p>Quelle classe représente environ les trois quarts des anticorps sériques ?</p>",
+          "options": ["IgA", "IgE", "IgG", "IgM"]
+        },
+        "de": {
+          "text": "<p>Welche Klasse macht etwa drei Viertel der Antikörper im Serum aus?</p>",
+          "options": ["IgA", "IgE", "IgG", "IgM"]
+        },
+        "es": {
+          "text": "<p>¿Qué clase representa alrededor de tres cuartas partes de los anticuerpos séricos?</p>",
+          "options": ["IgA", "IgE", "IgG", "IgM"]
+        }
+      },
+      "5": {
+        "fr": {
+          "text": "<p>Que présente un vaccin au système immunitaire ?</p>",
+          "options": [
+            "Un agent pathogène vivant qui rend toujours malade",
+            "Quelque chose qui ressemble à un pathogène mais ne peut pas causer la maladie",
+            "Un antibiotique",
+            "Les anticorps d'un donneur"
+          ]
+        },
+        "de": {
+          "text": "<p>Was zeigt eine Impfung dem Immunsystem?</p>",
+          "options": [
+            "Einen lebenden Erreger, der immer krank macht",
+            "Etwas, das wie ein Erreger aussieht, aber die Krankheit nicht auslösen kann",
+            "Ein Antibiotikum",
+            "Antikörper eines Spenders"
+          ]
+        },
+        "es": {
+          "text": "<p>¿Qué presenta una vacuna al sistema inmunitario?</p>",
+          "options": [
+            "Un patógeno vivo que siempre causa la enfermedad",
+            "Algo que parece un patógeno pero no puede causar la enfermedad",
+            "Un antibiótico",
+            "Los anticuerpos de un donante"
+          ]
+        }
+      }
+    }
+  },
+  {
+    "index": 9,
+    "questions": {
+      "0": {
+        "fr": { "text": "<p>Une formation indique où se placent les joueurs, pas comment l'équipe joue.</p>", "options": ["Oui", "Non"] },
+        "de": { "text": "<p>Eine Formation sagt, wo die Spieler stehen, nicht wie die Mannschaft spielt.</p>", "options": ["Ja", "Nein"] },
+        "es": { "text": "<p>Una formación dice dónde se colocan los jugadores, no cómo juega el equipo.</p>", "options": ["Sí", "No"] }
+      },
+      "1": {
+        "fr": { "text": "<p>Dans un 4-2-3-1, les trois sont des milieux défensifs.</p>", "options": ["Oui", "Non"] },
+        "de": { "text": "<p>In einem 4-2-3-1 sind die drei defensive Mittelfeldspieler.</p>", "options": ["Ja", "Nein"] },
+        "es": { "text": "<p>En un 4-2-3-1, los tres son mediocentros defensivos.</p>", "options": ["Sí", "No"] }
+      },
+      "2": {
+        "fr": { "text": "<p>Le pressing consiste simplement à courir vers le ballon le plus vite possible.</p>", "options": ["Oui", "Non"] },
+        "de": { "text": "<p>Pressing bedeutet einfach, so schnell wie möglich zum Ball zu rennen.</p>", "options": ["Ja", "Nein"] },
+        "es": { "text": "<p>El pressing consiste simplemente en correr hacia el balón lo más rápido posible.</p>", "options": ["Sí", "No"] }
+      },
+      "3": {
+        "fr": { "text": "<p>La plupart des buts viennent d'attaques placées longues plutôt que de transitions.</p>", "options": ["Oui", "Non"] },
+        "de": { "text": "<p>Die meisten Tore entstehen aus langen, geordneten Angriffen und nicht aus Umschaltmomenten.</p>", "options": ["Ja", "Nein"] },
+        "es": { "text": "<p>La mayoría de los goles vienen de ataques posicionales largos y no de transiciones.</p>", "options": ["Sí", "No"] }
+      },
+      "4": {
+        "fr": { "text": "<p>Les coups de pied arrêtés sont la partie du jeu qu'un entraînement peut reproduire exactement.</p>", "options": ["Oui", "Non"] },
+        "de": { "text": "<p>Standardsituationen sind der Teil des Spiels, den ein Training exakt nachstellen kann.</p>", "options": ["Ja", "Nein"] },
+        "es": { "text": "<p>Las jugadas a balón parado son la parte del juego que un entrenamiento puede reproducir exactamente.</p>", "options": ["Sí", "No"] }
+      },
+      "5": {
+        "fr": { "text": "<p>Suivre le ballon est la meilleure façon de regarder un match tactiquement.</p>", "options": ["Oui", "Non"] },
+        "de": { "text": "<p>Dem Ball zu folgen ist die beste Art, ein Spiel taktisch zu sehen.</p>", "options": ["Ja", "Nein"] },
+        "es": { "text": "<p>Seguir el balón es la mejor forma de ver un partido tácticamente.</p>", "options": ["Sí", "No"] }
+      }
+    }
+  },
+  {
+    "index": 10,
+    "questions": {
+      "0": {
+        "fr": {
+          "text": "<p>Qu'est-ce qui attire d'abord votre œil dans un tableau ?</p>",
+          "options": ["La couleur", "La composition", "Le sujet", "La lumière"]
+        },
+        "de": {
+          "text": "<p>Was zieht Ihren Blick in einem Bild zuerst an?</p>",
+          "options": ["Die Farbe", "Die Komposition", "Das Motiv", "Das Licht"]
+        },
+        "es": {
+          "text": "<p>¿Qué atrae primero su mirada en un cuadro?</p>",
+          "options": ["El color", "La composición", "El tema", "La luz"]
+        }
+      },
+      "1": {
+        "fr": {
+          "text": "<p>Quel détail vous paraît le plus fiable pour dater un tableau ?</p>",
+          "options": ["Son style", "Son sujet", "Son cadre", "Sa signature"]
+        },
+        "de": {
+          "text": "<p>Welchem Detail würden Sie am ehesten trauen, um ein Gemälde zu datieren?</p>",
+          "options": ["Seinem Stil", "Seinem Motiv", "Seinem Rahmen", "Seiner Signatur"]
+        },
+        "es": {
+          "text": "<p>¿En qué detalle confiaría más para datar un cuadro?</p>",
+          "options": ["En su estilo", "En su tema", "En su marco", "En su firma"]
+        }
+      },
+      "2": {
+        "fr": {
+          "text": "<p>Qu'est-ce qui fait pour vous la valeur d'une visite au musée ?</p>",
+          "options": ["Voir les originaux", "Le bâtiment", "Les explications", "Une heure de calme"]
+        },
+        "de": {
+          "text": "<p>Was macht für Sie einen Museumsbesuch lohnend?</p>",
+          "options": ["Die Originale sehen", "Das Gebäude", "Die Erklärungen", "Eine ruhige Stunde"]
+        },
+        "es": {
+          "text": "<p>¿Qué hace que valga la pena una visita al museo para usted?</p>",
+          "options": ["Ver los originales", "El edificio", "Las explicaciones", "Una hora tranquila"]
+        }
+      }
+    }
+  },
+  {
+    "index": 11,
+    "questions": {
+      "0": {
+        "fr": {
+          "text": "<p>Que doit apprendre un débutant en premier ?</p>",
+          "options": ["Les tableaux de grammaire", "Les sons qui portent du sens", "L'ordre de l'alphabet", "De longues listes de mots"]
+        },
+        "de": {
+          "text": "<p>Was sollte ein Anfänger zuerst lernen?</p>",
+          "options": ["Die Grammatiktabellen", "Die Laute, die Bedeutung tragen", "Die Reihenfolge des Alphabets", "Lange Wortlisten"]
+        },
+        "es": {
+          "text": "<p>¿Qué debería aprender primero un principiante?</p>",
+          "options": ["Las tablas de gramática", "Los sonidos que llevan significado", "El orden del alfabeto", "Listas largas de palabras"]
+        }
+      },
+      "1": {
+        "fr": {
+          "text": "<p>Pourquoi les listes de fréquence aident-elles un débutant ?</p>",
+          "options": [
+            "Elles contiennent tous les mots de la langue",
+            "Quelques centaines de mots couvrent une grande part de la parole quotidienne",
+            "Elles sont classées par difficulté",
+            "Elles évitent complètement la prononciation"
+          ]
+        },
+        "de": {
+          "text": "<p>Warum helfen Häufigkeitslisten einem Anfänger?</p>",
+          "options": [
+            "Sie enthalten jedes Wort der Sprache",
+            "Ein paar hundert Wörter decken einen großen Teil der Alltagssprache ab",
+            "Sie sind nach Schwierigkeit sortiert",
+            "Sie vermeiden die Aussprache völlig"
+          ]
+        },
+        "es": {
+          "text": "<p>¿Por qué ayudan las listas de frecuencia a un principiante?</p>",
+          "options": [
+            "Contienen todas las palabras del idioma",
+            "Unos cientos de palabras cubren gran parte del habla cotidiana",
+            "Están ordenadas por dificultad",
+            "Evitan por completo la pronunciación"
+          ]
+        }
+      },
+      "2": {
+        "fr": {
+          "text": "<p>Qu'est-ce qui fait qu'un mot reste ?</p>",
+          "options": ["Le rencontrer dans plusieurs contextes", "L'écrire une fois", "Lire le dictionnaire", "L'apprendre isolément"]
+        },
+        "de": {
+          "text": "<p>Was lässt Vokabeln hängen bleiben?</p>",
+          "options": ["Ein Wort in mehreren Kontexten treffen", "Es einmal aufschreiben", "Das Wörterbuch lesen", "Es isoliert lernen"]
+        },
+        "es": {
+          "text": "<p>¿Qué hace que el vocabulario se retenga?</p>",
+          "options": ["Encontrar una palabra en varios contextos", "Escribirla una vez", "Leer el diccionario", "Aprenderla de forma aislada"]
+        }
+      },
+      "3": {
+        "fr": {
+          "text": "<p>Qu'est-ce qu'un mot apparenté (cognat) ?</p>",
+          "options": ["Un mot qui ressemble à un mot d'une autre langue", "Un mot sans traduction", "Une forme verbale", "Un accent régional"]
+        },
+        "de": {
+          "text": "<p>Was ist ein Kognat?</p>",
+          "options": ["Ein Wort, das einem in einer anderen Sprache ähnelt", "Ein Wort ohne Übersetzung", "Eine Verbform", "Ein regionaler Akzent"]
+        },
+        "es": {
+          "text": "<p>¿Qué es un cognado?</p>",
+          "options": ["Una palabra que se parece a otra de otro idioma", "Una palabra sin traducción", "Una forma verbal", "Un acento regional"]
+        }
+      },
+      "4": {
+        "fr": {
+          "text": "<p>Pourquoi parler tôt est-il utile ?</p>",
+          "options": [
+            "Parce que la grammaire vient de toute façon plus tard",
+            "Parce que les erreurs deviennent une matière corrigeable",
+            "Parce que les locuteurs natifs s'y attendent",
+            "Parce que l'écrit est inutile"
+          ]
+        },
+        "de": {
+          "text": "<p>Warum ist frühes Sprechen nützlich?</p>",
+          "options": [
+            "Weil die Grammatik ohnehin später kommt",
+            "Weil Fehler zu korrigierbarem Material werden",
+            "Weil Muttersprachler das erwarten",
+            "Weil Schreiben nutzlos ist"
+          ]
+        },
+        "es": {
+          "text": "<p>¿Por qué es útil hablar pronto?</p>",
+          "options": [
+            "Porque la gramática llega igualmente después",
+            "Porque los errores se convierten en material corregible",
+            "Porque los nativos lo esperan",
+            "Porque escribir es inútil"
+          ]
+        }
+      }
+    }
+  },
+  {
+    "index": 12,
+    "questions": {
+      "0": {
+        "en": {
+          "text": "<p>What do you check in pairs before mounting?</p>",
+          "options": ["The tack", "The weather", "The lesson schedule", "The insurance"]
+        },
+        "de": {
+          "text": "<p>Was prüft man paarweise vor dem Aufsteigen?</p>",
+          "options": ["Die Ausrüstung: Zaumzeug und Sattel", "Das Wetter", "Den Stundenplan", "Die Versicherungen"]
+        },
+        "es": {
+          "text": "<p>¿Qué se comprueba por parejas antes de montar?</p>",
+          "options": ["Los arreos", "El tiempo", "El planning de las clases", "Los seguros"]
+        }
+      },
+      "1": {
+        "en": {
+          "text": "<p>How many riders are in the group described in the capsule?</p>",
+          "options": ["Four", "Six", "Eight", "Twelve"]
+        },
+        "de": {
+          "text": "<p>Wie viele Reiter umfasst die in der Kapsel beschriebene Gruppe?</p>",
+          "options": ["Vier", "Sechs", "Acht", "Zwölf"]
+        },
+        "es": {
+          "text": "<p>¿Cuántos jinetes tiene el grupo descrito en la cápsula?</p>",
+          "options": ["Cuatro", "Seis", "Ocho", "Doce"]
+        }
+      },
+      "2": {
+        "en": {
+          "text": "<p>What work fills the 10-to-25-minute slot?</p>",
+          "options": ["Balance at the rising trot", "Show jumping", "Racing gallop", "Work on the lunge line"]
+        },
+        "de": {
+          "text": "<p>Welche Arbeit füllt den Abschnitt von 10 bis 25 Minuten?</p>",
+          "options": ["Gleichgewicht im Leichttraben", "Springreiten", "Renngalopp", "Arbeit an der Longe"]
+        },
+        "es": {
+          "text": "<p>¿Qué trabajo ocupa la secuencia de 10 a 25 minutos?</p>",
+          "options": ["El equilibrio al trote levantado", "El salto de obstáculos", "El galope de carrera", "El trabajo a la cuerda"]
+        }
+      },
+      "3": {
+        "en": {
+          "text": "<p>How do you prepare a session with the character cards?</p>",
+          "options": ["Print the cards one by one", "Open the full deck and start the revision mode", "Draw the cards at random", "Write your own cards instead"]
+        },
+        "de": {
+          "text": "<p>Wie bereitet man eine Einheit mit den Charakterkarten vor?</p>",
+          "options": ["Die Karten einzeln ausdrucken", "Das komplette Kartenspiel öffnen und den Wiederholungsmodus starten", "Die Karten zufällig ziehen", "Stattdessen eigene Karteikarten schreiben"]
+        },
+        "es": {
+          "text": "<p>¿Cómo preparar una sesión con las cartas de personajes?</p>",
+          "options": ["Imprimir las cartas una a una", "Abrir la baraja completa y lanzar el modo repaso", "Sacar las cartas al azar", "Escribir sus propias fichas en su lugar"]
+        }
+      }
+    }
+  }
+]

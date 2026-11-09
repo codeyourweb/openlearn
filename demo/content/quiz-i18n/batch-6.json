@@ -1,0 +1,300 @@
+[
+  {
+    "file": "quizzes-humanities.json",
+    "index": 0,
+    "questions": {
+      "0": {
+        "fr": { "text": "<p>Quel fleuve a creusé le Grand Canyon ?</p>", "options": ["Le Colorado", "Le Rio Grande", "La Columbia", "Le Missouri"] },
+        "de": { "text": "<p>Welcher Fluss hat den Grand Canyon gegraben?</p>", "options": ["Der Colorado", "Der Rio Grande", "Der Columbia", "Der Missouri"] },
+        "es": { "text": "<p>¿Qué río excavó el Gran Cañón?</p>", "options": ["El Colorado", "El Río Grande", "El Columbia", "El Misuri"] }
+      },
+      "1": {
+        "fr": {
+          "text": "<p>Sélectionnez <b>tous</b> les pays qui ont une côte sur la mer Méditerranée.</p>",
+          "options": ["L'Espagne", "L'Égypte", "La Turquie", "Le Portugal"]
+        },
+        "de": {
+          "text": "<p>Wählen Sie <b>alle</b> Länder mit einer Küste am Mittelmeer aus.</p>",
+          "options": ["Spanien", "Ägypten", "Die Türkei", "Portugal"]
+        },
+        "es": {
+          "text": "<p>Seleccione <b>todos</b> los países con costa en el mar Mediterráneo.</p>",
+          "options": ["España", "Egipto", "Turquía", "Portugal"]
+        }
+      },
+      "2": {
+        "fr": {
+          "text": "<p>Quelle est la plus longue chaîne de montagnes terrestre ?</p>",
+          "options": ["Les Andes", "L'Himalaya", "Les montagnes Rocheuses", "Les Alpes"]
+        },
+        "de": {
+          "text": "<p>Welches ist das längste Gebirge an Land?</p>",
+          "options": ["Die Anden", "Der Himalaya", "Die Rocky Mountains", "Die Alpen"]
+        },
+        "es": {
+          "text": "<p>¿Cuál es la cordillera más larga del mundo en tierra?</p>",
+          "options": ["Los Andes", "El Himalaya", "Las Montañas Rocosas", "Los Alpes"]
+        }
+      },
+      "3": {
+        "fr": {
+          "text": "<p>Qu'est-ce qu'un <b>fjord</b> ?</p>",
+          "options": [
+            "Une vallée profonde creusée par un glacier et envahie par la mer",
+            "Un lagon peu profond fermé par un récif corallien",
+            "Un cône de sédiments là où un fleuve atteint la mer",
+            "Un lac formé dans le cratère d'un volcan"
+          ]
+        },
+        "de": {
+          "text": "<p>Was ist ein <b>Fjord</b>?</p>",
+          "options": [
+            "Ein tiefes, von einem Gletscher gegrabenes und vom Meer überflutetes Tal",
+            "Eine flache Lagune, die ein Korallenriff einschließt",
+            "Ein Sedimentfächer dort, wo ein Fluss das Meer erreicht",
+            "Ein See im Krater eines Vulkans"
+          ]
+        },
+        "es": {
+          "text": "<p>¿Qué es un <b>fiordo</b>?</p>",
+          "options": [
+            "Un valle profundo excavado por un glaciar e invadido por el mar",
+            "Una laguna poco profunda encerrada por un arrecife de coral",
+            "Un abanico de sedimentos donde un río llega al mar",
+            "Un lago formado en el cráter de un volcán"
+          ]
+        }
+      },
+      "4": {
+        "fr": {
+          "text": "<p>Quel est le plus grand lac d'Afrique par sa superficie ?</p>",
+          "options": ["Le lac Victoria", "Le lac Tanganyika", "Le lac Malawi", "Le lac Tchad"]
+        },
+        "de": {
+          "text": "<p>Welcher ist der flächengrößte See Afrikas?</p>",
+          "options": ["Der Victoriasee", "Der Tanganjikasee", "Der Malawisee", "Der Tschadsee"]
+        },
+        "es": {
+          "text": "<p>¿Cuál es el lago más grande de África por superficie?</p>",
+          "options": ["El lago Victoria", "El lago Tanganica", "El lago Malaui", "El lago Chad"]
+        }
+      },
+      "5": {
+        "fr": {
+          "text": "<p>Dans quelle mer le Danube se jette-t-il ?</p>",
+          "options": ["La mer Noire", "La mer Baltique", "La mer Caspienne", "La mer Adriatique"]
+        },
+        "de": {
+          "text": "<p>In welches Meer mündet die Donau?</p>",
+          "options": ["In das Schwarze Meer", "In die Ostsee", "In das Kaspische Meer", "In die Adria"]
+        },
+        "es": {
+          "text": "<p>¿En qué mar desemboca el Danubio?</p>",
+          "options": ["En el mar Negro", "En el mar Báltico", "En el mar Caspio", "En el mar Adriático"]
+        }
+      },
+      "6": {
+        "fr": {
+          "text": "<p>Quelle ligne de latitude traverse le Kenya, l'Indonésie et le Brésil ?</p>",
+          "options": ["L'équateur", "Le tropique du Cancer", "Le tropique du Capricorne", "Le méridien de Greenwich"]
+        },
+        "de": {
+          "text": "<p>Welche Breitenlinie durchquert Kenia, Indonesien und Brasilien?</p>",
+          "options": ["Der Äquator", "Der Wendekreis des Krebses", "Der Wendekreis des Steinbocks", "Der Nullmeridian"]
+        },
+        "es": {
+          "text": "<p>¿Qué línea de latitud cruza Kenia, Indonesia y Brasil?</p>",
+          "options": ["El ecuador", "El trópico de Cáncer", "El trópico de Capricornio", "El meridiano de Greenwich"]
+        }
+      },
+      "7": {
+        "fr": {
+          "text": "<p>Quel détroit sépare l'Europe de l'Afrique ?</p>",
+          "options": ["Le détroit de Gibraltar", "Le Bosphore", "Le détroit de Messine", "Le détroit d'Otrante"]
+        },
+        "de": {
+          "text": "<p>Welche Meerenge trennt Europa von Afrika?</p>",
+          "options": ["Die Straße von Gibraltar", "Der Bosporus", "Die Straße von Messina", "Die Straße von Otranto"]
+        },
+        "es": {
+          "text": "<p>¿Qué estrecho separa Europa de África?</p>",
+          "options": ["El estrecho de Gibraltar", "El Bósforo", "El estrecho de Mesina", "El estrecho de Otranto"]
+        }
+      },
+      "8": {
+        "fr": {
+          "text": "<p>Le Kilimandjaro, plus haut sommet d'Afrique, s'élève dans quel pays ?</p>",
+          "options": ["La Tanzanie", "Le Kenya", "L'Ouganda", "L'Éthiopie"]
+        },
+        "de": {
+          "text": "<p>In welchem Land erhebt sich der Kilimandscharo, der höchste Gipfel Afrikas?</p>",
+          "options": ["In Tansania", "In Kenia", "In Uganda", "In Äthiopien"]
+        },
+        "es": {
+          "text": "<p>El Kilimanjaro, la cumbre más alta de África, se eleva en ¿qué país?</p>",
+          "options": ["Tanzania", "Kenia", "Uganda", "Etiopía"]
+        }
+      }
+    }
+  },
+  {
+    "file": "quizzes-humanities.json",
+    "index": 1,
+    "questions": {
+      "0": {
+        "fr": { "text": "<p>Dans quelle ville la Renaissance italienne a-t-elle commencé ?</p>", "options": ["Florence", "Venise", "Rome", "Milan"] },
+        "de": { "text": "<p>In welcher Stadt begann die italienische Renaissance?</p>", "options": ["In Florenz", "In Venedig", "In Rom", "In Mailand"] },
+        "es": { "text": "<p>¿En qué ciudad comenzó el Renacimiento italiano?</p>", "options": ["Florencia", "Venecia", "Roma", "Milán"] }
+      },
+      "1": {
+        "fr": { "text": "<p>Qui a peint le plafond de la chapelle Sixtine ?</p>", "options": ["Michel-Ange", "Raphaël", "Léonard de Vinci", "Sandro Botticelli"] },
+        "de": { "text": "<p>Wer malte die Decke der Sixtinischen Kapelle?</p>", "options": ["Michelangelo", "Raffael", "Leonardo da Vinci", "Sandro Botticelli"] },
+        "es": { "text": "<p>¿Quién pintó el techo de la Capilla Sixtina?</p>", "options": ["Miguel Ángel", "Rafael", "Leonardo da Vinci", "Sandro Botticelli"] }
+      },
+      "2": {
+        "fr": {
+          "text": "<p>Sélectionnez <b>toutes</b> les peintures réalisées par Léonard de Vinci.</p>",
+          "options": ["La Cène", "La Joconde", "La Vierge aux rochers", "L'École d'Athènes"]
+        },
+        "de": {
+          "text": "<p>Wählen Sie <b>alle</b> von Leonardo da Vinci gemalten Werke aus.</p>",
+          "options": ["Das Abendmahl", "Mona Lisa", "Die Felsengrottenmadonna", "Die Schule von Athen"]
+        },
+        "es": {
+          "text": "<p>Seleccione <b>todas</b> las pinturas realizadas por Leonardo da Vinci.</p>",
+          "options": ["La última cena", "La Gioconda", "La Virgen de las rocas", "La escuela de Atenas"]
+        }
+      },
+      "3": {
+        "fr": {
+          "text": "<p>Qu'a introduit l'imprimerie de Johannes Gutenberg en Europe vers 1450 ?</p>",
+          "options": [
+            "L'impression à caractères métalliques mobiles",
+            "Le premier moulin à papier au nord des Alpes",
+            "L'impression sur bois gravée sur des planches uniques",
+            "La première bibliothèque publique"
+          ]
+        },
+        "de": {
+          "text": "<p>Was brachte die Presse von Johannes Gutenberg um 1450 nach Europa?</p>",
+          "options": [
+            "Den Druck mit beweglichen Metalllettern",
+            "Die erste Papiermühle nördlich der Alpen",
+            "Holztafeldruck von einzelnen Platten",
+            "Die erste öffentliche Bibliothek"
+          ]
+        },
+        "es": {
+          "text": "<p>¿Qué introdujo la imprenta de Johannes Gutenberg en Europa hacia 1450?</p>",
+          "options": [
+            "La impresión con tipos metálicos móviles",
+            "El primer molino de papel al norte de los Alpes",
+            "La impresión xilográfica tallada en planchas únicas",
+            "La primera biblioteca pública"
+          ]
+        }
+      },
+      "4": {
+        "fr": {
+          "text": "<p>Qui a écrit <i>Le Prince</i> en 1513 ?</p>",
+          "options": ["Nicolas Machiavel", "Dante Alighieri", "Francesco Petrarca", "Baldassare Castiglione"]
+        },
+        "de": {
+          "text": "<p>Wer schrieb 1513 <i>Der Fürst</i>?</p>",
+          "options": ["Niccolò Machiavelli", "Dante Alighieri", "Francesco Petrarca", "Baldassare Castiglione"]
+        },
+        "es": {
+          "text": "<p>¿Quién escribió <i>El príncipe</i> en 1513?</p>",
+          "options": ["Nicolás Maquiavelo", "Dante Alighieri", "Francesco Petrarca", "Baldassare Castiglione"]
+        }
+      },
+      "5": {
+        "fr": {
+          "text": "<p>La famille Médicis de Florence est surtout connue comme...</p>",
+          "options": [
+            "Des banquiers qui finançaient artistes et architectes",
+            "Une dynastie de doges vénitiens",
+            "Des capitaines mercenaires au service de Milan",
+            "Des imprimeurs qui exportaient des livres en Allemagne"
+          ]
+        },
+        "de": {
+          "text": "<p>Die Familie Medici aus Florenz ist vor allem bekannt als...</p>",
+          "options": [
+            "Bankiers, die Künstler und Architekten finanzierten",
+            "Eine Dynastie venezianischer Dogen",
+            "Söldnerhauptleute im Dienst Mailands",
+            "Drucker, die Bücher nach Deutschland exportierten"
+          ]
+        },
+        "es": {
+          "text": "<p>La familia Médici de Florencia se recuerda sobre todo como...</p>",
+          "options": [
+            "Banqueros que financiaban a artistas y arquitectos",
+            "Una dinastía de dux venecianos",
+            "Capitanes mercenarios al servicio de Milán",
+            "Impresores que exportaban libros a Alemania"
+          ]
+        }
+      },
+      "6": {
+        "fr": {
+          "text": "<p>Quelle coupole, achevée en 1436, couronne la cathédrale de Florence ?</p>",
+          "options": [
+            "La coupole de Brunelleschi",
+            "La coupole de Michel-Ange pour Saint-Pierre",
+            "La coupole du Panthéon",
+            "La coupole de Sainte-Sophie"
+          ]
+        },
+        "de": {
+          "text": "<p>Welche 1436 vollendete Kuppel krönt den Dom von Florenz?</p>",
+          "options": [
+            "Die Kuppel von Brunelleschi",
+            "Michelangelos Kuppel für Sankt Peter",
+            "Die Kuppel des Pantheons",
+            "Die Kuppel der Hagia Sophia"
+          ]
+        },
+        "es": {
+          "text": "<p>¿Qué cúpula, terminada en 1436, corona la catedral de Florencia?</p>",
+          "options": [
+            "La cúpula de Brunelleschi",
+            "La cúpula de Miguel Ángel para San Pedro",
+            "La cúpula del Panteón",
+            "La cúpula de Santa Sofía"
+          ]
+        }
+      },
+      "7": {
+        "fr": {
+          "text": "<p>L'<b>humanisme</b> de la Renaissance mettait l'accent sur...</p>",
+          "options": [
+            "L'étude des textes classiques et le potentiel humain",
+            "Le rejet de toute croyance religieuse",
+            "L'usage exclusif du latin dans toutes les disciplines",
+            "L'entraînement militaire avant les lettres"
+          ]
+        },
+        "de": {
+          "text": "<p>Der <b>Humanismus</b> der Renaissance legte den Schwerpunkt auf...</p>",
+          "options": [
+            "Das Studium klassischer Texte und das menschliche Potenzial",
+            "Die Ablehnung jeden religiösen Glaubens",
+            "Die ausschließliche Verwendung von Latein in allen Fächern",
+            "Militärische Ausbildung vor den Geisteswissenschaften"
+          ]
+        },
+        "es": {
+          "text": "<p>El <b>humanismo</b> renacentista ponía el acento en...</p>",
+          "options": [
+            "El estudio de los textos clásicos y el potencial humano",
+            "El rechazo de toda creencia religiosa",
+            "El uso exclusivo del latín en todas las disciplinas",
+            "El entrenamiento militar por encima de las letras"
+          ]
+        }
+      }
+    }
+  }
+]

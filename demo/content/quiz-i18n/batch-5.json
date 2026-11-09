@@ -1,0 +1,132 @@
+[
+  {
+    "file": "quizzes-fr.json",
+    "index": 0,
+    "questions": {
+      "0": {
+        "en": {
+          "text": "<p>In which year was the Bastille stormed?</p>",
+          "options": ["1789", "1788", "1791", "1793"]
+        }
+      },
+      "1": {
+        "en": {
+          "text": "<p>Select <b>all</b> the kings of the Capetian dynasty.</p>",
+          "options": ["Hugh Capet", "Philip Augustus", "Louis IX, known as Saint Louis", "Charlemagne"]
+        }
+      },
+      "2": {
+        "en": {
+          "text": "<p>Who was crowned Emperor of the French in 1804?</p>",
+          "options": ["Napoleon Bonaparte", "Louis XVI", "Charles X", "Louis-Philippe I"]
+        }
+      },
+      "3": {
+        "en": {
+          "text": "<p>Which victory of Francis I in 1515 is still famous?</p>",
+          "options": ["Marignan", "Bouvines", "Agincourt", "Pavia"]
+        }
+      },
+      "4": {
+        "en": {
+          "text": "<p>Who dominated the Committee of Public Safety during the Terror, in 1793-1794?</p>",
+          "options": [
+            "Maximilien de Robespierre",
+            "Georges Danton",
+            "Jean-Paul Marat",
+            "Gilbert du Motier de La Fayette"
+          ]
+        }
+      },
+      "5": {
+        "en": {
+          "text": "<p>In which year was Joan of Arc burned at Rouen?</p>",
+          "options": ["1431", "1429", "1453", "1415"]
+        }
+      },
+      "6": {
+        "en": {
+          "text": "<p>Which 1598 edict granted Protestants freedom of worship?</p>",
+          "options": [
+            "The Edict of Nantes",
+            "The Edict of Fontainebleau",
+            "The Edict of Roussillon",
+            "The Edict of Villers-Cotterêts"
+          ]
+        }
+      },
+      "7": {
+        "en": {
+          "text": "<p>Which dynasty ruled France in 1789?</p>",
+          "options": ["The Bourbons", "The Valois", "The direct Capetians", "The Merovingians"]
+        }
+      },
+      "8": {
+        "en": {
+          "text": "<p>Under which reign did Versailles become the great palace we know today?</p>",
+          "options": ["Louis XIV", "Louis XIII", "Francis I", "Henry IV"]
+        }
+      }
+    }
+  },
+  {
+    "file": "quizzes-fr.json",
+    "index": 1,
+    "questions": {
+      "0": {
+        "en": {
+          "text": "<p>Who wrote <i>Les Misérables</i>?</p>",
+          "options": ["Victor Hugo", "Émile Zola", "Honoré de Balzac", "Gustave Flaubert"]
+        }
+      },
+      "1": {
+        "en": {
+          "text": "<p>In which novel does Proust's madeleine appear?</p>",
+          "options": ["Swann's Way", "The Stranger", "Madame Bovary", "Father Goriot"]
+        }
+      },
+      "2": {
+        "en": {
+          "text": "<p>Select <b>all</b> the plays written by Molière.</p>",
+          "options": ["The Misanthrope", "The Miser", "Tartuffe", "Phèdre"]
+        }
+      },
+      "3": {
+        "en": {
+          "text": "<p>Who wrote <i>Madame Bovary</i>?</p>",
+          "options": ["Gustave Flaubert", "Stendhal", "Guy de Maupassant", "Émile Zola"]
+        }
+      },
+      "4": {
+        "en": {
+          "text": "<p>Who is the hero of <i>The Red and the Black</i>?</p>",
+          "options": ["Julien Sorel", "Eugène de Rastignac", "Frédéric Moreau", "Étienne Lantier"]
+        }
+      },
+      "5": {
+        "en": {
+          "text": "<p>Who wrote <i>Les Fleurs du mal</i>?</p>",
+          "options": ["Charles Baudelaire", "Paul Verlaine", "Arthur Rimbaud", "Guillaume Apollinaire"]
+        }
+      },
+      "6": {
+        "en": {
+          "text": "<p>Who is the author of <i>Father Goriot</i>?</p>",
+          "options": ["Honoré de Balzac", "Victor Hugo", "Stendhal", "Alexandre Dumas"]
+        }
+      },
+      "7": {
+        "en": {
+          "text": "<p>In <i>The Little Prince</i>, who tells the story?</p>",
+          "options": ["A pilot", "A fox", "A king", "A child"]
+        }
+      },
+      "8": {
+        "en": {
+          "text": "<p>Which literary movement is associated with Émile Zola?</p>",
+          "options": ["Naturalism", "Romanticism", "Symbolism", "Surrealism"]
+        }
+      }
+    }
+  }
+]

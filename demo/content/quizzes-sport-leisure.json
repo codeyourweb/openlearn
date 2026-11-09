@@ -26,21 +26,46 @@
           "options": [
             {
               "text": "Athens",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "Athènes",
+                "de": "Athen",
+                "es": "Atenas"
+              }
             },
             {
               "text": "Paris",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Paris",
+                "de": "Paris",
+                "es": "París"
+              }
             },
             {
               "text": "London",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Londres",
+                "de": "London",
+                "es": "Londres"
+              }
             },
             {
               "text": "Rome",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Rome",
+                "de": "Rom",
+                "es": "Roma"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Où se sont tenus les premiers Jeux olympiques modernes en 1896 ?</p>",
+            "de": "<p>Wo fanden 1896 die ersten Olympischen Spiele der Neuzeit statt?</p>",
+            "es": "<p>¿Dónde se celebraron los primeros Juegos Olímpicos modernos en 1896?</p>"
+          }
         },
         {
           "text_html": "<p>How often are the Summer Olympic Games normally held?</p>",
@@ -49,21 +74,46 @@
           "options": [
             {
               "text": "Every four years",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "Tous les quatre ans",
+                "de": "Alle vier Jahre",
+                "es": "Cada cuatro años"
+              }
             },
             {
               "text": "Every two years",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Tous les deux ans",
+                "de": "Alle zwei Jahre",
+                "es": "Cada dos años"
+              }
             },
             {
               "text": "Every three years",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Tous les trois ans",
+                "de": "Alle drei Jahre",
+                "es": "Cada tres años"
+              }
             },
             {
               "text": "Every five years",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Tous les cinq ans",
+                "de": "Alle fünf Jahre",
+                "es": "Cada cinco años"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Tous les combien de temps les Jeux olympiques d'été ont-ils normalement lieu ?</p>",
+            "de": "<p>Wie oft finden die Olympischen Sommerspiele normalerweise statt?</p>",
+            "es": "<p>¿Cada cuánto se celebran normalmente los Juegos Olímpicos de verano?</p>"
+          }
         },
         {
           "text_html": "<p>Select <b>all</b> sports that were on the programme of the 1896 Athens Games.</p>",
@@ -73,21 +123,46 @@
           "options": [
             {
               "text": "Athletics",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "L'athlétisme",
+                "de": "Leichtathletik",
+                "es": "Atletismo"
+              }
             },
             {
               "text": "Swimming",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "La natation",
+                "de": "Schwimmen",
+                "es": "Natación"
+              }
             },
             {
               "text": "Fencing",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "L'escrime",
+                "de": "Fechten",
+                "es": "Esgrima"
+              }
             },
             {
               "text": "Basketball",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Le basket-ball",
+                "de": "Basketball",
+                "es": "Baloncesto"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Sélectionnez <b>tous</b> les sports qui figuraient au programme des Jeux d'Athènes en 1896.</p>",
+            "de": "<p>Wählen Sie <b>alle</b> Sportarten aus, die 1896 in Athen auf dem Programm standen.</p>",
+            "es": "<p>Seleccione <b>todos</b> los deportes que estaban en el programa de los Juegos de Atenas de 1896.</p>"
+          }
         },
         {
           "text_html": "<p>Which city hosted the Summer Games in 1908, 1948 and 2012?</p>",
@@ -96,21 +171,46 @@
           "options": [
             {
               "text": "London",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "Londres",
+                "de": "London",
+                "es": "Londres"
+              }
             },
             {
               "text": "Paris",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Paris",
+                "de": "Paris",
+                "es": "París"
+              }
             },
             {
               "text": "Los Angeles",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Los Angeles",
+                "de": "Los Angeles",
+                "es": "Los Ángeles"
+              }
             },
             {
               "text": "Rome",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Rome",
+                "de": "Rom",
+                "es": "Roma"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Quelle ville a accueilli les Jeux d'été en 1908, 1948 et 2012 ?</p>",
+            "de": "<p>Welche Stadt war 1908, 1948 und 2012 Gastgeber der Sommerspiele?</p>",
+            "es": "<p>¿Qué ciudad acogió los Juegos de verano en 1908, 1948 y 2012?</p>"
+          }
         },
         {
           "text_html": "<p>What do the five Olympic rings represent?</p>",
@@ -119,21 +219,46 @@
           "options": [
             {
               "text": "The five inhabited continents united by the Games",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "Les cinq continents habités réunis par les Jeux",
+                "de": "Die fünf bewohnten Kontinente, vereint durch die Spiele",
+                "es": "Los cinco continentes habitados unidos por los Juegos"
+              }
             },
             {
               "text": "The five founding nations of the modern Games",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Les cinq nations fondatrices des Jeux modernes",
+                "de": "Die fünf Gründungsnationen der modernen Spiele",
+                "es": "Las cinco naciones fundadoras de los Juegos modernos"
+              }
             },
             {
               "text": "The five original sports",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Les cinq sports d'origine",
+                "de": "Die fünf ursprünglichen Sportarten",
+                "es": "Los cinco deportes originales"
+              }
             },
             {
               "text": "The five Olympic values",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Les cinq valeurs olympiques",
+                "de": "Die fünf olympischen Werte",
+                "es": "Los cinco valores olímpicos"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Que représentent les cinq anneaux olympiques ?</p>",
+            "de": "<p>Was stellen die fünf olympischen Ringe dar?</p>",
+            "es": "<p>¿Qué representan los cinco anillos olímpicos?</p>"
+          }
         },
         {
           "text_html": "<p>How long is an Olympic swimming pool?</p>",
@@ -142,21 +267,46 @@
           "options": [
             {
               "text": "50 metres",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "50 mètres",
+                "de": "50 Meter",
+                "es": "50 metros"
+              }
             },
             {
               "text": "25 metres",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "25 mètres",
+                "de": "25 Meter",
+                "es": "25 metros"
+              }
             },
             {
               "text": "33 metres",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "33 mètres",
+                "de": "33 Meter",
+                "es": "33 metros"
+              }
             },
             {
               "text": "100 metres",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "100 mètres",
+                "de": "100 Meter",
+                "es": "100 metros"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Quelle est la longueur d'un bassin olympique ?</p>",
+            "de": "<p>Wie lang ist ein olympisches Schwimmbecken?</p>",
+            "es": "<p>¿Cuánto mide una piscina olímpica?</p>"
+          }
         },
         {
           "text_html": "<p>The marathon distance of 42.195 km was fixed after which Games?</p>",
@@ -165,21 +315,46 @@
           "options": [
             {
               "text": "London 1908",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "Londres 1908",
+                "de": "London 1908",
+                "es": "Londres 1908"
+              }
             },
             {
               "text": "Athens 1896",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Athènes 1896",
+                "de": "Athen 1896",
+                "es": "Atenas 1896"
+              }
             },
             {
               "text": "Paris 1900",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Paris 1900",
+                "de": "Paris 1900",
+                "es": "París 1900"
+              }
             },
             {
               "text": "Berlin 1936",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Berlin 1936",
+                "de": "Berlin 1936",
+                "es": "Berlín 1936"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>La distance du marathon, 42,195 km, a été fixée après quels Jeux ?</p>",
+            "de": "<p>Nach welchen Spielen wurde die Marathondistanz von 42,195 km festgelegt?</p>",
+            "es": "<p>¿Tras qué Juegos se fijó la distancia del maratón en 42,195 km?</p>"
+          }
         },
         {
           "text_html": "<p>In tennis, winning all four major singles titles in the same calendar year is called...</p>",
@@ -188,21 +363,46 @@
           "options": [
             {
               "text": "a Grand Slam",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "un Grand Chelem",
+                "de": "einen Grand Slam",
+                "es": "un Grand Slam"
+              }
             },
             {
               "text": "a golden set",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "un set en or",
+                "de": "ein Golden Set",
+                "es": "un set dorado"
+              }
             },
             {
               "text": "a career Masters",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "un Masters en carrière",
+                "de": "einen Career Masters",
+                "es": "un Masters en su carrera"
+              }
             },
             {
               "text": "a triple crown",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "une triple couronne",
+                "de": "eine Triple Crown",
+                "es": "una triple corona"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Au tennis, remporter les quatre tournois majeurs la même année civile s'appelle...</p>",
+            "de": "<p>Im Tennis nennt man den Gewinn aller vier Grand-Slam-Titel im selben Kalenderjahr...</p>",
+            "es": "<p>En tenis, ganar los cuatro grandes en el mismo año natural se llama...</p>"
+          }
         },
         {
           "text_html": "<p>In which sport is the Thomas Cup contested?</p>",
@@ -211,21 +411,46 @@
           "options": [
             {
               "text": "Badminton",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "Le badminton",
+                "de": "Badminton",
+                "es": "Bádminton"
+              }
             },
             {
               "text": "Table tennis",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Le tennis de table",
+                "de": "Tischtennis",
+                "es": "Tenis de mesa"
+              }
             },
             {
               "text": "Squash",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Le squash",
+                "de": "Squash",
+                "es": "Squash"
+              }
             },
             {
               "text": "Tennis",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Le tennis",
+                "de": "Tennis",
+                "es": "Tenis"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Dans quel sport dispute-t-on la Thomas Cup ?</p>",
+            "de": "<p>In welcher Sportart wird der Thomas Cup ausgetragen?</p>",
+            "es": "<p>¿En qué deporte se disputa la Thomas Cup?</p>"
+          }
         }
       ]
     },
@@ -254,21 +479,46 @@
           "options": [
             {
               "text": "Alfred Hitchcock",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "Alfred Hitchcock",
+                "de": "Alfred Hitchcock",
+                "es": "Alfred Hitchcock"
+              }
             },
             {
               "text": "Billy Wilder",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Billy Wilder",
+                "de": "Billy Wilder",
+                "es": "Billy Wilder"
+              }
             },
             {
               "text": "Orson Welles",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Orson Welles",
+                "de": "Orson Welles",
+                "es": "Orson Welles"
+              }
             },
             {
               "text": "Fritz Lang",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Fritz Lang",
+                "de": "Fritz Lang",
+                "es": "Fritz Lang"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Qui a réalisé <i>Psychose</i> (1960) ?</p>",
+            "de": "<p>Wer inszenierte <i>Psycho</i> (1960)?</p>",
+            "es": "<p>¿Quién dirigió <i>Psicosis</i> (1960)?</p>"
+          }
         },
         {
           "text_html": "<p>Who directed <i>Seven Samurai</i> (1954)?</p>",
@@ -277,21 +527,46 @@
           "options": [
             {
               "text": "Akira Kurosawa",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "Akira Kurosawa",
+                "de": "Akira Kurosawa",
+                "es": "Akira Kurosawa"
+              }
             },
             {
               "text": "Yasujirō Ozu",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Yasujirō Ozu",
+                "de": "Yasujirō Ozu",
+                "es": "Yasujirō Ozu"
+              }
             },
             {
               "text": "Kenji Mizoguchi",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Kenji Mizoguchi",
+                "de": "Kenji Mizoguchi",
+                "es": "Kenji Mizoguchi"
+              }
             },
             {
               "text": "Satoshi Kon",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Satoshi Kon",
+                "de": "Satoshi Kon",
+                "es": "Satoshi Kon"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Qui a réalisé <i>Les Sept Samouraïs</i> (1954) ?</p>",
+            "de": "<p>Wer inszenierte <i>Die sieben Samurai</i> (1954)?</p>",
+            "es": "<p>¿Quién dirigió <i>Los siete samuráis</i> (1954)?</p>"
+          }
         },
         {
           "text_html": "<p>Select <b>all</b> films directed by Stanley Kubrick.</p>",
@@ -301,21 +576,46 @@
           "options": [
             {
               "text": "2001: A Space Odyssey",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "2001 : L'Odyssée de l'espace",
+                "de": "2001: Odyssee im Weltraum",
+                "es": "2001: Una odisea del espacio"
+              }
             },
             {
               "text": "The Shining",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "Shining",
+                "de": "Shining",
+                "es": "El resplandor"
+              }
             },
             {
               "text": "Barry Lyndon",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "Barry Lyndon",
+                "de": "Barry Lyndon",
+                "es": "Barry Lyndon"
+              }
             },
             {
               "text": "Apocalypse Now",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Apocalypse Now",
+                "de": "Apocalypse Now",
+                "es": "Apocalypse Now"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Sélectionnez <b>tous</b> les films réalisés par Stanley Kubrick.</p>",
+            "de": "<p>Wählen Sie <b>alle</b> von Stanley Kubrick inszenierten Filme aus.</p>",
+            "es": "<p>Seleccione <b>todas</b> las películas dirigidas por Stanley Kubrick.</p>"
+          }
         },
         {
           "text_html": "<p><i>Battleship Potemkin</i> (1925) is celebrated above all for...</p>",
@@ -324,21 +624,46 @@
           "options": [
             {
               "text": "Its montage editing, especially the Odessa Steps sequence",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "Son montage, en particulier la séquence des marches d'Odessa",
+                "de": "Seinen Schnitt, besonders die Treppenszene von Odessa",
+                "es": "Su montaje, en especial la secuencia de las escaleras de Odesa"
+              }
             },
             {
               "text": "Its early use of colour film",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Son usage précoce du film en couleur",
+                "de": "Seinen frühen Einsatz von Farbfilm",
+                "es": "Su temprano uso del cine en color"
+              }
             },
             {
               "text": "Its entirely improvised dialogue",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Son dialogue entièrement improvisé",
+                "de": "Seinen vollständig improvisierten Dialog",
+                "es": "Su diálogo totalmente improvisado"
+              }
             },
             {
               "text": "Its handheld documentary footage",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Ses images documentaires caméra à l'épaule",
+                "de": "Seine dokumentarischen Handkamera-Aufnahmen",
+                "es": "Sus imágenes documentales con cámara en mano"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p><i>Le Cuirassé Potemkine</i> (1925) est célèbre avant tout pour...</p>",
+            "de": "<p><i>Panzerkreuzer Potemkin</i> (1925) ist vor allem berühmt für...</p>",
+            "es": "<p><i>El acorazado Potemkin</i> (1925) es célebre sobre todo por...</p>"
+          }
         },
         {
           "text_html": "<p>Which director made the <i>Dollars</i> trilogy of spaghetti westerns?</p>",
@@ -347,21 +672,46 @@
           "options": [
             {
               "text": "Sergio Leone",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "Sergio Leone",
+                "de": "Sergio Leone",
+                "es": "Sergio Leone"
+              }
             },
             {
               "text": "John Ford",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "John Ford",
+                "de": "John Ford",
+                "es": "John Ford"
+              }
             },
             {
               "text": "Sam Peckinpah",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Sam Peckinpah",
+                "de": "Sam Peckinpah",
+                "es": "Sam Peckinpah"
+              }
             },
             {
               "text": "Sergio Corbucci",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Sergio Corbucci",
+                "de": "Sergio Corbucci",
+                "es": "Sergio Corbucci"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Quel réalisateur a tourné la trilogie des <i>Dollars</i>, des westerns spaghetti ?</p>",
+            "de": "<p>Welcher Regisseur drehte die <i>Dollar</i>-Trilogie der Italowestern?</p>",
+            "es": "<p>¿Qué director rodó la trilogía del <i>dólar</i> de wésterns spaghetti?</p>"
+          }
         },
         {
           "text_html": "<p><i>Cinema Paradiso</i> (1988) won the Oscar for Best Foreign Language Film for which country?</p>",
@@ -370,21 +720,46 @@
           "options": [
             {
               "text": "Italy",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "L'Italie",
+                "de": "Für Italien",
+                "es": "Italia"
+              }
             },
             {
               "text": "France",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "La France",
+                "de": "Für Frankreich",
+                "es": "Francia"
+              }
             },
             {
               "text": "Spain",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "L'Espagne",
+                "de": "Für Spanien",
+                "es": "España"
+              }
             },
             {
               "text": "Brazil",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Le Brésil",
+                "de": "Für Brasilien",
+                "es": "Brasil"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p><i>Cinéma Paradiso</i> (1988) a remporté l'Oscar du meilleur film étranger pour quel pays ?</p>",
+            "de": "<p>Für welches Land gewann <i>Cinema Paradiso</i> (1988) den Oscar für den besten fremdsprachigen Film?</p>",
+            "es": "<p>¿Para qué país ganó <i>Cinema Paradiso</i> (1988) el Óscar a la mejor película de habla no inglesa?</p>"
+          }
         },
         {
           "text_html": "<p>What does <b>mise en scène</b> refer to?</p>",
@@ -393,21 +768,46 @@
           "options": [
             {
               "text": "The arrangement of everything visible within the frame",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "L'agencement de tout ce qui est visible dans le cadre",
+                "de": "Die Anordnung alles Sichtbaren im Bild",
+                "es": "A la disposición de todo lo visible en el encuadre"
+              }
             },
             {
               "text": "The rhythm created by the editing",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Le rythme créé par le montage",
+                "de": "Den Rhythmus, den der Schnitt erzeugt",
+                "es": "Al ritmo que crea el montaje"
+              }
             },
             {
               "text": "The mixing of dialogue and music",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Le mixage des dialogues et de la musique",
+                "de": "Die Mischung von Dialog und Musik",
+                "es": "A la mezcla de diálogo y música"
+              }
             },
             {
               "text": "The way a film is marketed",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "La façon dont un film est promu",
+                "de": "Die Art, wie ein Film vermarktet wird",
+                "es": "A la forma en que se promociona una película"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>À quoi renvoie la <b>mise en scène</b> ?</p>",
+            "de": "<p>Worauf bezieht sich die <b>Mise en scène</b>?</p>",
+            "es": "<p>¿A qué se refiere la <b>puesta en escena</b>?</p>"
+          }
         },
         {
           "text_html": "<p>Who composed the score for <i>Jaws</i> (1975)?</p>",
@@ -416,21 +816,46 @@
           "options": [
             {
               "text": "John Williams",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "John Williams",
+                "de": "John Williams",
+                "es": "John Williams"
+              }
             },
             {
               "text": "Ennio Morricone",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Ennio Morricone",
+                "de": "Ennio Morricone",
+                "es": "Ennio Morricone"
+              }
             },
             {
               "text": "Bernard Herrmann",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Bernard Herrmann",
+                "de": "Bernard Herrmann",
+                "es": "Bernard Herrmann"
+              }
             },
             {
               "text": "Hans Zimmer",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Hans Zimmer",
+                "de": "Hans Zimmer",
+                "es": "Hans Zimmer"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Qui a composé la musique des <i>Dents de la mer</i> (1975) ?</p>",
+            "de": "<p>Wer komponierte die Musik zu <i>Der weiße Hai</i> (1975)?</p>",
+            "es": "<p>¿Quién compuso la música de <i>Tiburón</i> (1975)?</p>"
+          }
         },
         {
           "text_html": "<p>Which award did <i>Parasite</i> (2019) become the first non-English-language film to win?</p>",
@@ -439,21 +864,46 @@
           "options": [
             {
               "text": "The Oscar for Best Picture",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "fr": "L'Oscar du meilleur film",
+                "de": "Den Oscar für den besten Film",
+                "es": "El Óscar a la mejor película"
+              }
             },
             {
               "text": "The Oscar for Best Director",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "L'Oscar du meilleur réalisateur",
+                "de": "Den Oscar für die beste Regie",
+                "es": "El Óscar al mejor director"
+              }
             },
             {
               "text": "The Golden Lion in Venice",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Le Lion d'or à Venise",
+                "de": "Den Goldenen Löwen in Venedig",
+                "es": "El León de Oro en Venecia"
+              }
             },
             {
               "text": "The BAFTA for Best Film",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "fr": "Le BAFTA du meilleur film",
+                "de": "Den BAFTA für den besten Film",
+                "es": "El BAFTA a la mejor película"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "fr": "<p>Quelle récompense <i>Parasite</i> (2019) a-t-il été le premier film non anglophone à remporter ?</p>",
+            "de": "<p>Welchen Preis gewann <i>Parasite</i> (2019) als erster nicht englischsprachiger Film?</p>",
+            "es": "<p>¿Qué premio ganó <i>Parásitos</i> (2019) siendo la primera película no anglófona en lograrlo?</p>"
+          }
         }
       ]
     }

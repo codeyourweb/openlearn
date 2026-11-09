@@ -1,0 +1,203 @@
+[
+  {
+    "file": "quizzes-sport-leisure.json",
+    "index": 0,
+    "questions": {
+      "0": {
+        "fr": { "text": "<p>Où se sont tenus les premiers Jeux olympiques modernes en 1896 ?</p>", "options": ["Athènes", "Paris", "Londres", "Rome"] },
+        "de": { "text": "<p>Wo fanden 1896 die ersten Olympischen Spiele der Neuzeit statt?</p>", "options": ["Athen", "Paris", "London", "Rom"] },
+        "es": { "text": "<p>¿Dónde se celebraron los primeros Juegos Olímpicos modernos en 1896?</p>", "options": ["Atenas", "París", "Londres", "Roma"] }
+      },
+      "1": {
+        "fr": {
+          "text": "<p>Tous les combien de temps les Jeux olympiques d'été ont-ils normalement lieu ?</p>",
+          "options": ["Tous les quatre ans", "Tous les deux ans", "Tous les trois ans", "Tous les cinq ans"]
+        },
+        "de": {
+          "text": "<p>Wie oft finden die Olympischen Sommerspiele normalerweise statt?</p>",
+          "options": ["Alle vier Jahre", "Alle zwei Jahre", "Alle drei Jahre", "Alle fünf Jahre"]
+        },
+        "es": {
+          "text": "<p>¿Cada cuánto se celebran normalmente los Juegos Olímpicos de verano?</p>",
+          "options": ["Cada cuatro años", "Cada dos años", "Cada tres años", "Cada cinco años"]
+        }
+      },
+      "2": {
+        "fr": {
+          "text": "<p>Sélectionnez <b>tous</b> les sports qui figuraient au programme des Jeux d'Athènes en 1896.</p>",
+          "options": ["L'athlétisme", "La natation", "L'escrime", "Le basket-ball"]
+        },
+        "de": {
+          "text": "<p>Wählen Sie <b>alle</b> Sportarten aus, die 1896 in Athen auf dem Programm standen.</p>",
+          "options": ["Leichtathletik", "Schwimmen", "Fechten", "Basketball"]
+        },
+        "es": {
+          "text": "<p>Seleccione <b>todos</b> los deportes que estaban en el programa de los Juegos de Atenas de 1896.</p>",
+          "options": ["Atletismo", "Natación", "Esgrima", "Baloncesto"]
+        }
+      },
+      "3": {
+        "fr": { "text": "<p>Quelle ville a accueilli les Jeux d'été en 1908, 1948 et 2012 ?</p>", "options": ["Londres", "Paris", "Los Angeles", "Rome"] },
+        "de": { "text": "<p>Welche Stadt war 1908, 1948 und 2012 Gastgeber der Sommerspiele?</p>", "options": ["London", "Paris", "Los Angeles", "Rom"] },
+        "es": { "text": "<p>¿Qué ciudad acogió los Juegos de verano en 1908, 1948 y 2012?</p>", "options": ["Londres", "París", "Los Ángeles", "Roma"] }
+      },
+      "4": {
+        "fr": {
+          "text": "<p>Que représentent les cinq anneaux olympiques ?</p>",
+          "options": ["Les cinq continents habités réunis par les Jeux", "Les cinq nations fondatrices des Jeux modernes", "Les cinq sports d'origine", "Les cinq valeurs olympiques"]
+        },
+        "de": {
+          "text": "<p>Was stellen die fünf olympischen Ringe dar?</p>",
+          "options": ["Die fünf bewohnten Kontinente, vereint durch die Spiele", "Die fünf Gründungsnationen der modernen Spiele", "Die fünf ursprünglichen Sportarten", "Die fünf olympischen Werte"]
+        },
+        "es": {
+          "text": "<p>¿Qué representan los cinco anillos olímpicos?</p>",
+          "options": ["Los cinco continentes habitados unidos por los Juegos", "Las cinco naciones fundadoras de los Juegos modernos", "Los cinco deportes originales", "Los cinco valores olímpicos"]
+        }
+      },
+      "5": {
+        "fr": { "text": "<p>Quelle est la longueur d'un bassin olympique ?</p>", "options": ["50 mètres", "25 mètres", "33 mètres", "100 mètres"] },
+        "de": { "text": "<p>Wie lang ist ein olympisches Schwimmbecken?</p>", "options": ["50 Meter", "25 Meter", "33 Meter", "100 Meter"] },
+        "es": { "text": "<p>¿Cuánto mide una piscina olímpica?</p>", "options": ["50 metros", "25 metros", "33 metros", "100 metros"] }
+      },
+      "6": {
+        "fr": {
+          "text": "<p>La distance du marathon, 42,195 km, a été fixée après quels Jeux ?</p>",
+          "options": ["Londres 1908", "Athènes 1896", "Paris 1900", "Berlin 1936"]
+        },
+        "de": {
+          "text": "<p>Nach welchen Spielen wurde die Marathondistanz von 42,195 km festgelegt?</p>",
+          "options": ["London 1908", "Athen 1896", "Paris 1900", "Berlin 1936"]
+        },
+        "es": {
+          "text": "<p>¿Tras qué Juegos se fijó la distancia del maratón en 42,195 km?</p>",
+          "options": ["Londres 1908", "Atenas 1896", "París 1900", "Berlín 1936"]
+        }
+      },
+      "7": {
+        "fr": {
+          "text": "<p>Au tennis, remporter les quatre tournois majeurs la même année civile s'appelle...</p>",
+          "options": ["un Grand Chelem", "un set en or", "un Masters en carrière", "une triple couronne"]
+        },
+        "de": {
+          "text": "<p>Im Tennis nennt man den Gewinn aller vier Grand-Slam-Titel im selben Kalenderjahr...</p>",
+          "options": ["einen Grand Slam", "ein Golden Set", "einen Career Masters", "eine Triple Crown"]
+        },
+        "es": {
+          "text": "<p>En tenis, ganar los cuatro grandes en el mismo año natural se llama...</p>",
+          "options": ["un Grand Slam", "un set dorado", "un Masters en su carrera", "una triple corona"]
+        }
+      },
+      "8": {
+        "fr": { "text": "<p>Dans quel sport dispute-t-on la Thomas Cup ?</p>", "options": ["Le badminton", "Le tennis de table", "Le squash", "Le tennis"] },
+        "de": { "text": "<p>In welcher Sportart wird der Thomas Cup ausgetragen?</p>", "options": ["Badminton", "Tischtennis", "Squash", "Tennis"] },
+        "es": { "text": "<p>¿En qué deporte se disputa la Thomas Cup?</p>", "options": ["Bádminton", "Tenis de mesa", "Squash", "Tenis"] }
+      }
+    }
+  },
+  {
+    "file": "quizzes-sport-leisure.json",
+    "index": 1,
+    "questions": {
+      "0": {
+        "fr": { "text": "<p>Qui a réalisé <i>Psychose</i> (1960) ?</p>", "options": ["Alfred Hitchcock", "Billy Wilder", "Orson Welles", "Fritz Lang"] },
+        "de": { "text": "<p>Wer inszenierte <i>Psycho</i> (1960)?</p>", "options": ["Alfred Hitchcock", "Billy Wilder", "Orson Welles", "Fritz Lang"] },
+        "es": { "text": "<p>¿Quién dirigió <i>Psicosis</i> (1960)?</p>", "options": ["Alfred Hitchcock", "Billy Wilder", "Orson Welles", "Fritz Lang"] }
+      },
+      "1": {
+        "fr": { "text": "<p>Qui a réalisé <i>Les Sept Samouraïs</i> (1954) ?</p>", "options": ["Akira Kurosawa", "Yasujirō Ozu", "Kenji Mizoguchi", "Satoshi Kon"] },
+        "de": { "text": "<p>Wer inszenierte <i>Die sieben Samurai</i> (1954)?</p>", "options": ["Akira Kurosawa", "Yasujirō Ozu", "Kenji Mizoguchi", "Satoshi Kon"] },
+        "es": { "text": "<p>¿Quién dirigió <i>Los siete samuráis</i> (1954)?</p>", "options": ["Akira Kurosawa", "Yasujirō Ozu", "Kenji Mizoguchi", "Satoshi Kon"] }
+      },
+      "2": {
+        "fr": {
+          "text": "<p>Sélectionnez <b>tous</b> les films réalisés par Stanley Kubrick.</p>",
+          "options": ["2001 : L'Odyssée de l'espace", "Shining", "Barry Lyndon", "Apocalypse Now"]
+        },
+        "de": {
+          "text": "<p>Wählen Sie <b>alle</b> von Stanley Kubrick inszenierten Filme aus.</p>",
+          "options": ["2001: Odyssee im Weltraum", "Shining", "Barry Lyndon", "Apocalypse Now"]
+        },
+        "es": {
+          "text": "<p>Seleccione <b>todas</b> las películas dirigidas por Stanley Kubrick.</p>",
+          "options": ["2001: Una odisea del espacio", "El resplandor", "Barry Lyndon", "Apocalypse Now"]
+        }
+      },
+      "3": {
+        "fr": {
+          "text": "<p><i>Le Cuirassé Potemkine</i> (1925) est célèbre avant tout pour...</p>",
+          "options": ["Son montage, en particulier la séquence des marches d'Odessa", "Son usage précoce du film en couleur", "Son dialogue entièrement improvisé", "Ses images documentaires caméra à l'épaule"]
+        },
+        "de": {
+          "text": "<p><i>Panzerkreuzer Potemkin</i> (1925) ist vor allem berühmt für...</p>",
+          "options": ["Seinen Schnitt, besonders die Treppenszene von Odessa", "Seinen frühen Einsatz von Farbfilm", "Seinen vollständig improvisierten Dialog", "Seine dokumentarischen Handkamera-Aufnahmen"]
+        },
+        "es": {
+          "text": "<p><i>El acorazado Potemkin</i> (1925) es célebre sobre todo por...</p>",
+          "options": ["Su montaje, en especial la secuencia de las escaleras de Odesa", "Su temprano uso del cine en color", "Su diálogo totalmente improvisado", "Sus imágenes documentales con cámara en mano"]
+        }
+      },
+      "4": {
+        "fr": {
+          "text": "<p>Quel réalisateur a tourné la trilogie des <i>Dollars</i>, des westerns spaghetti ?</p>",
+          "options": ["Sergio Leone", "John Ford", "Sam Peckinpah", "Sergio Corbucci"]
+        },
+        "de": {
+          "text": "<p>Welcher Regisseur drehte die <i>Dollar</i>-Trilogie der Italowestern?</p>",
+          "options": ["Sergio Leone", "John Ford", "Sam Peckinpah", "Sergio Corbucci"]
+        },
+        "es": {
+          "text": "<p>¿Qué director rodó la trilogía del <i>dólar</i> de wésterns spaghetti?</p>",
+          "options": ["Sergio Leone", "John Ford", "Sam Peckinpah", "Sergio Corbucci"]
+        }
+      },
+      "5": {
+        "fr": {
+          "text": "<p><i>Cinéma Paradiso</i> (1988) a remporté l'Oscar du meilleur film étranger pour quel pays ?</p>",
+          "options": ["L'Italie", "La France", "L'Espagne", "Le Brésil"]
+        },
+        "de": {
+          "text": "<p>Für welches Land gewann <i>Cinema Paradiso</i> (1988) den Oscar für den besten fremdsprachigen Film?</p>",
+          "options": ["Für Italien", "Für Frankreich", "Für Spanien", "Für Brasilien"]
+        },
+        "es": {
+          "text": "<p>¿Para qué país ganó <i>Cinema Paradiso</i> (1988) el Óscar a la mejor película de habla no inglesa?</p>",
+          "options": ["Italia", "Francia", "España", "Brasil"]
+        }
+      },
+      "6": {
+        "fr": {
+          "text": "<p>À quoi renvoie la <b>mise en scène</b> ?</p>",
+          "options": ["L'agencement de tout ce qui est visible dans le cadre", "Le rythme créé par le montage", "Le mixage des dialogues et de la musique", "La façon dont un film est promu"]
+        },
+        "de": {
+          "text": "<p>Worauf bezieht sich die <b>Mise en scène</b>?</p>",
+          "options": ["Die Anordnung alles Sichtbaren im Bild", "Den Rhythmus, den der Schnitt erzeugt", "Die Mischung von Dialog und Musik", "Die Art, wie ein Film vermarktet wird"]
+        },
+        "es": {
+          "text": "<p>¿A qué se refiere la <b>puesta en escena</b>?</p>",
+          "options": ["A la disposición de todo lo visible en el encuadre", "Al ritmo que crea el montaje", "A la mezcla de diálogo y música", "A la forma en que se promociona una película"]
+        }
+      },
+      "7": {
+        "fr": { "text": "<p>Qui a composé la musique des <i>Dents de la mer</i> (1975) ?</p>", "options": ["John Williams", "Ennio Morricone", "Bernard Herrmann", "Hans Zimmer"] },
+        "de": { "text": "<p>Wer komponierte die Musik zu <i>Der weiße Hai</i> (1975)?</p>", "options": ["John Williams", "Ennio Morricone", "Bernard Herrmann", "Hans Zimmer"] },
+        "es": { "text": "<p>¿Quién compuso la música de <i>Tiburón</i> (1975)?</p>", "options": ["John Williams", "Ennio Morricone", "Bernard Herrmann", "Hans Zimmer"] }
+      },
+      "8": {
+        "fr": {
+          "text": "<p>Quelle récompense <i>Parasite</i> (2019) a-t-il été le premier film non anglophone à remporter ?</p>",
+          "options": ["L'Oscar du meilleur film", "L'Oscar du meilleur réalisateur", "Le Lion d'or à Venise", "Le BAFTA du meilleur film"]
+        },
+        "de": {
+          "text": "<p>Welchen Preis gewann <i>Parasite</i> (2019) als erster nicht englischsprachiger Film?</p>",
+          "options": ["Den Oscar für den besten Film", "Den Oscar für die beste Regie", "Den Goldenen Löwen in Venedig", "Den BAFTA für den besten Film"]
+        },
+        "es": {
+          "text": "<p>¿Qué premio ganó <i>Parásitos</i> (2019) siendo la primera película no anglófona en lograrlo?</p>",
+          "options": ["El Óscar a la mejor película", "El Óscar al mejor director", "El León de Oro en Venecia", "El BAFTA a la mejor película"]
+        }
+      }
+    }
+  }
+]

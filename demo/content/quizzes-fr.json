@@ -22,21 +22,36 @@
           "options": [
             {
               "text": "1789",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "en": "1789"
+              }
             },
             {
               "text": "1788",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "en": "1788"
+              }
             },
             {
               "text": "1791",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "en": "1791"
+              }
             },
             {
               "text": "1793",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "en": "1793"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "en": "<p>In which year was the Bastille stormed?</p>"
+          }
         },
         {
           "text_html": "<p>Sélectionnez <b>tous</b> les rois de la dynastie capétienne.</p>",
@@ -46,21 +61,36 @@
           "options": [
             {
               "text": "Hugues Capet",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "en": "Hugh Capet"
+              }
             },
             {
               "text": "Philippe Auguste",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "en": "Philip Augustus"
+              }
             },
             {
               "text": "Louis IX, dit Saint Louis",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "en": "Louis IX, known as Saint Louis"
+              }
             },
             {
               "text": "Charlemagne",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "en": "Charlemagne"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "en": "<p>Select <b>all</b> the kings of the Capetian dynasty.</p>"
+          }
         },
         {
           "text_html": "<p>Qui a été sacré empereur des Français en 1804 ?</p>",
@@ -69,21 +99,36 @@
           "options": [
             {
               "text": "Napoléon Bonaparte",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "en": "Napoleon Bonaparte"
+              }
             },
             {
               "text": "Louis XVI",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "en": "Louis XVI"
+              }
             },
             {
               "text": "Charles X",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "en": "Charles X"
+              }
             },
             {
               "text": "Louis-Philippe Ier",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "en": "Louis-Philippe I"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "en": "<p>Who was crowned Emperor of the French in 1804?</p>"
+          }
         },
         {
           "text_html": "<p>Quelle victoire de François Ier, en 1515, est restée célèbre ?</p>",
@@ -92,21 +137,36 @@
           "options": [
             {
               "text": "Marignan",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "en": "Marignan"
+              }
             },
             {
               "text": "Bouvines",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "en": "Bouvines"
+              }
             },
             {
               "text": "Azincourt",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "en": "Agincourt"
+              }
             },
             {
               "text": "Pavie",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "en": "Pavia"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "en": "<p>Which victory of Francis I in 1515 is still famous?</p>"
+          }
         },
         {
           "text_html": "<p>Qui a dominé le Comité de salut public pendant la Terreur, en 1793-1794 ?</p>",
@@ -115,21 +175,36 @@
           "options": [
             {
               "text": "Maximilien de Robespierre",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "en": "Maximilien de Robespierre"
+              }
             },
             {
               "text": "Georges Danton",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "en": "Georges Danton"
+              }
             },
             {
               "text": "Jean-Paul Marat",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "en": "Jean-Paul Marat"
+              }
             },
             {
               "text": "Gilbert du Motier de La Fayette",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "en": "Gilbert du Motier de La Fayette"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "en": "<p>Who dominated the Committee of Public Safety during the Terror, in 1793-1794?</p>"
+          }
         },
         {
           "text_html": "<p>En quelle année Jeanne d'Arc a-t-elle été brûlée à Rouen ?</p>",
@@ -138,21 +213,36 @@
           "options": [
             {
               "text": "1431",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "en": "1431"
+              }
             },
             {
               "text": "1429",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "en": "1429"
+              }
             },
             {
               "text": "1453",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "en": "1453"
+              }
             },
             {
               "text": "1415",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "en": "1415"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "en": "<p>In which year was Joan of Arc burned at Rouen?</p>"
+          }
         },
         {
           "text_html": "<p>Quel édit de 1598 a accordé la liberté de culte aux protestants ?</p>",
@@ -161,21 +251,36 @@
           "options": [
             {
               "text": "L'édit de Nantes",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "en": "The Edict of Nantes"
+              }
             },
             {
               "text": "L'édit de Fontainebleau",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "en": "The Edict of Fontainebleau"
+              }
             },
             {
               "text": "L'édit de Roussillon",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "en": "The Edict of Roussillon"
+              }
             },
             {
               "text": "L'édit de Villers-Cotterêts",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "en": "The Edict of Villers-Cotterêts"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "en": "<p>Which 1598 edict granted Protestants freedom of worship?</p>"
+          }
         },
         {
           "text_html": "<p>Quelle dynastie régnait sur la France en 1789 ?</p>",
@@ -184,21 +289,36 @@
           "options": [
             {
               "text": "Les Bourbons",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "en": "The Bourbons"
+              }
             },
             {
               "text": "Les Valois",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "en": "The Valois"
+              }
             },
             {
               "text": "Les Capétiens directs",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "en": "The direct Capetians"
+              }
             },
             {
               "text": "Les Mérovingiens",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "en": "The Merovingians"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "en": "<p>Which dynasty ruled France in 1789?</p>"
+          }
         },
         {
           "text_html": "<p>Sous quel règne Versailles est-il devenu le grand palais que l'on connaît ?</p>",
@@ -207,21 +327,36 @@
           "options": [
             {
               "text": "Louis XIV",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "en": "Louis XIV"
+              }
             },
             {
               "text": "Louis XIII",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "en": "Louis XIII"
+              }
             },
             {
               "text": "François Ier",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "en": "Francis I"
+              }
             },
             {
               "text": "Henri IV",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "en": "Henry IV"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "en": "<p>Under which reign did Versailles become the great palace we know today?</p>"
+          }
         }
       ]
     },
@@ -246,21 +381,36 @@
           "options": [
             {
               "text": "Victor Hugo",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "en": "Victor Hugo"
+              }
             },
             {
               "text": "Émile Zola",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "en": "Émile Zola"
+              }
             },
             {
               "text": "Honoré de Balzac",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "en": "Honoré de Balzac"
+              }
             },
             {
               "text": "Gustave Flaubert",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "en": "Gustave Flaubert"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "en": "<p>Who wrote <i>Les Misérables</i>?</p>"
+          }
         },
         {
           "text_html": "<p>Dans quel roman la madeleine de Proust apparaît-elle ?</p>",
@@ -269,21 +419,36 @@
           "options": [
             {
               "text": "Du côté de chez Swann",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "en": "Swann's Way"
+              }
             },
             {
               "text": "L'Étranger",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "en": "The Stranger"
+              }
             },
             {
               "text": "Madame Bovary",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "en": "Madame Bovary"
+              }
             },
             {
               "text": "Le Père Goriot",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "en": "Father Goriot"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "en": "<p>In which novel does Proust's madeleine appear?</p>"
+          }
         },
         {
           "text_html": "<p>Sélectionnez <b>toutes</b> les pièces écrites par Molière.</p>",
@@ -293,21 +458,36 @@
           "options": [
             {
               "text": "Le Misanthrope",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "en": "The Misanthrope"
+              }
             },
             {
               "text": "L'Avare",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "en": "The Miser"
+              }
             },
             {
               "text": "Tartuffe",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "en": "Tartuffe"
+              }
             },
             {
               "text": "Phèdre",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "en": "Phèdre"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "en": "<p>Select <b>all</b> the plays written by Molière.</p>"
+          }
         },
         {
           "text_html": "<p>Qui a écrit <i>Madame Bovary</i> ?</p>",
@@ -316,21 +496,36 @@
           "options": [
             {
               "text": "Gustave Flaubert",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "en": "Gustave Flaubert"
+              }
             },
             {
               "text": "Stendhal",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "en": "Stendhal"
+              }
             },
             {
               "text": "Guy de Maupassant",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "en": "Guy de Maupassant"
+              }
             },
             {
               "text": "Émile Zola",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "en": "Émile Zola"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "en": "<p>Who wrote <i>Madame Bovary</i>?</p>"
+          }
         },
         {
           "text_html": "<p>Quel est le héros du <i>Rouge et le Noir</i> ?</p>",
@@ -339,21 +534,36 @@
           "options": [
             {
               "text": "Julien Sorel",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "en": "Julien Sorel"
+              }
             },
             {
               "text": "Eugène de Rastignac",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "en": "Eugène de Rastignac"
+              }
             },
             {
               "text": "Frédéric Moreau",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "en": "Frédéric Moreau"
+              }
             },
             {
               "text": "Étienne Lantier",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "en": "Étienne Lantier"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "en": "<p>Who is the hero of <i>The Red and the Black</i>?</p>"
+          }
         },
         {
           "text_html": "<p>Qui a écrit <i>Les Fleurs du mal</i> ?</p>",
@@ -362,21 +572,36 @@
           "options": [
             {
               "text": "Charles Baudelaire",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "en": "Charles Baudelaire"
+              }
             },
             {
               "text": "Paul Verlaine",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "en": "Paul Verlaine"
+              }
             },
             {
               "text": "Arthur Rimbaud",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "en": "Arthur Rimbaud"
+              }
             },
             {
               "text": "Guillaume Apollinaire",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "en": "Guillaume Apollinaire"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "en": "<p>Who wrote <i>Les Fleurs du mal</i>?</p>"
+          }
         },
         {
           "text_html": "<p>Qui est l'auteur du <i>Père Goriot</i> ?</p>",
@@ -385,21 +610,36 @@
           "options": [
             {
               "text": "Honoré de Balzac",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "en": "Honoré de Balzac"
+              }
             },
             {
               "text": "Victor Hugo",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "en": "Victor Hugo"
+              }
             },
             {
               "text": "Stendhal",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "en": "Stendhal"
+              }
             },
             {
               "text": "Alexandre Dumas",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "en": "Alexandre Dumas"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "en": "<p>Who is the author of <i>Father Goriot</i>?</p>"
+          }
         },
         {
           "text_html": "<p>Dans <i>Le Petit Prince</i>, qui raconte l'histoire ?</p>",
@@ -408,21 +648,36 @@
           "options": [
             {
               "text": "Un aviateur",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "en": "A pilot"
+              }
             },
             {
               "text": "Un renard",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "en": "A fox"
+              }
             },
             {
               "text": "Un roi",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "en": "A king"
+              }
             },
             {
               "text": "Un enfant",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "en": "A child"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "en": "<p>In <i>The Little Prince</i>, who tells the story?</p>"
+          }
         },
         {
           "text_html": "<p>Quel mouvement littéraire est associé à Émile Zola ?</p>",
@@ -431,21 +686,36 @@
           "options": [
             {
               "text": "Le naturalisme",
-              "is_correct": true
+              "is_correct": true,
+              "translations": {
+                "en": "Naturalism"
+              }
             },
             {
               "text": "Le romantisme",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "en": "Romanticism"
+              }
             },
             {
               "text": "Le symbolisme",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "en": "Symbolism"
+              }
             },
             {
               "text": "Le surréalisme",
-              "is_correct": false
+              "is_correct": false,
+              "translations": {
+                "en": "Surrealism"
+              }
             }
-          ]
+          ],
+          "translations": {
+            "en": "<p>Which literary movement is associated with Émile Zola?</p>"
+          }
         }
       ]
     }

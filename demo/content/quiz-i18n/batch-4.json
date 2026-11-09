@@ -1,0 +1,230 @@
+[
+  {
+    "file": "quizzes.json",
+    "index": 0,
+    "questions": {
+      "0": {
+        "fr": {
+          "text": "<p>Qu'apprend réellement un <b>grand modèle de langage</b> pendant son entraînement ?</p>",
+          "options": [
+            "Les régularités statistiques des jetons d'un très vaste corpus de textes",
+            "Une base de faits vérifiés qu'il peut interroger",
+            "Les règles de grammaire écrites par ses développeurs",
+            "Une copie des sites qu'il a été autorisé à lire"
+          ]
+        },
+        "de": {
+          "text": "<p>Was lernt ein <b>großes Sprachmodell</b> beim Training tatsächlich?</p>",
+          "options": [
+            "Statistische Muster von Tokens in einem sehr großen Textkorpus",
+            "Eine Datenbank geprüfter Fakten, die es abfragen kann",
+            "Die von seinen Entwicklern geschriebenen Grammatikregeln",
+            "Eine Kopie der Websites, die es lesen durfte"
+          ]
+        },
+        "es": {
+          "text": "<p>¿Qué aprende realmente un <b>gran modelo de lenguaje</b> durante su entrenamiento?</p>",
+          "options": [
+            "Los patrones estadísticos de los tokens de un corpus de texto muy grande",
+            "Una base de datos de hechos verificados que puede consultar",
+            "Las reglas gramaticales escritas por sus desarrolladores",
+            "Una copia de los sitios web que se le permitió leer"
+          ]
+        }
+      },
+      "1": {
+        "fr": {
+          "text": "<p>Quelle affirmation sur les <b>hallucinations</b> est exacte ?</p>",
+          "options": [
+            "Un modèle peut produire une réponse fluide et tout simplement fausse",
+            "Elles n'arrivent que si la température est réglée à zéro",
+            "Elles sont impossibles une fois le modèle affiné",
+            "Elles sont causées par une absence de connexion Internet"
+          ]
+        },
+        "de": {
+          "text": "<p>Welche Aussage über <b>Halluzinationen</b> ist richtig?</p>",
+          "options": [
+            "Ein Modell kann eine flüssige Antwort geben, die schlicht falsch ist",
+            "Sie treten nur auf, wenn die Temperatur auf null steht",
+            "Sie sind nach dem Fine-Tuning unmöglich",
+            "Sie entstehen durch eine fehlende Internetverbindung"
+          ]
+        },
+        "es": {
+          "text": "<p>¿Qué afirmación sobre las <b>alucinaciones</b> es correcta?</p>",
+          "options": [
+            "Un modelo puede producir una respuesta fluida y sencillamente falsa",
+            "Solo ocurren cuando la temperatura está a cero",
+            "Son imposibles una vez ajustado el modelo",
+            "Las causa una conexión a internet ausente"
+          ]
+        }
+      },
+      "2": {
+        "fr": {
+          "text": "<p>À quoi sert un <b>prompt système</b> ?</p>",
+          "options": [
+            "Cadrer le rôle et les contraintes de l'assistant avant que l'utilisateur parle",
+            "Conserver définitivement les conversations précédentes de l'utilisateur",
+            "Accélérer la génération en raccourcissant le contexte",
+            "Chiffrer les échanges avec le fournisseur"
+          ]
+        },
+        "de": {
+          "text": "<p>Wozu dient ein <b>System-Prompt</b>?</p>",
+          "options": [
+            "Rolle und Grenzen des Assistenten festlegen, bevor der Nutzer spricht",
+            "Die früheren Gespräche des Nutzers dauerhaft speichern",
+            "Die Generierung durch Kürzen des Kontexts beschleunigen",
+            "Die Verbindung zum Anbieter verschlüsseln"
+          ]
+        },
+        "es": {
+          "text": "<p>¿Para qué sirve un <b>prompt de sistema</b>?</p>",
+          "options": [
+            "Enmarcar el papel y las restricciones del asistente antes de que hable el usuario",
+            "Guardar de forma permanente las conversaciones anteriores del usuario",
+            "Acelerar la generación acortando el contexto",
+            "Cifrar los intercambios con el proveedor"
+          ]
+        }
+      },
+      "3": {
+        "fr": {
+          "text": "<p>Quel couple de techniques permet d'adapter un modèle pré-entraîné à une tâche précise <i>sans</i> réentraîner tous ses poids ?</p>",
+          "options": [
+            "L'affinage sur un petit jeu de données et les adaptateurs économes en paramètres (LoRA)",
+            "Augmenter la température et le nombre maximal de jetons",
+            "Reconstruire le tokenizer et les plongements de zéro",
+            "Faire tourner le modèle deux fois et moyenner les deux réponses"
+          ]
+        },
+        "de": {
+          "text": "<p>Welches Technikpaar passt ein vortrainiertes Modell an eine bestimmte Aufgabe an, <i>ohne</i> alle Gewichte neu zu trainieren?</p>",
+          "options": [
+            "Fine-Tuning auf einem kleinen Datensatz und parameter-effiziente Adapter (LoRA)",
+            "Temperatur und maximale Tokenzahl erhöhen",
+            "Tokenizer und Embeddings von Grund auf neu bauen",
+            "Das Modell zweimal laufen lassen und die Antworten mitteln"
+          ]
+        },
+        "es": {
+          "text": "<p>¿Qué par de técnicas adapta un modelo preentrenado a una tarea concreta <i>sin</i> reentrenar todos sus pesos?</p>",
+          "options": [
+            "El ajuste fino con un conjunto de datos pequeño y adaptadores eficientes en parámetros (LoRA)",
+            "Aumentar la temperatura y el número máximo de tokens",
+            "Reconstruir el tokenizador y los embeddings desde cero",
+            "Ejecutar el modelo dos veces y promediar las respuestas"
+          ]
+        }
+      },
+      "4": {
+        "fr": {
+          "text": "<p>Qu'apporte le <b>RAG</b> (génération augmentée par recherche) à un modèle ?</p>",
+          "options": [
+            "Des documents pertinents sont retrouvés et placés dans le contexte avant la réponse",
+            "Le modèle est réentraîné à chaque question",
+            "Les réponses sont mises en cache pour économiser",
+            "Le modèle peut parcourir le web sans aucun index"
+          ]
+        },
+        "de": {
+          "text": "<p>Was fügt <b>RAG</b> (retrieval-augmented generation) einem Modell hinzu?</p>",
+          "options": [
+            "Relevante Dokumente werden abgerufen und vor der Antwort in den Kontext gelegt",
+            "Das Modell wird bei jeder Frage neu trainiert",
+            "Antworten werden zwischengespeichert, um Kosten zu sparen",
+            "Das Modell kann ohne jeden Index im Web surfen"
+          ]
+        },
+        "es": {
+          "text": "<p>¿Qué aporta <b>RAG</b> (generación aumentada por recuperación) a un modelo?</p>",
+          "options": [
+            "Se recuperan documentos relevantes y se colocan en el contexto antes de responder",
+            "El modelo se reentrena con cada pregunta",
+            "Las respuestas se guardan en caché para ahorrar",
+            "El modelo puede navegar por la web sin ningún índice"
+          ]
+        }
+      }
+    }
+  },
+  {
+    "file": "quizzes.json",
+    "index": 1,
+    "questions": {
+      "0": {
+        "fr": {
+          "text": "<p>Quelle planète a le jour le plus court ?</p>",
+          "options": ["Jupiter", "Mercure", "La Terre", "Mars"]
+        },
+        "de": {
+          "text": "<p>Welcher Planet hat den kürzesten Tag?</p>",
+          "options": ["Jupiter", "Merkur", "Erde", "Mars"]
+        },
+        "es": {
+          "text": "<p>¿Qué planeta tiene el día más corto?</p>",
+          "options": ["Júpiter", "Mercurio", "La Tierra", "Marte"]
+        }
+      },
+      "1": {
+        "fr": {
+          "text": "<p>Sélectionnez <b>toutes</b> les planètes qui ont des anneaux.</p>",
+          "options": ["Saturne", "Jupiter", "Uranus", "Mars"]
+        },
+        "de": {
+          "text": "<p>Wählen Sie <b>alle</b> Planeten mit Ringen aus.</p>",
+          "options": ["Saturn", "Jupiter", "Uranus", "Mars"]
+        },
+        "es": {
+          "text": "<p>Seleccione <b>todos</b> los planetas que tienen anillos.</p>",
+          "options": ["Saturno", "Júpiter", "Urano", "Marte"]
+        }
+      },
+      "2": {
+        "fr": {
+          "text": "<p>Pourquoi Vénus est-elle plus chaude que Mercure, alors qu'elle est plus loin du Soleil ?</p>",
+          "options": [
+            "Un effet de serre emballé, dû à son atmosphère dense de CO₂",
+            "Sa surface est faite de roche radioactive",
+            "Elle tourne plus vite que Mercure",
+            "Elle est plus proche du Soleil que Mercure"
+          ]
+        },
+        "de": {
+          "text": "<p>Warum ist die Venus heißer als der Merkur, obwohl sie weiter von der Sonne entfernt ist?</p>",
+          "options": [
+            "Ein außer Kontrolle geratener Treibhauseffekt durch ihre dichte CO₂-Atmosphäre",
+            "Ihre Oberfläche besteht aus radioaktivem Gestein",
+            "Sie dreht sich schneller als der Merkur",
+            "Sie ist näher an der Sonne als der Merkur"
+          ]
+        },
+        "es": {
+          "text": "<p>¿Cuál es la razón principal de que Venus sea más caliente que Mercurio, aunque esté más lejos del Sol?</p>",
+          "options": [
+            "Un efecto invernadero desbocado debido a su densa atmósfera de CO₂",
+            "Su superficie está hecha de roca radiactiva",
+            "Rota más rápido que Mercurio",
+            "Está más cerca del Sol que Mercurio"
+          ]
+        }
+      },
+      "3": {
+        "fr": {
+          "text": "<p>Lequel de ces astres n'est <i>pas</i> une planète naine ?</p>",
+          "options": ["Titan", "Pluton", "Éris", "Cérès"]
+        },
+        "de": {
+          "text": "<p>Welcher davon ist <i>kein</i> Zwergplanet?</p>",
+          "options": ["Titan", "Pluto", "Eris", "Ceres"]
+        },
+        "es": {
+          "text": "<p>¿Cuál de estos <i>no</i> es un planeta enano?</p>",
+          "options": ["Titán", "Plutón", "Eris", "Ceres"]
+        }
+      }
+    }
+  }
+]
