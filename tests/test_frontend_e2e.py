@@ -257,6 +257,39 @@ def read_pin(page) -> str:
     return pin.strip().upper()
 
 
+def test_signing_in_from_a_page_comes_back_to_that_page(browser):
+    """Signing in used to land on the account page, whatever you were reading.
+
+    The reader had to walk back to the article they wanted to edit. The page
+    they left is remembered for the session, and this test proves the browser
+    really returns there — the API cannot show it.
+    """
+    context, page, recorder = new_page(browser)
+    try:
+        email = f"e2e-return-{uuid.uuid4().hex[:10]}@example.com"
+        register_through_ui(page, email, "Retour")
+
+        page.click("#account-button")
+        page.click("#logout-button")
+        expect(page).to_have_url(re.compile(r".*/$"), timeout=15000)
+
+        # A public page nobody would call a destination of the sign-in flow.
+        page.goto(f"{BASE_URL}/about", wait_until="networkidle")
+        page.click("#account-button")
+        page.click("#account-popover a[href='/login']")
+        expect(page).to_have_url(re.compile(r".*/login$"))
+
+        page.fill("#email", email)
+        page.fill("#password", PASSWORD)
+        page.click("#login-form button[type=submit]")
+
+        expect(page).to_have_url(re.compile(r".*/about$"), timeout=15000)
+        assert not page.url.endswith("/account"), "the reader was sent to the account page"
+        assert recorder.errors == [], f"frontend errors: {recorder.errors}"
+    finally:
+        context.close()
+
+
 def test_register_create_and_play_solo(browser):
     context, page, recorder = new_page(browser)
     try:

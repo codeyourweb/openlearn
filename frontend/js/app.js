@@ -9,6 +9,7 @@ import { setUser, state } from "./store.js";
 import { applyTheme, currentTheme, toggleTheme } from "./theme.js";
 import { flagSvg } from "./flags.js";
 import { escapeHtml, toast } from "./ui.js";
+import { rememberReturnTarget } from "./returnTo.js";
 
 import { renderAccount } from "./pages/account.js";
 import { renderAdmin } from "./pages/admin.js";
@@ -351,6 +352,9 @@ function renderChrome() {
 }
 
 setAfterRender(() => {
+  // Read before the chrome renders: signing in from an article should come
+  // back to that article, not to the account page.
+  rememberReturnTarget();
   applyTranslations();
   renderChrome();
   renderVerificationBanner(document.getElementById("app"));

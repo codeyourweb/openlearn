@@ -8,6 +8,7 @@ import { navigate } from "../router.js";
 import { setUser } from "../store.js";
 import { escapeHtml, setBusy, toast } from "../ui.js";
 import { instance } from "../instance.js";
+import { forgetReturnTarget, returnTarget } from "../returnTo.js";
 
 /** "Continue with <provider>" buttons, one per identity provider. */
 function ssoBlock() {
@@ -20,7 +21,7 @@ function ssoBlock() {
         .map(
           (provider) => `
         <a class="btn btn-ghost btn-block sso-button" href="/api/v1/auth/sso/${encodeURIComponent(provider.slug)}/start?next=${encodeURIComponent(
-          location.pathname === "/login" ? "/dashboard" : location.pathname,
+          returnTarget(),
         )}">
           <span aria-hidden="true">🔑</span> ${escapeHtml(t("auth.sso_with", { provider: provider.label }))}
         </a>`,
@@ -29,10 +30,6 @@ function ssoBlock() {
     </div>`;
 }
 
-function safeNext(query) {
-  const next = query && query.next ? String(query.next) : "/dashboard";
-  return next.startsWith("/") && !next.startsWith("//") ? next : "/dashboard";
-}
 
 function bindForm(root, form, submit) {
   form.addEventListener("submit", async (event) => {
@@ -42,7 +39,9 @@ function bindForm(root, form, submit) {
     errorBox.hidden = true;
     setBusy(button, true);
     try {
+      const destination = root.dataset.next || returnTarget();
       await submit(new FormData(form));
+      forgetReturnTarget();
       // The login payload only carries the token: read the profile back, both to
       // fill the header and to name the session in the welcome toast (it used to
       // read "Signed in as ." because the name was never there).
@@ -50,7 +49,7 @@ function bindForm(root, form, submit) {
       setUser(me);
       window.dispatchEvent(new CustomEvent("oq:auth-changed"));
       toast(t("auth.welcome", { name: (me && (me.display_name || me.email)) || "" }), "success");
-      navigate(safeNext(root.dataset.next));
+      navigate(destination);
     } catch (error) {
       errorBox.textContent = error.detail || t("error.generic");
       errorBox.hidden = false;
@@ -63,7 +62,7 @@ function bindForm(root, form, submit) {
 export async function renderLogin({ query }) {
   const root = document.createElement("div");
   root.className = "auth-card card";
-  root.dataset.next = safeNext(query);
+  root.dataset.next = returnTarget(query);
   root.innerHTML = `
     <h1>${t("auth.login_title")}</h1>
     <p class="muted small">${t("auth.login_subtitle")}</p>
@@ -95,7 +94,7 @@ export async function renderLogin({ query }) {
 export async function renderRegister({ query }) {
   const root = document.createElement("div");
   root.className = "auth-card card";
-  root.dataset.next = safeNext(query);
+  root.dataset.next = returnTarget(query);
   root.innerHTML = `
     <h1>${t("auth.register_title")}</h1>
     <p class="muted small">${t("auth.register_subtitle")}</p>
@@ -117,7 +116,7 @@ export async function renderRegister({ query }) {
       <button class="btn btn-primary btn-block" type="submit">${t("auth.submit_register")}</button>
     </form>
     <p class="auth-switch">${t("auth.have_account")} <a href="${escapeHtml(
-      `/login?next=${encodeURIComponent(safeNext(query))}`,
+      `/login?next=${encodeURIComponent(returnTarget(query))}`,
     )}" data-link>${t("nav.signin")}</a></p>`;
 
   bindForm(root, root.querySelector("#register-form"), async (data) => {
