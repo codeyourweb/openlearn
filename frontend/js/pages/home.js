@@ -4,7 +4,7 @@
 
 import { api } from "../api.js";
 import { flagStrip } from "../flags.js";
-import { t, currentLanguage } from "../i18n.js";
+import { LANGUAGES, currentLanguage, t } from "../i18n.js";
 import { navigate } from "../router.js";
 import { isLoggedIn } from "../store.js";
 import { titleSlug } from "../seo.js";
@@ -101,9 +101,19 @@ function _bindPlayActions(container) {
   });
 }
 
+/** The types the catalogue can filter on, in the order the editor offers them. */
+const MODES = ["qcm", "swipe", "poll", "adventure"];
+
+/** ISO codes the filter offers: those the interface itself speaks. */
+// One order for the whole interface: zh and ja stay at the end of every
+// language list, as the picker shows them.
+const FILTER_LANGUAGES = LANGUAGES.map((item) => item.code);
+
 export async function renderHome({ query }) {
   const root = document.createElement("div");
   const search = (query && query.q) || "";
+  const mode = MODES.includes((query && query.mode) || "") ? query.mode : "";
+  const lang = FILTER_LANGUAGES.includes((query && query.lang) || "") ? query.lang : "";
   const tab = query && query.tab === "mine" && isLoggedIn() ? "mine" : "public";
   const requestedPage = Math.max(1, Number((query && query.page) || 1) || 1);
   let page = requestedPage;
@@ -120,6 +130,8 @@ export async function renderHome({ query }) {
     }
     const params = new URLSearchParams();
     if (search) params.set("q", search);
+    if (mode) params.set("mode", mode);
+    if (lang) params.set("lang", lang);
     params.set("limit", String(PAGE_SIZE));
     params.set("offset", String((target - 1) * PAGE_SIZE));
     const result = await api.getMeta(`/api/v1/quizzes?${params.toString()}`);
@@ -143,6 +155,13 @@ export async function renderHome({ query }) {
     });
   }
 
+  const keptFilters = () => {
+    const params = new URLSearchParams();
+    if (search) params.set("q", search);
+    if (mode) params.set("mode", mode);
+    if (lang) params.set("lang", lang);
+    return params.toString();
+  };
   const tabHref = (value, extra = "") =>
     value === "public" ? `/quizzes${extra}` : `/quizzes?tab=mine${extra ? `&${extra}` : ""}`;
 
@@ -178,7 +197,7 @@ export async function renderHome({ query }) {
     <section class="mt-4">
       <nav class="tabs" role="tablist" aria-label="${t("home.tabs_label")}">
         <a class="tab ${tab === "public" ? "is-active" : ""}" role="tab" aria-selected="${tab === "public"}"
-           href="${tabHref("public", search ? `q=${encodeURIComponent(search)}` : "")}" data-link>
+           href="${tabHref("public", keptFilters())}" data-link>
           ${t("home.tab_public")}
         </a>
         ${
@@ -190,6 +209,42 @@ export async function renderHome({ query }) {
         }
       </nav>
 
+      ${
+        tab === "public"
+          ? `<div class="filter-bar card mt-2">
+               <span class="filter-label">${t("filter.advanced")}</span>
+               <label class="field filter-field">
+                 <span class="label">${t("filter.type")}</span>
+                 <select class="select" id="filter-mode" aria-label="${t("filter.type")}">
+                   <option value="">${t("filter.all_types")}</option>
+                   ${MODES.map(
+                     (value) =>
+                       `<option value="${value}" ${value === mode ? "selected" : ""}>${t(`editor.mode_${value}`)}</option>`,
+                   ).join("")}
+                 </select>
+               </label>
+               <label class="field filter-field">
+                 <span class="label">${t("filter.language")}</span>
+                 <select class="select" id="filter-lang" aria-label="${t("filter.language")}">
+                   <option value="">${t("filter.all_languages")}</option>
+                   ${FILTER_LANGUAGES.map(
+                     (code) =>
+                       `<option value="${code}" ${code === lang ? "selected" : ""}>${LANGUAGES.filter(
+                         (item) => item.code === code,
+                       )
+                         .map((item) => item.label)
+                         .join("")}</option>`,
+                   ).join("")}
+                 </select>
+               </label>
+               ${
+                 mode || lang || search
+                   ? `<a class="btn btn-sm btn-ghost" href="/quizzes" data-link>${t("filter.clear")}</a>`
+                   : ""
+               }
+             </div>`
+          : ""
+      }
       <div class="row between mt-2">
         <h2>${tab === "mine" ? t("home.my_catalog") : t("home.catalog")}</h2>
         ${
@@ -220,12 +275,34 @@ export async function renderHome({ query }) {
     navigate(`/play/${encodeURIComponent(code)}`);
   });
 
+  const filters = root.querySelector(".filter-bar");
+  if (filters) {
+    const target = () => {
+      const params = new URLSearchParams();
+      if (search) params.set("q", search);
+      const chosenMode = filters.querySelector("#filter-mode").value;
+      const chosenLang = filters.querySelector("#filter-lang").value;
+      if (chosenMode) params.set("mode", chosenMode);
+      if (chosenLang) params.set("lang", chosenLang);
+      const suffix = params.toString();
+      return suffix ? `/quizzes?${suffix}` : "/quizzes";
+    };
+    filters.querySelectorAll("select").forEach((select) => {
+      select.addEventListener("change", () => navigate(target()));
+    });
+  }
+
   const searchForm = root.querySelector("#search-form");
   if (searchForm) {
     searchForm.addEventListener("submit", (event) => {
       event.preventDefault();
       const value = searchForm.querySelector("#search").value.trim();
-      navigate(value ? `/quizzes?q=${encodeURIComponent(value)}` : "/quizzes");
+      const params = new URLSearchParams();
+      if (value) params.set("q", value);
+      if (mode) params.set("mode", mode);
+      if (lang) params.set("lang", lang);
+      const suffix = params.toString();
+      navigate(suffix ? `/quizzes?${suffix}` : "/quizzes");
     });
   }
 
@@ -267,6 +344,8 @@ export async function renderHome({ query }) {
     const target = (value) => {
       const params = new URLSearchParams();
       if (search) params.set("q", search);
+      if (mode) params.set("mode", mode);
+      if (lang) params.set("lang", lang);
       if (value > 1) params.set("page", String(value));
       const suffix = params.toString();
       return suffix ? `/quizzes?${suffix}` : "/quizzes";

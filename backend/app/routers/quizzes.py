@@ -10,7 +10,7 @@ from __future__ import annotations
 
 from fastapi import APIRouter, Depends, HTTPException, Query, Request, Response, status
 from pydantic import ValidationError
-from sqlalchemy import delete, func, or_, select
+from sqlalchemy import String, cast, delete, func, or_, select
 from sqlalchemy.orm import Session as OrmSession
 
 from .. import ai, runtime, search, versions
@@ -666,20 +666,44 @@ def _ai_guard() -> None:
 # ---------------------------------------------------------------------------
 # Catalogue
 # ---------------------------------------------------------------------------
+QUIZ_MODES = ("qcm", "swipe", "poll", "adventure")
+
+
+def language_clause(lang: str):
+    """Rows a reader asking for ``lang`` expects to find.
+
+    A quiz carries its own language plus, when it was translated, the list of
+    languages it was translated into. Casting that JSON array to text is the one
+    form of "contains" that SQLite, PostgreSQL, MySQL and MariaDB all accept;
+    the pattern quotes the code so ``fr`` never matches ``fr-CA``.
+    """
+    return or_(
+        Quiz.default_language == lang,
+        cast(Quiz.languages, String).like(f'%"{lang}"%'),
+    )
+
+
 @router.get("", response_model=list[QuizSummaryOut])
 def list_quizzes(
     response: Response,
     q: str | None = Query(default=None, max_length=100),
+    mode: str | None = Query(default=None, pattern="^(qcm|swipe|poll|adventure)$"),
+    lang: str | None = Query(default=None, min_length=2, max_length=5),
     limit: int = Query(default=50, ge=1, le=100),
     offset: int = Query(default=0, ge=0),
     db: OrmSession = Depends(get_db),
 ):
-    """Public catalogue, optionally filtered by a full text search.
+    """Public catalogue, optionally filtered by a search, a type and a language.
 
     ``X-Total-Count`` carries the size of the whole result set so the client can
-    paginate without guessing.
+    paginate without guessing; it counts the filtered set, so the pager never
+    promises pages the filters emptied.
     """
     stmt = select(Quiz).where(Quiz.status == "public")
+    if mode:
+        stmt = stmt.where(Quiz.mode == mode)
+    if lang:
+        stmt = stmt.where(language_clause(lang))
     if q and q.strip():
         ranked = search_ids(db, q)
         if ranked is None:
@@ -695,7 +719,7 @@ def list_quizzes(
         else:
             response.headers["X-Total-Count"] = "0"
             return []
-    total = db.scalar(select(func.count(Quiz.id)).where(Quiz.status == "public")) or 0
+    total = db.scalar(select(func.count()).select_from(stmt.subquery())) or 0
     response.headers["X-Total-Count"] = str(total)
     # MySQL and MariaDB have no NULLS LAST: sort on the predicate instead.
     stmt = stmt.order_by(

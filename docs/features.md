@@ -17,6 +17,7 @@ permalink: /features/
 - **Structure**: page tree, sections, and a visual graph of links between pages.
 - **References**: per-page bibliography, reusable citations, dead-link detection.
 - **Full-text search** across titles and bodies, filtered by space.
+- **Language filter** on the public list: the same twelve codes the interface offers.
 - **Page templates** for recurring formats (fact sheet, procedure, notice).
 - **Two-step publication**: a draft, then a publication request; the page becomes public once a
   moderator has approved it.
@@ -34,6 +35,7 @@ permalink: /features/
 - **Solo games** with an attempt limit configurable per quiz.
 - **Assessment**: score, per-question detail, time per question, CSV export.
 - **JSON import and export** to prepare a quiz offline and load it later.
+- **Catalogue filters**: by questionnaire type and by language, combinable with the search.
 
 ## Spaced repetition
 

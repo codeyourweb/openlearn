@@ -363,6 +363,12 @@ export const en = {
   "common.search_placeholder": "Search a quiz…",
   "common.pin": "Game PIN",
 
+  "filter.advanced": "Filters",
+  "filter.type": "Type",
+  "filter.language": "Language",
+  "filter.all_types": "All types",
+  "filter.all_languages": "All languages",
+  "filter.clear": "Clear filters",
   "home.title": "Train. Challenge. Validate.",
   "home.subtitle": "Five kinds of questionnaires: live quiz with a PIN, self-paced QCM, swipe cards, branching adventure, poll. No account needed to play. A markdown wiki sits next to them.",
   "home.join_title": "Join a game",
