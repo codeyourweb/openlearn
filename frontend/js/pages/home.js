@@ -124,7 +124,13 @@ export async function renderHome({ query }) {
   const load = async (target) => {
     if (tab === "mine") {
       // The owner's list is small and unpaginated: search is filtered here.
-      quizzes = await api.get("/api/v1/quizzes/mine");
+      const mine = await api.get("/api/v1/quizzes/mine");
+      const needle = search.trim().toLowerCase();
+      quizzes = needle
+        ? mine.filter((quiz) =>
+            `${quiz.title} ${quiz.description || ""} ${(quiz.tags || []).join(" ")}`.toLowerCase().includes(needle),
+          )
+        : mine;
       total = quizzes.length;
       return;
     }
@@ -209,12 +215,19 @@ export async function renderHome({ query }) {
         }
       </nav>
 
+      <div class="row between mt-3">
+        <h2>${tab === "mine" ? t("home.my_catalog") : t("home.catalog")}</h2>
+      </div>
       ${
         tab === "public"
-          ? `<div class="filter-bar card mt-2">
-               <span class="filter-label">${t("filter.advanced")}</span>
-               <label class="field filter-field">
-                 <span class="label">${t("filter.type")}</span>
+          ? `<form id="catalog-tools" class="catalog-tools card" role="search">
+               <div class="catalog-search">
+                 <input class="input" id="search" name="q" value="${escapeHtml(search)}"
+                        placeholder="${t("common.search_placeholder")}" aria-label="${t("home.search_label")}" />
+                 <button class="btn btn-primary" type="submit">${t("action.search")}</button>
+               </div>
+               <div class="catalog-filters">
+                 <label class="sr-only" for="filter-mode">${t("filter.type")}</label>
                  <select class="select" id="filter-mode" aria-label="${t("filter.type")}">
                    <option value="">${t("filter.all_types")}</option>
                    ${MODES.map(
@@ -222,9 +235,7 @@ export async function renderHome({ query }) {
                        `<option value="${value}" ${value === mode ? "selected" : ""}>${t(`editor.mode_${value}`)}</option>`,
                    ).join("")}
                  </select>
-               </label>
-               <label class="field filter-field">
-                 <span class="label">${t("filter.language")}</span>
+                 <label class="sr-only" for="filter-lang">${t("filter.language")}</label>
                  <select class="select" id="filter-lang" aria-label="${t("filter.language")}">
                    <option value="">${t("filter.all_languages")}</option>
                    ${FILTER_LANGUAGES.map(
@@ -236,30 +247,21 @@ export async function renderHome({ query }) {
                          .join("")}</option>`,
                    ).join("")}
                  </select>
-               </label>
-               ${
-                 mode || lang || search
-                   ? `<a class="btn btn-sm btn-ghost" href="/quizzes" data-link>${t("filter.clear")}</a>`
-                   : ""
-               }
-             </div>`
-          : ""
+                 ${
+                   mode || lang || search
+                     ? `<a class="btn btn-ghost catalog-clear" href="/quizzes" data-link>${t("filter.clear")}</a>`
+                     : ""
+                 }
+               </div>
+             </form>`
+          : `<form id="search-form" class="catalog-tools card" role="search">
+               <div class="catalog-search">
+                 <input class="input" id="search" name="q" value="${escapeHtml(search)}"
+                        placeholder="${t("common.search_placeholder")}" aria-label="${t("home.search_label")}" />
+                 <button class="btn btn-primary" type="submit">${t("action.search")}</button>
+               </div>
+             </form>`
       }
-      <div class="row between mt-2">
-        <h2>${tab === "mine" ? t("home.my_catalog") : t("home.catalog")}</h2>
-        ${
-          tab === "mine"
-            ? `<div class="search-form" role="search">
-                 <input class="input" id="search" name="q" value="${escapeHtml(search)}"
-                        placeholder="${t("common.search_placeholder")}" aria-label="${t("home.search_label")}" />
-               </div>`
-            : `<form id="search-form" class="search-form" role="search">
-                 <input class="input" id="search" name="q" value="${escapeHtml(search)}"
-                        placeholder="${t("common.search_placeholder")}" aria-label="${t("home.search_label")}" />
-                 <button class="btn" type="submit">${t("action.search")}</button>
-               </form>`
-        }
-      </div>
       <div id="catalog" class="grid mt-2"></div>
       <nav id="catalog-pager" class="pager" aria-label="${t("home.pagination_label")}"></nav>
     </section>`;
@@ -275,34 +277,29 @@ export async function renderHome({ query }) {
     navigate(`/play/${encodeURIComponent(code)}`);
   });
 
-  const filters = root.querySelector(".filter-bar");
-  if (filters) {
-    const target = () => {
+  const tools = root.querySelector("#catalog-tools") || root.querySelector("#search-form");
+  if (tools) {
+    const modeSelect = tools.querySelector("#filter-mode");
+    const langSelect = tools.querySelector("#filter-lang");
+    const build = (value) => {
       const params = new URLSearchParams();
-      if (search) params.set("q", search);
-      const chosenMode = filters.querySelector("#filter-mode").value;
-      const chosenLang = filters.querySelector("#filter-lang").value;
+      if (value) params.set("q", value);
+      const chosenMode = modeSelect ? modeSelect.value : mode;
+      const chosenLang = langSelect ? langSelect.value : lang;
       if (chosenMode) params.set("mode", chosenMode);
       if (chosenLang) params.set("lang", chosenLang);
+      if (tab === "mine") params.set("tab", "mine");
       const suffix = params.toString();
       return suffix ? `/quizzes?${suffix}` : "/quizzes";
     };
-    filters.querySelectorAll("select").forEach((select) => {
-      select.addEventListener("change", () => navigate(target()));
-    });
-  }
-
-  const searchForm = root.querySelector("#search-form");
-  if (searchForm) {
-    searchForm.addEventListener("submit", (event) => {
+    tools.addEventListener("submit", (event) => {
       event.preventDefault();
-      const value = searchForm.querySelector("#search").value.trim();
-      const params = new URLSearchParams();
-      if (value) params.set("q", value);
-      if (mode) params.set("mode", mode);
-      if (lang) params.set("lang", lang);
-      const suffix = params.toString();
-      navigate(suffix ? `/quizzes?${suffix}` : "/quizzes");
+      navigate(build(tools.querySelector("#search").value.trim()));
+    });
+    // A dropdown that changed is a filter that applies at once; making the
+    // reader hunt for the Search button afterwards hides what it does.
+    [modeSelect, langSelect].filter(Boolean).forEach((select) => {
+      select.addEventListener("change", () => navigate(build(tools.querySelector("#search").value.trim())));
     });
   }
 
