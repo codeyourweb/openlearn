@@ -203,6 +203,11 @@ def build_snapshot(quiz: Any, language: str | None = None) -> dict:
     """Freeze a playable, already-translated copy of the story."""
     language = language or getattr(quiz, "default_language", "en") or "en"
     settings = getattr(quiz, "adventure_settings", None) or {}
+    # A story is snapshotted per run so that editing it never moves a
+    # play-through already under way. The revision lets the author's own preview
+    # notice that the document changed since the run started.
+    updated = getattr(quiz, "updated_at", None)
+    revision = updated.isoformat() if hasattr(updated, "isoformat") else str(updated or "")
 
     attributes = []
     for attribute in getattr(quiz, "adventure_attributes", []):
@@ -258,6 +263,7 @@ def build_snapshot(quiz: Any, language: str | None = None) -> dict:
 
     return {
         "language": language,
+        "revision": revision,
         "start": getattr(quiz, "adventure_start_key", "") or "",
         "attributes": attributes,
         "nodes": nodes,

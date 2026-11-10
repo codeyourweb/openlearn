@@ -2447,3 +2447,115 @@ def test_a_mailed_confirmation_link_carries_its_token_to_the_server(browser):
         assert recorder.errors == [], recorder.errors
     finally:
         context.close()
+
+
+def test_the_preview_of_a_story_follows_its_edits(browser):
+    """The author's preview reads the current document, not the run it started.
+
+    A run keeps a snapshot so that editing a story never moves a play-through
+    under way. The author's own preview is the exception: reopening it used to
+    resume the old snapshot, so a replaced picture never appeared and pictures
+    added to later scenes never showed at all.
+    """
+    context, page, recorder = new_page(browser)
+    try:
+        register_through_ui(page, f"author-{uuid.uuid4().hex[:10]}@example.org", "Story Author")
+        api = context.request
+        csrf = next(
+            (cookie["value"] for cookie in context.cookies() if cookie["name"] == "ol_csrf"), ""
+        )
+        assert csrf, "no CSRF cookie after registering"
+        headers = {"X-CSRF-Token": csrf}
+
+        def upload() -> str:
+            response = api.post(
+                f"{BASE_URL}/api/v1/uploads/question-image",
+                headers=headers,
+                multipart={
+                    "file": {"name": "scene.png", "mimeType": "image/png", "buffer": _picture_png(8, 8)}
+                },
+            )
+            assert response.status == 201, response.text()
+            return response.json()["path"]
+
+        def story(start_image: str, second_image: str | None = None) -> dict:
+            return {
+                "title": "A star for Santa",
+                "description": "Two scenes, two pictures.",
+                "mode": "adventure",
+                "is_public": False,
+                "adventure": {
+                    "start": "start",
+                    "death_text_html": "<p>Lost.</p>",
+                    "victory_text_html": "<p>Won.</p>",
+                    "attributes": [
+                        {"key": "hope", "label": "Hope", "initial_value": 3, "min_value": 0, "max_value": 10}
+                    ],
+                    "nodes": [
+                        {
+                            "key": "start",
+                            "kind": "question",
+                            "text_html": "<p>First scene.</p>",
+                            "pos_x": 0,
+                            "pos_y": 0,
+                            "image_path": start_image,
+                            "choices": [
+                                {"key": "go", "text": "Continue", "target": "second",
+                                 "effects": [{"attribute": "hope", "delta": 1}]},
+                                {"key": "skip", "text": "Give up", "target": "end",
+                                 "effects": [{"attribute": "hope", "delta": -1}]},
+                            ],
+                        },
+                        {
+                            "key": "second",
+                            "kind": "question",
+                            "text_html": "<p>Second scene.</p>",
+                            "pos_x": 300,
+                            "pos_y": 0,
+                            "image_path": second_image,
+                            "choices": [
+                                {"key": "finish", "text": "Finish", "target": "end",
+                                 "effects": [{"attribute": "hope", "delta": 1}]},
+                                {"key": "leave", "text": "Leave", "target": "end",
+                                 "effects": [{"attribute": "hope", "delta": 0}]},
+                            ],
+                        },
+                        {
+                            "key": "end",
+                            "kind": "ending",
+                            "text_html": "<p>The end.</p>",
+                            "pos_x": 600,
+                            "pos_y": 0,
+                            "choices": [],
+                            "outcomes": [{"kind": "default", "text_html": "<p>Done.</p>", "priority": 9}],
+                        },
+                    ],
+                },
+            }
+
+        first, second, later = upload(), upload(), upload()
+        created = api.post(f"{BASE_URL}/api/v1/quizzes", headers=headers, data=story(first))
+        assert created.status == 201, created.text()
+        quiz_id = created.json()["id"]
+
+        page.goto(f"{BASE_URL}/adventures/{quiz_id}/play", wait_until="networkidle")
+        page.wait_for_selector("img.adv-image", timeout=15000)
+        assert page.get_attribute("img.adv-image", "src") == first
+
+        edited = api.put(f"{BASE_URL}/api/v1/quizzes/{quiz_id}", headers=headers, data=story(second, later))
+        assert edited.status == 200, edited.text()
+
+        page.reload(wait_until="networkidle")
+        page.wait_for_selector("img.adv-image", timeout=15000)
+        assert page.get_attribute("img.adv-image", "src") == second, (
+            "the preview resumed the snapshot taken before the picture was replaced"
+        )
+
+        page.locator(".adv-choice").first.click()
+        page.wait_for_timeout(1500)
+        assert page.get_attribute("img.adv-image", "src") == later, (
+            "a picture added to a later scene does not reach the preview"
+        )
+        assert not [error for error in recorder.errors if "pageerror" in error], recorder.errors
+    finally:
+        context.close()

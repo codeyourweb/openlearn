@@ -128,6 +128,43 @@ def _state(run: AdventureRun, snapshot: dict) -> dict:
     return payload
 
 
+def _playable_snapshot(db: OrmSession, run: AdventureRun) -> dict:
+    """The story this run plays.
+
+    A reader keeps the story they started, whatever the author does to it
+    afterwards: that is what the snapshot is for. The author's own preview is the
+    exception — its only purpose is to show the document as it is now, so it is
+    rebuilt when the quiz has changed since the run began. The place and the
+    counters survive when the scene and the attributes still exist.
+    """
+    snapshot = run.snapshot or {}
+    if run.status == "finished" or run.user_id is None:
+        return snapshot
+    quiz = db.get(Quiz, run.quiz_id)
+    if quiz is None or quiz.owner_id != run.user_id:
+        return snapshot
+
+    current = engine.build_snapshot(quiz, run.language)
+    if not current["start"] or current["start"] not in current["nodes"]:
+        return snapshot
+    if current.get("revision") == snapshot.get("revision"):
+        return snapshot
+
+    known = {attribute["key"]: attribute for attribute in current["attributes"]}
+    values = {key: value for key, value in (run.attributes or {}).items() if key in known}
+    for key, attribute in known.items():
+        values.setdefault(key, attribute["initial"])
+    run.attributes = values
+    if run.current_key not in current["nodes"]:
+        run.current_key = current["start"]
+    run.snapshot = current
+    run.updated_at = utcnow()
+    _arm_clock(run, current)
+    db.commit()
+    db.refresh(run)
+    return current
+
+
 @router.post("/quizzes/{quiz_id}/runs", status_code=status.HTTP_201_CREATED)
 def start_run(
     quiz_id: int,
@@ -183,7 +220,7 @@ def get_run(
 ):
     enforce_rate_limit(request, "adventure-state", limit=240, window=60)
     run = _get_run(db, token)
-    return _state(run, run.snapshot or {})
+    return _state(run, _playable_snapshot(db, run))
 
 
 @router.post("/runs/{token}/timeout")
@@ -204,7 +241,7 @@ def expire_scene(
     run = _get_run(db, token)
     if run.status == "finished":
         return _state(run, run.snapshot or {})
-    snapshot = run.snapshot or {}
+    snapshot = _playable_snapshot(db, run)
     if (snapshot.get("timer_mode") or "none") == "none":
         raise HTTPException(status_code=409, detail="This story has no timer.")
     deadline = aware(run.node_deadline)
@@ -245,7 +282,7 @@ def choose(
     if run.status == "finished":
         raise HTTPException(status_code=409, detail="This run is already finished.")
 
-    snapshot = run.snapshot or {}
+    snapshot = _playable_snapshot(db, run)
     try:
         result = engine.take_choice(snapshot, run.attributes or {}, run.current_key, payload.choice)
     except engine.AdventureError as exc:
