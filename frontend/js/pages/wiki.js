@@ -6,6 +6,7 @@ import { api, uploadImage } from "../api.js";
 import { LANGUAGES, currentLanguage, t, tp } from "../i18n.js";
 import { markdownToHtml, inlineMarkdown, paintCustomColors } from "../markdown.js";
 import { hydrateEmbeds } from "../wikiEmbeds.js";
+import { shareCard, wireShare } from "../share.js";
 import { flagStrip } from "../flags.js";
 import { setPageSeo, titleSlug } from "../seo.js";
 import { navigate } from "../router.js";
@@ -553,6 +554,7 @@ async function _wikiPage(root, params) {
           <a class="btn btn-sm btn-ghost" href="/api/v1/wiki/${wiki.id}/export.zip">${escapeHtml(t("wiki.export_zip"))}</a>
           <a class="btn btn-sm btn-ghost" href="/api/v1/wiki/${wiki.id}/export.pdf?lang=${encodeURIComponent(currentLanguage())}" title="${escapeHtml(t("wiki.export_pdf_hint"))}">${escapeHtml(t("wiki.export_wiki_pdf"))}</a>
         </div>
+        ${shareCard(`${window.location.origin}${wikiPath(wiki)}`, { title: wiki.title })}
         ${wiki.pending_proposals ? `<p class="pill warn">${escapeHtml(t("wiki.pending_proposals", { n: wiki.pending_proposals }))}</p>` : ""}
         ${
           canWrite || wiki.can_delete
@@ -808,6 +810,8 @@ async function _wikiPage(root, params) {
       }
     });
   }
+
+  wireShare(root);
 
   // On a phone the page list would push the article below three screens of
   // menu and stay stuck there while scrolling: it collapses to one bar.

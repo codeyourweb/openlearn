@@ -16,6 +16,7 @@ import os
 import re
 import time
 import uuid
+from urllib.parse import quote
 
 import pytest
 
@@ -2838,6 +2839,196 @@ def test_the_wiki_of_a_questionnaire_comes_before_its_questions(browser):
         )
         assert order["cardTop"] < order["playTop"], "the wiki sits below the play buttons"
         assert order["cardTop"] < order["tabsTop"], "the wiki sits below the questions"
+        assert not [error for error in recorder.errors if "pageerror" in error], recorder.errors
+    finally:
+        context.close()
+
+
+def test_a_questionnaire_carries_its_own_qr_code_and_share_links(browser):
+    """Sharing is how a questionnaire leaves the room: a QR code, a link, the networks.
+
+    A visitor without an account can play a published questionnaire, so the QR
+    code is enough to bring someone in — no sign-up needed on the other side.
+    """
+    context, page, recorder = new_page(browser)
+    context.grant_permissions(["clipboard-read", "clipboard-write"])
+    try:
+        register_through_ui(page, f"share-{uuid.uuid4().hex[:10]}@example.org", "Share Author")
+        api = context.request
+        csrf = next(
+            (cookie["value"] for cookie in context.cookies() if cookie["name"] == "ol_csrf"), ""
+        )
+        headers = {"X-CSRF-Token": csrf}
+        created = api.post(
+            f"{BASE_URL}/api/v1/quizzes",
+            headers=headers,
+            data={
+                "title": "Share me",
+                "description": "A questionnaire worth passing on.",
+                "mode": "qcm",
+                "questions": [
+                    {
+                        "text_html": "<p>Which flag makes dig recurse?</p>",
+                        "options": [
+                            {"text": "+recurse", "is_correct": True},
+                            {"text": "+trace", "is_correct": False},
+                        ],
+                    }
+                ],
+            },
+        )
+        assert created.status == 201, created.text()
+        quiz_id = created.json()["id"]
+
+        page.goto(f"{BASE_URL}/quizzes/{quiz_id}", wait_until="networkidle")
+        card = page.locator(".share-card")
+        expect(card).to_be_visible(timeout=15000)
+
+        # Under the "About" block, as asked: facts first, then the way out.
+        order = page.evaluate(
+            """() => {
+                const about = document.querySelector('.detail-aside .card').getBoundingClientRect();
+                const share = document.querySelector('.share-card').getBoundingClientRect();
+                return { about: about.top, share: share.top };
+            }"""
+        )
+        assert order["share"] > order["about"], "the share card sits above the facts"
+
+        # A scannable QR code: one SVG path, drawn locally, with the page URL.
+        modules = page.evaluate(
+            """() => {
+                const svg = document.querySelector('.share-qr svg');
+                const path = svg && svg.querySelector('path');
+                return { found: !!path, commands: path ? (path.getAttribute('d') || '').split('M').length - 1 : 0,
+                         label: svg ? svg.getAttribute('aria-label') : null };
+            }"""
+        )
+        assert modules["found"], "no QR code was drawn"
+        assert modules["commands"] > 40, f"the QR code looks empty ({modules['commands']} modules)"
+        assert modules["label"], "the QR code has no accessible name"
+
+        expected = f"{BASE_URL}/quizzes/{quiz_id}"
+        copy_button = page.locator("[data-share-copy]")
+        assert copy_button.get_attribute("data-share-copy") == expected
+        copy_button.click()
+        page.wait_for_timeout(400)
+        # Over plain HTTP there is no `navigator.clipboard`; the module falls back
+        # to a hidden textarea, so the toast is the signal that works everywhere.
+        toast_text = page.locator("#toast-region .toast").inner_text()
+        assert "opied" in toast_text or "opié" in toast_text, toast_text
+        if page.evaluate("() => Boolean(navigator.clipboard)"):
+            copied = page.evaluate("() => navigator.clipboard.readText()")
+            assert copied == expected, f"copied {copied!r} instead of the page URL"
+
+        links = page.evaluate(
+            """() => [...document.querySelectorAll('.share-link')].map((a) => ({
+                label: a.getAttribute('title'), href: a.getAttribute('href'), target: a.getAttribute('target'),
+                rel: a.getAttribute('rel'),
+            }))"""
+        )
+        labels = {link["label"] for link in links}
+        assert {"E-mail", "WhatsApp", "LinkedIn", "X", "Facebook"} <= labels, labels
+        encoded = quote(expected, safe="")
+        for link in links:
+            assert link["target"] == "_blank" and "noopener" in (link["rel"] or ""), link
+            assert encoded in link["href"] or link["href"].startswith("mailto:"), link
+        assert not [error for error in recorder.errors if "pageerror" in error], recorder.errors
+    finally:
+        context.close()
+
+
+def test_a_wiki_carries_its_own_qr_code(browser):
+    context, page, recorder = new_page(browser)
+    try:
+        register_through_ui(page, f"wikishare-{uuid.uuid4().hex[:10]}@example.org", "Wiki Author")
+        api = context.request
+        csrf = next(
+            (cookie["value"] for cookie in context.cookies() if cookie["name"] == "ol_csrf"), ""
+        )
+        headers = {"X-CSRF-Token": csrf}
+        wiki = api.post(
+            f"{BASE_URL}/api/v1/wiki",
+            headers=headers,
+            data={"title": "Shareable wiki", "description": "A chapter worth sending."},
+        )
+        assert wiki.status == 201, wiki.text()
+        wiki_id = wiki.json()["id"]
+
+        page.goto(f"{BASE_URL}/wiki/{wiki_id}", wait_until="networkidle")
+        card = page.locator(".share-card")
+        expect(card).to_be_visible(timeout=15000)
+        assert page.locator(".share-qr svg path").count() == 1
+        # The wiki URL carries the page slug; the QR code and the copy button
+        # both point at the page the reader is on.
+        shared = page.locator("[data-share-copy]").get_attribute("data-share-copy")
+        assert shared.startswith(f"{BASE_URL}/wiki/{wiki_id}/"), shared
+        assert not [error for error in recorder.errors if "pageerror" in error], recorder.errors
+    finally:
+        context.close()
+
+
+def test_a_picture_is_shown_whole_never_cropped(browser):
+    """Uploads keep their shape; the frame adapts to the picture, not the reverse.
+
+    A diagram loses its labels and a portrait loses its head when a fixed frame
+    crops them. Every content image is letterboxed instead.
+    """
+    context, page, recorder = new_page(browser, viewport=(1440, 900))
+    try:
+        register_through_ui(page, f"crop-{uuid.uuid4().hex[:10]}@example.org", "Crop Author")
+        api = context.request
+        csrf = next(
+            (cookie["value"] for cookie in context.cookies() if cookie["name"] == "ol_csrf"), ""
+        )
+        headers = {"X-CSRF-Token": csrf}
+        portrait = api.post(
+            f"{BASE_URL}/api/v1/uploads/question-image",
+            headers=headers,
+            multipart={
+                "file": {"name": "tall.png", "mimeType": "image/png", "buffer": _picture_png(300, 700)}
+            },
+        )
+        assert portrait.status == 201, portrait.text()
+        picture = portrait.json()
+        assert picture["width"] == 300 and picture["height"] == 700, picture
+
+        quiz = api.post(
+            f"{BASE_URL}/api/v1/quizzes",
+            headers=headers,
+            data={
+                "title": "A tall picture",
+                "description": "Portrait on purpose.",
+                "mode": "qcm",
+                "questions": [
+                    {
+                        "text_html": "<p>Look at the diagram.</p>",
+                        "image_path": picture["path"],
+                        "options": [
+                            {"text": "Yes", "is_correct": True},
+                            {"text": "No", "is_correct": False},
+                        ],
+                    }
+                ],
+            },
+        )
+        assert quiz.status == 201, quiz.text()
+        quiz_id = quiz.json()["id"]
+
+        page.goto(f"{BASE_URL}/quizzes/{quiz_id}", wait_until="networkidle")
+        page.wait_for_selector(".question-image", timeout=15000)
+        measured = page.evaluate(
+            """() => {
+                const img = document.querySelector('.question-image');
+                const style = getComputedStyle(img);
+                return { fit: style.objectFit, natural: img.naturalWidth / img.naturalHeight,
+                         box: img.clientWidth / img.clientHeight, loaded: img.naturalWidth };
+            }"""
+        )
+        assert measured["loaded"] == 300, "the picture did not load"
+        assert measured["fit"] == "contain", measured
+        # 300×700 in a letterboxed box: the box is never taller than its cap and
+        # never narrower than its column, so the picture cannot be cut.
+        assert measured["box"] > measured["natural"], measured
         assert not [error for error in recorder.errors if "pageerror" in error], recorder.errors
     finally:
         context.close()

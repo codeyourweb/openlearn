@@ -12,6 +12,7 @@ import { flagStrip } from "../flags.js";
 import { confirmDialog, escapeHtml, formatDate, toast } from "../ui.js";
 import { setPageSeo, titleSlug } from "../seo.js";
 import { assessmentSection, bindAssessment } from "./quizAssessment.js";
+import { shareCard, wireShare } from "../share.js";
 
 const MODE_LABEL = {
   qcm: "editor.mode_qcm",
@@ -435,6 +436,10 @@ export async function renderQuizDetail({ id, query }) {
               <div><dt>${t("common.updated")}</dt><dd>${formatDate(quiz.updated_at)}</dd></div>
             </dl>
           </div>
+          ${shareCard(`${window.location.origin}/quizzes/${quiz.id}`, {
+            title: quiz.title,
+            hint: t("share.qr_hint_quiz"),
+          })}
           ${
             isOwner
               ? `<div class="card">
@@ -479,6 +484,7 @@ export async function renderQuizDetail({ id, query }) {
     ${isOwner && quiz.mode !== "adventure" ? assessmentSection(quiz) : ""}`;
 
   if (isOwner && quiz.mode !== "adventure") bindAssessment(root, quiz);
+  wireShare(root);
 
   // Wikis that present this questionnaire. They sit above the play buttons:
   // the questions come from a wiki, so the reading comes first.
