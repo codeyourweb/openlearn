@@ -540,7 +540,6 @@ export const en = {
   "quiz.avg_time": "Average time",
   "quiz.correct_short": "correct",
   "quiz.first_questions": "First questions",
-  "quiz.wikis_empty": "No wiki presents this questionnaire yet.",
   "quiz.host_and_play": "Host and play",
   "quiz.no_stats_hint": "Statistics appear as soon as someone has played this quiz.",
   "quiz.no_stats_yet": "No participation yet",

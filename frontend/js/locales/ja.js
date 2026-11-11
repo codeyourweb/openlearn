@@ -471,7 +471,6 @@ export const ja = {
   "quiz.avg_time": "平均回答時間",
   "quiz.correct_short": "正解",
   "quiz.first_questions": "最初の問題",
-  "quiz.wikis_empty": "この問題集を掲載しているwikiはまだありません。",
   "quiz.host_and_play": "ホストしてプレイ",
   "quiz.no_stats_hint": "誰かがこのクイズをプレイすると統計が表示されます。",
   "quiz.no_stats_yet": "参加者はいません",

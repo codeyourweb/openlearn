@@ -472,7 +472,6 @@ export const pt = {
   "quiz.avg_time": "Tempo médio",
   "quiz.correct_short": "certas",
   "quiz.first_questions": "Primeiras perguntas",
-  "quiz.wikis_empty": "Ainda nenhum wiki apresenta este questionário.",
   "quiz.host_and_play": "Animar e jogar",
   "quiz.no_stats_hint": "As estatísticas aparecerão assim que alguém jogar este quiz.",
   "quiz.no_stats_yet": "Ainda não há participações",

@@ -472,7 +472,6 @@ export const ar = {
   "quiz.avg_time": "متوسط الوقت",
   "quiz.correct_short": "صحيحة",
   "quiz.first_questions": "الأسئلة الأولى",
-  "quiz.wikis_empty": "لا يوجد ويكي يعرض هذا الاختبار بعد.",
   "quiz.host_and_play": "الإدارة واللعب",
   "quiz.no_stats_hint": "ستظهر الإحصاءات بمجرد أن يلعب أحدهم هذا الاختبار.",
   "quiz.no_stats_yet": "لا مشاركات حتى الآن",

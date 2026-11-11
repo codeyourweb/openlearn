@@ -473,7 +473,6 @@ export const fr = {
   "quiz.avg_time": "Temps moyen",
   "quiz.correct_short": "correct",
   "quiz.first_questions": "Premières questions",
-  "quiz.wikis_empty": "Aucun wiki ne présente encore ce questionnaire.",
   "quiz.host_and_play": "Animer et jouer",
   "quiz.no_stats_hint": "Les statistiques s'afficheront dès que quelqu'un aura joué à ce quiz.",
   "quiz.no_stats_yet": "Aucune participation pour le moment",

@@ -472,7 +472,6 @@ export const hi = {
   "quiz.avg_time": "औसत समय",
   "quiz.correct_short": "सही",
   "quiz.first_questions": "पहले प्रश्न",
-  "quiz.wikis_empty": "अभी कोई विकी इस प्रश्नोत्तरी को प्रस्तुत नहीं करता।",
   "quiz.host_and_play": "संचालन करें और खेलें",
   "quiz.no_stats_hint": "इस क्विज़ को कोई खेलेगा तो आँकड़े दिखेंगे।",
   "quiz.no_stats_yet": "अभी कोई भागीदारी नहीं",

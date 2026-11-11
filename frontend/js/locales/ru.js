@@ -471,7 +471,6 @@ export const ru = {
   "quiz.avg_time": "Среднее время",
   "quiz.correct_short": "правильно",
   "quiz.first_questions": "Первые вопросы",
-  "quiz.wikis_empty": "Для этого опросника еще нет вики-страниц.",
   "quiz.host_and_play": "Вести и играть",
   "quiz.no_stats_hint": "Статистика появится, как только кто-нибудь пройдет этот квиз.",
   "quiz.no_stats_yet": "Пока нет участников",

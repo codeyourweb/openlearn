@@ -471,7 +471,6 @@ export const de = {
   "quiz.avg_time": "Durchschnittliche Zeit",
   "quiz.correct_short": "korrekt",
   "quiz.first_questions": "Erste Fragen",
-  "quiz.wikis_empty": "Dieses Quiz ist noch in keinem Wiki hinterlegt.",
   "quiz.host_and_play": "Hosten und mitspielen",
   "quiz.no_stats_hint": "Statistiken erscheinen, sobald die erste Person dieses Quiz gespielt hat.",
   "quiz.no_stats_yet": "Noch keine Teilnahmen",

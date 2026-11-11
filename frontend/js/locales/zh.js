@@ -471,7 +471,6 @@ export const zh = {
   "quiz.avg_time": "平均用时",
   "quiz.correct_short": "正确",
   "quiz.first_questions": "首批问题",
-  "quiz.wikis_empty": "目前还没有 Wiki 包含此问卷。",
   "quiz.host_and_play": "主持并参与",
   "quiz.no_stats_hint": "一旦有人参与此测验，统计数据将立即显示。",
   "quiz.no_stats_yet": "暂无参与记录",

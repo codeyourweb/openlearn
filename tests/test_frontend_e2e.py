@@ -3034,6 +3034,52 @@ def test_a_picture_is_shown_whole_never_cropped(browser):
         context.close()
 
 
+def test_a_questionnaire_without_a_wiki_shows_no_reading_section(browser):
+    """No wiki attached, no « read before playing » section — for anyone.
+
+    The heading promised a chapter and the only thing under it said there was
+    none. An author does not need that reminder either: the dashboard lists the
+    wikis they own.
+    """
+    context, page, recorder = new_page(browser)
+    try:
+        register_through_ui(page, f"nowiki-{uuid.uuid4().hex[:10]}@example.org", "No Wiki Author")
+        api = context.request
+        csrf = next(
+            (cookie["value"] for cookie in context.cookies() if cookie["name"] == "ol_csrf"), ""
+        )
+        quiz = api.post(
+            f"{BASE_URL}/api/v1/quizzes",
+            headers={"X-CSRF-Token": csrf},
+            data={
+                "title": "Sans wiki",
+                "description": "Rien à lire avant.",
+                "mode": "qcm",
+                "questions": [
+                    {
+                        "text_html": "<p>Une question suffit.</p>",
+                        "options": [
+                            {"text": "Oui", "is_correct": True},
+                            {"text": "Non", "is_correct": False},
+                        ],
+                    }
+                ],
+            },
+        ).json()
+
+        page.goto(f"{BASE_URL}/quizzes/{quiz['id']}", wait_until="networkidle")
+        expect(page.locator("[data-act='solo']")).to_be_visible(timeout=15000)
+        page.wait_for_timeout(800)
+
+        assert page.locator("#quiz-wikis").count() == 1, "the section is gone from the markup"
+        assert not page.locator("#quiz-wikis").is_visible(), "an empty reading section is painted"
+        assert "À lire avant de jouer" not in page.content()
+        assert "Aucun wiki ne présente encore" not in page.content()
+        assert not [error for error in recorder.errors if "pageerror" in error], recorder.errors
+    finally:
+        context.close()
+
+
 def test_a_card_picture_is_framed_from_the_editor(browser):
     """An author frames the picture where it lives, not in an external tool.
 

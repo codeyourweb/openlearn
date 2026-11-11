@@ -497,14 +497,9 @@ export async function renderQuizDetail({ id, query }) {
     .then((payload) => {
       const wikis = payload.items || [];
       if (!wikiList) return;
-      if (!wikis.length) {
-        // An empty shelf is noise before playing; only the owner needs to know
-        // that no wiki presents this questionnaire yet.
-        if (!isOwner) return;
-        wikiList.innerHTML = `<p class="muted small">${escapeHtml(t("quiz.wikis_empty"))}</p>`;
-        if (wikiCard) wikiCard.hidden = false;
-        return;
-      }
+      // No wiki, no section: an empty shelf tells a reader the reading they
+      // came for does not exist, and its heading promises a chapter anyway.
+      if (!wikis.length) return;
       wikiList.innerHTML = wikis
         .map(
           (wiki) => `

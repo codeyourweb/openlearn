@@ -472,7 +472,6 @@ export const bn = {
   "quiz.avg_time": "গড় সময়",
   "quiz.correct_short": "সঠিক",
   "quiz.first_questions": "প্রথম প্রশ্নগুলো",
-  "quiz.wikis_empty": "এখনো কোনো উইকি এই প্রশ্নাবলি উপস্থাপন করে না।",
   "quiz.host_and_play": "পরিচালনা ও খেলা",
   "quiz.no_stats_hint": "কেউ এই কুইজ খেললেই পরিসংখ্যান দেখা যাবে।",
   "quiz.no_stats_yet": "এখনো কোনো অংশগ্রহণ নেই",
