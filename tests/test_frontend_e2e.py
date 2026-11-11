@@ -386,6 +386,50 @@ def test_register_create_and_play_solo(browser):
         context.close()
 
 
+def test_the_report_pill_never_covers_the_answer_button(browser):
+    """A quiz being answered owns the bottom of a narrow screen."""
+    context, page, recorder = new_page(browser, (390, 844))
+    try:
+        email = f"pill-{uuid.uuid4().hex[:8]}@example.com"
+        register_through_ui(page, email, "Pill Tester")
+        quiz_id = create_quiz_through_editor(page, "Fleuves de France")
+        page.goto(f"{BASE_URL}/quizzes/{quiz_id}", wait_until="networkidle")
+        expect(page.locator("#report-problem-floating")).to_be_visible()
+
+        page.locator('button[data-act="solo"]').first.click()
+        expect(page).to_have_url(re.compile(r".*/play/[A-Z0-9]+$"), timeout=15000)
+        expect(page.locator(".question-card")).to_be_visible(timeout=15000)
+        expect(page.locator('[data-act="submit"]')).to_be_visible()
+        expect(page.locator("#report-problem-floating")).to_be_hidden()
+        assert recorder.errors == [], f"frontend errors: {recorder.errors}"
+    finally:
+        context.close()
+
+
+def test_the_report_pill_stays_clear_of_the_column_on_a_wide_screen(browser):
+    context, page, recorder = new_page(browser, (1440, 900))
+    try:
+        email = f"pill-{uuid.uuid4().hex[:8]}@example.com"
+        register_through_ui(page, email, "Pill Tester")
+        quiz_id = create_quiz_through_editor(page, "Fleuves de France")
+        page.goto(f"{BASE_URL}/quizzes/{quiz_id}", wait_until="networkidle")
+        page.locator('button[data-act="solo"]').first.click()
+        expect(page.locator('[data-act="submit"]')).to_be_visible(timeout=15000)
+
+        pill = page.locator("#report-problem-floating")
+        expect(pill).to_be_visible()
+        pill_box = pill.bounding_box()
+        card_box = page.locator(".question-card").bounding_box()
+        assert pill_box and card_box
+        assert pill_box["x"] >= card_box["x"] + card_box["width"], (
+            f"pill starts at {pill_box['x']}, the question column ends at "
+            f"{card_box['x'] + card_box['width']}"
+        )
+        assert recorder.errors == [], f"frontend errors: {recorder.errors}"
+    finally:
+        context.close()
+
+
 def test_live_session_with_guest_and_join_lock(browser):
     host_context, host_page, host_errors = new_page(browser)
     guest_context, guest_page, guest_errors = new_page(browser, (900, 800))

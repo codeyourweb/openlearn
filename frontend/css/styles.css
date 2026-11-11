@@ -1521,6 +1521,17 @@ pre code { background: none; padding: 0; }
   color: var(--accent-text);
 }
 
+/* A quiz being answered owns the bottom of the screen: the pill landed exactly
+   on the button that validates an answer once the column grew narrow enough to
+   sit under it. Reporting is still one scroll away, in the footer, and the pill
+   comes back with the results. */
+@media (max-width: 1300px) {
+  body[data-route^="/play"] .report-pill,
+  body[data-route^="/host"] .report-pill {
+    display: none;
+  }
+}
+
 .report-pill-icon {
   font-size: .95rem;
   line-height: 1;

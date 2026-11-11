@@ -83,6 +83,9 @@ export async function render() {
   const app = document.getElementById("app");
   if (!app) return;
   const { pathname, search } = location;
+  /* The route names the screen, so a style or a behaviour can be scoped to it
+     without every page carrying a class of its own. */
+  document.body.dataset.route = pathname;
   const found = matchRoute(pathname);
   const query = Object.fromEntries(new URLSearchParams(search));
   app.innerHTML = '<div class="loading">Loading…</div>';
