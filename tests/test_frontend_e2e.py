@@ -386,15 +386,16 @@ def test_register_create_and_play_solo(browser):
         context.close()
 
 
-def test_the_report_pill_never_covers_the_answer_button(browser):
-    """A quiz being answered owns the bottom of a narrow screen."""
+def test_the_report_pill_keeps_out_of_the_way_on_a_phone(browser):
+    """On a phone the footer link reports; the floating pill would sit on controls."""
     context, page, recorder = new_page(browser, (390, 844))
     try:
         email = f"pill-{uuid.uuid4().hex[:8]}@example.com"
         register_through_ui(page, email, "Pill Tester")
         quiz_id = create_quiz_through_editor(page, "Fleuves de France")
         page.goto(f"{BASE_URL}/quizzes/{quiz_id}", wait_until="networkidle")
-        expect(page.locator("#report-problem-floating")).to_be_visible()
+        expect(page.locator("#report-problem-floating")).to_be_hidden()
+        expect(page.locator("footer a[data-report]")).to_be_visible()
 
         page.locator('button[data-act="solo"]').first.click()
         expect(page).to_have_url(re.compile(r".*/play/[A-Z0-9]+$"), timeout=15000)

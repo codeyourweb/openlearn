@@ -1521,13 +1521,11 @@ pre code { background: none; padding: 0; }
   color: var(--accent-text);
 }
 
-/* A quiz being answered owns the bottom of the screen: the pill landed exactly
-   on the button that validates an answer once the column grew narrow enough to
-   sit under it. Reporting is still one scroll away, in the footer, and the pill
-   comes back with the results. */
+/* A floating pill needs a margin to live in. Below this width the layout has
+   none: it sat on the button that validates an answer, on the catalogue's
+   filters and on other controls, so the footer link carries reporting there. */
 @media (max-width: 1300px) {
-  body[data-route^="/play"] .report-pill,
-  body[data-route^="/host"] .report-pill {
+  .report-pill {
     display: none;
   }
 }
