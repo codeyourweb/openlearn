@@ -231,6 +231,9 @@ class Question(Base):
     text_html: Mapped[str] = mapped_column(Text)
     text_translations: Mapped[dict[str, str]] = mapped_column(JSON, default=dict)
     image_path: Mapped[str | None] = mapped_column(String(200))
+    # {"x", "y", "zoom"} — how the author framed the picture; empty means the
+    # whole image, letterboxed.
+    image_framing: Mapped[dict[str, float]] = mapped_column(JSON, default=dict)
     time_limit_seconds: Mapped[int] = mapped_column(Integer, default=30)
     points: Mapped[int] = mapped_column(Integer, default=100)
     # Polls have no answer key to infer "several answers allowed" from, so the
@@ -341,6 +344,8 @@ class SessionQuestion(Base):
     # not a stale one.
     text_translations: Mapped[dict[str, str]] = mapped_column(JSON, default=dict)
     image_path: Mapped[str | None] = mapped_column(String(200))
+    # Frozen with the wording: a run keeps the framing it started with.
+    image_framing: Mapped[dict[str, float]] = mapped_column(JSON, default=dict)
     time_limit_seconds: Mapped[int] = mapped_column(Integer)
     points: Mapped[int] = mapped_column(Integer, default=100)
     allow_multiple: Mapped[bool] = mapped_column(Boolean, default=False)
@@ -454,6 +459,7 @@ class AdventureNode(Base):
     text_html: Mapped[str] = mapped_column(Text, default="")
     text_translations: Mapped[dict[str, str]] = mapped_column(JSON, default=dict)
     image_path: Mapped[str | None] = mapped_column(String(200))
+    image_framing: Mapped[dict[str, float]] = mapped_column(JSON, default=dict)
     background_path: Mapped[str | None] = mapped_column(String(200))
     pos_x: Mapped[int] = mapped_column(Integer, default=0)
     pos_y: Mapped[int] = mapped_column(Integer, default=0)
@@ -912,6 +918,9 @@ class RevisionCard(Base):
     # Both faces can carry one: a card may be a picture on each side.
     image_path: Mapped[str | None] = mapped_column(String(200))
     back_image_path: Mapped[str | None] = mapped_column(String(200))
+    # How each face frames its picture: a card is 2:3, a photo rarely is.
+    image_framing: Mapped[dict[str, float]] = mapped_column(JSON, default=dict)
+    back_image_framing: Mapped[dict[str, float]] = mapped_column(JSON, default=dict)
     # "manual" | "wiki" | "quiz" — kept for the author's sake, not for logic.
     source: Mapped[str] = mapped_column(String(10), default="manual")
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)

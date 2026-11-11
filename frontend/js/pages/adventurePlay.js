@@ -4,6 +4,7 @@
 
 import { api } from "../api.js";
 import { currentLanguage, t } from "../i18n.js";
+import { framingAttr, paintFraming } from "../imageFrame.js";
 import { navigate } from "../router.js";
 import { escapeHtml, toast } from "../ui.js";
 
@@ -72,7 +73,7 @@ function nodeView(state) {
   const node = state.node;
   return `
     <section class="adv-scene">
-      ${node.image_path ? `<img class="adv-image" src="${escapeHtml(node.image_path)}" alt="" loading="lazy" />` : ""}
+      ${node.image_path ? `<img class="adv-image" src="${escapeHtml(node.image_path)}" alt="" loading="lazy"${framingAttr(node.image_framing)} />` : ""}
       <div class="adv-body">
         <div class="adv-text">${/* already sanitised server-side */ node.text_html}</div>
         <div class="adv-choices" role="group" aria-label="${t("adventure.choices")}">
@@ -107,12 +108,11 @@ function endingView(state, quizId) {
     <section class="adv-ending ${kind}${ending.background_path ? " has-bg" : ""}"${ending.background_path ? ` data-background="${escapeHtml(ending.background_path)}"` : ""}>
       ${
         ending.image_path
-          ? `<img class="adv-image" src="${escapeHtml(ending.image_path)}" alt="" loading="eager" />`
+          ? `<img class="adv-image" src="${escapeHtml(ending.image_path)}" alt="" loading="eager"${framingAttr(ending.image_framing)} />`
           : ""
       }
       <div class="adv-ending-body">
         <span class="adv-ending-kind">${escapeHtml(labels[kind] || kind)}</span>
-        <h1 class="adv-ending-title">${escapeHtml(t("adventure.the_end"))}</h1>
         ${
           ending.scene_html
             ? `<div class="adv-text adv-ending-scene">${ending.scene_html}</div>`
@@ -213,6 +213,7 @@ export async function renderAdventurePlay({ id }) {
       ${finished ? "" : attributesBar(state, deltas)}
     `;
     applyDynamicStyles(root);
+    paintFraming(root);
 
     // A new scene starts at the top of the page: the reader clicked at the
     // bottom of the previous one. The focus follows so that a screen reader
@@ -221,7 +222,9 @@ export async function renderAdventurePlay({ id }) {
     const sceneKey = finished ? "ending" : (state.node && state.node.key) || "";
     if (lastScene !== null && lastScene !== sceneKey) {
       window.scrollTo({ top: 0, left: 0, behavior: "auto" });
-      const arrival = root.querySelector(finished ? ".adv-ending-title" : ".adv-text");
+      const arrival = root.querySelector(
+        finished ? ".adv-ending-scene, .adv-ending-closing, .adv-ending" : ".adv-text",
+      );
       if (arrival) {
         arrival.setAttribute("tabindex", "-1");
         arrival.focus({ preventScroll: true });

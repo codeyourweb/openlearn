@@ -3,6 +3,8 @@
 /* Quiz editor: metadata, mode, WYSIWYG questions, translations, publication and AI. */
 
 import { api, keepaliveRequest, uploadImage } from "../api.js";
+import { openFramingEditor } from "../framingEditor.js";
+import { framingAttr, paintFraming } from "../imageFrame.js";
 import { LANGUAGES, currentLanguage, languageLabel, t } from "../i18n.js";
 import { navigate } from "../router.js";
 import { isLoggedIn } from "../store.js";
@@ -69,6 +71,7 @@ function toModel(quiz) {
       text_html: question.text_html,
       translations: question.translations || {},
       image_path: question.image_path,
+      image_framing: question.image_framing || null,
       time_limit_seconds: question.time_limit_seconds,
       points: question.points || 100,
       multiple: Boolean(question.allow_multiple ?? question.multiple_answers),
@@ -208,12 +211,25 @@ function questionCard(question, index, model) {
           <label class="label">${t("editor.image")} (${t("common.optional")})</label>
           <div class="row">
             <button type="button" class="btn btn-sm" data-act="upload-image">${question.image_path ? t("action.remove") : t("action.upload")}</button>
+            ${
+              question.image_path
+                ? `<button type="button" class="btn btn-sm btn-ghost" data-act="frame-image">${escapeHtml(
+                    t("framing.edit"),
+                  )}</button>`
+                : ""
+            }
             ${question.image_path ? `<button type="button" class="btn btn-sm btn-ghost" data-act="remove-image">${t("editor.remove_image")}</button>` : ""}
           </div>
         </div>
       </div>
 
-      ${question.image_path ? `<div class="image-preview"><img src="${escapeHtml(question.image_path)}" alt="" /></div>` : ""}
+      ${
+        question.image_path
+          ? `<div class="image-preview clip-frame"><img src="${escapeHtml(question.image_path)}" alt=""${framingAttr(
+              question.image_framing,
+            )} /></div>`
+          : ""
+      }
 
       <div class="options-editor">
         ${question.options.map((_, optionIndex) => optionRow(question, index, optionIndex, model.mode)).join("")}
@@ -365,6 +381,7 @@ export async function renderEditor({ id, mode, variant }) {
 
       <div class="tabs mt-2">
         <button class="tab ${tab === "content" ? "active" : ""}" data-tab="content">${t("editor.tab_content")}</button>
+        <button class="tab ${tab === "preview" ? "active" : ""}" data-tab="preview">${t("editor.tab_preview")}</button>
         <button class="tab ${tab === "publish" ? "active" : ""}" data-tab="publish">${t("editor.tab_publish")}</button>
       </div>
 
@@ -372,7 +389,9 @@ export async function renderEditor({ id, mode, variant }) {
 
     const body = root.querySelector("#tab-body");
     if (tab === "content") body.appendChild(contentTab());
+    else if (tab === "preview") body.appendChild(previewTab());
     else body.appendChild(publishTab());
+    paintFraming(root);
     root.querySelector("#save-quiz").addEventListener("click", save);
     paintSaveState(dirty ? "pending" : autosavedAt ? "saved" : "idle");
     root.querySelectorAll("[data-tab]").forEach((button) => {
@@ -699,6 +718,140 @@ export async function renderEditor({ id, mode, variant }) {
   const drawQuestions = (section) => {
     questionsHost = section.querySelector("#questions");
     questionsHost.innerHTML = model.questions.map((question, index) => questionCard(question, index, model)).join("");
+  };
+
+
+  /* A draft is only worth writing if you can see it: this tab plays the
+     questionnaire with what is on screen right now, without saving anything and
+     without going back to the list to start a test run. */
+  const previewTab = () => {
+    syncFromDom();
+    const section = document.createElement("section");
+    const questions = model.questions.filter(
+      (question) =>
+        htmlToText(question.text_html || "").trim() || question.image_path || question.options.length,
+    );
+    let index = 0;
+    let picked = [];
+    let revealed = false;
+
+    const optionLabel = (question, position) => {
+      if (model.mode === "swipe") return t(position === 0 ? "editor.swipe_yes" : "editor.swipe_no");
+      return question.options[position].text || t("editor.answer_n", { n: position + 1 });
+    };
+
+    const draw = () => {
+      if (!questions.length) {
+        section.innerHTML = `
+          <div class="empty">
+            <h2>${escapeHtml(t("editor.preview_empty"))}</h2>
+            <p class="muted">${escapeHtml(t("editor.preview_empty_hint"))}</p>
+          </div>`;
+        return;
+      }
+      index = Math.min(Math.max(0, index), questions.length - 1);
+      const question = questions[index];
+      const multiple = Boolean(question.multiple) && model.mode === "qcm";
+      const isPoll = model.mode === "poll";
+      const options = question.options
+        .map((option, position) => {
+          const selected = picked.includes(position);
+          const state = revealed ? (option.is_correct ? " correct" : " wrong") : "";
+          return `
+            <button type="button" class="preview-option${selected ? " chosen" : ""}${isPoll ? "" : state}"
+                    data-option="${position}" aria-pressed="${selected}">
+              <span class="opt-marker ${multiple ? "checkbox" : "radio"}" aria-hidden="true"></span>
+              <span>${escapeHtml(optionLabel(question, position))}</span>
+            </button>`;
+        })
+        .join("");
+
+      section.innerHTML = `
+        <div class="card preview-card">
+          <div class="card-head">
+            <h2>${escapeHtml(t("editor.preview_title"))}</h2>
+            <span class="badge muted">${escapeHtml(t("editor.preview_draft_badge"))}</span>
+          </div>
+          <p class="hint">${escapeHtml(t("editor.preview_lead"))}</p>
+
+          <div class="question-card preview-question">
+            <div class="row between">
+              <span class="badge">${escapeHtml(
+                t("play.question_of", { n: index + 1, total: questions.length }),
+              )}</span>
+              ${isPoll ? `<span class="badge muted">${escapeHtml(t("editor.preview_poll"))}</span>` : ""}
+            </div>
+            ${
+              htmlToText(question.text_html || "").trim()
+                ? `<div class="question-text">${sanitizeHtml(question.text_html)}</div>`
+                : ""
+            }
+            ${
+              question.image_path
+                ? `<img class="question-image" src="${escapeHtml(question.image_path)}" alt=""${framingAttr(
+                    question.image_framing,
+                  )} />`
+                : ""
+            }
+            <div class="preview-options" role="group">${options}</div>
+          </div>
+
+          <div class="row between mt-2">
+            <button type="button" class="btn btn-sm" data-act="preview-prev" ${index === 0 ? "disabled" : ""}>
+              ← ${escapeHtml(t("action.previous"))}
+            </button>
+            <div class="row">
+              ${
+                isPoll
+                  ? ""
+                  : `<button type="button" class="btn btn-sm btn-ghost" data-act="preview-reveal">
+                       ${escapeHtml(revealed ? t("editor.preview_hide") : t("editor.preview_reveal"))}
+                     </button>`
+              }
+              <button type="button" class="btn btn-sm btn-primary" data-act="preview-next"
+                      ${index >= questions.length - 1 ? "disabled" : ""}>
+                ${escapeHtml(t("action.next"))} →
+              </button>
+            </div>
+          </div>
+          ${revealed && !isPoll ? `<p class="hint">${escapeHtml(t("editor.preview_revealed"))}</p>` : ""}
+        </div>`;
+
+      section.querySelectorAll("[data-option]").forEach((button) => {
+        button.addEventListener("click", () => {
+          if (revealed) return;
+          const position = Number(button.dataset.option);
+          if (multiple) {
+            picked = picked.includes(position)
+              ? picked.filter((value) => value !== position)
+              : [...picked, position];
+          } else {
+            picked = [position];
+          }
+          draw();
+        });
+      });
+      section.querySelector('[data-act="preview-prev"]')?.addEventListener("click", () => {
+        index -= 1;
+        picked = [];
+        revealed = false;
+        draw();
+      });
+      section.querySelector('[data-act="preview-next"]')?.addEventListener("click", () => {
+        index += 1;
+        picked = [];
+        revealed = false;
+        draw();
+      });
+      section.querySelector('[data-act="preview-reveal"]')?.addEventListener("click", () => {
+        revealed = !revealed;
+        draw();
+      });
+      paintFraming(section);
+    };
+
+    draw();
+    return section;
   };
 
   const publishTab = () => {
@@ -1157,9 +1310,26 @@ export async function renderEditor({ id, mode, variant }) {
       input.click();
       return;
     }
+    if (action === "frame-image") {
+      syncFromDom();
+      const question = model.questions[index];
+      if (!question || !question.image_path) return;
+      const chosen = await openFramingEditor({
+        src: question.image_path,
+        aspect: 4 / 3,
+        framing: question.image_framing || null,
+        label: t("editor.image"),
+      });
+      if (chosen === undefined) return;
+      question.image_framing = chosen;
+      markDirty();
+      shell();
+      return;
+    }
     if (action === "remove-image") {
       syncFromDom();
       model.questions[index].image_path = null;
+      model.questions[index].image_framing = null;
       markDirty();
       shell();
       return;

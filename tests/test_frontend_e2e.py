@@ -3032,3 +3032,233 @@ def test_a_picture_is_shown_whole_never_cropped(browser):
         assert not [error for error in recorder.errors if "pageerror" in error], recorder.errors
     finally:
         context.close()
+
+
+def test_a_card_picture_is_framed_from_the_editor(browser):
+    """An author frames the picture where it lives, not in an external tool.
+
+    The editor shows the card's real shape, the author drags the picture and
+    zooms, and what the deck then paints is that exact window: same values, same
+    CSS. Nothing is cropped behind the author's back.
+    """
+    context, page, recorder = new_page(browser, viewport=(1440, 900))
+    try:
+        register_through_ui(page, f"framing-{uuid.uuid4().hex[:10]}@example.org", "Framing Author")
+        api = context.request
+        csrf = next(
+            (cookie["value"] for cookie in context.cookies() if cookie["name"] == "ol_csrf"), ""
+        )
+        headers = {"X-CSRF-Token": csrf}
+        uploaded = api.post(
+            f"{BASE_URL}/api/v1/uploads/image",
+            headers=headers,
+            multipart={
+                "file": {"name": "tall.png", "mimeType": "image/png", "buffer": _picture_png(300, 700)}
+            },
+        )
+        assert uploaded.status == 201, uploaded.text()
+        picture = uploaded.json()["path"]
+        deck = api.post(
+            f"{BASE_URL}/api/v1/decks",
+            headers=headers,
+            data={"title": "Cadrage", "aspect": "2:3"},
+        ).json()
+        api.post(
+            f"{BASE_URL}/api/v1/decks/{deck['id']}/cards",
+            headers=headers,
+            data={"front_md": "", "back_md": "Le fond", "image_path": picture},
+        )
+
+        page.goto(f"{BASE_URL}/cards/{deck['id']}", wait_until="networkidle")
+        card = page.locator(".revision-card").first
+        expect(card).to_be_visible(timeout=15000)
+
+        # The picture is whole to begin with: no framing stored, no cropping.
+        stored_front = api.get(f"{BASE_URL}/api/v1/decks/{deck['id']}").json()["cards"][0]
+        assert stored_front["image_framing"] is None
+
+        # The edit button only shows on hover, under the card's two faces.
+        card.hover()
+        page.locator(f"[data-edit='{stored_front['id']}']").click(force=True)
+        frame_button = page.locator("#deck-image-frame")
+        expect(frame_button).to_be_visible(timeout=15000)
+        frame_button.click()
+
+        modal = page.locator(".framing-modal")
+        expect(modal).to_be_visible(timeout=10000)
+        stage = page.locator(".framing-box")
+        box = stage.bounding_box()
+        assert box and box["width"] > 100, box
+
+        # Drag the picture down and to the left, then zoom in.
+        page.mouse.move(box["x"] + box["width"] / 2, box["y"] + box["height"] / 2)
+        page.mouse.down()
+        page.mouse.move(box["x"] + box["width"] / 2 + 60, box["y"] + box["height"] / 2 + 40, steps=8)
+        page.mouse.up()
+        page.locator(".framing-modal input[type=range]").fill("1.8")
+        page.locator('[data-action="save"]').click()
+        expect(modal).to_be_hidden(timeout=10000)
+
+        page.locator("#deck-card-form button[type=submit]").click()
+        page.wait_for_timeout(1500)
+
+        card_json = api.get(f"{BASE_URL}/api/v1/decks/{deck['id']}").json()["cards"][0]
+        framing = card_json["image_framing"]
+        assert framing, card_json
+        assert framing["zoom"] == 1.8, framing
+        assert framing["x"] != 50 or framing["y"] != 50, framing
+
+        # The deck paints exactly that framing, through CSS variables.
+        painted = page.evaluate(
+            """() => {
+                const img = document.querySelector('.revision-card-image');
+                const style = getComputedStyle(img);
+                return { framed: img.classList.contains('is-framed'), fit: style.objectFit,
+                         x: img.style.getPropertyValue('--frame-x'),
+                         y: img.style.getPropertyValue('--frame-y'),
+                         zoom: img.style.getPropertyValue('--frame-zoom') };
+            }"""
+        )
+        assert painted["framed"] is True, painted
+        assert painted["fit"] == "cover", painted
+        assert painted["zoom"] == "1.8", painted
+        assert abs(float(painted["x"].rstrip("%")) - framing["x"]) < 0.2, painted
+        assert abs(float(painted["y"].rstrip("%")) - framing["y"]) < 0.2, painted
+        assert not [error for error in recorder.errors if "pageerror" in error], recorder.errors
+    finally:
+        context.close()
+
+
+def test_the_editor_previews_the_draft_without_publishing_it(browser):
+    """A draft has to be testable where it is written.
+
+    The preview tab plays the questionnaire as it stands on screen: no version,
+    no session, nothing published. Without it the author had to leave the
+    editor, find the questionnaire in the list and start a run to see a typo.
+    """
+    context, page, recorder = new_page(browser)
+    try:
+        register_through_ui(page, f"preview-{uuid.uuid4().hex[:10]}@example.org", "Preview Author")
+        api = context.request
+        csrf = next(
+            (cookie["value"] for cookie in context.cookies() if cookie["name"] == "ol_csrf"), ""
+        )
+        headers = {"X-CSRF-Token": csrf}
+        quiz = api.post(
+            f"{BASE_URL}/api/v1/quizzes",
+            headers=headers,
+            data={
+                "title": "Brouillon à relire",
+                "description": "Pas encore publié.",
+                "mode": "qcm",
+                "questions": [
+                    {
+                        "text_html": "<p>Quel drapeau force dig à récurser ?</p>",
+                        "options": [
+                            {"text": "+recurse", "is_correct": True},
+                            {"text": "+trace", "is_correct": False},
+                        ],
+                    },
+                    {
+                        "text_html": "<p>Et quel drapeau montre le chemin ?</p>",
+                        "options": [
+                            {"text": "+trace", "is_correct": True},
+                            {"text": "+short", "is_correct": False},
+                        ],
+                    },
+                ],
+            },
+        ).json()
+
+        page.goto(f"{BASE_URL}/quizzes/{quiz['id']}/edit", wait_until="networkidle")
+        page.click('[data-tab="preview"]')
+
+        card = page.locator(".preview-card")
+        expect(card).to_be_visible(timeout=15000)
+        assert "Quel drapeau force dig" in card.inner_text()
+        assert page.locator(".preview-option").count() == 2
+
+        # The author can check their own answers, then walk to the next question.
+        page.locator('.preview-option:has-text("+recurse")').click()
+        page.locator('[data-act="preview-reveal"]').click()
+        assert page.locator(".preview-option.correct").count() >= 1
+        page.locator('[data-act="preview-next"]').click()
+        page.wait_for_timeout(300)
+        assert "Et quel drapeau montre le chemin" in page.locator(".preview-card").inner_text()
+
+        # Nothing was published, no version was cut, no session was created.
+        detail = api.get(f"{BASE_URL}/api/v1/quizzes/{quiz['id']}").json()
+        assert detail["status"] == "draft", detail.get("status")
+        assert not detail.get("versions"), "a preview must not create a version"
+        assert not [error for error in recorder.errors if "pageerror" in error], recorder.errors
+    finally:
+        context.close()
+
+
+def test_an_ending_is_the_scene_its_author_wrote(browser):
+    """No « Fin » heading over the closing card: the tooltip says what it is.
+
+    The heading stole the first line of the scene, and an author who wrote the
+    ending's words had to fight it. The card now opens on the picture and the
+    text alone.
+    """
+    context, page, recorder = new_page(browser)
+    try:
+        register_through_ui(page, f"ending-title-{uuid.uuid4().hex[:10]}@example.org", "Ending Author")
+        api = context.request
+        csrf = next(
+            (cookie["value"] for cookie in context.cookies() if cookie["name"] == "ol_csrf"), ""
+        )
+        quiz = api.post(
+            f"{BASE_URL}/api/v1/quizzes",
+            headers={"X-CSRF-Token": csrf},
+            data={
+                "title": "Sans titre de fin",
+                "description": "La fin parle d'elle-même.",
+                "mode": "adventure",
+                "is_public": False,
+                "adventure": {
+                    "start": "start",
+                    "death_text_html": "<p>Perdu.</p>",
+                    "victory_text_html": "<p>Gagné.</p>",
+                    "attributes": [
+                        {"key": "hope", "label": "Espoir", "initial_value": 3, "min_value": 0, "max_value": 10}
+                    ],
+                    "nodes": [
+                        {
+                            "key": "start",
+                            "kind": "question",
+                            "text_html": "<p>La nuit tombe.</p>",
+                            "pos_x": 0,
+                            "pos_y": 0,
+                            "choices": [
+                                {"key": "go", "text": "Avancer", "target": "end",
+                                 "effects": [{"attribute": "hope", "delta": 1}]},
+                                {"key": "stop", "text": "Attendre", "target": "end",
+                                 "effects": [{"attribute": "hope", "delta": 0}]},
+                            ],
+                        },
+                        {
+                            "key": "end",
+                            "kind": "ending",
+                            "text_html": "<p>L'étoile brille au-dessus du toit.</p>",
+                            "pos_x": 300,
+                            "pos_y": 0,
+                            "choices": [],
+                            "outcomes": [
+                                {"kind": "default", "text_html": "<p>Fin de l'histoire.</p>", "priority": 9}
+                            ],
+                        },
+                    ],
+                },
+            },
+        ).json()
+
+        page.goto(f"{BASE_URL}/adventures/{quiz['id']}/play", wait_until="networkidle")
+        page.locator(".adv-choice").first.click()
+        expect(page.locator(".adv-ending")).to_be_visible(timeout=15000)
+        assert page.locator(".adv-ending-title").count() == 0, "the « Fin » heading is back"
+        assert "L'étoile brille" in page.locator(".adv-ending").inner_text()
+        assert not [error for error in recorder.errors if "pageerror" in error], recorder.errors
+    finally:
+        context.close()

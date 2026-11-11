@@ -63,10 +63,14 @@ _COLUMNS: dict[str, dict[str, str]] = {
     "questions": {
         "text_translations": "JSON",
         "allow_multiple": "BOOLEAN NOT NULL DEFAULT 0",
+        # {"x", "y", "zoom"}: how the author framed the picture in its frame.
+        "image_framing": "JSON",
     },
     "options": {"text_translations": "JSON"},
     "session_questions": {
         "allow_multiple": "BOOLEAN NOT NULL DEFAULT 0",
+        # Frozen with the wording: a run keeps the framing it started with.
+        "image_framing": "JSON",
         # Translations frozen with the snapshot, so a run can change language
         # without restarting.
         "text_translations": "JSON",
@@ -96,6 +100,13 @@ _COLUMNS: dict[str, dict[str, str]] = {
     "revision_cards": {
         # A picture on the back as well: some decks are two-sided illustrations.
         "back_image_path": "VARCHAR(200)",
+        # How the author framed each face: {"x": 0-100, "y": 0-100, "zoom": 1-3}.
+        "image_framing": "JSON",
+        "back_image_framing": "JSON",
+    },
+    "adventure_nodes": {
+        # The same framing, on the scene illustration.
+        "image_framing": "JSON",
     },
 }
 

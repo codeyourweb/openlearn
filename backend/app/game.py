@@ -16,6 +16,7 @@ from sqlalchemy import func, select
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session as OrmSession
 
+from .framing import framing_payload
 from .models import (
     Answer,
     GameSession,
@@ -113,6 +114,7 @@ def create_session(
                     "text_html": resolve_text(wrapped_question, None, "text", "text_html"),
                     "translations": dict(question.get("translations") or {}),
                     "image_path": question["image_path"],
+                    "image_framing": question.get("image_framing") or {},
                     "time_limit_seconds": question["time_limit_seconds"],
                     "points": question["points"],
                     "multiple": bool(question.get("multiple")),
@@ -140,6 +142,7 @@ def create_session(
                 "text_html": question.text_html,
                 "translations": dict(question.text_translations or {}),
                 "image_path": question.image_path,
+                "image_framing": question.image_framing or {},
                 "time_limit_seconds": question.time_limit_seconds,
                 "points": question.points,
                 "multiple": bool(question.multiple_answers),
@@ -199,6 +202,7 @@ def create_session(
             text_html=question["text_html"],
             text_translations=question.get("translations") or {},
             image_path=question["image_path"],
+            image_framing=question.get("image_framing") or {},
             time_limit_seconds=question["time_limit_seconds"],
             points=question["points"],
             allow_multiple=bool(question.get("multiple")),
@@ -549,6 +553,7 @@ def build_state(db: OrmSession, session: GameSession) -> dict[str, Any]:
             # another language without asking the server for a new run.
             "translations": dict(question.text_translations or {}),
             "image_path": question.image_path,
+            "image_framing": framing_payload(question.image_framing),
             "time_limit_seconds": question.time_limit_seconds,
             "points": question.points,
             "multiple_answers": (
@@ -673,6 +678,7 @@ def results_payload(
                 "text_html": _spoken(question, "text_html", language),
                 "translations": dict(question.text_translations or {}),
                 "image_path": question.image_path,
+                "image_framing": framing_payload(question.image_framing),
                 "time_limit_seconds": question.time_limit_seconds,
                 "points": question.points,
                 "options": [

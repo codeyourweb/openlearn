@@ -843,16 +843,17 @@ pre code { background: none; padding: 0; }
   border-bottom: 1px solid var(--border);
 }
 .adv-ending-closing { border-top: 1px dashed var(--border); padding-top: 14px; }
+/* No "The end" headline: the badge already says how the story closes, and the
+   screen belongs to whatever the author wrote there. */
+.adv-ending-scene { margin-top: 4px; }
 .adv-ending.has-bg .adv-ending-closing { border-color: rgba(226, 232, 240, 0.28); }
 .adv-ending.has-bg { color: #eef3fb; }
-.adv-ending.has-bg .adv-ending-title { color: #ffffff; }
 .adv-ending.has-bg .adv-ending-kind { color: rgba(226, 232, 240, 0.78); border-color: rgba(226, 232, 240, 0.35); }
 .adv-ending.has-bg .adv-ending-sub,
 .adv-ending.has-bg .adv-stat-label { color: rgba(226, 232, 240, 0.72); }
 .adv-ending.has-bg .adv-stat-track { background: rgba(255, 255, 255, 0.14); border-color: rgba(255, 255, 255, 0.22); }
 .adv-ending.has-bg .adv-text p { color: #e7edf7; }
 .adv-ending-kind { justify-self: start; font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); border: 1px solid var(--border); border-radius: 999px; padding: 3px 10px; }
-.adv-ending-title { margin: 0; font-size: 30px; }
 .adv-ending-sub { margin: 6px 0 0; font-size: 13px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
 
 /* -------------------------------------------------------------------------- */
@@ -4389,3 +4390,52 @@ html[data-demo="off"] [data-nav="about"] { display: none !important; }
   padding: 0 0.4rem;
   font-weight: 600;
 }
+
+/* ── Framing a picture inside its area ───────────────────────────────────────
+   A picture with a framing fills its box and is cropped there; the author
+   chose the focus point and the zoom. Without one, nothing changes: the whole
+   picture is shown, letterboxed. */
+.is-framed {
+  object-fit: cover;
+  object-position: var(--frame-x, 50%) var(--frame-y, 50%);
+  transform: scale(var(--frame-zoom, 1));
+  transform-origin: var(--frame-x, 50%) var(--frame-y, 50%);
+}
+.clip-frame { overflow: hidden; }
+
+.framing-modal { width: min(46rem, 94vw); }
+.framing-stage {
+  position: relative; display: flex; align-items: center; justify-content: center;
+  padding: 1.1rem; border-radius: var(--radius); background: var(--surface-2);
+}
+.framing-stage:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.framing-box {
+  position: relative; width: 100%; max-height: 52vh; overflow: hidden;
+  border-radius: var(--radius-sm); cursor: grab; touch-action: none;
+  background: var(--surface);
+  box-shadow: 0 0 0 1px var(--border);
+}
+.framing-box:active { cursor: grabbing; }
+.framing-box > img { display: block; width: 100%; height: 100%; user-select: none; pointer-events: none; }
+/* The dashed guide stands for the edges of the area the reader will see. */
+.framing-guide {
+  position: absolute; inset: 1.1rem; border: 1px dashed var(--border-strong, var(--border));
+  border-radius: var(--radius-sm); pointer-events: none;
+}
+.framing-zoom { margin-top: 0.9rem; }
+.framing-readout { margin: 0.4rem 0 0; min-height: 1.2em; }
+
+/* Draft preview: the questionnaire as the player meets it, from the editor. */
+.preview-card { max-width: 52rem; }
+.preview-question { margin-top: 0.9rem; }
+.preview-options { display: grid; gap: 0.5rem; margin-top: 0.8rem; }
+.preview-option {
+  display: flex; align-items: center; gap: 0.7rem; width: 100%; text-align: left;
+  padding: 0.65rem 0.8rem; border: 1px solid var(--border); border-radius: var(--radius-sm);
+  background: var(--surface); color: inherit; font: inherit; cursor: pointer;
+}
+.preview-option:hover { border-color: var(--accent); }
+.preview-option.chosen { border-color: var(--accent); background: var(--accent-soft, var(--surface-2)); }
+.preview-option.correct { border-color: var(--ok, #2f7d32); }
+.preview-option.wrong.chosen { border-color: var(--danger, #b3261e); }
+.preview-option .opt-marker { flex: 0 0 auto; }

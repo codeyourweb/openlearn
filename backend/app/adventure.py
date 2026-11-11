@@ -250,6 +250,7 @@ def build_snapshot(quiz: Any, language: str | None = None) -> dict:
             "kind": node.kind,
             "text": node.text_translations.get(language) or node.text_html,
             "image": node.image_path,
+            "framing": node.image_framing or {},
             "background": node.background_path,
             "choices": choices,
             "outcomes": outcomes,

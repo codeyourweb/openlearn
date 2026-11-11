@@ -9,6 +9,8 @@
  */
 
 import { api, uploadImage } from "../api.js";
+import { openFramingEditor } from "../framingEditor.js";
+import { framingAttr, paintFraming } from "../imageFrame.js";
 import { t } from "../i18n.js";
 import { markdownToHtml } from "../markdown.js";
 import { navigate } from "../router.js";
@@ -48,8 +50,9 @@ export function cardFace(card, side) {
   const content = (side === "front" ? card.front_md : card.back_md) || "";
   const text = content.trim();
   const source = side === "front" ? card.image_path : card.back_image_path;
+  const framing = side === "front" ? card.image_framing : card.back_image_framing;
   const picture = source
-    ? `<img class="revision-card-image" src="${escapeHtml(source)}" alt="" loading="lazy">`
+    ? `<img class="revision-card-image" src="${escapeHtml(source)}" alt="" loading="lazy"${framingAttr(framing)}>`
     : "";
   // Text is optional: a character card is often a picture and nothing else.
   const body = text ? `<div class="revision-card-text">${renderMarkdown(text)}</div>` : "";
@@ -148,6 +151,7 @@ function paintDeck() {
                    </label>
                    <span class="muted small" id="deck-image-name"></span>
                    <button type="button" class="btn btn-sm btn-ghost" id="deck-image-clear" hidden>${escapeHtml(t("cards.remove_image"))}</button>
+                   <button type="button" class="btn btn-sm btn-ghost" id="deck-image-frame" hidden>${escapeHtml(t("framing.edit"))}</button>
                  </div>
                  <div class="row-wrap">
                    <label class="btn btn-sm btn-ghost file-button">
@@ -156,6 +160,7 @@ function paintDeck() {
                    </label>
                    <span class="muted small" id="deck-back-image-name"></span>
                    <button type="button" class="btn btn-sm btn-ghost" id="deck-back-image-clear" hidden>${escapeHtml(t("cards.remove_back_image"))}</button>
+                   <button type="button" class="btn btn-sm btn-ghost" id="deck-back-image-frame" hidden>${escapeHtml(t("framing.edit"))}</button>
                  </div>
                  <div class="row-wrap end mt-2">
                    <button type="button" class="btn btn-ghost" id="deck-card-reset">${escapeHtml(t("action.cancel"))}</button>
@@ -226,6 +231,7 @@ function paintDeck() {
     }
   });
 
+  paintFraming(rootEl);
   bindEditor();
 }
 
@@ -241,8 +247,16 @@ function bindEditor() {
   const backImageInput = rootEl.querySelector("#deck-back-image");
   const backImageName = rootEl.querySelector("#deck-back-image-name");
   const backImageClear = rootEl.querySelector("#deck-back-image-clear");
+  const imageFrameBtn = rootEl.querySelector("#deck-image-frame");
+  const backImageFrameBtn = rootEl.querySelector("#deck-back-image-frame");
   let imagePath = null;
   let backImagePath = null;
+  let imageFraming = null;
+  let backImageFraming = null;
+  const aspectRatio = () => {
+    const [w, h] = String(deck.aspect || "2:3").split(":").map(Number);
+    return w > 0 && h > 0 ? w / h : 2 / 3;
+  };
 
   const reset = () => {
     form.reset();
@@ -253,6 +267,10 @@ function bindEditor() {
     backImageName.textContent = "";
     imageClear.hidden = true;
     backImageClear.hidden = true;
+    imageFraming = null;
+    backImageFraming = null;
+    if (imageFrameBtn) imageFrameBtn.hidden = true;
+    if (backImageFrameBtn) backImageFrameBtn.hidden = true;
     front.focus();
   };
   rootEl.querySelector("#deck-card-reset")?.addEventListener("click", reset);
@@ -265,6 +283,8 @@ function bindEditor() {
       imagePath = stored.path;
       imageName.textContent = stored.path.split("/").pop();
       imageClear.hidden = false;
+      imageFraming = null;
+      if (imageFrameBtn) imageFrameBtn.hidden = false;
     } catch (error) {
       toast(error.detail || error.message || t("common.error"), "error");
     }
@@ -273,6 +293,8 @@ function bindEditor() {
     imagePath = null;
     imageName.textContent = "";
     imageClear.hidden = true;
+    imageFraming = null;
+    if (imageFrameBtn) imageFrameBtn.hidden = true;
     if (imageInput) imageInput.value = "";
   });
 
@@ -284,6 +306,8 @@ function bindEditor() {
       backImagePath = stored.path;
       backImageName.textContent = stored.path.split("/").pop();
       backImageClear.hidden = false;
+      backImageFraming = null;
+      if (backImageFrameBtn) backImageFrameBtn.hidden = false;
     } catch (error) {
       toast(error.detail || error.message || t("common.error"), "error");
     }
@@ -292,7 +316,32 @@ function bindEditor() {
     backImagePath = null;
     backImageName.textContent = "";
     backImageClear.hidden = true;
+    backImageFraming = null;
+    if (backImageFrameBtn) backImageFrameBtn.hidden = true;
     if (backImageInput) backImageInput.value = "";
+  });
+
+  imageFrameBtn?.addEventListener("click", async () => {
+    if (!imagePath) return;
+    const chosen = await openFramingEditor({
+      src: imagePath,
+      aspect: aspectRatio(),
+      framing: imageFraming,
+      label: t("cards.image"),
+    });
+    if (chosen === undefined) return;
+    imageFraming = chosen;
+  });
+  backImageFrameBtn?.addEventListener("click", async () => {
+    if (!backImagePath) return;
+    const chosen = await openFramingEditor({
+      src: backImagePath,
+      aspect: aspectRatio(),
+      framing: backImageFraming,
+      label: t("cards.back_image"),
+    });
+    if (chosen === undefined) return;
+    backImageFraming = chosen;
   });
 
   form?.addEventListener("submit", async (event) => {
@@ -302,6 +351,8 @@ function bindEditor() {
       back_md: back.value.trim(),
       image_path: imagePath,
       back_image_path: backImagePath,
+      image_framing: imagePath ? imageFraming : null,
+      back_image_framing: backImagePath ? backImageFraming : null,
     };
     if (!payload.front_md && !payload.image_path) {
       toast(t("cards.need_face"), "error");
@@ -330,9 +381,13 @@ function bindEditor() {
       imagePath = card.image_path || null;
       imageName.textContent = imagePath ? imagePath.split("/").pop() : "";
       imageClear.hidden = !imagePath;
+      imageFraming = card.image_framing || null;
+      if (imageFrameBtn) imageFrameBtn.hidden = !imagePath;
       backImagePath = card.back_image_path || null;
       backImageName.textContent = backImagePath ? backImagePath.split("/").pop() : "";
       backImageClear.hidden = !backImagePath;
+      backImageFraming = card.back_image_framing || null;
+      if (backImageFrameBtn) backImageFrameBtn.hidden = !backImagePath;
       rootEl.querySelector("#deck-editor")?.scrollIntoView({ behavior: "smooth", block: "center" });
       front.focus();
     });

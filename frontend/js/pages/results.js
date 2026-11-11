@@ -3,6 +3,7 @@
 /* Detailed post-game view: who answered what, question by question. */
 
 import { api } from "../api.js";
+import { framingAttr, paintFraming } from "../imageFrame.js";
 import { currentLanguage, localized, t } from "../i18n.js";
 import { hostToken, participantToken } from "../store.js";
 import { escapeHtml, formatDate, formatDuration } from "../ui.js";
@@ -69,7 +70,7 @@ export async function renderResults({ code }) {
             </div>
           </div>
         </div>
-        ${question.image_path ? `<img class="question-image" src="${escapeHtml(question.image_path)}" alt="" />` : ""}
+        ${question.image_path ? `<img class="question-image" src="${escapeHtml(question.image_path)}" alt=""${framingAttr(question.image_framing)} />` : ""}
         <p class="small"><strong>${t("results.correct_answer")}:</strong> ${correctTexts}</p>
         <div class="table-wrap mt-1">
           <table class="table">
@@ -133,6 +134,7 @@ export async function renderResults({ code }) {
       <h2>${t("results.detail")}</h2>
       ${questionsHtml}
     </section>`;
+  paintFraming(root);
 
   return root;
 }

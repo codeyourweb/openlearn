@@ -9,6 +9,7 @@
 */
 
 import { api } from "../api.js";
+import { framingAttr, paintFraming } from "../imageFrame.js";
 import { localized, t, tp } from "../i18n.js";
 import { LiveConnection } from "../live.js";
 import { qrSvg } from "../qr.js";
@@ -440,7 +441,7 @@ export async function renderHost({ code }) {
                </div>`
         }
         <div class="question-text">${localized(question.text_html, question.translations)}</div>
-        ${question.image_path ? `<img class="question-image" src="${escapeHtml(question.image_path)}" alt="" />` : ""}
+        ${question.image_path ? `<img class="question-image" src="${escapeHtml(question.image_path)}" alt=""${framingAttr(question.image_framing)} />` : ""}
         ${optionsBlock(question, null)}
       </div>
       ${answered ? "" : hostPlayBlock(question)}
@@ -460,6 +461,7 @@ export async function renderHost({ code }) {
       </section>
       ${advanceBar(question)}`;
     ensureTimer();
+    paintFraming(root);
   };
 
   const paintReveal = () => {
@@ -476,7 +478,7 @@ export async function renderHost({ code }) {
       </div>
       <div class="question-card">
         <div class="question-text">${localized(question.text_html, question.translations)}</div>
-        ${question.image_path ? `<img class="question-image" src="${escapeHtml(question.image_path)}" alt="" />` : ""}
+        ${question.image_path ? `<img class="question-image" src="${escapeHtml(question.image_path)}" alt=""${framingAttr(question.image_framing)} />` : ""}
         ${optionsBlock(question, reveal)}
         ${
           iAmPlaying()
@@ -502,6 +504,7 @@ export async function renderHost({ code }) {
           </button>
         </div>
       </section>`;
+    paintFraming(root);
   };
 
   const paintFinished = () => {

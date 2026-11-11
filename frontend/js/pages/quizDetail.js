@@ -5,6 +5,7 @@
    only sees what is needed to decide whether to play. */
 
 import { api } from "../api.js";
+import { framingAttr, paintFraming } from "../imageFrame.js";
 import { currentLanguage, languageLabel, t, tp } from "../i18n.js";
 import { navigate } from "../router.js";
 import { isLoggedIn, state } from "../store.js";
@@ -101,7 +102,7 @@ export async function renderQuizDetail({ id, query }) {
         <div class="question-text">${question.text_html}</div>
         ${
           question.image_path
-            ? `<img class="question-image" src="${escapeHtml(question.image_path)}" alt="" loading="lazy" />`
+            ? `<img class="question-image" src="${escapeHtml(question.image_path)}" alt="" loading="lazy"${framingAttr(question.image_framing)} />`
             : ""
         }
         <ul class="answer-list">
@@ -485,6 +486,7 @@ export async function renderQuizDetail({ id, query }) {
 
   if (isOwner && quiz.mode !== "adventure") bindAssessment(root, quiz);
   wireShare(root);
+  paintFraming(root);
 
   // Wikis that present this questionnaire. They sit above the play buttons:
   // the questions come from a wiki, so the reading comes first.

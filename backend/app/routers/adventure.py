@@ -118,6 +118,7 @@ def _state(run: AdventureRun, snapshot: dict) -> dict:
             "text_html": run.outcome_text_html or "",
             "text_plain": html_to_text(run.outcome_text_html or ""),
             "image_path": node.get("image") if reaching_node else None,
+            "image_framing": (node.get("framing") or None) if reaching_node else None,
             "background_path": run.background_path
             or ((node.get("background") or None) if reaching_node else None),
             "attribute": (run.path or [{}])[-1].get("ending_attribute", "") if run.path else "",
@@ -133,6 +134,7 @@ def _state(run: AdventureRun, snapshot: dict) -> dict:
         "text_html": node["text"],
         "text_plain": html_to_text(node["text"]),
         "image_path": node.get("image"),
+        "image_framing": node.get("framing") or None,
         "background_path": node.get("background"),
         "choices": [{"key": choice["key"], "text": choice["text"]} for choice in node["choices"]],
     }

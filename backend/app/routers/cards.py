@@ -19,6 +19,7 @@ from ..cards import pairs_from_markdown, pairs_from_questionnaire
 from ..cards_pdf import sheet_pdf
 from ..config import settings
 from ..deps import get_db, get_optional_user, require_user
+from ..framing import framing_payload, normalize_framing
 from ..models import (
     Question,
     Quiz,
@@ -67,6 +68,14 @@ class DeckPatch(BaseModel):
     aspect: str | None = None
 
 
+class FramingIn(BaseModel):
+    """How a face frames its picture: focus point in percent, zoom from 1 to 3."""
+
+    x: float = Field(default=50, ge=0, le=100)
+    y: float = Field(default=50, ge=0, le=100)
+    zoom: float = Field(default=1, ge=1, le=3)
+
+
 class CardIn(BaseModel):
     # Empty is allowed: a picture can carry the front on its own. What is not
     # allowed is a card with neither words nor picture, checked below.
@@ -74,6 +83,12 @@ class CardIn(BaseModel):
     back_md: str = Field(default="", max_length=MAX_TEXT)
     image_path: str | None = Field(default=None, max_length=200)
     back_image_path: str | None = Field(default=None, max_length=200)
+    image_framing: FramingIn | None = None
+    back_image_framing: FramingIn | None = None
+
+
+def _framing(value: FramingIn | None) -> dict[str, float]:
+    return normalize_framing(value.model_dump() if value else None)
 
 
 def _require_face(payload: CardIn) -> None:
@@ -149,6 +164,8 @@ def _serialise_card(card: RevisionCard, review: RevisionReview | None) -> dict:
         "back_md": card.back_md,
         "image_path": card.image_path,
         "back_image_path": card.back_image_path,
+        "image_framing": framing_payload(card.image_framing),
+        "back_image_framing": framing_payload(card.back_image_framing),
         "source": card.source,
         "box": review.box if review else 0,
         "seen": review.seen if review else 0,
@@ -349,6 +366,8 @@ def add_card(
         back_md=payload.back_md.strip(),
         image_path=payload.image_path,
         back_image_path=payload.back_image_path,
+        image_framing=_framing(payload.image_framing),
+        back_image_framing=_framing(payload.back_image_framing),
         source="manual",
     )
     db.add(card)
@@ -374,6 +393,8 @@ def update_card(
     card.back_md = payload.back_md.strip()
     card.image_path = payload.image_path
     card.back_image_path = payload.back_image_path
+    card.image_framing = _framing(payload.image_framing)
+    card.back_image_framing = _framing(payload.back_image_framing)
     db.commit()
     db.refresh(card)
     return _serialise_card(card, None)

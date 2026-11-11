@@ -13,6 +13,7 @@
 */
 
 import { api } from "./api.js";
+import { paintFraming } from "./imageFrame.js";
 import { t, tp } from "./i18n.js";
 import { escapeHtml, toast } from "./ui.js";
 import { navigate } from "./router.js";
@@ -83,6 +84,7 @@ function deckReader(deck) {
     inner.innerHTML = `
       <div class="revision-card-face revision-card-front">${cardFace(card, "front")}</div>
       <div class="revision-card-face revision-card-back">${cardFace(card, "back")}</div>`;
+    paintFraming(inner);
     stage.querySelector(".revision-card").classList.toggle("flipped", flipped);
     counter.textContent = `${index + 1} / ${cards.length}`;
   };

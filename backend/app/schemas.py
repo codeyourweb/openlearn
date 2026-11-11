@@ -136,10 +136,19 @@ class OptionIn(BaseModel):
         return _clean_translation_map(value, html=False, max_length=500)
 
 
+class FramingIn(BaseModel):
+    """How the author framed a picture inside its frame (percent + zoom)."""
+
+    x: float = Field(default=50, ge=0, le=100)
+    y: float = Field(default=50, ge=0, le=100)
+    zoom: float = Field(default=1, ge=1, le=3)
+
+
 class QuestionIn(BaseModel):
     text_html: str = Field(min_length=1, max_length=20_000)
     translations: dict[str, str] = Field(default_factory=dict)
     image_path: str | None = Field(default=None, max_length=200)
+    image_framing: FramingIn | None = None
     time_limit_seconds: int = Field(default=30, ge=5, le=300)
     points: int = Field(default=100, ge=0, le=1000)
     # Only meaningful for polls; elsewhere several correct answers say it.
@@ -277,6 +286,7 @@ class AdventureNodeIn(BaseModel):
     text_html: str = Field(min_length=1, max_length=20_000)
     translations: dict[str, str] = Field(default_factory=dict)
     image_path: str | None = Field(default=None, max_length=200)
+    image_framing: FramingIn | None = None
     background_path: str | None = Field(default=None, max_length=200)
     pos_x: int = Field(default=0, ge=-10_000, le=10_000)
     pos_y: int = Field(default=0, ge=-10_000, le=10_000)

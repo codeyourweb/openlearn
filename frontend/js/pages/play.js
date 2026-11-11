@@ -7,6 +7,7 @@
 */
 
 import { api } from "../api.js";
+import { framingAttr, paintFraming } from "../imageFrame.js";
 import { localized, t, tp } from "../i18n.js";
 import { LiveConnection } from "../live.js";
 import { navigate } from "../router.js";
@@ -415,7 +416,7 @@ async function renderPlayer(root, code) {
                </div>`
         }
         ${swipe ? "" : `<div class="question-text">${localized(question.text_html, question.translations)}</div>`}
-        ${!swipe && question.image_path ? `<img class="question-image" src="${escapeHtml(question.image_path)}" alt="" />` : ""}
+        ${!swipe && question.image_path ? `<img class="question-image" src="${escapeHtml(question.image_path)}" alt=""${framingAttr(question.image_framing)} />` : ""}
         <div id="answers">${optionsHtml()}</div>
         <p class="banner warn mt-2" id="time-notice" role="status" ${timeUp && !state.reveal ? "" : "hidden"}>${t("play.time_up")}</p>
         ${
@@ -430,6 +431,7 @@ async function renderPlayer(root, code) {
         <div id="feedback">${feedbackHtml()}</div>
       </div>`;
     ensureTimer();
+    paintFraming(root);
   };
 
   const paintReveal = () => {
@@ -444,7 +446,7 @@ async function renderPlayer(root, code) {
       </div>
       <div class="question-card">
         ${state.session.mode === "swipe" ? "" : `<div class="question-text">${localized(question.text_html, question.translations)}</div>`}
-        ${state.session.mode !== "swipe" && question.image_path ? `<img class="question-image" src="${escapeHtml(question.image_path)}" alt="" />` : ""}
+        ${state.session.mode !== "swipe" && question.image_path ? `<img class="question-image" src="${escapeHtml(question.image_path)}" alt=""${framingAttr(question.image_framing)} />` : ""}
         <div id="answers">${optionsHtml()}</div>
         <div id="feedback">${feedbackHtml()}</div>
         <p class="hint mt-2">${isHostClient ? "" : t("play.waiting_next")}</p>
@@ -459,6 +461,7 @@ async function renderPlayer(root, code) {
           : ""
       }
       <section class="card mt-2"><h3>${t("common.score")}</h3>${scoreboardHtml()}</section>`;
+    paintFraming(root);
   };
 
   const paintFinished = () => {

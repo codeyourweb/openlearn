@@ -26,6 +26,7 @@ from ..content import (
 )
 from ..db import get_db
 from ..deps import enforce_ai_interval, enforce_rate_limit, get_optional_user, require_user
+from ..framing import framing_payload, normalize_framing
 from ..models import (
     AdventureAttribute,
     AdventureChoice,
@@ -56,6 +57,14 @@ from ..schemas import (
 from ..search import search_ids
 
 router = APIRouter(prefix="/api/v1/quizzes", tags=["quizzes"])
+
+
+def _framing_of(payload) -> dict | None:
+    """The framing an input carries, whatever schema version it came from."""
+    framing = getattr(payload, "image_framing", None)
+    if framing is None:
+        return None
+    return framing.model_dump() if hasattr(framing, "model_dump") else dict(framing)
 
 
 # ---------------------------------------------------------------------------
@@ -165,6 +174,7 @@ def serialise_quiz(
                 "text_plain": html_to_text(question.text_html),
                 "translations": question.text_translations or {},
                 "image_path": question.image_path,
+                "image_framing": framing_payload(question.image_framing),
                 "time_limit_seconds": question.time_limit_seconds,
                 "points": question.points,
                 "multiple_answers": bool(question.allow_multiple)
@@ -212,6 +222,7 @@ def serialise_quiz(
                     "text_plain": html_to_text(node.text_html),
                     "translations": node.text_translations or {},
                     "image_path": node.image_path,
+                    "image_framing": framing_payload(node.image_framing),
                     "background_path": node.background_path,
                     "pos_x": node.pos_x,
                     "pos_y": node.pos_y,
@@ -330,6 +341,7 @@ def serialise_payload(
                 "text_plain": html_to_text(question["text_html"]),
                 "translations": question["translations"],
                 "image_path": question["image_path"],
+                "image_framing": question.get("image_framing"),
                 "time_limit_seconds": question["time_limit_seconds"],
                 "points": question["points"],
                 "multiple_answers": sum(1 for option in question["options"] if option["is_correct"]) > 1,
@@ -369,6 +381,7 @@ def serialise_payload(
                     "text_plain": html_to_text(node.get("text_html", "")),
                     "translations": node.get("translations", {}),
                     "image_path": node.get("image_path"),
+                    "image_framing": node.get("image_framing"),
                     "background_path": node.get("background_path"),
                     "pos_x": node.get("pos_x", 0),
                     "pos_y": node.get("pos_y", 0),
@@ -497,6 +510,7 @@ def _apply_quiz(db: OrmSession, quiz: Quiz, payload: QuizIn) -> Quiz:
                 text_html=node_in.text_html,
                 text_translations=node_in.translations,
                 image_path=node_in.image_path,
+                image_framing=normalize_framing(_framing_of(node_in)),
                 background_path=node_in.background_path,
                 pos_x=node_in.pos_x,
                 pos_y=node_in.pos_y,
@@ -539,6 +553,7 @@ def _apply_quiz(db: OrmSession, quiz: Quiz, payload: QuizIn) -> Quiz:
             text_html=question_in.text_html,
             text_translations=question_in.translations,
             image_path=question_in.image_path,
+            image_framing=normalize_framing(_framing_of(question_in)),
             time_limit_seconds=question_in.time_limit_seconds,
             points=0 if payload.mode == "poll" else question_in.points,
             allow_multiple=bool(getattr(question_in, "allow_multiple", False)),
@@ -936,6 +951,7 @@ def _adventure_payload(quiz: Quiz) -> dict:
                 "text_html": node.text_html,
                 "translations": node.text_translations or {},
                 "image_path": node.image_path,
+                "image_framing": framing_payload(node.image_framing),
                 "background_path": node.background_path,
                 "pos_x": node.pos_x,
                 "pos_y": node.pos_y,
@@ -991,6 +1007,7 @@ def duplicate_quiz(quiz_id: int, user: User = Depends(require_user), db: OrmSess
                 "text_html": question.text_html,
                 "translations": question.text_translations or {},
                 "image_path": question.image_path,
+                "image_framing": framing_payload(question.image_framing),
                 "time_limit_seconds": question.time_limit_seconds,
                 "points": question.points,
                 "options": [

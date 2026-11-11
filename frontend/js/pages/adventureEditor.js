@@ -9,6 +9,8 @@
  */
 
 import { api, keepaliveRequest, uploadImage } from "../api.js";
+import { openFramingEditor } from "../framingEditor.js";
+import { framingAttr, paintFraming } from "../imageFrame.js";
 import { currentLanguage, t } from "../i18n.js";
 import { navigate } from "../router.js";
 import { confirmDialog, escapeHtml, showUploadProgress, toast } from "../ui.js";
@@ -141,6 +143,7 @@ function emptyModel() {
           text_html: `<p>${t("adventure.default_scene")}</p>`,
           translations: {},
           image_path: null,
+          image_framing: null,
           background_path: null,
           pos_x: 40,
           pos_y: 60,
@@ -170,6 +173,7 @@ function emptyModel() {
           text_html: `<p>${t("adv_editor.default_ending")}</p>`,
           translations: {},
           image_path: null,
+          image_framing: null,
           background_path: null,
           pos_x: 320,
           pos_y: 230,
@@ -711,12 +715,19 @@ function inspectorNode(model, node) {
           ${t("adv_editor.upload")}
           <input type="file" accept="image/png,image/jpeg,image/webp,image/gif" hidden data-upload="image_path" />
         </label>
-        ${node.image_path ? `<button type="button" class="btn btn-sm btn-ghost" data-act="clear-image">✕</button>` : ""}
+        ${
+          node.image_path
+            ? `<button type="button" class="btn btn-sm btn-ghost" data-act="frame-image">${escapeHtml(
+                t("framing.edit"),
+              )}</button>
+               <button type="button" class="btn btn-sm btn-ghost" data-act="clear-image">✕</button>`
+            : ""
+        }
       </div>
       ${
         node.image_path
           ? `<figure class="adv-preview">
-               <img src="${escapeHtml(node.image_path)}" alt="" loading="lazy" />
+               <img src="${escapeHtml(node.image_path)}" alt="" loading="lazy"${framingAttr(node.image_framing)} />
              </figure>`
           : ""
       }
@@ -1159,6 +1170,7 @@ export async function renderAdventureEditor({ id }) {
       inspector.innerHTML = `<div class="adv-inspector-section"><p class="muted">${t(
         "adv_editor.select_node",
       )}</p></div>`;
+    paintFraming(inspector);
     wireInspector();
   };
 
@@ -1990,8 +2002,23 @@ export async function renderAdventureEditor({ id }) {
         paintAll();
         break;
       }
+      case "frame-image": {
+        if (!node.image_path) break;
+        const chosen = await openFramingEditor({
+          src: node.image_path,
+          aspect: 16 / 9,
+          framing: node.image_framing || null,
+          label: t("adv_editor.image"),
+        });
+        if (chosen === undefined) break;
+        node.image_framing = chosen;
+        markDirty();
+        paintAll();
+        break;
+      }
       case "clear-image":
         node.image_path = null;
+        node.image_framing = null;
         markDirty();
         paintAll();
         break;
