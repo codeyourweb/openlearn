@@ -1225,6 +1225,7 @@ export const zh = {
   "wiki.quiz_created": "测验已创建：共 {n} 道题",
   "wiki.tags_ai": "建议标签",
   "wiki.tags_added": "标签建议已生成，请保留合适的标签。",
+  "wiki.read_first": "开始前请先阅读",
   "wiki.wikis_title": "包含此测验的 Wiki",
   "wiki.map_help": "所有页面及其相互之间的链接",
   "wiki.canvas": "画布",

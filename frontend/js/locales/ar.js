@@ -1225,6 +1225,7 @@ export const ar = {
   "wiki.quiz_created": "تم إنشاء الاختبار: {n} أسئلة",
   "wiki.tags_ai": "اقتراح وسوم",
   "wiki.tags_added": "وُضعت وسوم مقترحة. احتفظ بالمناسب منها.",
+  "wiki.read_first": "اقرأ قبل أن تلعب",
   "wiki.wikis_title": "الويكيات التي تعرض هذا الاختبار",
   "wiki.map_help": "كل صفحة والروابط التي تجمعها",
   "wiki.canvas": "اللوحة",

@@ -1225,6 +1225,7 @@ export const es = {
   "wiki.quiz_created": "Cuestionario creado: {n} preguntas",
   "wiki.tags_ai": "Sugerir etiquetas",
   "wiki.tags_added": "Etiquetas propuestas. Mantén las que correspondan.",
+  "wiki.read_first": "Léelo antes de jugar",
   "wiki.wikis_title": "Wikis que presentan este cuestionario",
   "wiki.map_help": "todas las páginas y los enlaces entre ellas",
   "wiki.canvas": "Lienzo",

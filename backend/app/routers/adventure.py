@@ -104,11 +104,22 @@ def _state(run: AdventureRun, snapshot: dict) -> dict:
     }
 
     if run.status == "finished":
+        # An ending node owns a scene like any other: the text written in the
+        # "step text" field is the picture the reader lands on, and the outcome
+        # text closes the story. Death and victory endings have no such node, so
+        # only the closing text is shown there.
+        node = (snapshot.get("nodes") or {}).get(run.ending_key or "") or {}
+        reaching_node = node.get("kind") == "ending"
+        scene = (node.get("text") or "") if reaching_node else ""
         payload["ending"] = {
             "kind": run.ending_kind or "exit",
+            "scene_html": scene,
+            "scene_plain": html_to_text(scene),
             "text_html": run.outcome_text_html or "",
             "text_plain": html_to_text(run.outcome_text_html or ""),
-            "background_path": run.background_path,
+            "image_path": node.get("image") if reaching_node else None,
+            "background_path": run.background_path
+            or ((node.get("background") or None) if reaching_node else None),
             "attribute": (run.path or [{}])[-1].get("ending_attribute", "") if run.path else "",
         }
         return payload

@@ -1225,6 +1225,7 @@ export const it = {
   "wiki.quiz_created": "Questionario creato: {n} domande",
   "wiki.tags_ai": "Suggerisci tag",
   "wiki.tags_added": "Tag proposti. Mantieni quelli pertinenti.",
+  "wiki.read_first": "Leggi prima di giocare",
   "wiki.wikis_title": "Wiki che presentano questo questionario",
   "wiki.map_help": "ogni pagina e i collegamenti tra di esse",
   "wiki.canvas": "Lavagna",

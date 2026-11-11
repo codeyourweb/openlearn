@@ -401,6 +401,10 @@ export async function renderQuizDetail({ id, query }) {
           <h1 class="mt-2">${escapeHtml(quiz.title)}</h1>
           <p class="muted detail-description">${escapeHtml(quiz.description || "")}</p>
           ${isStory ? "" : `<p class="detail-hint small">${t("quiz.host_hint")}</p>`}
+          <section class="card detail-wiki" id="quiz-wikis" hidden>
+            <h2 class="detail-wiki-title">${t("wiki.read_first")}</h2>
+            <div class="wiki-quiz-list" id="quiz-wikis-list"></div>
+          </section>
           <div class="detail-actions">
             ${
               isStory
@@ -472,15 +476,13 @@ export async function renderQuizDetail({ id, query }) {
       </nav>
       <div class="tab-panel" id="tab-panel">${panelFor(initialTab)}</div>
     </div>
-    <section class="card wiki-quizzes mt-3" id="quiz-wikis">
-      <h2>${escapeHtml(t("wiki.wikis_title"))}</h2>
-      <div class="wiki-quiz-list" id="quiz-wikis-list"></div>
-    </section>
     ${isOwner && quiz.mode !== "adventure" ? assessmentSection(quiz) : ""}`;
 
   if (isOwner && quiz.mode !== "adventure") bindAssessment(root, quiz);
 
-  // Wikis that present this questionnaire, so the two sides stay discoverable.
+  // Wikis that present this questionnaire. They sit above the play buttons:
+  // the questions come from a wiki, so the reading comes first.
+  const wikiCard = root.querySelector("#quiz-wikis");
   const wikiList = root.querySelector("#quiz-wikis-list");
   api
     .get(`/api/v1/quizzes/${quiz.id}/wikis`)
@@ -488,7 +490,11 @@ export async function renderQuizDetail({ id, query }) {
       const wikis = payload.items || [];
       if (!wikiList) return;
       if (!wikis.length) {
+        // An empty shelf is noise before playing; only the owner needs to know
+        // that no wiki presents this questionnaire yet.
+        if (!isOwner) return;
         wikiList.innerHTML = `<p class="muted small">${escapeHtml(t("quiz.wikis_empty"))}</p>`;
+        if (wikiCard) wikiCard.hidden = false;
         return;
       }
       wikiList.innerHTML = wikis
@@ -505,10 +511,10 @@ export async function renderQuizDetail({ id, query }) {
           </div>`,
         )
         .join("");
+      if (wikiCard) wikiCard.hidden = false;
     })
     .catch(() => {
-      const card = root.querySelector("#quiz-wikis");
-      if (card) card.hidden = true;
+      if (wikiCard) wikiCard.hidden = true;
     });
 
   // Bars are sized from data, never from a style attribute (CSP).

@@ -93,6 +93,10 @@ function nodeView(state) {
 function endingView(state, quizId) {
   const ending = state.ending || {};
   const kind = ending.kind || "exit";
+  const scene = ending.scene_html || "";
+  // A story may close on the scene's own words when no outcome matches: show
+  // them once, not twice.
+  const closing = ending.text_html && ending.text_html !== scene ? ending.text_html : "";
   const labels = {
     death: t("adventure.ending_death"),
     victory: t("adventure.ending_victory"),
@@ -101,18 +105,32 @@ function endingView(state, quizId) {
   };
   return `
     <section class="adv-ending ${kind}${ending.background_path ? " has-bg" : ""}"${ending.background_path ? ` data-background="${escapeHtml(ending.background_path)}"` : ""}>
-      <span class="adv-ending-kind">${escapeHtml(labels[kind] || kind)}</span>
-      <h1 class="adv-ending-title">${escapeHtml(t("adventure.the_end"))}</h1>
       ${
-        ending.text_html
-          ? `<div class="adv-text">${ending.text_html}</div>`
-          : `<p class="adv-text muted">${t("adventure.ending_no_text")}</p>`
+        ending.image_path
+          ? `<img class="adv-image" src="${escapeHtml(ending.image_path)}" alt="" loading="eager" />`
+          : ""
       }
-      <h2 class="adv-ending-sub">${t("adventure.final_stats")}</h2>
-      ${attributesBar(state)}
-      <div class="row gap-2 mt-3">
-        <button type="button" class="btn" data-act="replay">${t("adventure.play_again")}</button>
-        <a class="btn btn-ghost" href="/quizzes/${quizId}" data-link>${t("action.back_to_quiz")}</a>
+      <div class="adv-ending-body">
+        <span class="adv-ending-kind">${escapeHtml(labels[kind] || kind)}</span>
+        <h1 class="adv-ending-title">${escapeHtml(t("adventure.the_end"))}</h1>
+        ${
+          ending.scene_html
+            ? `<div class="adv-text adv-ending-scene">${ending.scene_html}</div>`
+            : ""
+        }
+        ${
+          closing
+            ? `<div class="adv-text adv-ending-closing">${closing}</div>`
+            : ending.scene_html
+              ? ""
+              : `<p class="adv-text muted">${t("adventure.ending_no_text")}</p>`
+        }
+        <h2 class="adv-ending-sub">${t("adventure.final_stats")}</h2>
+        ${attributesBar(state)}
+        <div class="row gap-2 mt-3">
+          <button type="button" class="btn" data-act="replay">${t("adventure.play_again")}</button>
+          <a class="btn btn-ghost" href="/quizzes/${quizId}" data-link>${t("action.back_to_quiz")}</a>
+        </div>
       </div>
     </section>`;
 }
@@ -152,6 +170,7 @@ export async function renderAdventurePlay({ id }) {
   };
 
   let previousValues = null;
+  let lastScene = null;
 
   let clockHandle = 0;
   let expiring = false;
@@ -194,6 +213,21 @@ export async function renderAdventurePlay({ id }) {
       ${finished ? "" : attributesBar(state, deltas)}
     `;
     applyDynamicStyles(root);
+
+    // A new scene starts at the top of the page: the reader clicked at the
+    // bottom of the previous one. The focus follows so that a screen reader
+    // announces the scene it just moved to, and the choice list stays next in
+    // the tab order.
+    const sceneKey = finished ? "ending" : (state.node && state.node.key) || "";
+    if (lastScene !== null && lastScene !== sceneKey) {
+      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+      const arrival = root.querySelector(finished ? ".adv-ending-title" : ".adv-text");
+      if (arrival) {
+        arrival.setAttribute("tabindex", "-1");
+        arrival.focus({ preventScroll: true });
+      }
+    }
+    lastScene = sceneKey;
 
     // Story clock: the server holds the deadline, the client only mirrors it
     // and asks for the penalty when it runs out.

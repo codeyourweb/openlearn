@@ -1225,6 +1225,7 @@ export const ru = {
   "wiki.quiz_created": "Тест создан: {n} вопрос(ов)",
   "wiki.tags_ai": "Предложить теги",
   "wiki.tags_added": "Теги предложены. Оставьте подходящие.",
+  "wiki.read_first": "Прочитайте перед игрой",
   "wiki.wikis_title": "Вики, в которых представлен этот тест",
   "wiki.map_help": "все страницы и связи между ними",
   "wiki.canvas": "Холст",

@@ -1225,6 +1225,7 @@ export const fr = {
   "wiki.quiz_created": "Questionnaire créé : {n} questions",
   "wiki.tags_ai": "Suggérer des tags",
   "wiki.tags_added": "Tags proposés. Conservez ceux qui conviennent.",
+  "wiki.read_first": "À lire avant de jouer",
   "wiki.wikis_title": "Wikis présentant ce questionnaire",
   "wiki.map_help": "chaque page et les liens qui les unissent",
   "wiki.canvas": "Canevas",

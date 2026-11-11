@@ -1225,6 +1225,7 @@ export const ja = {
   "wiki.quiz_created": "クイズを作成しました：{n}問",
   "wiki.tags_ai": "タグを提案",
   "wiki.tags_added": "タグを提案しました。適切なものを選択してください。",
+  "wiki.read_first": "始める前に読んでください",
   "wiki.wikis_title": "このクイズを掲載しているwiki",
   "wiki.map_help": "すべてのページと、ページ間のリンクを表示します",
   "wiki.canvas": "キャンバス",

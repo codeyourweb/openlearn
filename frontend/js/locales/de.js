@@ -1225,6 +1225,7 @@ export const de = {
   "wiki.quiz_created": "Fragebogen erstellt: {n} Fragen",
   "wiki.tags_ai": "Tags vorschlagen",
   "wiki.tags_added": "Tags vorgeschlagen. Bitte passende auswählen.",
+  "wiki.read_first": "Vor dem Spielen lesen",
   "wiki.wikis_title": "Wikis, die diesen Fragebogen enthalten",
   "wiki.map_help": "Alle Seiten und die Verknüpfungen zwischen ihnen",
   "wiki.canvas": "Canvas",

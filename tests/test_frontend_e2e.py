@@ -2604,3 +2604,240 @@ def test_the_preview_of_a_story_follows_its_edits(browser):
         assert not [error for error in recorder.errors if "pageerror" in error], recorder.errors
     finally:
         context.close()
+
+
+def test_an_ending_carries_its_picture_and_its_scene(browser):
+    """The closing screen belongs to the ending node, picture and words included.
+
+    The author wrote the ending's scene in "step text", illustrated it, and put
+    the closing paragraph in "ending text". The player used to render only the
+    latter: the picture never appeared and the scene was silently dropped.
+    """
+    context, page, recorder = new_page(browser)
+    try:
+        register_through_ui(page, f"ending-{uuid.uuid4().hex[:10]}@example.org", "Ending Author")
+        api = context.request
+        csrf = next(
+            (cookie["value"] for cookie in context.cookies() if cookie["name"] == "ol_csrf"), ""
+        )
+        headers = {"X-CSRF-Token": csrf}
+
+        uploaded = api.post(
+            f"{BASE_URL}/api/v1/uploads/question-image",
+            headers=headers,
+            multipart={
+                "file": {"name": "ending.png", "mimeType": "image/png", "buffer": _picture_png(8, 8)}
+            },
+        )
+        assert uploaded.status == 201, uploaded.text()
+        picture = uploaded.json()["path"]
+
+        payload = {
+            "title": "A star for Santa",
+            "description": "One scene, one illustrated ending.",
+            "mode": "adventure",
+            "is_public": False,
+            "adventure": {
+                "start": "start",
+                "death_text_html": "<p>Lost.</p>",
+                "victory_text_html": "<p>Won.</p>",
+                "attributes": [
+                    {"key": "hope", "label": "Hope", "initial_value": 3, "min_value": 0, "max_value": 10}
+                ],
+                "nodes": [
+                    {
+                        "key": "start",
+                        "kind": "question",
+                        "text_html": "<p>First scene.</p>",
+                        "pos_x": 0,
+                        "pos_y": 0,
+                        "choices": [
+                            {"key": "go", "text": "Continue", "target": "end",
+                             "effects": [{"attribute": "hope", "delta": 1}]},
+                            {"key": "stop", "text": "Stop", "target": "end",
+                             "effects": [{"attribute": "hope", "delta": 0}]},
+                        ],
+                    },
+                    {
+                        "key": "end",
+                        "kind": "ending",
+                        "text_html": "<p>The sleigh lands on the roof.</p>",
+                        "pos_x": 300,
+                        "pos_y": 0,
+                        "image_path": picture,
+                        "choices": [],
+                        "outcomes": [
+                            {"kind": "default", "text_html": "<p>Hope carried you home.</p>", "priority": 9}
+                        ],
+                    },
+                ],
+            },
+        }
+        created = api.post(f"{BASE_URL}/api/v1/quizzes", headers=headers, data=payload)
+        assert created.status == 201, created.text()
+        quiz_id = created.json()["id"]
+
+        page.goto(f"{BASE_URL}/adventures/{quiz_id}/play", wait_until="networkidle")
+        page.locator(".adv-choice").first.click()
+        page.wait_for_selector(".adv-ending", timeout=15000)
+
+        scene = page.locator(".adv-ending-scene")
+        expect(scene).to_be_visible()
+        assert "sleigh lands" in scene.inner_text()
+        closing = page.locator(".adv-ending-closing")
+        expect(closing).to_be_visible()
+        assert "Hope carried you home" in closing.inner_text()
+        ending_image = page.locator(".adv-ending img.adv-image")
+        expect(ending_image).to_be_visible()
+        assert page.get_attribute(".adv-ending img.adv-image", "src") == picture
+        assert ending_image.evaluate("(img) => img.naturalWidth") > 0, "the ending picture is broken"
+        assert not [error for error in recorder.errors if "pageerror" in error], recorder.errors
+    finally:
+        context.close()
+
+
+def test_a_new_scene_opens_at_the_top_of_the_page(browser):
+    """A reader clicks at the bottom of a scene; the next one must not open there."""
+    context, page, recorder = new_page(browser, viewport=(390, 844))
+    try:
+        register_through_ui(page, f"scroll-{uuid.uuid4().hex[:10]}@example.org", "Reader")
+        api = context.request
+        csrf = next(
+            (cookie["value"] for cookie in context.cookies() if cookie["name"] == "ol_csrf"), ""
+        )
+        headers = {"X-CSRF-Token": csrf}
+        paragraph = " ".join(["Une longue phrase pour occuper la page."] * 30)
+        payload = {
+            "title": "A long scroll",
+            "description": "Two tall scenes.",
+            "mode": "adventure",
+            "is_public": False,
+            "adventure": {
+                "start": "start",
+                "death_text_html": "<p>Lost.</p>",
+                "victory_text_html": "<p>Won.</p>",
+                "attributes": [
+                    {"key": "hope", "label": "Hope", "initial_value": 3, "min_value": 0, "max_value": 10}
+                ],
+                "nodes": [
+                    {
+                        "key": "start",
+                        "kind": "question",
+                        "text_html": f"<p>{paragraph}</p>",
+                        "pos_x": 0,
+                        "pos_y": 0,
+                        "choices": [
+                            {"key": "go", "text": "Continue", "target": "second",
+                             "effects": [{"attribute": "hope", "delta": 1}]},
+                            {"key": "stop", "text": "Stop", "target": "second",
+                             "effects": [{"attribute": "hope", "delta": 0}]},
+                        ],
+                    },
+                    {
+                        "key": "second",
+                        "kind": "question",
+                        "text_html": f"<p>Second scene. {paragraph}</p>",
+                        "pos_x": 300,
+                        "pos_y": 0,
+                        "choices": [
+                            {"key": "finish", "text": "Finish", "target": "end",
+                             "effects": [{"attribute": "hope", "delta": 0}]},
+                            {"key": "leave", "text": "Leave", "target": "end",
+                             "effects": [{"attribute": "hope", "delta": 0}]},
+                        ],
+                    },
+                    {
+                        "key": "end",
+                        "kind": "ending",
+                        "text_html": "<p>The end.</p>",
+                        "pos_x": 600,
+                        "pos_y": 0,
+                        "choices": [],
+                        "outcomes": [{"kind": "default", "text_html": "<p>Done.</p>", "priority": 9}],
+                    },
+                ],
+            },
+        }
+        created = api.post(f"{BASE_URL}/api/v1/quizzes", headers=headers, data=payload)
+        assert created.status == 201, created.text()
+        quiz_id = created.json()["id"]
+
+        page.goto(f"{BASE_URL}/adventures/{quiz_id}/play", wait_until="networkidle")
+        page.wait_for_selector(".adv-choice", timeout=15000)
+        page.evaluate("window.scrollTo(0, document.body.scrollHeight)")
+        page.wait_for_timeout(200)
+        assert page.evaluate("window.scrollY") > 200, "the probe needs a page taller than the screen"
+
+        page.locator(".adv-choice").last.click()
+        page.wait_for_timeout(1200)
+        assert page.evaluate("window.scrollY") <= 4, "the next scene opened where the previous one ended"
+        assert "Second scene." in page.locator(".adv-text").first.inner_text()
+        assert not [error for error in recorder.errors if "pageerror" in error], recorder.errors
+    finally:
+        context.close()
+
+
+def test_the_wiki_of_a_questionnaire_comes_before_its_questions(browser):
+    """The questions come from the wiki: the reading stands above the play buttons."""
+    context, page, recorder = new_page(browser)
+    try:
+        register_through_ui(page, f"wiki-first-{uuid.uuid4().hex[:10]}@example.org", "Wiki Author")
+        api = context.request
+        csrf = next(
+            (cookie["value"] for cookie in context.cookies() if cookie["name"] == "ol_csrf"), ""
+        )
+        headers = {"X-CSRF-Token": csrf}
+        quiz = api.post(
+            f"{BASE_URL}/api/v1/quizzes",
+            headers=headers,
+            data={
+                "title": "DNS relay, the quiz",
+                "description": "Questions taken from the wiki.",
+                "mode": "qcm",
+                "questions": [
+                    {
+                        "text_html": "<p>Which flag makes dig recurse?</p>",
+                        "options": [
+                            {"text": "+recurse", "is_correct": True},
+                            {"text": "+trace", "is_correct": False},
+                        ],
+                    }
+                ],
+            },
+        )
+        assert quiz.status == 201, quiz.text()
+        quiz_id = quiz.json()["id"]
+        wiki = api.post(
+            f"{BASE_URL}/api/v1/wiki",
+            headers=headers,
+            data={
+                "title": "DNS relay, explained",
+                "description": "The chapter these questions come from.",
+            },
+        )
+        assert wiki.status == 201, wiki.text()
+        wiki_id = wiki.json()["id"]
+        linked = api.post(
+            f"{BASE_URL}/api/v1/wiki/{wiki_id}/quizzes", headers=headers, data={"quiz_id": quiz_id}
+        )
+        assert linked.status == 201, linked.text()
+
+        page.goto(f"{BASE_URL}/quizzes/{quiz_id}", wait_until="networkidle")
+        card = page.locator("#quiz-wikis")
+        expect(card).to_be_visible(timeout=15000)
+        assert "DNS relay, explained" in card.inner_text()
+        playing = page.locator("[data-act='solo']")
+        expect(playing).to_be_visible()
+        order = page.evaluate(
+            """() => {
+                const card = document.querySelector('#quiz-wikis').getBoundingClientRect();
+                const play = document.querySelector("[data-act='solo']").getBoundingClientRect();
+                const tabs = document.querySelector('.tabs').getBoundingClientRect();
+                return { cardTop: card.top, playTop: play.top, tabsTop: tabs.top };
+            }"""
+        )
+        assert order["cardTop"] < order["playTop"], "the wiki sits below the play buttons"
+        assert order["cardTop"] < order["tabsTop"], "the wiki sits below the questions"
+        assert not [error for error in recorder.errors if "pageerror" in error], recorder.errors
+    finally:
+        context.close()

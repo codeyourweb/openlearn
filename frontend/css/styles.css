@@ -829,6 +829,17 @@ pre code { background: none; padding: 0; }
   background: linear-gradient(180deg, rgba(6, 10, 20, 0.58), rgba(6, 10, 20, 0.78));
 }
 .adv-ending.has-bg > * { position: relative; z-index: 1; }
+.adv-ending-body { display: grid; gap: 16px; }
+/* An ending carries its own illustration: it runs to the edges of the card, so
+   the closing screen reads like the scene that leads to it. */
+.adv-ending > .adv-image {
+  width: calc(100% + 60px);
+  margin: -32px -30px 0;
+  max-height: 300px;
+  border-bottom: 1px solid var(--border);
+}
+.adv-ending-closing { border-top: 1px dashed var(--border); padding-top: 14px; }
+.adv-ending.has-bg .adv-ending-closing { border-color: rgba(226, 232, 240, 0.28); }
 .adv-ending.has-bg { color: #eef3fb; }
 .adv-ending.has-bg .adv-ending-title { color: #ffffff; }
 .adv-ending.has-bg .adv-ending-kind { color: rgba(226, 232, 240, 0.78); border-color: rgba(226, 232, 240, 0.35); }
@@ -1365,6 +1376,19 @@ pre code { background: none; padding: 0; }
 .detail-hero h1 { margin: .35rem 0 0; font-size: clamp(1.6rem, 2.6vw, 2.2rem); line-height: 1.15; }
 .detail-description { margin: .6rem 0 0; max-width: 62ch; line-height: 1.6; }
 .detail-actions { display: flex; flex-wrap: wrap; gap: .55rem; margin-top: 1.1rem; }
+
+/* The wiki that presents a questionnaire is where its questions come from, so
+   it stands above the play buttons — a reader who skips it is guessing. */
+.detail-wiki {
+  margin-top: 1.05rem;
+  padding: .85rem 1rem;
+  display: grid;
+  gap: .15rem;
+  border-left: 3px solid var(--accent-2);
+  background: var(--accent-soft);
+}
+.detail-wiki-title { margin: 0; font-size: .95rem; }
+.detail-wiki .wiki-quiz-list { margin-top: .45rem; }
 .detail-aside { display: grid; gap: .8rem; }
 .detail-aside .card { padding: .95rem 1rem; }
 .detail-aside h3 { margin: 0 0 .6rem; font-size: .95rem; }
