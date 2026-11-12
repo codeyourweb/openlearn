@@ -13,7 +13,9 @@
 */
 
 import { t } from "./i18n.js";
+import { qrSharingEnabled, socialSharingEnabled } from "./instance.js";
 import { qrSvg } from "./qr.js";
+import { openQrOverlay } from "./qrOverlay.js";
 import { copyToClipboard, escapeHtml, toast } from "./ui.js";
 
 const NETWORKS = [
@@ -38,30 +40,52 @@ export function shareCard(url, { title = "", hint = "" } = {}) {
   const encodedUrl = encodeURIComponent(value);
   const message = title ? `${title} — OpenLearn` : "OpenLearn";
   const encodedText = encodeURIComponent(message);
-  const links = NETWORKS.map(
-    (network) => `
+  const withQr = qrSharingEnabled();
+  const withNetworks = socialSharingEnabled();
+  const links = withNetworks
+    ? NETWORKS.map(
+        (network) => `
       <a class="share-link" href="${escapeHtml(network.href(encodedUrl, encodedText))}"
          target="_blank" rel="noopener noreferrer nofollow"
          title="${escapeHtml(network.label)}">
         <span class="share-icon" aria-hidden="true">${escapeHtml(network.icon)}</span>
         <span class="share-label">${escapeHtml(network.label)}</span>
       </a>`,
-  ).join("");
+      ).join("")
+    : "";
+  // An isolated network has no use for a code pointing at a closed host, nor for
+  // links that cannot resolve: each switch drops its own block, and the card is
+  // then just the address to copy into whatever the room already uses.
+  const qrBlock = withQr
+    ? `
+      <button type="button" class="share-qr-open" data-share-qr="${escapeHtml(value)}"
+              data-share-title="${escapeHtml(title)}"
+              title="${escapeHtml(t("share.qr_open"))}" aria-label="${escapeHtml(t("share.qr_open"))}">
+        <span class="share-qr">${qrSvg(value, { label: t("share.qr_label") })}</span>
+      </button>
+      <p class="muted small">${escapeHtml(hint || t("share.qr_hint"))}</p>`
+    : `<p class="muted small">${escapeHtml(t("share.copy_hint"))}</p>`;
   return `
-    <section class="card share-card">
+    <section class="card share-card" data-sharing="qr:${withQr ? "on" : "off"} social:${withNetworks ? "on" : "off"}">
       <h3>${escapeHtml(t("share.title"))}</h3>
-      <div class="share-qr">${qrSvg(value, { label: t("share.qr_label") })}</div>
-      <p class="muted small">${escapeHtml(hint || t("share.qr_hint"))}</p>
+      ${qrBlock}
       <button type="button" class="btn btn-sm btn-block" data-share-copy="${escapeHtml(value)}">
         ${escapeHtml(t("share.copy"))}
       </button>
-      <div class="share-links">${links}</div>
+      ${links ? `<div class="share-links">${links}</div>` : ""}
     </section>`;
 }
 
-/** Wire the copy button of every share card under `root`. */
+/** Wire the copy button and the QR opener of every share card under `root`. */
 export function wireShare(root) {
   if (!root) return;
+  for (const button of root.querySelectorAll("[data-share-qr]")) {
+    button.addEventListener("click", () => {
+      const url = button.getAttribute("data-share-qr") || "";
+      const title = button.getAttribute("data-share-title") || "";
+      openQrOverlay(url, { title, hint: t("share.qr_project_hint") });
+    });
+  }
   for (const button of root.querySelectorAll("[data-share-copy]")) {
     button.addEventListener("click", async () => {
       const url = button.getAttribute("data-share-copy") || "";

@@ -55,4 +55,10 @@ def meta(db: OrmSession = Depends(get_db)) -> dict:
             "requires_auth": bool(settings.mcp_require_auth),
         },
         "uploads": {"max_bytes": settings.max_upload_bytes},
+        # Isolated networks: a QR code pointing at a closed host is noise, and
+        # the networks are unreachable. Both switches are the administrator's.
+        "sharing": {
+            "qr": runtime.get(db, "sharing.qr_enabled"),
+            "social": runtime.get(db, "sharing.social_enabled"),
+        },
     }

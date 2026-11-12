@@ -18,6 +18,7 @@ const FALLBACK = {
   languages: ["en", "fr", "it", "es", "de", "ru", "zh", "ja"],
   ai: { enabled: false, available: false, model: "", min_interval_seconds: 15 },
   mail: { configured: false },
+  sharing: { qr: true, social: true },
   sso: [],
   mcp: { enabled: false, endpoint: "/mcp", requires_auth: true },
 };
@@ -47,6 +48,17 @@ export function instance() {
 export function aiEnabled() {
   const ai = instance().ai || {};
   return Boolean(ai.enabled && ai.available);
+}
+
+/** Both switches are independent: the room may want the code and no networks. */
+export function qrSharingEnabled() {
+  const sharing = instance().sharing || {};
+  return sharing.qr !== false;
+}
+
+export function socialSharingEnabled() {
+  const sharing = instance().sharing || {};
+  return sharing.social !== false;
 }
 
 /** The entry page: the presentation on a demo instance, the wiki elsewhere. */

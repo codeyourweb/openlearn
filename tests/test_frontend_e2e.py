@@ -3308,3 +3308,146 @@ def test_an_ending_is_the_scene_its_author_wrote(browser):
         assert not [error for error in recorder.errors if "pageerror" in error], recorder.errors
     finally:
         context.close()
+
+
+def test_a_share_code_opens_full_screen_for_the_room(browser):
+    """A trainer projects the page: the 148px code is for a phone, not a room.
+
+    One click on it must show the same code at the size of the window, on white,
+    with the address printed for whoever cannot scan — and give the focus back.
+    """
+    context, page, recorder = new_page(browser, viewport=(1440, 900))
+    try:
+        register_through_ui(page, f"qrbig-{uuid.uuid4().hex[:10]}@example.org", "Projector")
+        api = context.request
+        csrf = next(
+            (cookie["value"] for cookie in context.cookies() if cookie["name"] == "ol_csrf"), ""
+        )
+        quiz = api.post(
+            f"{BASE_URL}/api/v1/quizzes",
+            headers={"X-CSRF-Token": csrf},
+            data={
+                "title": "Projeté en classe",
+                "description": "Un questionnaire à scanner depuis le fond de la salle.",
+                "mode": "qcm",
+                "is_public": True,
+                "questions": [
+                    {
+                        "text_html": "<p>Une question.</p>",
+                        "options": [
+                            {"text": "Oui", "is_correct": True},
+                            {"text": "Non", "is_correct": False},
+                        ],
+                    }
+                ],
+            },
+        ).json()
+
+        page.goto(f"{BASE_URL}/quizzes/{quiz['id']}", wait_until="networkidle")
+        opener = page.locator(".share-qr-open").first
+        expect(opener).to_be_visible(timeout=15000)
+        small = page.locator(".share-qr").first.bounding_box()["width"]
+
+        opener.click()
+        overlay = page.locator(".qr-overlay")
+        expect(overlay).to_be_visible(timeout=10000)
+        big = page.locator(".qr-overlay-qr").bounding_box()["width"]
+        assert big > small * 2.5, f"the projected code is only {big}px for a {small}px one"
+        assert big >= 300, big
+        # White panel: scanners need contrast, whatever the theme.
+        background = page.evaluate(
+            "() => getComputedStyle(document.querySelector('.qr-overlay-qr')).backgroundColor"
+        )
+        assert background in {"rgb(255, 255, 255)", "rgba(255, 255, 255, 1)"}, background
+        assert f"/quizzes/{quiz['id']}" in page.locator(".qr-overlay-url").inner_text()
+
+        page.keyboard.press("Escape")
+        expect(overlay).to_be_hidden(timeout=5000)
+        assert page.evaluate("() => document.body.classList.contains('qr-open')") is False
+        assert page.evaluate("() => document.activeElement.classList.contains('share-qr-open')")
+        assert not [error for error in recorder.errors if "pageerror" in error], recorder.errors
+    finally:
+        context.close()
+
+
+def test_the_two_sharing_switches_hide_one_block_each(browser):
+    """A closed network: no code and no networks — the administrator decides.
+
+    Two independent switches, read by every page from /api/v1/meta. Whatever is
+    switched off must be absent from the markup, not merely invisible, so nothing
+    pointing outside can be clicked by mistake. Copying the address stays: it is
+    how an intranet shares a page.
+    """
+    admin_email = os.environ.get("OL_TEST_ADMIN_EMAIL", "")
+    admin_password = os.environ.get("OL_TEST_ADMIN_PASSWORD", "")
+    if not (admin_email and admin_password):
+        pytest.skip("OL_TEST_ADMIN_EMAIL / OL_TEST_ADMIN_PASSWORD are not set.")
+
+    context, page, recorder = new_page(browser)
+    try:
+        page.goto(f"{BASE_URL}/login", wait_until="networkidle")
+        page.fill("#email", admin_email)
+        page.fill("#password", admin_password)
+        page.click("#login-form button[type=submit]")
+        expect(page).to_have_url(re.compile(r".*/(dashboard)?$"), timeout=15000)
+
+        api = context.request
+        csrf = next(
+            (cookie["value"] for cookie in context.cookies() if cookie["name"] == "ol_csrf"), ""
+        )
+        headers = {"X-CSRF-Token": csrf}
+        quiz = api.post(
+            f"{BASE_URL}/api/v1/quizzes",
+            headers=headers,
+            data={
+                "title": "Questionnaire interne",
+                "description": "Sur un réseau fermé.",
+                "mode": "qcm",
+                "is_public": True,
+                "questions": [
+                    {
+                        "text_html": "<p>Interne ?</p>",
+                        "options": [
+                            {"text": "Oui", "is_correct": True},
+                            {"text": "Non", "is_correct": False},
+                        ],
+                    }
+                ],
+            },
+        ).json()
+
+        def switches(qr: bool, social: bool):
+            response = api.put(
+                f"{BASE_URL}/api/v1/admin/settings",
+                headers=headers,
+                data={"values": {"sharing.qr_enabled": qr, "sharing.social_enabled": social}},
+            )
+            assert response.status == 200, response.text()
+
+        try:
+            switches(False, False)
+            page.goto(f"{BASE_URL}/quizzes/{quiz['id']}", wait_until="networkidle")
+            expect(page.locator(".share-card")).to_be_visible(timeout=15000)
+            assert page.locator("[data-share-qr]").count() == 0, "a code survives on a closed network"
+            assert page.locator(".share-links").count() == 0, "network links survive"
+            assert page.locator("[data-share-copy]").count() == 1
+
+            switches(True, False)
+            page.reload(wait_until="networkidle")
+            expect(page.locator("[data-share-qr]")).to_be_visible(timeout=15000)
+            assert page.locator(".share-links").count() == 0
+
+            switches(False, True)
+            page.reload(wait_until="networkidle")
+            expect(page.locator(".share-links")).to_be_visible(timeout=15000)
+            assert page.locator("[data-share-qr]").count() == 0
+
+            switches(True, True)
+            page.reload(wait_until="networkidle")
+            expect(page.locator("[data-share-qr]")).to_be_visible(timeout=15000)
+            expect(page.locator(".share-links")).to_be_visible(timeout=15000)
+        finally:
+            switches(True, True)
+        assert not [error for error in recorder.errors if "pageerror" in error], recorder.errors
+    finally:
+        context.close()

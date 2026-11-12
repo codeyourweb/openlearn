@@ -53,11 +53,17 @@ SPEC: dict[str, tuple[type, str, bool]] = {
     "security.registration_open": (bool, None, False),
     "security.password_reset_ttl_minutes": (int, "password_reset_ttl_minutes", False),
     "instance.name": (str, "instance_name", False),
+    # Two independent switches: a classroom on a closed network has no use for
+    # either, and a school may want the code without the networks.
+    "sharing.qr_enabled": (bool, None, False),
+    "sharing.social_enabled": (bool, None, False),
 }
 
 # Defaults for keys that have no ``Settings`` attribute.
 _FALLBACK: dict[str, Any] = {
     "security.registration_open": True,
+    "sharing.qr_enabled": True,
+    "sharing.social_enabled": True,
 }
 
 SECTIONS: dict[str, tuple[str, ...]] = {
@@ -65,6 +71,7 @@ SECTIONS: dict[str, tuple[str, ...]] = {
     "mail": tuple(k for k in SPEC if k.startswith("mail.")),
     "security": tuple(k for k in SPEC if k.startswith("security.")),
     "instance": tuple(k for k in SPEC if k.startswith("instance.")),
+    "sharing": tuple(k for k in SPEC if k.startswith("sharing.")),
 }
 
 _LIMITS: dict[str, tuple[int | None, int | None]] = {

@@ -90,6 +90,7 @@ function _switchHtml() {
       <div class="ld-switch" role="tablist" aria-label="${escapeHtml(t("about.tabs_label"))}">
         <button class="ld-switch-btn is-active" type="button" role="tab" aria-selected="true" data-tab="discover">${escapeHtml(t("about.tab_discover"))}</button>
         <button class="ld-switch-btn" type="button" role="tab" aria-selected="false" data-tab="pro">${escapeHtml(t("about.tab_pro"))}</button>
+        <button class="ld-switch-btn" type="button" role="tab" aria-selected="false" data-tab="security">${escapeHtml(t("about.tab_security"))}</button>
       </div>
     </div>`;
 }
@@ -530,7 +531,8 @@ export function renderAbout() {
 
   root.innerHTML = `
     <div data-view="discover">${discoverHtml}</div>
-    <div data-view="pro" hidden>${_switchHtml()}${_proHtml()}</div>`;
+    <div data-view="pro" hidden>${_switchHtml()}${_proHtml()}</div>
+    <div data-view="security" hidden>${_switchHtml()}${_secHtml()}</div>`;
 
   _bindTabs(root);
   _animate(root);
@@ -597,10 +599,90 @@ function _proHtml() {
     </section>`;
 }
 
-/** Two tabs, one page: the story, and the same platform read as a training tool. */
+/* -------------------------------------------------------------------------- */
+/* "Security — for IT and CISOs": the architecture choices, stated plainly     */
+/* -------------------------------------------------------------------------- */
+
+const SEC_CARDS = ["tests", "deploy", "database", "identity", "offline", "operations"];
+const SEC_NOTES = ["roles", "audit", "backup", "licence", "a11y"];
+
+function _secArt() {
+  return `
+    <div class="ld-window ld-window-sec">
+      <div class="ld-window-bar"><span></span><span></span><span></span><em>${escapeHtml(t("about.sec_art_bar"))}</em></div>
+      <div class="ld-window-body ld-sec-body">
+        <div class="ld-terminal">
+          <p><b>$</b> ${escapeHtml(t("about.sec_art_cmd"))}</p>
+          <p class="ok">✓ ${escapeHtml(t("about.sec_art_db"))}</p>
+          <p class="ok">✓ ${escapeHtml(t("about.sec_art_sso"))}</p>
+          <p class="ok">✓ ${escapeHtml(t("about.sec_art_tests"))}</p>
+          <p class="cursor">_</p>
+        </div>
+        <div class="ld-shield"><span aria-hidden="true">🔒</span>${escapeHtml(t("about.sec_art_offline"))}</div>
+      </div>
+    </div>`;
+}
+
+function _secHtml() {
+  return `
+    <section class="ld-hero sec-hero">
+      <div class="ld-aurora" aria-hidden="true"><span></span><span></span><span></span></div>
+      <div class="ld-hero-text">
+        <p class="ld-eyebrow" data-reveal>${escapeHtml(t("about.sec_eyebrow"))}</p>
+        <h2 class="ld-hero-title" data-reveal>${escapeHtml(t("about.sec_title"))}</h2>
+        <p class="ld-lead" data-reveal>${escapeHtml(t("about.sec_lead"))}</p>
+        <ul class="ld-hero-points" data-reveal>
+          ${SEC_HERO_POINTS.map(
+            (point) => `<li><span aria-hidden="true">✦</span> ${escapeHtml(t(`about.sec_point_${point}`))}</li>`,
+          ).join("")}
+        </ul>
+      </div>
+      <div class="ld-hero-art" data-reveal>${_secArt()}</div>
+    </section>
+
+    <section class="pro-cards sec-cards">
+      ${SEC_CARDS.map(
+        (card) => `
+        <article class="pro-card" data-reveal>
+          <span class="pro-icon" aria-hidden="true">${SEC_ICONS[card]}</span>
+          <h2>${escapeHtml(t(`about.sec_${card}_title`))}</h2>
+          <p>${escapeHtml(t(`about.sec_${card}_body`))}</p>
+        </article>`,
+      ).join("")}
+    </section>
+
+    <section class="pro-free">
+      <div class="pro-free-inner sec-notes" data-reveal>
+        <h2>${escapeHtml(t("about.sec_notes_title"))}</h2>
+        <ul class="sec-notes-list">
+          ${SEC_NOTES.map(
+            (note) => `<li><strong>${escapeHtml(t(`about.sec_note_${note}_title`))}</strong> ${escapeHtml(t(`about.sec_note_${note}_body`))}</li>`,
+          ).join("")}
+        </ul>
+        <p class="muted">${escapeHtml(t("about.sec_closing"))}</p>
+      </div>
+    </section>`;
+}
+
+const SEC_HERO_POINTS = ["code", "outbound", "data"];
+const SEC_ICONS = {
+  tests: "🧪",
+  deploy: "📦",
+  database: "🗄",
+  identity: "🔑",
+  offline: "🔌",
+  operations: "🛠",
+};
+
+/** Three views, one page: the story, the training tool, the infrastructure. */
 function _bindTabs(root) {
   const tabs = [...root.querySelectorAll(".ld-switch-btn")];
-  const views = { discover: root.querySelector('[data-view="discover"]'), pro: root.querySelector('[data-view="pro"]') };
+  const views = {
+    discover: root.querySelector('[data-view="discover"]'),
+    pro: root.querySelector('[data-view="pro"]'),
+    security: root.querySelector('[data-view="security"]'),
+  };
+  const hashes = { pro: "#pro", security: "#securite" };
   const select = (name) => {
     tabs.forEach((tab) => {
       const active = tab.dataset.tab === name;
@@ -610,11 +692,12 @@ function _bindTabs(root) {
     Object.entries(views).forEach(([key, node]) => {
       if (node) node.hidden = key !== name;
     });
-    window.history.replaceState({}, "", name === "pro" ? "#pro" : location.pathname);
-    if (name === "pro") _animate(root);
+    window.history.replaceState({}, "", hashes[name] || location.pathname);
+    if (name !== "discover") _animate(root);
   };
   tabs.forEach((tab) => tab.addEventListener("click", () => select(tab.dataset.tab)));
   if (location.hash === "#pro") select("pro");
+  if (location.hash === "#securite") select("security");
 }
 
 /** Reveal on scroll, count the figures, drive the progress bar and parallax. */
