@@ -1,6 +1,8 @@
 # Audio transcripts
 
-OpenLearn can read a wiki page, a questionnaire or a scene of an adventure aloud.
+OpenLearn can read a wiki page or a scene of an adventure aloud. A plain
+questionnaire has no transcript: it is a sequence of questions, not prose, and a
+voice reading it adds nothing to the screen.
 The audio is made **when the author asks for it**, once, and stored; a reader who
 presses play waits for nothing.
 
@@ -85,11 +87,37 @@ docker run -d --name qwen-tts --restart unless-stopped \
 Then put `qwen-tts` on the same Docker network as the application and set
 `OL_AUDIO_SERVICE_URL=http://qwen-tts:8000`.
 
-Measured on eight cores with no GPU, Qwen3-TTS 0.6B CustomVoice in float32:
-**410 characters → 26.7 s of audio in 99 s of CPU** (RTF 0.27), 209 KiB of MP3.
-That number is what the ceiling and the “about N minutes” line in the dialog are
-computed from. A transcript of a 12 000-character document is roughly 45 minutes
-of CPU: allowed, but the job queue is why it does not block anything.
+Measured on eight cores with no GPU, in float32, on the same 306-character
+French paragraph:
+
+| Model | Audio produced | CPU time | Real-time factor |
+|---|---|---|---|
+| 0.6B CustomVoice | 18.5 s | 68 s | 0.27 |
+| 1.7B CustomVoice | 18.5 s | 131 s | 0.43 |
+
+The 1.7B checkpoint is the default: the extra CPU buys a clearly steadier
+reading. Budget about seven minutes per 1 000 characters, and roughly 85 minutes
+for a 12 000-character document — allowed, and the job queue is why it blocks
+nothing. Switch back to the 0.6B with `TTS_MODEL` if the machine is short on
+cores.
+
+## One portion at a time
+
+A transcript belongs to **one page or one scene**, never to a whole story. The
+author controls it from the document itself:
+
+- nothing yet → “Create the transcript”, with the choice of a female or a male
+  voice;
+- ready → “Transcript ready · 0:42”, then *Listen*, *Make it again* and *Remove*;
+- unavailable → the block is not rendered at all.
+
+*Make it again* replaces the previous rendition for the same voice and language,
+so an author who dislikes a reading never ends up with two versions of it.
+*Remove* deletes the rendition: the player disappears from the page, which is how
+an author gives up on the audio of one portion without touching the rest.
+
+An adventure therefore gets exactly the scenes its author asked for. Rendering
+scene 4 of 13 costs one scene of CPU, not the whole graph.
 
 ## Storage and cost
 

@@ -12,7 +12,7 @@ the same HTTP surface — `POST /v1/audio/speech`, `GET /v1/audio/voices`,
 ```bash
 docker build -t qwen-tts-cpu:local .
 docker run -d --name qwen-tts --restart unless-stopped \
-  -m 9g --cpus 6 \
+  -m 13g --cpus 6 \
   -e TTS_THREADS=6 \
   -v /srv/qwen-tts-models:/models \
   -p 127.0.0.1:8021:8000 \
@@ -83,7 +83,7 @@ serialised behind a lock — two models decoding at once on CPU would both crawl
 
 | Variable | Default | Meaning |
 |---|---|---|
-| `TTS_MODEL` | `Qwen/Qwen3-TTS-12Hz-0.6B-CustomVoice` | Hugging Face id or local path. |
+| `TTS_MODEL` | `Qwen/Qwen3-TTS-12Hz-1.7B-CustomVoice` | Hugging Face id or local path. |
 | `TTS_THREADS` | `6` | Torch threads. |
 | `TTS_MAX_CHARS` | `4000` | Refuse longer inputs. |
 | `TTS_BITRATE` | `64` | MP3 bitrate, kbit/s. |

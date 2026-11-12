@@ -224,16 +224,17 @@ def test_an_edited_page_no_longer_plays_its_old_transcript(client, tts):
     assert listed["renditions"] == []
 
 
-def test_a_quiz_is_read_question_by_question(client, tts):
+def test_a_plain_questionnaire_cannot_be_read_aloud(client, tts):
+    """Only a wiki page and an adventure scene carry a transcript."""
     register_user(client, "author@example.com")
     quiz = _quiz(client)
-    started = client.post(
+    refused = client.post(
         "/api/v1/audio/render",
         json={"owner_type": "quiz", "owner_id": quiz["id"], "voice": "male"},
         headers=csrf_headers(client),
     )
-    assert started.status_code == 202, started.text
-    assert started.json()["segments"] >= 2, "the intro and the question are separate pieces"
+    assert refused.status_code == 422, refused.text
+    assert "page or node" in refused.json()["detail"]
 
 
 def test_the_two_voices_are_synthesised_separately(client, tts):

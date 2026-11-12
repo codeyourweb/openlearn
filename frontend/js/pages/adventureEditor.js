@@ -9,7 +9,7 @@
  */
 
 import { api, keepaliveRequest, uploadImage } from "../api.js";
-import { audioStatus, openBatchGenerator } from "../audio.js";
+import { mountAudioControls } from "../audio.js";
 import { openFramingEditor } from "../framingEditor.js";
 import { framingAttr, paintFraming } from "../imageFrame.js";
 import { currentLanguage, t } from "../i18n.js";
@@ -733,6 +733,13 @@ function inspectorNode(model, node) {
           : ""
       }
 
+      <!-- The same order as the reader: illustration, transcript, then the story. -->
+      <div class="adv-inspector-section mt-3" id="scene-audio-section" hidden>
+        <h4>${t("audio.scene_title")}</h4>
+        <p class="muted small">${t("audio.scene_help")}</p>
+        <div class="audio-controls" id="scene-audio"></div>
+      </div>
+
       ${
         node.kind === "ending"
           ? `
@@ -955,14 +962,6 @@ export async function renderAdventureEditor({ id }) {
     /* no provider, or no answer: the editor stays exactly as it was */
   }
 
-  // Speech is a deployment setting, not an AI one: an instance can read stories
-  // aloud without any model provider.
-  let audioAvailable = false;
-  try {
-    audioAvailable = Boolean((await audioStatus()).enabled) && !isNew;
-  } catch {
-    /* no engine: no button */
-  }
 
   let model = emptyModel();
   if (!isNew) {
@@ -1000,11 +999,6 @@ export async function renderAdventureEditor({ id }) {
              placeholder="${t("adv_editor.title_placeholder")}" value="${escapeHtml(model.title)}" />
       <span class="muted small adv-status"></span>
       <div class="spacer"></div>
-      ${
-        audioAvailable
-          ? `<button type="button" class="btn btn-sm btn-ghost" data-act="audio-open">${t("audio.dialog_title")}</button>`
-          : ""
-      }
       ${
         aiAvailable
           ? `<button type="button" class="btn btn-sm btn-ghost" data-act="ai-open">${t("adv_editor.ai_revise")}</button>`
@@ -1247,27 +1241,6 @@ export async function renderAdventureEditor({ id }) {
   const aiNote = root.querySelector("[data-ai-status]");
   const wireAiPanel = () => {
     if (!aiPanel) return;
-    root.querySelector('[data-act="audio-open"]')?.addEventListener("click", () => {
-      // Scenes that were never saved have no id, and a transcript cannot point
-      // at nothing: the dialog names what it will read, and skips the rest.
-      const all = model.adventure.nodes || [];
-      const scenes = all.filter((node) => node.id && (node.text_html || "").trim());
-      const missing = all.length - scenes.length;
-      openBatchGenerator({
-        items: scenes.map((node) => ({
-          ownerType: "node",
-          ownerId: node.id,
-          label: node.title || "",
-          chars: String(node.text_html || "").replace(/<[^>]+>/g, " ").length,
-        })),
-        language: (model.default_language || "").slice(0, 2),
-        title: missing
-          ? `${model.title} — ${t("audio.batch_save_first", { count: missing })}`
-          : model.title,
-        onReady: () => navigate(`/adventures/${id}/edit`),
-      });
-    });
-
     root.querySelector('[data-act="ai-open"]')?.addEventListener("click", () => {
       aiPanel.hidden = !aiPanel.hidden;
       if (!aiPanel.hidden) aiPanel.querySelector("textarea").focus();
@@ -1313,6 +1286,23 @@ export async function renderAdventureEditor({ id }) {
 
   const wireInspector = () => {
     const node = current();
+
+    // One transcript per scene, offered on the scene itself: an author who only
+    // wants the first three read aloud should not have to render the other ten.
+    const audioSection = inspector.querySelector("#scene-audio-section");
+    const audioBox = inspector.querySelector("#scene-audio");
+    if (audioSection && audioBox && node && node.id) {
+      audioSection.hidden = false;
+      const chars = String(node.text_html || "").replace(/<[^>]+>/g, " ").length;
+      void mountAudioControls(audioBox, {
+        ownerType: "node",
+        ownerId: node.id,
+        language: (model.default_language || "").slice(0, 2),
+        title: (node.text_html || "").replace(/<[^>]+>/g, " ").trim().slice(0, 80),
+        chars,
+        onReady: () => paintCanvas(canvas, model, selectedKey, zoom),
+      });
+    }
 
     inspector.querySelectorAll("[data-cmd]").forEach((button) => {
       button.addEventListener("click", () => {

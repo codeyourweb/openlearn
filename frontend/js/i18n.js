@@ -1698,10 +1698,14 @@ export const en = {
   "audio.failed": "The transcript failed.",
   "audio.generate": "Create an audio transcript",
   "audio.unsupported": "This instance has no voice for that language.",
-  "audio.batch_help": "The {count} scenes will be read one after the other.",
-  "audio.batch_scene": "Scene {index} of {total}…",
-  "audio.batch_done": "{done} of {total} scenes ready.",
-  "audio.batch_save_first": "Save first: {count} scene(s) not saved yet.",
+  "audio.ready_at": "Transcript ready · {duration}",
+  "audio.redo": "Make it again",
+  "audio.remove": "Remove the transcript",
+  "audio.remove_confirm": "Remove this portion's transcript? The player will disappear from the page.",
+  "audio.removed": "Transcript removed.",
+  "audio.listen_now": "Listen",
+  "audio.scene_title": "Scene transcript",
+  "audio.scene_help": "Each scene has its own transcript: make only the ones you want, redo them, or remove them.",
 };
 
 

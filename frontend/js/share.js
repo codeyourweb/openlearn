@@ -96,3 +96,66 @@ export function wireShare(root) {
     });
   }
 }
+
+/**
+ * Put the share card where it belongs on the screen the reader has.
+ *
+ * On a wide screen it sits in the aside, under the facts: you read the page, the
+ * card is already there beside it. On a phone there is no "beside", and a card
+ * that opens above the article pushes the very thing the reader came for below
+ * the fold — a QR code before the first sentence. Under 860 px (the width at
+ * which the aside stacks) the card moves to the end of the document instead,
+ * where a reader who wants to share it has finished reading anyway.
+ */
+export function placeShare(root, slotSelector) {
+  const card = root.querySelector(".share-card");
+  const slot = root.querySelector(slotSelector);
+  if (!card || !slot) return;
+  const home = card.parentElement;
+  const query = window.matchMedia("(max-width: 860px)");
+  let watcher = null;
+
+  const endWatch = () => {
+    if (watcher) {
+      watcher.disconnect();
+      watcher = null;
+    }
+  };
+
+  // A page may build its tree detached and attach it a moment later: an
+  // unattached card is not a discarded one. Watch the insertion, then place it,
+  // and give up after a few seconds if it never arrives — that is a page that
+  // re-rendered, and holding a dead node forever would leak on every visit.
+  const waitForAttachment = () => {
+    if (watcher) return;
+    watcher = new MutationObserver(() => {
+      if (!card.isConnected) return;
+      endWatch();
+      place();
+    });
+    watcher.observe(document.body, { childList: true, subtree: true });
+    // The listeners stay: a window that grows must still get its card back.
+    window.setTimeout(endWatch, 5000);
+  };
+
+  const place = () => {
+    if (!card.isConnected) {
+      waitForAttachment();
+      return;
+    }
+    if (query.matches) {
+      if (card.parentElement !== slot) slot.appendChild(card);
+    } else if (card.parentElement !== home) {
+      home.appendChild(card);
+    }
+  };
+
+  place();
+  // An emulated phone can still report the desktop fallback width while the
+  // page script runs, so `matchMedia` may answer false here and turn true once
+  // the document is laid out. Re-place on the next frame, and on every change
+  // of width afterwards.
+  requestAnimationFrame(place);
+  query.addEventListener("change", place);
+  window.addEventListener("resize", place);
+}

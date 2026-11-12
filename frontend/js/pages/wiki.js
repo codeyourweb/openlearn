@@ -3,11 +3,11 @@
 /* Wiki: catalogue, reader and creation flow. */
 
 import { api, uploadImage } from "../api.js";
-import { mountPlayer } from "../audio.js";
+import { mountPlayer, placePlayerUnderIllustration } from "../audio.js";
 import { LANGUAGES, currentLanguage, t, tp } from "../i18n.js";
 import { markdownToHtml, inlineMarkdown, paintCustomColors } from "../markdown.js";
 import { hydrateEmbeds } from "../wikiEmbeds.js";
-import { shareCard, wireShare } from "../share.js";
+import { placeShare, shareCard, wireShare } from "../share.js";
 import { flagStrip } from "../flags.js";
 import { setPageSeo, titleSlug } from "../seo.js";
 import { navigate } from "../router.js";
@@ -716,6 +716,7 @@ async function _wikiPage(root, params) {
               : ""
           }
         </section>
+        <div class="share-mobile-slot" id="share-mobile"></div>
       </main>
     </div>
   `;
@@ -794,6 +795,7 @@ async function _wikiPage(root, params) {
 
   // The transcript, when one was made from the text on screen. Nothing is
   // synthesised here: a missing rendition simply leaves the host empty.
+  placePlayerUnderIllustration(root.querySelector("#wiki-audio"), root.querySelector("#wiki-content"));
   void mountPlayer(root.querySelector("#wiki-audio"), {
     ownerType: "page",
     ownerId: page.id,
@@ -822,6 +824,7 @@ async function _wikiPage(root, params) {
   }
 
   wireShare(root);
+  placeShare(root, "#share-mobile");
 
   // On a phone the page list would push the article below three screens of
   // menu and stay stuck there while scrolling: it collapses to one bar.

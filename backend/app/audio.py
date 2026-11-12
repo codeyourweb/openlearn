@@ -209,25 +209,6 @@ def _sections(db: OrmSession, owner_type: str, owner_id: int, language: str) -> 
         paragraphs = [page.title.rstrip(".") + "."] + markdown_to_speech(page.content_md)
         return _group("page", paragraphs)
 
-    if owner_type == "quiz":
-        quiz = db.get(Quiz, owner_id)
-        if quiz is None:
-            raise AudioUnavailable("Quiz not found.")
-        if quiz.mode == "adventure":
-            raise AudioUnavailable("An adventure is read scene by scene.")
-        sections: list[dict] = []
-        intro = [quiz.title.rstrip(".") + "."]
-        if quiz.description.strip():
-            intro += markdown_to_speech(quiz.description)
-        sections.append({"title": quiz.title, "paragraphs": intro})
-        for index, question in enumerate(_questions(db, quiz.id), start=1):
-            body = _translated_html(question.text_html, question.text_translations, language)
-            for option in _options(db, question.id):
-                body += _translated_text(option.text, option.text_translations, language)
-            if body:
-                sections.append({"title": f"{index}", "paragraphs": body})
-        return sections
-
     if owner_type == "node":
         from .models import AdventureNode
 
@@ -237,7 +218,7 @@ def _sections(db: OrmSession, owner_type: str, owner_id: int, language: str) -> 
         paragraphs = _translated_html(node.text_html, node.text_translations, language)
         return _group("scene", paragraphs)
 
-    raise AudioUnavailable(f"Unknown document kind: {owner_type}.")
+    raise AudioUnavailable(f"Only wiki pages and adventure scenes can be read aloud, not {owner_type}.")
 
 
 def _translated_html(raw: str, translations: dict | None, language: str) -> list[str]:
@@ -248,29 +229,8 @@ def _translated_html(raw: str, translations: dict | None, language: str) -> list
     return html_to_speech(raw)
 
 
-def _translated_text(raw: str, translations: dict | None, language: str) -> list[str]:
-    text = (translations or {}).get(language) if translations else None
-    return markdown_to_speech(text or raw)
-
-
 def _group(prefix: str, paragraphs: list[str]) -> list[dict]:
     return [{"title": prefix, "paragraphs": paragraphs}] if paragraphs else []
-
-
-def _questions(db: OrmSession, quiz_id: int):
-    from .models import Question
-
-    return db.scalars(
-        select(Question).where(Question.quiz_id == quiz_id).order_by(Question.position, Question.id)
-    ).all()
-
-
-def _options(db: OrmSession, question_id: int):
-    from .models import Option
-
-    return db.scalars(
-        select(Option).where(Option.question_id == question_id).order_by(Option.position, Option.id)
-    ).all()
 
 
 def script_for(db: OrmSession, owner_type: str, owner_id: int, language: str) -> list[dict]:
@@ -443,10 +403,6 @@ def _document_title(db: OrmSession, owner_type: str, owner_id: int) -> str:
         if page is not None:
             wiki = db.get(Wiki, page.wiki_id)
             return f"{wiki.title} — {page.title}" if wiki else page.title
-    if owner_type == "quiz":
-        quiz = db.get(Quiz, owner_id)
-        if quiz is not None:
-            return quiz.title
     if owner_type == "node":
         from .models import AdventureNode
 

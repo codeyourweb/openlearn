@@ -14,7 +14,7 @@ import { flagStrip } from "../flags.js";
 import { confirmDialog, escapeHtml, formatDate, toast } from "../ui.js";
 import { setPageSeo, titleSlug } from "../seo.js";
 import { assessmentSection, bindAssessment } from "./quizAssessment.js";
-import { shareCard, wireShare } from "../share.js";
+import { placeShare, shareCard, wireShare } from "../share.js";
 
 const MODE_LABEL = {
   qcm: "editor.mode_qcm",
@@ -483,11 +483,13 @@ export async function renderQuizDetail({ id, query }) {
           .join("")}
       </nav>
       <div class="tab-panel" id="tab-panel">${panelFor(initialTab)}</div>
+      <div class="share-mobile-slot" id="share-mobile"></div>
     </div>
     ${isOwner && quiz.mode !== "adventure" ? assessmentSection(quiz) : ""}`;
 
   if (isOwner && quiz.mode !== "adventure") bindAssessment(root, quiz);
   wireShare(root);
+  placeShare(root, "#share-mobile");
   paintFraming(root);
 
   // A transcript belongs to the questionnaire, not to a scene: it is read at

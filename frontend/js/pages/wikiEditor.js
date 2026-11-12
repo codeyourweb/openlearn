@@ -3,7 +3,7 @@
 /* Wiki editor: markdown, preview or WYSIWYG over the same document, plus AI. */
 
 import { api, uploadImage } from "../api.js";
-import { audioStatus, openGenerator } from "../audio.js";
+import { mountAudioControls } from "../audio.js";
 import {
   offsetInEditable,
   offsetInTextarea,
@@ -243,10 +243,8 @@ async function _wikiEditor(root, params) {
         </button>
       </div>
       <div class="ed-reviews ed-audio" id="wiki-audio-reviews" role="group" hidden>
-        <button type="button" class="btn btn-sm btn-ghost" data-audio-open
-                title="${escapeHtml(t("audio.dialog_help"))}" ${pageId ? "" : "disabled"}>
-          <span aria-hidden="true">🔊</span> ${escapeHtml(t("audio.generate"))}
-        </button>
+        <span aria-hidden="true" class="ed-audio-mark">🔊</span>
+        <div class="audio-controls" id="wiki-audio-controls"></div>
       </div>
       <span class="muted small ed-count" id="wiki-word-count"></span>
     </div>
@@ -1791,27 +1789,17 @@ async function _wikiEditor(root, params) {
   // Speech is its own switch: it shows even when no model is wired, because a
   // local engine is all it needs.
   const audioGroup = root.querySelector("#wiki-audio-reviews");
-  if (audioGroup) {
-    void audioStatus().then((status) => {
-      if (!status.enabled || !pageId) return;
-      audioGroup.hidden = false;
-      const button = audioGroup.querySelector("[data-audio-open]");
-      const language = (wiki.default_language || "").slice(0, 2);
-      if (!status.languages.includes(language)) {
-        button.disabled = true;
-        button.title = t("audio.unsupported");
-        return;
-      }
-      button.addEventListener("click", () => {
-        const textarea = root.querySelector("#wiki-md");
-        openGenerator({
-          ownerType: "page",
-          ownerId: pageId,
-          language,
-          chars: (textarea?.value || model.content || "").length,
-          title: model.title || page?.title || "",
-        });
-      });
+  const audioBox = root.querySelector("#wiki-audio-controls");
+  if (audioGroup && audioBox && pageId) {
+    const textarea = root.querySelector("#wiki-md");
+    void mountAudioControls(audioBox, {
+      ownerType: "page",
+      ownerId: pageId,
+      language: (wiki.default_language || "").slice(0, 2),
+      chars: (textarea?.value || model.content || "").length,
+      title: model.title || page?.title || "",
+    }).then(() => {
+      if (!audioBox.hidden) audioGroup.hidden = false;
     });
   }
 

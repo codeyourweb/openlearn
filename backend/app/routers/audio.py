@@ -38,14 +38,6 @@ def _writable(role: str) -> bool:
     return wiki_writable(role)
 
 
-def _quiz_permission(quiz: Quiz, user: User | None) -> tuple[bool, bool]:
-    from .quizzes import _can_view
-
-    visible = _can_view(quiz, user)
-    writable = user is not None and (quiz.owner_id == user.id or bool(user.is_admin))
-    return visible, writable or (visible and user is not None and bool(getattr(user, "is_staff", False)))
-
-
 def _resolve(db: OrmSession, owner_type: str, owner_id: int, user: User | None) -> tuple[Quiz | WikiPage, bool, bool, str]:
     """Return the document, whether it is readable, whether it is writable, and its language."""
     if owner_type == "page":
@@ -58,13 +50,6 @@ def _resolve(db: OrmSession, owner_type: str, owner_id: int, user: User | None) 
 
         wiki = db.get(Wiki, page.wiki_id)
         return page, _readable(wiki, role), _writable(role), (wiki.default_language if wiki else "en")
-
-    if owner_type == "quiz":
-        quiz = db.get(Quiz, owner_id)
-        if quiz is None:
-            raise HTTPException(status_code=404, detail="Quiz not found.")
-        visible, writable = _quiz_permission(quiz, user)
-        return quiz, visible, writable, quiz.default_language or "en"
 
     if owner_type == "node":
         from ..models import AdventureNode
@@ -80,7 +65,7 @@ def _resolve(db: OrmSession, owner_type: str, owner_id: int, user: User | None) 
         writable = user is not None and (quiz.owner_id == user.id or bool(user.is_admin))
         return node, visible, writable, quiz.default_language or "en"
 
-    raise HTTPException(status_code=422, detail="owner_type must be page, quiz or node.")
+    raise HTTPException(status_code=422, detail="owner_type must be page or node.")
 
 
 def _document_language(document, fallback: str) -> str:

@@ -11,7 +11,7 @@
 
 import { api } from "./api.js";
 import { t } from "./i18n.js";
-import { escapeHtml, toast } from "./ui.js";
+import { confirmDialog, escapeHtml, toast } from "./ui.js";
 
 const SPEEDS = [0.8, 1, 1.25, 1.5];
 
@@ -311,123 +311,137 @@ export function openGenerator({ ownerType, ownerId, language, chars = 0, title =
 }
 
 /**
- * Generate the transcripts of every scene of an adventure, one after the other.
+ * Put the player between the illustration and the text it reads.
  *
- * An adventure is a graph, not a text: there is no single audio track to make,
- * so each scene gets its own. Enqueuing them one at a time keeps the progress
- * honest ("3 of 13") and stops a half-written draft from queueing twelve jobs
- * that will all fail on the same mistake.
+ * A wiki page often opens on a picture, then explains it: a player above the
+ * picture belongs to the header, not to the text. Move it under a leading image
+ * (a bare <img>, or a paragraph holding nothing else), and leave it where it is
+ * when the page starts with words.
  */
-export function openBatchGenerator({ items, language, title, onReady }) {
-  const existing = document.querySelector("#audio-gen");
-  existing?.remove();
-  if (!items.length) return;
+export function placePlayerUnderIllustration(host, content) {
+  if (!host || !content) return;
+  const first = content.firstElementChild;
+  if (!first) return;
+  const isImage = (element) => element && element.tagName === "IMG";
+  const holder =
+    isImage(first) || (first.children.length === 1 && isImage(first.firstElementChild)) ? first : null;
+  if (holder) content.insertBefore(host, holder.nextElementSibling);
+}
 
-  const totalChars = items.reduce((sum, item) => sum + (item.chars || 0), 0);
-  const audioSeconds = Math.round(totalChars / 15.4);
-  const cpuMinutes = Math.max(1, Math.round((audioSeconds * 3.7) / 60));
+/**
+ * The author's controls for one portion: a page or a scene.
+ *
+ * Three states, and no fourth: nothing yet (offer to make it), ready (offer to
+ * listen, make it again, or drop it), and unavailable (the button is hidden).
+ * "Make it again" replaces the previous rendition — the same voice and language
+ * overwrite — so an author who dislikes a reading is never left with two.
+ */
+export async function mountAudioControls(container, { ownerType, ownerId, language, title = "", chars = 0, onReady }) {
+  if (!container) return;
+  container.innerHTML = "";
+  container.hidden = true;
+  if (!ownerId) return;
+  const status = await audioStatus();
+  if (!status.enabled) return;
+  container.hidden = false;
 
-  const dialog = document.createElement("dialog");
-  dialog.className = "modal audio-gen";
-  dialog.id = "audio-gen";
-  dialog.innerHTML = `
-    <form method="dialog" class="modal-body">
-      <h2>${escapeHtml(t("audio.dialog_title"))}</h2>
-      <p class="muted small">${escapeHtml(title)}</p>
-      <p class="muted small">${escapeHtml(t("audio.batch_help", { count: items.length }))}</p>
-      <fieldset class="field">
-        <legend>${escapeHtml(t("audio.voice"))}</legend>
-        <label class="check">
-          <input type="radio" name="audio-voice" value="female" checked />
-          <span>${escapeHtml(t("audio.voice_female"))}</span>
-        </label>
-        <label class="check">
-          <input type="radio" name="audio-voice" value="male" />
-          <span>${escapeHtml(t("audio.voice_male"))}</span>
-        </label>
-      </fieldset>
-      <p class="muted small" data-audio-estimate>
-        ${escapeHtml(t("audio.estimate", { minutes: cpuMinutes, audio: clock(audioSeconds) }))}
-      </p>
-      <p class="audio-gen-status" data-audio-status role="status" aria-live="polite"></p>
-      <div class="row-wrap end">
-        <button class="btn btn-ghost" value="cancel" formnovalidate>${escapeHtml(t("action.cancel"))}</button>
-        <button class="btn btn-primary" data-audio-start value="default">${escapeHtml(t("audio.start"))}</button>
-      </div>
-    </form>`;
-  document.body.append(dialog);
+  const supported = status.languages.includes(language);
 
-  const status = dialog.querySelector("[data-audio-status]");
-  const startButton = dialog.querySelector("[data-audio-start]");
-  let stopped = false;
-
-  dialog.addEventListener("click", (event) => {
-    if (event.target === dialog) {
-      stopped = true;
-      dialog.close();
-      dialog.remove();
+  const paint = async () => {
+    let renditions = [];
+    try {
+      const query = new URLSearchParams({ owner_type: ownerType, owner_id: String(ownerId) });
+      const payload = await api.get(`/api/v1/audio/renditions?${query.toString()}`);
+      renditions = payload.renditions || [];
+    } catch {
+      renditions = [];
     }
-  });
-  dialog.addEventListener("close", () => {
-    stopped = true;
-  });
+    container.innerHTML = "";
+    const row = document.createElement("div");
+    row.className = "audio-controls-row";
 
-  const waitFor = async (jobId) => {
-    for (;;) {
-      if (stopped) return { status: "abandoned" };
-      const state = await api.get(`/api/v1/audio/jobs/${jobId}`);
-      if (state.status !== "done") {
-        status.textContent = t("audio.progress", {
-          message: state.message || "…",
-          percent: state.progress || 0,
-        });
+    const button = (label, className, action) => {
+      const element = document.createElement("button");
+      element.type = "button";
+      element.className = className;
+      element.textContent = label;
+      element.addEventListener("click", action);
+      return element;
+    };
+
+    if (!renditions.length) {
+      if (!supported) {
+        const note = document.createElement("p");
+        note.className = "muted small";
+        note.textContent = t("audio.unsupported");
+        row.append(note);
+        container.append(row);
+        return;
       }
-      if (state.status === "done") return state;
-      if (state.status !== "running" && state.status !== "queued") return state;
-      await new Promise((resolve) => setTimeout(resolve, 2500));
+      row.append(
+        button(t("audio.generate"), "btn btn-sm", () =>
+          openGenerator({
+            ownerType,
+            ownerId,
+            language,
+            title,
+            chars,
+            onReady: () => {
+              void paint();
+              onReady?.();
+            },
+          }),
+        ),
+      );
+      container.append(row);
+      return;
     }
+
+    const rendition = renditions[0];
+    const state = document.createElement("span");
+    state.className = "audio-controls-state";
+    state.textContent = t("audio.ready_at", { duration: clock(totalOf(rendition)) });
+    row.append(state);
+
+    // Listening here beats reloading the page: the author is judging a voice.
+    const host = document.createElement("div");
+    host.className = "audio-host";
+    row.append(
+      button(t("audio.listen_now"), "btn btn-sm btn-ghost", () => {
+        if (!host.childElementCount) {
+          void mountPlayer(host, { ownerType, ownerId, language: rendition.language || language });
+        }
+        host.hidden = false;
+      }),
+      button(t("audio.redo"), "btn btn-sm btn-ghost", () =>
+        openGenerator({
+          ownerType,
+          ownerId,
+          language,
+          title,
+          chars,
+          onReady: () => {
+            void paint();
+            onReady?.();
+          },
+        }),
+      ),
+      button(t("audio.remove"), "btn btn-sm btn-ghost btn-danger", async () => {
+        const agreed = await confirmDialog(t("audio.remove"), t("audio.remove_confirm"), t("action.delete"));
+        if (!agreed) return;
+        try {
+          await api.del(`/api/v1/audio/renditions/${rendition.id}`);
+          toast(t("audio.removed"), "success");
+          host.innerHTML = "";
+          void paint();
+          onReady?.();
+        } catch (error) {
+          toast(error?.detail || t("error.generic"), "error");
+        }
+      }),
+    );
+    container.append(row, host);
   };
 
-  startButton.addEventListener("click", async (event) => {
-    event.preventDefault();
-    const voice = dialog.querySelector('[name="audio-voice"]:checked')?.value || "female";
-    startButton.disabled = true;
-    let done = 0;
-    for (const item of items) {
-      if (stopped) return;
-      status.textContent = t("audio.batch_scene", { index: done + 1, total: items.length });
-      let job;
-      try {
-        job = await api.post("/api/v1/audio/render", {
-          owner_type: item.ownerType,
-          owner_id: item.ownerId,
-          voice,
-          language: language || null,
-        });
-      } catch (error) {
-        status.textContent = `${item.label || done + 1} — ${
-          error?.payload?.detail?.message || t("audio.failed")
-        }`;
-        startButton.disabled = false;
-        return;
-      }
-      const state = await waitFor(job.job_id);
-      if (state.status !== "done") {
-        if (state.status === "abandoned") return;
-        status.textContent = `${item.label || done + 1} — ${state.error || t("audio.failed")}`;
-        startButton.disabled = false;
-        return;
-      }
-      done += 1;
-      status.textContent = t("audio.batch_done", { done, total: items.length });
-    }
-    onReady?.();
-    toast(t("audio.ready"), "success");
-    setTimeout(() => {
-      dialog.close();
-      dialog.remove();
-    }, 900);
-  });
-
-  dialog.showModal();
+  await paint();
 }

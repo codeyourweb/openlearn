@@ -1819,7 +1819,10 @@ h2:focus-within > .ld-anchor,
 
 @media (max-width: 860px) {
   .detail-hero { grid-template-columns: minmax(0, 1fr); }
-  .detail-aside { order: -1; }
+  /* The facts and the manage buttons used to come first, which pushed the title
+     and the play button below the fold: a reader opened a questionnaire and saw
+     a metadata table. The document comes first, its facts after it. */
+  .detail-aside { order: 0; }
 }
 
 @media (max-width: 560px) {
@@ -4693,4 +4696,37 @@ html[data-demo="off"] [data-nav="about"] { display: none !important; }
   .audio-voice select {
     width: 100%;
   }
+}
+
+/* The share slot only exists for a narrow screen: on a wide one the card stays
+   in the aside and an empty div would add a gap under the article. */
+.share-mobile-slot:empty {
+  display: none;
+}
+
+/* Author controls for one transcript: three buttons at most, so they sit inline
+   with their state instead of opening another panel. */
+.audio-controls:empty {
+  display: none;
+}
+.audio-controls-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+.audio-controls-state {
+  font-size: 0.9rem;
+  /* Darker than the muted grey: this line sits on the lilac strip, where the
+     usual grey falls under 4.5:1. */
+  color: #3f4653;
+}
+.audio-controls .btn-danger {
+  color: #b91c1c;
+}
+.ed-audio-mark {
+  font-size: 1rem;
+}
+.ed-audio {
+  align-items: center;
 }
