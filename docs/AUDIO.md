@@ -1,0 +1,125 @@
+# Audio transcripts
+
+OpenLearn can read a wiki page, a questionnaire or a scene of an adventure aloud.
+The audio is made **when the author asks for it**, once, and stored; a reader who
+presses play waits for nothing.
+
+This is a separate switch from AI assistance: a speech engine is a local service,
+not a model provider, and an instance can have one without the other.
+
+## Why it is generated at editing time
+
+A page of 6 000 characters takes about four minutes of speech. Synthesising that
+while a reader waits would be the slowest page in the application. Generating it
+from the editor moves the cost to the one moment when waiting is acceptable — and
+the result is cached, so a second reader pays nothing.
+
+The consequence is a rule worth knowing: **an edited document stops serving its
+transcript**. A rendition is stored with the hash of the script it was made from;
+if the text changed, the player disappears until someone regenerates it. Nobody
+ever hears a text that is no longer on the page.
+
+## What is read, and what is not
+
+The script is built from the saved content, never from the text currently in an
+editor textarea:
+
+| Read aloud | Ignored |
+|---|---|
+| Titles (as sentences, so the voice pauses) | Code blocks |
+| Paragraphs | Tables |
+| List items, one by one | Image captions and alt text |
+| Question prompts and their options | Raw URLs |
+| Scene text of an adventure | Footnote markers, HTML tags |
+
+Only the document's own language is spoken: a French wiki reads in French even
+when the interface is in Japanese. The nine languages supported are the ones the
+shipped engine can pronounce:
+
+`en`, `fr`, `de`, `es`, `it`, `pt`, `ru`, `zh`, `ja`
+
+Hindi, Bengali and Arabic are **not** covered by the Qwen3-TTS checkpoint. On an
+instance that needs them, point `OL_AUDIO_SERVICE_URL` at another engine and add
+the codes to `OL_AUDIO_LANGUAGES`; the interface follows the list, so a language
+without a voice simply does not offer the button.
+
+## Configuration
+
+All of it is environment; nothing is configured from the browser.
+
+| Variable | Default | Meaning |
+|---|---|---|
+| `OL_AUDIO_ENABLED` | `false` | Master switch. Off means no button, no endpoint, no player. |
+| `OL_AUDIO_SERVICE_URL` | *(empty)* | Base URL of the speech service. `/v1/audio/speech` is appended. |
+| `OL_AUDIO_MODEL` | `qwen3-tts` | Model name sent to the service; part of the cache key. |
+| `OL_AUDIO_TIMEOUT_SECONDS` | `1800` | Per-segment timeout. A CPU box needs minutes per paragraph. |
+| `OL_AUDIO_CONCURRENCY` | `1` | Segments synthesised at once. One, on purpose. |
+| `OL_AUDIO_VOICE_FEMALE` | `Serena` | Voice name for “female”, as the engine spells it. |
+| `OL_AUDIO_VOICE_MALE` | `Aiden` | Voice name for “male”. |
+| `OL_AUDIO_MAX_CHARS` | `12000` | Refused above this. 1 000 characters ≈ 4 minutes of CPU. |
+| `OL_AUDIO_CHUNK_CHARS` | `900` | Size of one request, about a minute of audio. |
+| `OL_AUDIO_LANGUAGES` | nine codes above | What the engine can speak here. |
+
+```bash
+OL_AUDIO_ENABLED=true
+OL_AUDIO_SERVICE_URL=http://qwen-tts:8000
+```
+
+The voices are the engine's names, not ours: swapping engines renames two
+settings, and no code changes.
+
+## The service
+
+`deploy/qwen-tts/` ships a CPU-capable container that exposes the same shape as
+the OpenAI speech endpoint, so an instance with a GPU can use the upstream
+container instead without touching the application.
+
+```bash
+docker build -t qwen-tts-cpu:local deploy/qwen-tts
+docker run -d --name qwen-tts --restart unless-stopped \
+  -m 9g --cpus 6 -e TTS_THREADS=6 \
+  -v /srv/qwen-tts-models:/models \
+  -p 127.0.0.1:8021:8000 qwen-tts-cpu:local
+```
+
+Then put `qwen-tts` on the same Docker network as the application and set
+`OL_AUDIO_SERVICE_URL=http://qwen-tts:8000`.
+
+Measured on eight cores with no GPU, Qwen3-TTS 0.6B CustomVoice in float32:
+**410 characters → 26.7 s of audio in 99 s of CPU** (RTF 0.27), 209 KiB of MP3.
+That number is what the ceiling and the “about N minutes” line in the dialog are
+computed from. A transcript of a 12 000-character document is roughly 45 minutes
+of CPU: allowed, but the job queue is why it does not block anything.
+
+## Storage and cost
+
+- One MP3 per ≈900-character chunk, in the media directory, served like any
+  other `/media/...` file.
+- Segments are cached on the hash of their text, voice, language and model: a
+  12 000-character page with one corrected sentence re-synthesises **one**
+  segment, not thirteen.
+- Storage is the only recurring cost on a local engine: about 8 KiB per second
+  of audio, so roughly 470 KiB per minute.
+
+## Guarantees
+
+- **Nothing leaves the instance.** The engine runs beside the application.
+- **One job at a time.** A semaphore serialises synthesis, so a large document
+  cannot starve the web server; requests queue instead.
+- **A failed engine fails the job, not the page.** The error is stored on the job
+  and shown to the author; no partial rendition is published.
+- **No audio leaks past the document's own visibility.** The list endpoint
+  returns nothing for a document the caller cannot read — a draft's transcript is
+  invisible to a visitor, exactly like the draft.
+- **An MP3 is checked before it is stored.** A proxy returning an HTML error page
+  is refused rather than saved with an `.mp3` extension.
+
+## Tests
+
+`tests/test_audio.py` covers the script builder (what is read, what is dropped,
+chunk sizes), the cache (a second render costs nothing; one edited sentence costs
+one segment), staleness, the character ceiling, language refusal, permission,
+deletion, and a broken engine.
+
+The end-to-end suite checks the opposite direction: on an instance without a
+speech service, no button and no player appears.

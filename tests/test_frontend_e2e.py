@@ -3595,3 +3595,52 @@ def test_an_administrator_can_wire_the_audit_forwarder(browser):
         assert not [error for error in recorder.errors if "pageerror" in error], recorder.errors
     finally:
         context.close()
+
+def test_the_transcript_button_matches_the_instance_setting(browser):
+    """Speech is a deployment choice, and the interface must agree with it.
+
+    On an instance that configured no engine, no button and no player appear:
+    offering a control that can only fail is worse than offering nothing. On an
+    instance that did configure one, the author must find it. Both branches are
+    asserted from the same run, so the test tells the truth wherever it runs.
+    """
+    context, page, recorder = new_page(browser)
+    try:
+        status = context.request.get(f"{BASE_URL}/api/v1/audio/status").json()
+        enabled = bool(status.get("enabled"))
+        register_through_ui(page, f"speech-{uuid.uuid4().hex[:10]}@example.org", "Quiet Author")
+
+        csrf = next(
+            (cookie["value"] for cookie in context.cookies() if cookie["name"] == "ol_csrf"), ""
+        )
+        wiki = context.request.post(
+            f"{BASE_URL}/api/v1/wiki",
+            headers={"X-CSRF-Token": csrf},
+            data={"title": "Sans voix", "description": "", "default_language": "fr"},
+        ).json()
+        page_created = context.request.post(
+            f"{BASE_URL}/api/v1/wiki/{wiki['id']}/pages",
+            headers={"X-CSRF-Token": csrf},
+            data={"title": "Une page", "content_md": "# Une page\n\nUn texte court."},
+        ).json()
+
+        url = f"{BASE_URL}/wiki/{wiki['id']}/p/{page_created['slug']}"
+        page.goto(url, wait_until="networkidle")
+        page.wait_for_timeout(700)
+        assert page.locator("#wiki-audio").count() == 1, "the host is missing from the markup"
+        players = page.locator(".audio-card").count()
+
+        page.goto(f"{BASE_URL}/wiki/{wiki['id']}/edit/{page_created['id']}", wait_until="networkidle")
+        page.wait_for_timeout(700)
+        button = page.locator("[data-audio-open]")
+        assert button.count() == 1, "the transcript action is missing from the editor"
+        visible = button.is_visible()
+
+        if enabled:
+            assert visible, "an instance with a speech engine offers no transcript button"
+        else:
+            assert not visible, "a transcript button is offered on an instance with no speech engine"
+            assert players == 0, "a player appeared without a speech engine"
+        assert not [error for error in recorder.errors if "pageerror" in error], recorder.errors
+    finally:
+        context.close()

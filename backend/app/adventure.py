@@ -246,6 +246,9 @@ def build_snapshot(quiz: Any, language: str | None = None) -> dict:
             for outcome in sorted(node.outcomes, key=lambda item: item.priority)
         ]
         nodes[node.key] = {
+            # Frozen with the rest: a run started before the story was edited
+            # keeps pointing at the scene it was played on.
+            "id": node.id,
             "key": node.key,
             "kind": node.kind,
             "text": node.text_translations.get(language) or node.text_html,

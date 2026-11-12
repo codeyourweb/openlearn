@@ -3,6 +3,7 @@
 /* Wiki: catalogue, reader and creation flow. */
 
 import { api, uploadImage } from "../api.js";
+import { mountPlayer } from "../audio.js";
 import { LANGUAGES, currentLanguage, t, tp } from "../i18n.js";
 import { markdownToHtml, inlineMarkdown, paintCustomColors } from "../markdown.js";
 import { hydrateEmbeds } from "../wikiEmbeds.js";
@@ -646,6 +647,7 @@ async function _wikiPage(root, params) {
                 <a class="btn btn-sm btn-ghost" href="/api/v1/wiki/pages/${page.id}/export.pdf" title="${escapeHtml(t("wiki.export_pdf_hint"))}">${escapeHtml(t("wiki.export_pdf"))}</a>
               </div>
             </header>
+            <div class="audio-host" id="wiki-audio"></div>
             <div class="wiki-content" id="wiki-content">${page.html}</div>
             ${missingLinksHtml(wiki, page)}
             ${
@@ -789,6 +791,14 @@ async function _wikiPage(root, params) {
       }
     });
   }
+
+  // The transcript, when one was made from the text on screen. Nothing is
+  // synthesised here: a missing rendition simply leaves the host empty.
+  void mountPlayer(root.querySelector("#wiki-audio"), {
+    ownerType: "page",
+    ownerId: page.id,
+    language: (wiki.default_language || "").slice(0, 2) || null,
+  });
 
   const deleteWikiButton = root.querySelector("#wiki-delete");
   if (deleteWikiButton) {

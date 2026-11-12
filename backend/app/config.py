@@ -145,6 +145,35 @@ class Settings(BaseSettings):
     log_http_verify_tls: bool = True
     log_http_timeout_seconds: int = 5
 
+    # Speech synthesis of the reading content. Off by default: an instance only
+    # produces audio once its administrator points it at a TTS service it runs.
+    # The service is OpenAI-shaped (POST /v1/audio/speech), so the Qwen3-TTS
+    # container shipped in deploy/qwen-tts and a GPU deployment are the same
+    # thing seen from here.
+    audio_enabled: bool = False
+    audio_service_url: str = ""
+    audio_model: str = "qwen3-tts"
+    # Longer than an ordinary request on purpose: a small CPU box needs minutes
+    # per paragraph, and the call happens in a background job, not in a page.
+    audio_timeout_seconds: int = 1800
+    # One synthesis at a time: a 0.6B model decoding on CPU already saturates
+    # the cores it is given, and two in parallel would starve the web server.
+    audio_concurrency: int = 1
+    # Voice names are the service's, not ours: an administrator swapping engines
+    # renames these two, and nothing else in the application changes.
+    audio_voice_female: str = "Serena"
+    audio_voice_male: str = "Aiden"
+    # A document longer than this is refused rather than turned into an hour of
+    # CPU nobody asked for. Measured: 1000 characters is about four minutes.
+    audio_max_chars: int = 12000
+    # Chunk size in characters: small enough that one request stays around
+    # 60 seconds of audio, so progress moves and a retry is cheap.
+    audio_chunk_chars: int = 900
+    # The nine languages the Qwen3-TTS checkpoint reads. Hindi, Bengali and
+    # Arabic are absent from it; an instance that needs them points
+    # audio_service_url at another engine and extends this list.
+    audio_languages: str = "en,fr,de,es,it,pt,ru,zh,ja"
+
     # Moderation bootstrap: the first administrator is created from these values.
     admin_email: str = ""
     admin_password: str = ""

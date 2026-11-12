@@ -39,6 +39,9 @@ from .routers import (
     wiki_ai,
     wiki_collab,
 )
+from .routers import (
+    audio as audio_module,
+)
 from .search import ensure_index, ensure_wiki_index
 from .seo import render_shell
 from .seo import router as seo_router
@@ -218,6 +221,7 @@ def create_app() -> FastAPI:
     app.include_router(account_recovery.router)
     app.include_router(sso_auth.router)
     app.include_router(admin_settings.router)
+    app.include_router(audio_module.router)
     app.include_router(instance.router)
     app.include_router(legal.router)
     app.include_router(mcp_module.router)

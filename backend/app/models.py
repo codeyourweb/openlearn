@@ -24,7 +24,9 @@ from sqlalchemy import (
     JSON,
     Boolean,
     DateTime,
+    Float,
     ForeignKey,
+    Index,
     Integer,
     String,
     Text,
@@ -1058,3 +1060,57 @@ class ExternalIdentity(Base):
     email: Mapped[str] = mapped_column(String(254), default="")
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
     last_login_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+
+
+class AudioSegment(Base):
+    """One synthesised piece of text, shared by every document that contains it.
+
+    The cache is the point: re-editing a paragraph re-synthesises that paragraph
+    and nothing else. The key covers everything the audio depends on, so a voice
+    or language change cannot return the wrong file.
+    """
+
+    __tablename__ = "audio_segments"
+    __table_args__ = (UniqueConstraint("cache_key", name="uq_audio_segment_key"),)
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    cache_key: Mapped[str] = mapped_column(String(64), index=True)
+    language: Mapped[str] = mapped_column(String(5), default="en")
+    voice: Mapped[str] = mapped_column(String(10), default="female")
+    model: Mapped[str] = mapped_column(String(60), default="")
+    path: Mapped[str] = mapped_column(String(200))
+    seconds: Mapped[float] = mapped_column(Float, default=0.0)
+    bytes: Mapped[int] = mapped_column(Integer, default=0)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
+
+
+class AudioRendition(Base):
+    """A playable transcript of one document, in one voice.
+
+    Segments are stored in order rather than concatenated: the reader advances
+    through them, which is what makes resuming and section skipping possible
+    without an audio editor on the server.
+    """
+
+    __tablename__ = "audio_renditions"
+    __table_args__ = (
+        Index("ix_audio_rendition_target", "owner_type", "owner_id", "language"),
+    )
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    # page | quiz | node
+    owner_type: Mapped[str] = mapped_column(String(8))
+    owner_id: Mapped[int] = mapped_column(Integer)
+    language: Mapped[str] = mapped_column(String(5), default="en")
+    voice: Mapped[str] = mapped_column(String(10), default="female")
+    model: Mapped[str] = mapped_column(String(60), default="")
+    title: Mapped[str] = mapped_column(String(200), default="")
+    # Hash of the script the audio was made from: an edited document shows no
+    # player until it is regenerated, instead of playing yesterday's text.
+    content_hash: Mapped[str] = mapped_column(String(64), default="")
+    total_seconds: Mapped[float] = mapped_column(Float, default=0.0)
+    segments: Mapped[list] = mapped_column(JSON, default=list)
+    created_by_id: Mapped[int | None] = mapped_column(
+        ForeignKey("users.id", ondelete="SET NULL")
+    )
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)

@@ -3,6 +3,7 @@
 /* Quiz editor: metadata, mode, WYSIWYG questions, translations, publication and AI. */
 
 import { api, keepaliveRequest, uploadImage } from "../api.js";
+import { audioStatus, openGenerator } from "../audio.js";
 import { openFramingEditor } from "../framingEditor.js";
 import { framingAttr, paintFraming } from "../imageFrame.js";
 import { LANGUAGES, currentLanguage, languageLabel, t } from "../i18n.js";
@@ -401,6 +402,23 @@ export async function renderEditor({ id, mode, variant }) {
         shell();
       });
     });
+
+    // Speech needs no model: the switch is the instance's, not the AI's.
+    const audioBox = root.querySelector("#editor-audio");
+    if (audioBox) {
+      void audioStatus().then((status) => {
+        if (!status.enabled) return;
+        audioBox.hidden = false;
+        const button = audioBox.querySelector('[data-act="audio"]');
+        button.disabled = !model.id;
+        const language = (model.default_language || "").slice(0, 2);
+        if (model.id && !status.languages.includes(language)) {
+          button.disabled = true;
+          const hint = root.querySelector("#editor-audio-hint");
+          if (hint) hint.textContent = t("audio.unsupported");
+        }
+      });
+    }
   };
 
   const paintSaveState = (state, detail = "") => {
@@ -889,6 +907,14 @@ export async function renderEditor({ id, mode, variant }) {
           }
         </div>
 
+        <div class="publish-check" id="editor-audio" hidden>
+          <h3><span aria-hidden="true">🔊</span> ${escapeHtml(t("audio.dialog_title"))}</h3>
+          <p class="hint" id="editor-audio-hint">${escapeHtml(t("audio.dialog_help"))}</p>
+          <div class="row-wrap ai-zone">
+            <button class="btn" data-act="audio" disabled>${escapeHtml(t("audio.generate"))}</button>
+          </div>
+        </div>
+
         <div class="publish-actions mt-3">
           <div class="publish-action">
             <button class="btn btn-lg" data-act="publish-private">${t("editor.publish_private")}</button>
@@ -1076,6 +1102,17 @@ export async function renderEditor({ id, mode, variant }) {
       button.disabled = false;
       toast(error.detail || t("common.error"), "error");
     }
+  };
+
+  // Rough size of what would be read: the title, the description, the questions
+  // and their options. Good enough for an estimate, and no request needed.
+  const audioChars = () => {
+    const parts = [model.title || "", model.description || ""];
+    for (const question of model.questions || []) {
+      parts.push(String(question.text_html || "").replace(/<[^>]+>/g, " "));
+      for (const option of question.options || []) parts.push(option.text || "");
+    }
+    return parts.join(" ").length;
   };
 
   const runAi = async (action, button) => {
@@ -1406,6 +1443,16 @@ export async function renderEditor({ id, mode, variant }) {
         button.disabled = false;
         toast(error.detail || t("common.error"), "error");
       }
+      return;
+    }
+    if (action === "audio") {
+      openGenerator({
+        ownerType: "quiz",
+        ownerId: model.id || quiz.id,
+        language: (model.default_language || "").slice(0, 2),
+        chars: audioChars(),
+        title: model.title || "",
+      });
       return;
     }
     if (action.startsWith("ai-")) {

@@ -951,3 +951,14 @@ class WikiChatIn(BaseModel):
     language: LanguageCode = "en"
     chat_id: int | None = None
     wiki_ids: Annotated[list[int], Field(default_factory=list, max_length=50)]
+
+
+class AudioRenderIn(BaseModel):
+    """Ask for a transcript of one document, in one voice."""
+
+    owner_type: Literal["page", "quiz", "node"]
+    owner_id: int = Field(gt=0)
+    voice: Literal["female", "male"] = "female"
+    # Optional: an instance where the document is written in a language other
+    # than its declared one can say so explicitly.
+    language: str | None = Field(default=None, max_length=8)

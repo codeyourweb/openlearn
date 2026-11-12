@@ -124,6 +124,7 @@ def _state(run: AdventureRun, snapshot: dict) -> dict:
             "background_path": run.background_path
             or ((node.get("background") or None) if reaching_node else None),
             "attribute": (run.path or [{}])[-1].get("ending_attribute", "") if run.path else "",
+            "node_id": node.get("id") if reaching_node else None,
         }
         return payload
 
@@ -131,6 +132,9 @@ def _state(run: AdventureRun, snapshot: dict) -> dict:
     if node is None:
         raise HTTPException(status_code=409, detail="This run points to a missing node.")
     payload["node"] = {
+        # Runs started before the id was frozen still name their scene by key:
+        # the player then has nothing to attach to, and simply does not appear.
+        "id": node.get("id"),
         "key": node["key"],
         "kind": node["kind"],
         "text_html": node["text"],

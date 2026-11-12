@@ -216,6 +216,9 @@ def serialise_quiz(
             ],
             "nodes": [
                 {
+                    # The key names a scene inside the graph; the id is what the
+                    # speech transcript of that scene is stored under.
+                    "id": node.id,
                     "key": node.key,
                     "kind": node.kind,
                     "text_html": node.text_html,

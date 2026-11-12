@@ -3,6 +3,7 @@
 /* Adventure player: solo branching story with attribute tracking. */
 
 import { api } from "../api.js";
+import { mountPlayer } from "../audio.js";
 import { currentLanguage, t } from "../i18n.js";
 import { framingAttr, paintFraming } from "../imageFrame.js";
 import { navigate } from "../router.js";
@@ -75,6 +76,7 @@ function nodeView(state) {
     <section class="adv-scene">
       ${node.image_path ? `<img class="adv-image" src="${escapeHtml(node.image_path)}" alt="" loading="lazy"${framingAttr(node.image_framing)} />` : ""}
       <div class="adv-body">
+        <div class="audio-host" id="adv-audio"></div>
         <div class="adv-text">${/* already sanitised server-side */ node.text_html}</div>
         <div class="adv-choices" role="group" aria-label="${t("adventure.choices")}">
           ${node.choices
@@ -112,6 +114,7 @@ function endingView(state, quizId) {
           : ""
       }
       <div class="adv-ending-body">
+        <div class="audio-host" id="adv-audio"></div>
         <span class="adv-ending-kind">${escapeHtml(labels[kind] || kind)}</span>
         ${
           ending.scene_html
@@ -214,6 +217,18 @@ export async function renderAdventurePlay({ id }) {
     `;
     applyDynamicStyles(root);
     paintFraming(root);
+
+    // A scene can be listened to on its own: the audio belongs to the scene, so
+    // a reader who went back two branches does not hear the whole story again.
+    const sceneId = finished ? state.ending?.node_id : state.node?.id;
+    if (sceneId) {
+      void mountPlayer(root.querySelector("#adv-audio"), {
+        ownerType: "node",
+        ownerId: sceneId,
+        language: (quiz.default_language || "").slice(0, 2) || null,
+      });
+    }
+
 
     // A new scene starts at the top of the page: the reader clicked at the
     // bottom of the previous one. The focus follows so that a screen reader

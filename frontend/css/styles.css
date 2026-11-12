@@ -4592,3 +4592,105 @@ html[data-demo="off"] [data-nav="about"] { display: none !important; }
 .preview-option.correct { border-color: var(--ok, #2f7d32); }
 .preview-option.wrong.chosen { border-color: var(--danger, #b3261e); }
 .preview-option .opt-marker { flex: 0 0 auto; }
+
+/* ---------------------------------------------------------------- speech -- */
+/* No rendition, no player: the host stays empty and takes no room. */
+.audio-host:empty {
+  display: none;
+}
+
+.audio-card {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  padding: 0.6rem 0.8rem;
+  margin-bottom: 1rem;
+  border: 1px solid var(--border);
+  border-radius: 0.85rem;
+  background: var(--surface-2);
+}
+
+.audio-btn {
+  flex: none;
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 0.95rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.audio-btn:hover,
+.audio-btn:focus-visible {
+  border-color: var(--accent);
+  color: var(--accent-text);
+}
+
+.audio-main {
+  flex: 1 1 12rem;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.audio-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.audio-range {
+  width: 100%;
+  accent-color: var(--accent);
+}
+
+.audio-meta {
+  font-size: 0.75rem;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.audio-speed select,
+.audio-voice select {
+  padding: 0.35rem 0.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 0.8rem;
+}
+
+/* The status line keeps its height, so the dialog does not jump when the
+   first progress tick arrives. */
+.audio-gen-status {
+  min-height: 1.4rem;
+  margin: 0.5rem 0 0;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.ed-audio {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+@media (max-width: 560px) {
+  .audio-card {
+    gap: 0.5rem;
+  }
+
+  .audio-speed,
+  .audio-voice {
+    flex: 1 1 6rem;
+  }
+
+  .audio-speed select,
+  .audio-voice select {
+    width: 100%;
+  }
+}

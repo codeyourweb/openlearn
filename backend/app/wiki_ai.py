@@ -720,6 +720,12 @@ def run_job(job_id: int) -> None:
                 result = _run_generate(db, job, append=True)
             elif job.kind == "fill":
                 result = _run_fill(db, job)
+            elif job.kind == "audio":
+                # Speech synthesis lives in its own module: same job table, same
+                # progress column, one worker at a time.
+                from .audio import run_audio_job
+
+                result = run_audio_job(db, job)
             else:
                 raise AiUnavailable(f"Unknown job kind: {job.kind}.")
             job.result = result

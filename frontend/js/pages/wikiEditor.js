@@ -3,6 +3,7 @@
 /* Wiki editor: markdown, preview or WYSIWYG over the same document, plus AI. */
 
 import { api, uploadImage } from "../api.js";
+import { audioStatus, openGenerator } from "../audio.js";
 import {
   offsetInEditable,
   offsetInTextarea,
@@ -239,6 +240,12 @@ async function _wikiEditor(root, params) {
         </button>
         <button type="button" class="btn btn-sm btn-ghost" data-review="compliance" ${pageId ? "" : "disabled"} title="${escapeHtml(t("ai.compliance_help"))}">
           <span aria-hidden="true">✨</span> ${escapeHtml(t("ai.compliance"))}
+        </button>
+      </div>
+      <div class="ed-reviews ed-audio" id="wiki-audio-reviews" role="group" hidden>
+        <button type="button" class="btn btn-sm btn-ghost" data-audio-open
+                title="${escapeHtml(t("audio.dialog_help"))}" ${pageId ? "" : "disabled"}>
+          <span aria-hidden="true">🔊</span> ${escapeHtml(t("audio.generate"))}
         </button>
       </div>
       <span class="muted small ed-count" id="wiki-word-count"></span>
@@ -1781,6 +1788,33 @@ async function _wikiEditor(root, params) {
   /* AI: fill this page, and review it                                      */
   /* --------------------------------------------------------------------- */
   const jobsBox = root.querySelector("#ai-jobs");
+  // Speech is its own switch: it shows even when no model is wired, because a
+  // local engine is all it needs.
+  const audioGroup = root.querySelector("#wiki-audio-reviews");
+  if (audioGroup) {
+    void audioStatus().then((status) => {
+      if (!status.enabled || !pageId) return;
+      audioGroup.hidden = false;
+      const button = audioGroup.querySelector("[data-audio-open]");
+      const language = (wiki.default_language || "").slice(0, 2);
+      if (!status.languages.includes(language)) {
+        button.disabled = true;
+        button.title = t("audio.unsupported");
+        return;
+      }
+      button.addEventListener("click", () => {
+        const textarea = root.querySelector("#wiki-md");
+        openGenerator({
+          ownerType: "page",
+          ownerId: pageId,
+          language,
+          chars: (textarea?.value || model.content || "").length,
+          title: model.title || page?.title || "",
+        });
+      });
+    });
+  }
+
   const reviewBox = root.querySelector("#wiki-review-strip");
   const brief = root.querySelector("#ai-brief");
   const briefCount = root.querySelector("#ai-brief-count");

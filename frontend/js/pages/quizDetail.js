@@ -5,6 +5,7 @@
    only sees what is needed to decide whether to play. */
 
 import { api } from "../api.js";
+import { mountPlayer } from "../audio.js";
 import { framingAttr, paintFraming } from "../imageFrame.js";
 import { currentLanguage, languageLabel, t, tp } from "../i18n.js";
 import { navigate } from "../router.js";
@@ -403,6 +404,7 @@ export async function renderQuizDetail({ id, query }) {
           <h1 class="mt-2">${escapeHtml(quiz.title)}</h1>
           <p class="muted detail-description">${escapeHtml(quiz.description || "")}</p>
           ${isStory ? "" : `<p class="detail-hint small">${t("quiz.host_hint")}</p>`}
+          <div class="audio-host" id="quiz-audio"></div>
           <section class="card detail-wiki" id="quiz-wikis" hidden>
             <h2 class="detail-wiki-title">${t("wiki.read_first")}</h2>
             <div class="wiki-quiz-list" id="quiz-wikis-list"></div>
@@ -487,6 +489,14 @@ export async function renderQuizDetail({ id, query }) {
   if (isOwner && quiz.mode !== "adventure") bindAssessment(root, quiz);
   wireShare(root);
   paintFraming(root);
+
+  // A transcript belongs to the questionnaire, not to a scene: it is read at
+  // the top of the page, before the play buttons.
+  void mountPlayer(root.querySelector("#quiz-audio"), {
+    ownerType: "quiz",
+    ownerId: quiz.id,
+    language: (quiz.default_language || "").slice(0, 2) || null,
+  });
 
   // Wikis that present this questionnaire. They sit above the play buttons:
   // the questions come from a wiki, so the reading comes first.
