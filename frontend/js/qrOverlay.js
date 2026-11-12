@@ -38,7 +38,7 @@ export function openQrOverlay(url, { title = "", hint = "", label = "" } = {}) {
       ${title ? `<p class="qr-overlay-title">${escapeHtml(title)}</p>` : ""}
       <div class="qr-overlay-qr">${qrSvg(value)}</div>
       <p class="qr-overlay-url">${escapeHtml(value)}</p>
-      ${hint ? `<p class="hint">${escapeHtml(hint)}</p>` : ""}
+      ${hint ? `<p class="qr-overlay-hint">${escapeHtml(hint)}</p>` : ""}
       <button class="btn" type="button" data-qr-close>${escapeHtml(t("action.close"))}</button>
     </div>`;
 

@@ -1704,6 +1704,15 @@ pre code { background: none; padding: 0; }
   color: var(--accent-text);
   user-select: all;
 }
+/* What to do with the code, in one line, without competing with it. */
+.qr-overlay-hint {
+  margin: 0;
+  max-width: 38rem;
+  font-size: .92rem;
+  line-height: 1.4;
+  text-align: center;
+  color: var(--muted, #55607a);
+}
 body.qr-open { overflow: hidden; }
 
 @media print {

@@ -651,7 +651,7 @@ function _secHtml() {
       ).join("")}
     </section>
 
-    <section class="pro-free sec-free">
+    <section class="pro-free">
       <div class="pro-free-inner sec-notes" data-reveal>
         <h2>${escapeHtml(t("about.sec_notes_title"))}</h2>
         <ul class="sec-notes-list">
