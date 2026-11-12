@@ -2691,6 +2691,12 @@ def test_an_ending_carries_its_picture_and_its_scene(browser):
         ending_image = page.locator(".adv-ending img.adv-image")
         expect(ending_image).to_be_visible()
         assert page.get_attribute(".adv-ending img.adv-image", "src") == picture
+        # `naturalWidth` is 0 until the bytes arrive: wait for the load, then judge.
+        page.wait_for_function(
+            "() => { const img = document.querySelector('.adv-ending img.adv-image');"
+            " return Boolean(img && img.complete); }",
+            timeout=15000,
+        )
         assert ending_image.evaluate("(img) => img.naturalWidth") > 0, "the ending picture is broken"
         assert not [error for error in recorder.errors if "pageerror" in error], recorder.errors
     finally:
@@ -3632,9 +3638,12 @@ def test_the_transcript_button_matches_the_instance_setting(browser):
 
         page.goto(f"{BASE_URL}/wiki/{wiki['id']}/edit/{page_created['id']}", wait_until="networkidle")
         page.wait_for_timeout(700)
-        button = page.locator("[data-audio-open]")
-        assert button.count() == 1, "the transcript action is missing from the editor"
-        visible = button.is_visible()
+        # The controls are a block, not a bare button: "create" when nothing has
+        # been made yet, a status and three actions when it has.
+        controls = page.locator("#wiki-audio-controls")
+        assert controls.count() == 1, "the transcript block is missing from the editor"
+        button = controls.locator("button")
+        visible = controls.is_visible() and button.count() == 1
 
         if enabled:
             assert visible, "an instance with a speech engine offers no transcript button"
