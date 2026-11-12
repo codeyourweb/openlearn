@@ -39,6 +39,7 @@ media files are written to the `openlearn-data` volume; that is the only state t
 | `OL_AUTH_RATE_LIMIT` | Sign-in attempts allowed per window | `10` |
 | `OL_MAIL_HOST`, `OL_MAIL_PORT`, `OL_MAIL_FROM` | Outgoing mail | empty |
 | `OL_AI_BASE_URL`, `OL_AI_MODEL` | OpenAI-compatible provider for the assistant | empty |
+| `OL_LOG_ENABLED`, `OL_LOG_SYSLOG_HOST`, `OL_LOG_HTTP_URL` | Audit forwarding to a SIEM ([details](/audit-logging/)) | off, empty, empty |
 
 A variable that is not declared in `docker-compose.yml` never reaches the container: if a setting
 seems to have no effect, check first that it is passed through.

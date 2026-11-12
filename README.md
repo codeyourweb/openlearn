@@ -203,6 +203,9 @@ environment. The full list lives in `backend/app/config.py`.
 | `OL_MAIL_FROM_ADDRESS` / `OL_MAIL_FROM_NAME` | unset | Sender identity. |
 | `OL_SSO_ENABLED` | `true` | Allows OIDC/SAML providers declared in the administration panel. |
 | `OL_MCP_ENABLED` / `OL_MCP_REQUIRE_AUTH` | `true` / `true` | Agent endpoint, see [docs/MCP.md](docs/MCP.md). |
+| `OL_LOG_ENABLED` | `false` | Forwards the audit trail to a SIEM, see [docs/AUDIT_LOGGING.md](docs/AUDIT_LOGGING.md). |
+| `OL_LOG_SYSLOG_HOST` / `OL_LOG_SYSLOG_PORT` / `OL_LOG_SYSLOG_PROTOCOL` | unset / `514` / `udp` | Syslog collector (RFC 5424, `udp`, `tcp` or `tls`). |
+| `OL_LOG_HTTP_URL` / `OL_LOG_HTTP_TOKEN` | unset | HTTP POST collector and its bearer token. |
 | `OL_TLS_CERT_FILE` / `OL_TLS_KEY_FILE` / `OL_TLS_PORT` | unset / unset / `8443` | Serve HTTPS directly. |
 | `OL_SEARCH_BASE_URL` | unset | Optional SearXNG endpoint handed to the model for fact-checking. |
 
@@ -322,6 +325,9 @@ behind a reverse proxy or with TLS terminated by the application itself.
   environment reference, TLS in both directions, backups, upgrades, scaling.
 - [docs/MCP.md](docs/MCP.md) — the Model Context Protocol endpoint that lets an
   external agent read the wikis, with client configuration examples.
+- [docs/AUDIT_LOGGING.md](docs/AUDIT_LOGGING.md) — the security events, the
+  syslog and HTTP POST transports, and the collector recipes for Splunk,
+  Microsoft Sentinel, Google SecOps and Sekoia.
 
 Behind a proxy, two headers matter: `Host` and `X-Forwarded-Proto`. With the
 latter set to `https`, cookies are flagged `Secure`, HSTS is emitted and share
@@ -400,6 +406,7 @@ run.sh           bare-metal launcher (creates the virtual environment)
 - [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) — install, databases, TLS, backups, upgrades.
 - [docs/ADMINISTRATION.md](docs/ADMINISTRATION.md) — settings, AI provider, mail, SSO, demo mode.
 - [docs/MCP.md](docs/MCP.md) — the agent endpoint and its tools.
+- [docs/AUDIT_LOGGING.md](docs/AUDIT_LOGGING.md) — audit forwarding to a SIEM over syslog or HTTP POST.
 
 ## Contributing
 

@@ -29,7 +29,7 @@ from fastapi.responses import PlainTextResponse
 from sqlalchemy import delete, func, or_, select, update
 from sqlalchemy.orm import Session as OrmSession
 
-from .. import collab, pdf_export, search, wiki_ai
+from .. import audit, collab, pdf_export, search, wiki_ai
 from ..config import settings
 from ..db import get_db
 from ..deps import enforce_ai_interval, get_optional_user, require_user
@@ -110,7 +110,9 @@ def _member_role(db: OrmSession, wiki: Wiki, user: User | None) -> str | None:
 
 
 def _readable(wiki: Wiki, role: str | None) -> bool:
-    if wiki.status == "public":
+    # Live means readable by whoever holds the address. "public" only adds the
+    # catalogue and the search index; a private wiki is shared by its link.
+    if wiki.status in {"public", "private"}:
         return True
     return role in {"owner", "maintainer", "contributor", "moderator"}
 
@@ -268,6 +270,17 @@ def _freeze(db: OrmSession, page: WikiPage, author: User | None, note: str = "")
         note=(note or "")[:300],
     )
     db.add(version)
+    audit.content(
+        db,
+        "wiki_page_saved",
+        request=None,
+        user=author,
+        kind="wiki_page",
+        item_id=page.id,
+        name=page.title,
+        detail=note,
+        commit=False,
+    )
     return version
 
 
@@ -372,6 +385,9 @@ def create_wiki(
     _rebuild_links(db, page)
     db.commit()
     db.refresh(wiki)
+    audit.content(
+        db, "wiki_created", request=None, user=user, kind="wiki", item_id=wiki.id, name=wiki.title
+    )
     return _serialise_wiki(db, wiki, "owner", user)
 
 
@@ -615,10 +631,14 @@ def delete_wiki(
     db.execute(delete(WikiTemplate).where(WikiTemplate.wiki_id == wiki.id))
     db.execute(delete(WikiMember).where(WikiMember.wiki_id == wiki.id))
     db.execute(delete(WikiPage).where(WikiPage.wiki_id == wiki.id))
+    title = wiki.title
     db.execute(delete(Wiki).where(Wiki.id == wiki.id))
     db.commit()
     for page_id in page_ids:
         collab.drop(page_id)
+    audit.content(
+        db, "wiki_deleted", request=None, user=user, kind="wiki", item_id=wiki_id, name=title
+    )
     return Response(status_code=204)
 
 
@@ -635,6 +655,16 @@ def publish_wiki(
         wiki.status = "private"
         wiki.is_public = False
         db.commit()
+        audit.content(
+            db,
+            "wiki_published",
+            request=None,
+            user=user,
+            kind="wiki",
+            item_id=wiki.id,
+            name=wiki.title,
+            detail="private",
+        )
         return _serialise_wiki(db, wiki, role, user)
 
     trusted = user.is_trusted or user.is_staff
@@ -645,6 +675,16 @@ def publish_wiki(
         "" if trusted else "Awaiting administrator review before the public catalogue."
     )
     db.commit()
+    audit.content(
+        db,
+        "wiki_published",
+        request=None,
+        user=user,
+        kind="wiki",
+        item_id=wiki.id,
+        name=wiki.title,
+        detail=wiki.status,
+    )
     return _serialise_wiki(db, wiki, role, user)
 
 

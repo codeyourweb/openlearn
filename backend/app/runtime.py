@@ -57,6 +57,20 @@ SPEC: dict[str, tuple[type, str, bool]] = {
     # either, and a school may want the code without the networks.
     "sharing.qr_enabled": (bool, None, False),
     "sharing.social_enabled": (bool, None, False),
+    # Ship the audit trail to an XDR/SIEM: syslog (RFC 5424) and/or HTTP POST.
+    # A target is active as soon as its host or its URL is set; the master
+    # switch alone decides whether anything leaves the instance.
+    "log.enabled": (bool, "log_enabled", False),
+    "log.syslog_host": (str, "log_syslog_host", False),
+    "log.syslog_port": (int, "log_syslog_port", False),
+    "log.syslog_protocol": (str, "log_syslog_protocol", False),
+    "log.syslog_facility": (int, "log_syslog_facility", False),
+    "log.syslog_hostname": (str, "log_syslog_hostname", False),
+    "log.syslog_tls_verify": (bool, "log_syslog_tls_verify", False),
+    "log.http_url": (str, "log_http_url", False),
+    "log.http_token": (str, "log_http_token", True),
+    "log.http_verify_tls": (bool, "log_http_verify_tls", False),
+    "log.http_timeout_seconds": (int, "log_http_timeout_seconds", False),
 }
 
 # Defaults for keys that have no ``Settings`` attribute.
@@ -72,6 +86,7 @@ SECTIONS: dict[str, tuple[str, ...]] = {
     "security": tuple(k for k in SPEC if k.startswith("security.")),
     "instance": tuple(k for k in SPEC if k.startswith("instance.")),
     "sharing": tuple(k for k in SPEC if k.startswith("sharing.")),
+    "log": tuple(k for k in SPEC if k.startswith("log.")),
 }
 
 _LIMITS: dict[str, tuple[int | None, int | None]] = {
@@ -79,7 +94,12 @@ _LIMITS: dict[str, tuple[int | None, int | None]] = {
     "ai.min_interval_seconds": (0, 3600),
     "mail.port": (1, 65535),
     "security.password_reset_ttl_minutes": (5, 24 * 60),
+    "log.syslog_port": (1, 65535),
+    "log.syslog_facility": (0, 23),
+    "log.http_timeout_seconds": (1, 60),
 }
+
+LOG_PROTOCOLS = {"udp", "tcp", "tls"}
 
 _cache: dict[str, tuple[float, Any]] = {}
 _cache_lock = threading.Lock()
@@ -105,6 +125,16 @@ def _coerce(key: str, raw: Any) -> Any:
             raise ValueError(f"{key} must be at most {high}.")
         return value
     text = "" if raw is None else str(raw).strip()
+    if key == "log.syslog_protocol":
+        text = text.lower() or "udp"
+        if text not in LOG_PROTOCOLS:
+            raise ValueError("log.syslog_protocol must be udp, tcp or tls.")
+        return text
+    if key == "log.http_url" and text:
+        if not text.startswith(("http://", "https://")):
+            # Only a webhook: no file://, no gopher://, nothing a collector
+            # library would happily open on our behalf.
+            raise ValueError("log.http_url must be an http(s) URL.")
     if key in {"ai.base_url", "mail.host"} and text and "://" not in text and key == "ai.base_url":
         raise ValueError(f"{key} must be an http(s) URL.")
     return text
@@ -242,6 +272,43 @@ class AiConfig:
     @property
     def wiki_model_or_default(self) -> str:
         return self.wiki_model or self.model
+
+
+@dataclass(frozen=True)
+class LogConfig:
+    """Where the audit trail goes, and how it gets there."""
+
+    enabled: bool
+    syslog_host: str
+    syslog_port: int
+    syslog_protocol: str
+    syslog_facility: int
+    syslog_hostname: str
+    syslog_tls_verify: bool
+    http_url: str
+    http_token: str
+    http_verify_tls: bool
+    http_timeout_seconds: int
+
+    @property
+    def configured(self) -> bool:
+        return bool(self.enabled and (self.syslog_host or self.http_url))
+
+
+def log_config(db: OrmSession | None = None) -> LogConfig:
+    return LogConfig(
+        enabled=bool(get(db, "log.enabled")),
+        syslog_host=get(db, "log.syslog_host") or "",
+        syslog_port=int(get(db, "log.syslog_port")),
+        syslog_protocol=get(db, "log.syslog_protocol") or "udp",
+        syslog_facility=int(get(db, "log.syslog_facility")),
+        syslog_hostname=get(db, "log.syslog_hostname") or "",
+        syslog_tls_verify=bool(get(db, "log.syslog_tls_verify")),
+        http_url=get(db, "log.http_url") or "",
+        http_token=get(db, "log.http_token") or "",
+        http_verify_tls=bool(get(db, "log.http_verify_tls")),
+        http_timeout_seconds=int(get(db, "log.http_timeout_seconds")),
+    )
 
 
 def ai_config(db: OrmSession | None = None) -> AiConfig:

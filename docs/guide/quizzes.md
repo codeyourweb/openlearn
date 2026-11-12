@@ -60,6 +60,12 @@ Like a wiki, a quiz starts as a draft and requests its **publication**. A modera
 approval it becomes public, appears in the `/quizzes` catalogue, and you receive an email. A
 refusal leaves the quiz private, with the reason.
 
+**Private is not hidden.** A privately published quiz — or wiki — is live: whoever holds its address
+opens it, plays it and shares it, without an account. Publication to the catalogue only adds the
+listing and the search result. That is what makes a link usable in a classroom or by e-mail while
+the content stays out of the front page; a **draft**, never published, stays closed to everyone but
+its author.
+
 Every save creates a **version** (**Versions** tab) that can be restored: editing a quiz that has
 already been played does not rewrite past results, which stay attached to the version that was
 played. A version older than the current one is marked **outdated**.

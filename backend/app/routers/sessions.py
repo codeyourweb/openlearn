@@ -19,10 +19,11 @@ from fastapi import (
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session as OrmSession
 
+from .. import audit
 from ..config import settings
 from ..content import valid_language
 from ..db import SessionLocal, get_db
-from ..deps import client_ip, enforce_rate_limit, external_base_url, get_optional_user, verify_csrf
+from ..deps import enforce_rate_limit, external_base_url, get_optional_user, verify_csrf
 from ..evaluation import ensure_attempt_left
 from ..game import (
     all_participants_answered,
@@ -39,7 +40,7 @@ from ..game import (
     schedule_timer,
     start_session,
 )
-from ..models import GameSession, Participant, Quiz, SecurityEvent, User
+from ..models import GameSession, Participant, Quiz, User
 from ..realtime import manager
 from ..schemas import AnswerIn, JoinIn, SessionCreateIn
 from ..security import decode_access_token, sha256
@@ -73,8 +74,8 @@ def participant_or_403(db: OrmSession, session: GameSession, request: Request) -
 
 
 def _audit(db: OrmSession, event: str, request: Request | None, user_id: int | None = None, detail: str = "") -> None:
-    db.add(SecurityEvent(event=event, ip=client_ip(request) if request else None, user_id=user_id, detail=detail[:300]))
-    db.commit()
+    """One funnel: the local trail, then the collector (see app.audit)."""
+    audit.record(db, event, request=request, user_id=user_id, detail=detail)
 
 
 def _public_session(session: GameSession, participant_count: int) -> dict:
@@ -113,11 +114,11 @@ async def create_game_session(
     if quiz is None:
         raise HTTPException(status_code=404, detail="Quiz not found.")
     is_owner = user is not None and (quiz.owner_id == user.id or user.is_staff)
-    if quiz.status != "public" and not is_owner:
-        raise HTTPException(status_code=404, detail="Quiz not found.")
-    # Anyone may host a live session of a published quiz, signed in or not;
-    # a private quiz can only be driven by its owner.
-    if quiz.status != "public" and user is None:
+    # "public" and "private" are both live: the switch only decides the
+    # catalogue and the search index. Whoever holds the address of a privately
+    # published quiz may play it, signed in or not. A draft or a quiz awaiting
+    # moderation stays closed to everyone but its author.
+    if quiz.status not in {"public", "private"} and not is_owner:
         raise HTTPException(status_code=404, detail="Quiz not found.")
 
     # A questionnaire used as an assessment allows a limited number of runs.

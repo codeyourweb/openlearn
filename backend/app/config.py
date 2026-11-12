@@ -131,6 +131,20 @@ class Settings(BaseSettings):
     # Wiki generation may use a larger, slower model than the quiz helper.
     ai_wiki_model: str = ""
 
+    # Audit forwarding to an XDR/SIEM. Off by default: nothing leaves the
+    # instance until an administrator names a collector.
+    log_enabled: bool = False
+    log_syslog_host: str = ""
+    log_syslog_port: int = 514
+    log_syslog_protocol: str = "udp"  # udp | tcp | tls
+    log_syslog_facility: int = 13  # "log audit"
+    log_syslog_hostname: str = ""
+    log_syslog_tls_verify: bool = True
+    log_http_url: str = ""
+    log_http_token: str = ""
+    log_http_verify_tls: bool = True
+    log_http_timeout_seconds: int = 5
+
     # Moderation bootstrap: the first administrator is created from these values.
     admin_email: str = ""
     admin_password: str = ""

@@ -18,7 +18,7 @@ from pydantic import BaseModel, Field
 from sqlalchemy import delete, func, select
 from sqlalchemy.orm import Session as OrmSession
 
-from .. import mailer, runtime, sso
+from .. import audit, log_forward, mailer, runtime, sso
 from ..config import settings
 from ..db import get_db
 from ..deps import require_admin
@@ -125,6 +125,7 @@ def read_settings(db: OrmSession = Depends(get_db), _admin: User = Depends(requi
 @router.put("/settings", summary="Update one or more settings")
 def write_settings(
     payload: SettingsIn,
+    request: Request,
     db: OrmSession = Depends(get_db),
     admin: User = Depends(require_admin),
 ) -> dict[str, Any]:
@@ -135,7 +136,49 @@ def write_settings(
         applied = runtime.set_many(db, payload.values, user_id=admin.id)
     except (TypeError, ValueError) as exc:
         raise HTTPException(status_code=422, detail=str(exc)) from exc
+    # Which keys an administrator changed, never what they are worth: the value
+    # of `log.http_token` or `ai.api_key` must not reach the collector.
+    audit.record(
+        db,
+        "settings_changed",
+        request,
+        None,
+        ",".join(sorted(applied))[:300],
+        user=admin,
+        target={"type": "settings", "id": ",".join(sorted({k.split(".")[0] for k in applied}))},
+        source="admin",
+    )
     return {"applied": sorted(applied), "sections": runtime.describe(db)}
+
+
+@router.get("/log/status", summary="Audit forwarding: targets, counters, last error")
+def log_status(_admin: User = Depends(require_admin)) -> dict[str, Any]:
+    return log_forward.status()
+
+
+@router.post("/log/test", summary="Send one test event to the collector")
+def log_test(
+    request: Request,
+    db: OrmSession = Depends(get_db),
+    admin: User = Depends(require_admin),
+) -> dict[str, Any]:
+    """Prove the wiring now rather than during an incident.
+
+    The event is delivered synchronously (an administrator is waiting for the
+    answer) and is itself recorded: a test that leaves a trace at the collector
+    and in the local trail is the whole point.
+    """
+    result = log_forward.send_test()
+    audit.record(
+        db,
+        "audit_test_sent",
+        request,
+        None,
+        "ok" if result.get("ok") else str(result.get("targets") or result.get("error"))[:300],
+        user=admin,
+        source="admin",
+    )
+    return result
 
 
 @router.post("/settings/ai/test", summary="Call the configured model once")

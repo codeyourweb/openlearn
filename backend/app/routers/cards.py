@@ -15,6 +15,7 @@ from pydantic import BaseModel, Field
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session as OrmSession
 
+from .. import audit
 from ..cards import pairs_from_markdown, pairs_from_questionnaire
 from ..cards_pdf import sheet_pdf
 from ..config import settings
@@ -308,6 +309,9 @@ def create_deck(
     db.add(deck)
     db.commit()
     db.refresh(deck)
+    audit.content(
+        db, "deck_created", request=None, user=user, kind="deck", item_id=deck.id, name=deck.title
+    )
     return _serialise(deck, [], user=user)
 
 
@@ -337,8 +341,12 @@ def delete_deck(
     user: User = Depends(require_user),
 ) -> Response:
     deck = _deck_for_write(db, deck_id, user)
+    title = deck.title
     db.delete(deck)
     db.commit()
+    audit.content(
+        db, "deck_deleted", request=None, user=user, kind="deck", item_id=deck_id, name=title
+    )
     return Response(status_code=status.HTTP_204_NO_CONTENT)
 
 

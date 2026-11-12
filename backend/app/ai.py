@@ -13,11 +13,12 @@ from __future__ import annotations
 import json
 import logging
 import re
+import time
 from typing import Any
 
 import httpx
 
-from . import runtime
+from . import log_forward, runtime
 from .adventure import slug_key
 from .config import settings
 from .models import SUPPORTED_LANGUAGES
@@ -75,6 +76,7 @@ def _chat(
     temperature: float = 0.2,
     operation: str = "chat",
 ) -> str:
+    started = time.monotonic()
     config = runtime.ai_config()
     if not config.configured:
         raise AiError("AI features are disabled on this instance.")
@@ -126,11 +128,34 @@ def _chat(
         message = choice.get("message") if isinstance(choice, dict) else None
         content = message.get("content") if isinstance(message, dict) else None
         if isinstance(content, str) and content.strip():
+            # A call to a model is an action worth an audit trail: what was
+            # asked (operation), which model, how long — never the text.
+            log_forward.emit(
+                "ai_call",
+                outcome="success",
+                detail={
+                    "operation": operation,
+                    "model": config.model,
+                    "seconds": round(time.monotonic() - started, 2),
+                },
+                source="ai",
+            )
             return content
         truncated = isinstance(choice, dict) and choice.get("finish_reason") == "length"
         if not truncated or index == len(budgets) - 1:
             break
 
+    log_forward.emit(
+        "ai_call",
+        outcome="failure",
+        detail={
+            "operation": operation,
+            "model": config.model,
+            "seconds": round(time.monotonic() - started, 2),
+            "reason": "empty answer",
+        },
+        source="ai",
+    )
     runtime.record_ai_error(
         operation=operation,
         model=config.model,

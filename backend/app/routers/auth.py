@@ -11,11 +11,11 @@ from fastapi import APIRouter, Depends, HTTPException, Request, Response, status
 from sqlalchemy import select
 from sqlalchemy.orm import Session as OrmSession
 
-from .. import runtime, verification
+from .. import audit, runtime, verification
 from ..config import settings
 from ..db import get_db
-from ..deps import client_ip, enforce_rate_limit, require_user
-from ..models import SecurityEvent, User, utcnow
+from ..deps import enforce_rate_limit, require_user
+from ..models import User, utcnow
 from ..schemas import LoginIn, RegisterIn, TokenOut, UserOut
 from ..security import (
     PasswordPolicyError,
@@ -34,16 +34,21 @@ MAX_FAILED_LOGINS = 5
 LOCKOUT_MINUTES = 15
 
 
-def _audit(db: OrmSession, event: str, request: Request | None = None, user_id: int | None = None, detail: str = "") -> None:
-    db.add(
-        SecurityEvent(
-            event=event,
-            ip=client_ip(request) if request else None,
-            user_id=user_id,
-            detail=detail[:300],
-        )
-    )
-    db.commit()
+def _audit(
+    db: OrmSession,
+    event: str,
+    request: Request | None = None,
+    user_id: int | None = None,
+    detail: str = "",
+    *,
+    user: User | None = None,
+) -> None:
+    """One funnel: the local trail, then the collector (see app.audit).
+
+    ``user`` is passed when the account is known: its address is what a person
+    reading an alert in the SIEM needs to identify the actor.
+    """
+    audit.record(db, event, request=request, user_id=user_id, detail=detail, user=user)
 
 
 def is_secure_request(request: Request | None) -> bool:
@@ -165,7 +170,7 @@ def login(payload: LoginIn, request: Request, response: Response, db: OrmSession
                 user.failed_logins = 0
             db.add(user)
             db.commit()
-        _audit(db, "login_failure", request, user.id if user else None, payload.email)
+        _audit(db, "login_failure", request, user.id if user else None, payload.email, user=user)
         raise HTTPException(status_code=401, detail="Invalid email or password.")
 
     # Reached only with the right password: a lock is then told to its owner,
@@ -176,7 +181,7 @@ def login(payload: LoginIn, request: Request, response: Response, db: OrmSession
         if locked_until.tzinfo is None:
             locked_until = locked_until.replace(tzinfo=now.tzinfo)
         if locked_until > now:
-            _audit(db, "login_locked", request, user.id)
+            _audit(db, "login_locked", request, user.id, user=user)
             raise HTTPException(status_code=423, detail="Account temporarily locked after too many failed attempts.")
 
     if needs_rehash(user.password_hash):
@@ -187,7 +192,7 @@ def login(payload: LoginIn, request: Request, response: Response, db: OrmSession
     db.add(user)
     db.commit()
     db.refresh(user)
-    _audit(db, "login_success", request, user.id)
+    _audit(db, "login_success", request, user.id, user=user)
     set_auth_cookies(response, user, request)
     return user
 
@@ -206,7 +211,7 @@ def issue_token(payload: LoginIn, request: Request, db: OrmSession = Depends(get
     if user is None or not user.is_active or not password_ok:
         _audit(db, "token_failure", request, user.id if user else None, payload.email)
         raise HTTPException(status_code=401, detail="Invalid email or password.")
-    _audit(db, "token_success", request, user.id)
+    _audit(db, "token_success", request, user.id, user=user)
     return TokenOut(
         access_token=create_access_token(user.id, token_type="api"),
         expires_in=settings.access_token_ttl_minutes * 60,
@@ -225,7 +230,7 @@ def logout(request: Request, response: Response, db: OrmSession = Depends(get_db
             user = db.get(User, int(payload["sub"]))
     clear_auth_cookies(response)
     if user:
-        _audit(db, "logout", request, user.id)
+        _audit(db, "logout", request, user.id, user=user)
     response.status_code = status.HTTP_204_NO_CONTENT
     return response
 

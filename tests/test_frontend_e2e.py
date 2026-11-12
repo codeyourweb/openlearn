@@ -3471,7 +3471,7 @@ def test_the_presentation_speaks_to_it_and_cisos(browser):
             page.locator('.ld-switch-btn[data-tab="security"]:visible').get_attribute("aria-selected")
             == "true"
         )
-        expect(security.locator(".pro-card")).to_have_count(6)
+        expect(security.locator(".sec-block")).to_have_count(6)
         expect(security.locator(".sec-notes-list li")).to_have_count(5)
 
         body = security.inner_text()
@@ -3491,6 +3491,103 @@ def test_the_presentation_speaks_to_it_and_cisos(browser):
             "() => document.documentElement.scrollWidth - document.documentElement.clientWidth"
         )
         assert overflow <= 1, f"the security view overflows by {overflow}px on a phone"
+        assert not [error for error in recorder.errors if "pageerror" in error], recorder.errors
+    finally:
+        context.close()
+
+
+def test_every_block_of_the_presentation_has_its_own_address(browser):
+    """A block can be sent to someone who has never seen the page.
+
+    `#securite-database` must open the security view, scroll to the block, and
+    the little mark next to its heading must copy exactly that address.
+    """
+    context, page, recorder = new_page(browser, viewport=(1440, 950))
+    context.grant_permissions(["clipboard-read", "clipboard-write"])
+    try:
+        page.goto(f"{BASE_URL}/about#securite-database", wait_until="networkidle")
+        security = page.locator('[data-view="security"]')
+        expect(security).to_be_visible(timeout=15000)
+        page.wait_for_timeout(800)
+
+        block = page.locator("#securite-database")
+        expect(block).to_be_in_viewport()
+        assert "database" in block.inner_text().lower()
+
+        # The mark copies the address of its own block, not the page's.
+        mark = page.locator("#securite-database h2 .ld-anchor")
+        assert mark.count() == 1
+        mark.click()
+        page.wait_for_timeout(300)
+        expected = f"{BASE_URL}/about#securite-database"
+        # The clipboard needs a secure origin: over plain HTTP the same click
+        # falls back to showing the address, which is what the reader wants.
+        copied = page.evaluate("() => (navigator.clipboard ? navigator.clipboard.readText() : null)")
+        if copied is None:
+            assert expected in page.locator(".toast").first.inner_text()
+        else:
+            assert copied == expected, copied
+        assert page.url.endswith("#securite-database")
+
+        # A block of another view is reachable too, and switches the tab.
+        page.goto(f"{BASE_URL}/about#pro-eval", wait_until="networkidle")
+        pro = page.locator('[data-view="pro"]')
+        expect(pro).to_be_visible(timeout=15000)
+        page.wait_for_timeout(700)
+        expect(page.locator("#pro-eval")).to_be_in_viewport()
+        assert page.locator('[data-tab="pro"]:visible').get_attribute("aria-selected") == "true"
+
+        # Every scene and every card is addressable: a mark exists per heading.
+        page.goto(f"{BASE_URL}/about", wait_until="networkidle")
+        page.wait_for_timeout(600)
+        ids = page.evaluate(
+            """() => [...document.querySelectorAll('[data-view="discover"] .ld-scene')].map(el => el.id)"""
+        )
+        assert len(ids) >= 5 and all(identifier.startswith("decouvrir-") for identifier in ids)
+        for identifier in ids:
+            assert page.locator(f"#{identifier} .ld-anchor").count() == 1
+
+        assert not [error for error in recorder.errors if "pageerror" in error], recorder.errors
+    finally:
+        context.close()
+
+
+def test_an_administrator_can_wire_the_audit_forwarder(browser):
+    """The settings page must be able to configure forwarding without a shell.
+
+    The test button is the whole point: it reports the collector's answer while
+    the administrator is still on the page. With no target, it says so instead
+    of failing silently.
+    """
+    admin_email = os.environ.get("OL_TEST_ADMIN_EMAIL", "")
+    admin_password = os.environ.get("OL_TEST_ADMIN_PASSWORD", "")
+    if not (admin_email and admin_password):
+        pytest.skip("OL_TEST_ADMIN_EMAIL / OL_TEST_ADMIN_PASSWORD are not set.")
+
+    context, page, recorder = new_page(browser, viewport=(1440, 950))
+    try:
+        page.goto(f"{BASE_URL}/login", wait_until="networkidle")
+        page.fill("#email", admin_email)
+        page.fill("#password", admin_password)
+        page.click("#login-form button[type=submit]")
+        expect(page).to_have_url(re.compile(r".*/(dashboard)?$"), timeout=15000)
+
+        page.goto(f"{BASE_URL}/admin#settings", wait_until="networkidle")
+        page.locator('[data-tab="settings"]').click()
+        panel = page.locator('[data-section="log"]')
+        expect(panel).to_be_visible(timeout=15000)
+        panel.scroll_into_view_if_needed()
+        assert panel.locator('[data-key="log.syslog_host"]').count() == 1
+        assert panel.locator('[data-key="log.http_url"]').count() == 1
+        # The token is write-only: the field must not come back filled.
+        token = panel.locator('[data-key="log.http_token"]')
+        assert token.count() == 1 and token.input_value() == ""
+
+        page.locator('[data-test="log"]').click()
+        page.wait_for_timeout(1500)
+        banner = page.locator("#settings-output .banner")
+        expect(banner).to_be_visible(timeout=10000)
+        assert banner.inner_text().strip(), "an answer, even a refusal, must be shown"
         assert not [error for error in recorder.errors if "pageerror" in error], recorder.errors
     finally:
         context.close()

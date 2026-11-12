@@ -53,7 +53,7 @@ def test_settings_expose_types_and_mask_secrets(client):
     register_user(client)
     make_admin(client)
     data = client.get("/api/v1/admin/settings").json()
-    assert set(data["sections"]) == {"ai", "mail", "security", "instance", "sharing"}
+    assert set(data["sections"]) == {"ai", "mail", "security", "instance", "sharing", "log"}
 
     rows = {row["key"]: row for row in data["sections"]["ai"]}
     assert rows["ai.enabled"]["type"] == "bool"

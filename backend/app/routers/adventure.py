@@ -50,7 +50,9 @@ def _get_run(db: OrmSession, token: str) -> AdventureRun:
 
 
 def _public_view(quiz: Quiz, user: User | None) -> bool:
-    if quiz.status == "public":
+    # A privately published story is playable by whoever holds its address; the
+    # switch only keeps it out of the catalogue and the search index.
+    if quiz.status in {"public", "private"}:
         return True
     if user is None:
         return False

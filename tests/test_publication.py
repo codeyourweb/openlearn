@@ -131,12 +131,19 @@ def test_editing_a_public_quiz_never_unpublishes_it(client):
     assert [row["title"] for row in catalogue] == ["Sample quiz"]
 
 
-def test_pending_quiz_is_invisible_to_visitors(client):
+def test_a_quiz_awaiting_moderation_is_readable_by_its_link_but_never_listed(client):
+    """The catalogue waits for the moderator; the address does not.
+
+    A trainer who prepared a questionnaire must be able to send its link the
+    same evening. Publication to the catalogue is what the review decides — it
+    never gates access to a quiz that has been published once.
+    """
     register_user(client)
     quiz = create_quiz(client)
     visibility(client, quiz["id"], "public")
     client.post("/api/v1/auth/logout", headers=csrf_headers(client))
-    assert client.get(f"/api/v1/quizzes/{quiz['id']}").status_code == 404
+    assert client.get(f"/api/v1/quizzes/{quiz['id']}").status_code == 200
+    assert client.get("/api/v1/quizzes").json() == []
 
 
 def test_owner_can_retire_a_public_quiz(client):

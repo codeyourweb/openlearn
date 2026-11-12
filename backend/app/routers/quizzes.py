@@ -13,7 +13,7 @@ from pydantic import ValidationError
 from sqlalchemy import String, cast, delete, func, or_, select
 from sqlalchemy.orm import Session as OrmSession
 
-from .. import ai, runtime, search, versions
+from .. import ai, audit, runtime, search, versions
 from ..adventure import AdventureError, validate_adventure_graph
 from ..config import settings
 from ..content import (
@@ -620,7 +620,11 @@ def _translations_are_complete(
 
 
 def _can_view(quiz: Quiz, user: User | None) -> bool:
-    if quiz.status == "public":
+    # "public" and "private" are both live: the difference is the catalogue and
+    # the search index, not access. A quiz shared by its address opens for any
+    # visitor holding that address — which is what publishing "privately"
+    # promises in its own docstring. A draft or a pending quiz stays closed.
+    if quiz.status in {"public", "private"}:
         return True
     if user is None:
         return False
@@ -797,7 +801,12 @@ def list_my_quizzes(
 
 
 @router.post("", status_code=status.HTTP_201_CREATED)
-def create_quiz(payload: QuizIn, user: User = Depends(require_user), db: OrmSession = Depends(get_db)):
+def create_quiz(
+    payload: QuizIn,
+    request: Request,
+    user: User = Depends(require_user),
+    db: OrmSession = Depends(get_db),
+):
     quiz = Quiz(
         owner_id=user.id,
         title=payload.title,
@@ -814,6 +823,9 @@ def create_quiz(payload: QuizIn, user: User = Depends(require_user), db: OrmSess
     db.add(quiz)
     db.flush()
     _apply_quiz(db, quiz, payload)
+    audit.content(
+        db, "quiz_created", request=request, user=user, kind="quiz", item_id=quiz.id, name=quiz.title
+    )
     return serialise_quiz(quiz, include_answers=True, viewer=user)
 
 
@@ -845,6 +857,7 @@ def get_quiz(
 def update_quiz(
     quiz_id: int,
     payload: QuizIn,
+    request: Request,
     user: User = Depends(require_user),
     db: OrmSession = Depends(get_db),
 ):
@@ -855,6 +868,9 @@ def update_quiz(
     # Editing only touches the working copy: the published version keeps
     # serving visitors until the author publishes again.
     search.refresh_quiz(db, quiz)
+    audit.content(
+        db, "quiz_updated", request=request, user=user, kind="quiz", item_id=quiz.id, name=quiz.title
+    )
     return serialise_quiz(quiz, include_answers=True, viewer=user)
 
 
@@ -911,12 +927,29 @@ def update_draft(
 
 
 @router.delete("/{quiz_id}", status_code=status.HTTP_204_NO_CONTENT)
-def delete_quiz(quiz_id: int, user: User = Depends(require_user), db: OrmSession = Depends(get_db)):
+def delete_quiz(
+    quiz_id: int,
+    request: Request,
+    user: User = Depends(require_user),
+    db: OrmSession = Depends(get_db),
+):
     quiz = _get_quiz_or_404(db, quiz_id)
     if not _can_edit(quiz, user):
         raise HTTPException(status_code=403, detail="You do not own this quiz.")
+    name = quiz.title
     db.delete(quiz)
     db.commit()
+    # Recorded after the deletion: the row is gone, the event is what remains.
+    audit.record(
+        db,
+        "quiz_deleted",
+        request,
+        None,
+        "",
+        user=user,
+        target={"type": "quiz", "id": quiz_id, "name": name},
+        source="content",
+    )
 
 
 
@@ -1096,6 +1129,7 @@ def _publish_working_copy(
 @router.post("/{quiz_id}/publish")
 def publish_quiz(
     quiz_id: int,
+    request: Request,
     user: User = Depends(require_user),
     body: QuizPublishIn | None = None,
     db: OrmSession = Depends(get_db),
@@ -1111,9 +1145,21 @@ def publish_quiz(
     quiz = _get_quiz_or_404(db, quiz_id)
     if not _can_edit(quiz, user):
         raise HTTPException(status_code=403, detail="You do not own this quiz.")
-    request = body or QuizPublishIn()
+    # `request` is the HTTP request (for the audit trail); the publish options
+    # are kept apart so the two meanings cannot collide.
+    options = body or QuizPublishIn()
     version = _publish_working_copy(
-        db, quiz, user, note=request.note, visibility=request.visibility
+        db, quiz, user, note=options.note, visibility=options.visibility
+    )
+    audit.content(
+        db,
+        "quiz_published",
+        request=request,
+        user=user,
+        kind="quiz",
+        item_id=quiz.id,
+        name=quiz.title,
+        detail=options.visibility,
     )
     return {
         "id": quiz.id,
@@ -1141,6 +1187,12 @@ def set_visibility(
     version = None
     if payload.visibility in ("public", "pending"):
         version = _publish_working_copy(db, quiz, user)
+    elif payload.visibility == "private":
+        # Private is a live publication: the quiz has an address, so it gets a
+        # frozen edition like any other, and the author republishes to update
+        # what the link serves. Without this, a shared link would show the
+        # working copy and change under the class between two sessions.
+        version = _publish_working_copy(db, quiz, user, visibility="private")
     else:
         quiz.status = payload.visibility
         quiz.published_at = None

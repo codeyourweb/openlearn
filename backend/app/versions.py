@@ -218,8 +218,12 @@ def published_version(db: OrmSession, quiz: Quiz) -> QuizVersion | None:
 
 
 def published_payload(db: OrmSession, quiz: Quiz) -> dict | None:
-    """The payload the public currently sees, if any version is live."""
-    if quiz.status != "public":
+    """The payload the reader currently sees, if any version is live.
+
+    "Private" is live too: it has no catalogue entry, but its address serves a
+    frozen edition like any other publication.
+    """
+    if quiz.status not in {"public", "private"}:
         return None
     version = published_version(db, quiz)
     return version.payload if version else None

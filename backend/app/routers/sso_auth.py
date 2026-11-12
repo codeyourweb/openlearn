@@ -20,11 +20,10 @@ from fastapi.responses import RedirectResponse, Response
 from sqlalchemy import select
 from sqlalchemy.orm import Session as OrmSession
 
-from .. import sso
+from .. import audit, sso
 from ..config import settings
 from ..db import get_db
-from ..deps import client_ip
-from ..models import ExternalIdentity, SecurityEvent, SsoProvider, User, utcnow
+from ..models import ExternalIdentity, SsoProvider, User, utcnow
 from ..security import hash_password, new_secret
 
 logger = logging.getLogger(__name__)
@@ -36,8 +35,8 @@ _STATE_TTL_SECONDS = 600
 
 
 def _audit(db: OrmSession, event: str, request: Request, user_id: int | None = None, detail: str = "") -> None:
-    db.add(SecurityEvent(event=event, ip=client_ip(request), user_id=user_id, detail=detail[:300]))
-    db.commit()
+    """One funnel: the local trail, then the collector (see app.audit)."""
+    audit.record(db, event, request=request, user_id=user_id, detail=detail)
 
 
 def _public_base(request: Request) -> str:

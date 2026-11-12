@@ -91,13 +91,16 @@ A space starts as a **draft** or **private**. To make it readable by everyone:
 1. open the space settings and request **publication**;
 2. the space moves to **pending review** — a moderator reads it;
 3. once approved it becomes **public** and you receive an email, with the moderator's note where
-   there is one;
+   there is one — until then, the space is already readable by whoever has its link: publication
+   only decides whether it appears in the catalogue and the search;
 4. if it is refused, the space stays private and the reason is shown to the managers.
 
 | Status | Who sees it |
 | --- | --- |
 | Draft | You and the members of the space |
-| Private | Invited members only |
+| Private | **Anyone holding the address of the space** — it is not listed and not searchable, but a link opens it for a visitor without an account |
+| Pending review | You, and the moderators reading it; the link already works |
+| Public | Everyone: listed in `/wiki`, in the search results, indexed for search engines |
 | Pending review | Members, and moderators |
 | Public | Everyone, including signed-out visitors |
 | Refused | Members; publication can be requested again after fixes |

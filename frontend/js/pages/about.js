@@ -9,7 +9,7 @@
  */
 
 import { LANGUAGES, t } from "../i18n.js";
-import { escapeHtml } from "../ui.js";
+import { escapeHtml, toast } from "../ui.js";
 import { state } from "../store.js";
 import { instance } from "../instance.js";
 
@@ -53,6 +53,19 @@ function _icon(name, extra = "") {
   return `<svg class="ld-icon ${extra}" viewBox="0 0 24 24" width="18" height="18" fill="none"
       stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"
       aria-hidden="true"><path d="${path}" /></svg>`;
+}
+
+/* A block that can be linked to on its own.
+ *
+ * Someone who wants to send a colleague straight to "the database choice" sends
+ * them the block, not the page: every section carries an id and a discreet
+ * button that copies its address. The hash also opens the right view on load,
+ * so the link works for someone who has never seen the page.
+ */
+function _anchor(id) {
+  return `<a class="ld-anchor" href="#${id}" data-anchor="${id}"
+      aria-label="${escapeHtml(t("about.anchor_copy"))}"
+      title="${escapeHtml(t("about.anchor_copy"))}">#</a>`;
 }
 
 /* The quiz mock at the top of the page plays itself: three questions, each with
@@ -421,7 +434,7 @@ export function renderAbout() {
     (scene, index) => `
     <section class="ld-scene ${scene.side === "right" ? "ld-scene-right" : ""} ${
       scene.highlight ? "ld-scene-ai" : ""
-    }" data-scene="${scene.key}">
+    }" data-scene="${scene.key}" id="decouvrir-${scene.key}">
       <div class="ld-scene-text">
         <p class="ld-step" data-reveal>${String(index + 1).padStart(2, "0")}</p>
         ${
@@ -429,7 +442,7 @@ export function renderAbout() {
             ? `<p class="ld-ai-badge" data-reveal><span aria-hidden="true">✨</span> ${escapeHtml(t("about.ai_badge"))}</p>`
             : ""
         }
-        <h2 data-reveal>${escapeHtml(t(`about.ch_${scene.key}_title`))}</h2>
+        <h2 data-reveal>${escapeHtml(t(`about.ch_${scene.key}_title`))} ${_anchor(`decouvrir-${scene.key}`)}</h2>
         <p class="ld-lead" data-reveal>${escapeHtml(t(`about.ch_${scene.key}_lead`))}</p>
         <ul class="ld-points">
           ${["b1", "b2", "b3"]
@@ -505,8 +518,8 @@ export function renderAbout() {
 
     <div class="ld-scenes">${scenes}</div>
 
-    <section class="ld-steps">
-      <h2 data-reveal>${escapeHtml(t("about.steps_title"))}</h2>
+    <section class="ld-steps" id="decouvrir-etapes">
+      <h2 data-reveal>${escapeHtml(t("about.steps_title"))} ${_anchor("decouvrir-etapes")}</h2>
       <ol class="ld-step-list">
         ${[1, 2, 3]
           .map(
@@ -521,7 +534,7 @@ export function renderAbout() {
       </ol>
     </section>
 
-    <section class="ld-final">
+    <section class="ld-final" id="decouvrir-commencer">
       <div class="ld-final-inner" data-reveal>
         <h2>${escapeHtml(t("about.final_title"))}</h2>
         <p>${escapeHtml(t("about.final_body"))}</p>
@@ -534,7 +547,8 @@ export function renderAbout() {
     <div data-view="pro" hidden>${_switchHtml()}${_proHtml()}</div>
     <div data-view="security" hidden>${_switchHtml()}${_secHtml()}</div>`;
 
-  _bindTabs(root);
+  const select = _bindTabs(root);
+  _bindAnchors(root, select);
   _animate(root);
   _startRotator(root);
   _startMockQuiz(root);
@@ -559,7 +573,7 @@ function _proHtml() {
       <div class="ld-aurora" aria-hidden="true"><span></span><span></span><span></span></div>
       <div class="ld-hero-text">
         <p class="ld-eyebrow" data-reveal>${escapeHtml(t("about.pro_eyebrow"))}</p>
-        <h2 class="ld-hero-title" data-reveal>${escapeHtml(t("about.pro_title"))}</h2>
+        <h2 class="ld-hero-title" data-reveal>${escapeHtml(t("about.pro_title"))} ${_anchor("pro")}</h2>
         <p class="ld-lead" data-reveal>${escapeHtml(t("about.pro_lead"))}</p>
         <ul class="ld-hero-points" data-reveal>
           <li><span aria-hidden="true">✦</span> ${escapeHtml(t("about.pro_point_free"))}</li>
@@ -571,12 +585,12 @@ function _proHtml() {
       <div class="ld-hero-art" data-reveal>${_artHost()}</div>
     </section>
 
-    <section class="pro-cards">
+    <section class="pro-cards" id="pro-cartes">
       ${PRO_CARDS.map(
         (card) => `
-        <article class="pro-card" data-reveal>
+        <article class="pro-card" data-reveal id="pro-${card.key}">
           <span class="pro-icon" aria-hidden="true">${card.icon}</span>
-          <h2>${escapeHtml(t(`about.pro_${card.key}_title`))}</h2>
+          <h2>${escapeHtml(t(`about.pro_${card.key}_title`))} ${_anchor(`pro-${card.key}`)}</h2>
           <p>${escapeHtml(t(`about.pro_${card.key}_body`))}</p>
           <ul class="ld-points">
             ${["b1", "b2", "b3"]
@@ -590,7 +604,7 @@ function _proHtml() {
       ).join("")}
     </section>
 
-    <section class="pro-free">
+    <section class="pro-free" id="pro-gratuit">
       <div class="pro-free-inner" data-reveal>
         <p class="ld-ai-badge"><span aria-hidden="true">✨</span> ${escapeHtml(t("about.pro_free_badge"))}</p>
         <h2>${escapeHtml(t("about.pro_free_title"))}</h2>
@@ -629,7 +643,7 @@ function _secHtml() {
       <div class="ld-aurora" aria-hidden="true"><span></span><span></span><span></span></div>
       <div class="ld-hero-text">
         <p class="ld-eyebrow" data-reveal>${escapeHtml(t("about.sec_eyebrow"))}</p>
-        <h2 class="ld-hero-title" data-reveal>${escapeHtml(t("about.sec_title"))}</h2>
+        <h2 class="ld-hero-title" data-reveal>${escapeHtml(t("about.sec_title"))} ${_anchor("securite")}</h2>
         <p class="ld-lead" data-reveal>${escapeHtml(t("about.sec_lead"))}</p>
         <ul class="ld-hero-points" data-reveal>
           ${SEC_HERO_POINTS.map(
@@ -640,20 +654,25 @@ function _secHtml() {
       <div class="ld-hero-art" data-reveal>${_secArt()}</div>
     </section>
 
-    <section class="pro-cards sec-cards">
+    <section class="sec-stack" id="securite-choix">
       ${SEC_CARDS.map(
-        (card) => `
-        <article class="pro-card" data-reveal>
-          <span class="pro-icon" aria-hidden="true">${SEC_ICONS[card]}</span>
-          <h2>${escapeHtml(t(`about.sec_${card}_title`))}</h2>
-          <p>${escapeHtml(t(`about.sec_${card}_body`))}</p>
+        (card, index) => `
+        <article class="sec-block" id="securite-${card}" data-reveal>
+          <p class="sec-block-num" aria-hidden="true">${String(index + 1).padStart(2, "0")}</p>
+          <div class="sec-block-text">
+            <h2>
+              <span class="sec-block-icon" aria-hidden="true">${SEC_ICONS[card]}</span>
+              ${escapeHtml(t(`about.sec_${card}_title`))} ${_anchor(`securite-${card}`)}
+            </h2>
+            <p>${escapeHtml(t(`about.sec_${card}_body`))}</p>
+          </div>
         </article>`,
       ).join("")}
     </section>
 
-    <section class="pro-free">
+    <section class="pro-free" id="securite-controle">
       <div class="pro-free-inner sec-notes" data-reveal>
-        <h2>${escapeHtml(t("about.sec_notes_title"))}</h2>
+        <h2>${escapeHtml(t("about.sec_notes_title"))} ${_anchor("securite-controle")}</h2>
         <ul class="sec-notes-list">
           ${SEC_NOTES.map(
             (note) => `<li><strong>${escapeHtml(t(`about.sec_note_${note}_title`))}</strong> ${escapeHtml(t(`about.sec_note_${note}_body`))}</li>`,
@@ -683,7 +702,7 @@ function _bindTabs(root) {
     security: root.querySelector('[data-view="security"]'),
   };
   const hashes = { pro: "#pro", security: "#securite" };
-  const select = (name) => {
+  const select = (name, { keepHash = false } = {}) => {
     tabs.forEach((tab) => {
       const active = tab.dataset.tab === name;
       tab.classList.toggle("is-active", active);
@@ -692,12 +711,58 @@ function _bindTabs(root) {
     Object.entries(views).forEach(([key, node]) => {
       if (node) node.hidden = key !== name;
     });
-    window.history.replaceState({}, "", hashes[name] || location.pathname);
+    if (!keepHash) window.history.replaceState({}, "", hashes[name] || location.pathname);
     if (name !== "discover") _animate(root);
   };
   tabs.forEach((tab) => tab.addEventListener("click", () => select(tab.dataset.tab)));
   if (location.hash === "#pro") select("pro");
   if (location.hash === "#securite") select("security");
+  return select;
+}
+
+/* A block can be addressed and copied on its own.
+ *
+ * ``#securite-database`` opens the page on the database choice, in the right
+ * view, scrolled there — so the link a reader sends means something to someone
+ * who has never seen the page. The button copies that address.
+ */
+function _bindAnchors(root, select) {
+  const open = (smooth) => {
+    const id = decodeURIComponent(location.hash.replace(/^#/, ""));
+    if (!id) return;
+    const target = root.querySelector(`[id="${id}"]`);
+    if (!target) return;
+    const view = target.closest("[data-view]");
+    if (view && view.hidden) select(view.dataset.view, { keepHash: true });
+    target.scrollIntoView({
+      block: "start",
+      behavior: smooth && !window.matchMedia("(prefers-reduced-motion: reduce)").matches
+        ? "smooth"
+        : "auto",
+    });
+  };
+
+  root.querySelectorAll("[data-anchor]").forEach((link) => {
+    link.addEventListener("click", async (event) => {
+      event.preventDefault();
+      const id = link.dataset.anchor;
+      const url = `${location.origin}${location.pathname}#${id}`;
+      window.history.replaceState({}, "", `#${id}`);
+      try {
+        await navigator.clipboard.writeText(url);
+        toast(t("about.anchor_copied"), "success");
+      } catch {
+        // No clipboard (insecure context, refused permission): the address bar
+        // already carries the address, which is what the reader wanted.
+        toast(url, "info");
+      }
+    });
+  });
+
+  // The browser restores the scroll position after the view is shown: run once
+  // after mount, then on every later change of address.
+  window.requestAnimationFrame(() => open(false));
+  window.addEventListener("hashchange", () => open(true));
 }
 
 /** Reveal on scroll, count the figures, drive the progress bar and parallax. */

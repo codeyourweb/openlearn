@@ -16,6 +16,7 @@ const SECTION_TITLE = {
   mail: "admin.set_mail_title",
   security: "admin.set_security_title",
   instance: "admin.set_instance_title",
+  log: "admin.set_log_title",
 };
 
 const SECTION_LEAD = {
@@ -23,6 +24,7 @@ const SECTION_LEAD = {
   mail: "admin.set_mail_lead",
   security: "admin.set_security_lead",
   instance: "admin.set_instance_lead",
+  log: "admin.set_log_lead",
 };
 
 function fieldLabel(key) {
@@ -107,6 +109,7 @@ export async function settingsView(panel) {
             <button class="btn btn-primary" type="button" data-save="${section}">${t("action.save")}</button>
             ${section === "ai" ? `<button class="btn" type="button" data-test="ai">${t("admin.set_test_ai")}</button>` : ""}
             ${section === "mail" ? `<button class="btn" type="button" data-test="mail">${t("admin.set_test_mail")}</button>` : ""}
+            ${section === "log" ? `<button class="btn" type="button" data-test="log">${t("admin.set_log_test")}</button>` : ""}
           </footer>
         </section>`,
         )
@@ -158,6 +161,29 @@ export async function settingsView(panel) {
         output.innerHTML = `<div class="banner warn">${escapeHtml(error.detail || t("error.generic"))}</div>`;
       } finally {
         setBusy(testAi, false);
+      }
+    });
+  }
+
+  const testLog = panel.querySelector('[data-test="log"]');
+  if (testLog) {
+    testLog.addEventListener("click", async () => {
+      setBusy(testLog, true);
+      output.innerHTML = `<p class="muted">${t("admin.set_testing")}</p>`;
+      try {
+        // The event is delivered while the administrator waits: the answer is
+        // the collector's own, per target, not a "queued" that means nothing.
+        const result = await api.post("/api/v1/admin/log/test", {});
+        const perTarget = Object.entries(result.targets || {})
+          .map(([name, value]) => `${name}: ${value}`)
+          .join(" · ");
+        output.innerHTML = result.ok
+          ? `<div class="banner ok">${escapeHtml(perTarget)}</div>`
+          : `<div class="banner warn">${escapeHtml(perTarget || result.error || t("error.generic"))}</div>`;
+      } catch (error) {
+        output.innerHTML = `<div class="banner warn">${escapeHtml(error.detail || t("error.generic"))}</div>`;
+      } finally {
+        setBusy(testLog, false);
       }
     });
   }

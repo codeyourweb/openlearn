@@ -18,11 +18,11 @@ from pydantic import BaseModel, EmailStr, Field
 from sqlalchemy import select
 from sqlalchemy.orm import Session as OrmSession
 
-from .. import mailer, runtime
+from .. import audit, mailer, runtime
 from ..config import settings
 from ..db import get_db
 from ..deps import client_ip, enforce_rate_limit
-from ..models import PasswordResetToken, SecurityEvent, User, utcnow
+from ..models import PasswordResetToken, User, utcnow
 from ..security import PasswordPolicyError, hash_password, new_secret, sha256, validate_password
 
 logger = logging.getLogger(__name__)
@@ -40,15 +40,8 @@ class ResetIn(BaseModel):
 
 
 def _audit(db: OrmSession, event: str, request: Request | None, user_id: int | None = None, detail: str = "") -> None:
-    db.add(
-        SecurityEvent(
-            event=event,
-            ip=client_ip(request) if request else None,
-            user_id=user_id,
-            detail=detail[:300],
-        )
-    )
-    db.commit()
+    """One funnel: the local trail, then the collector (see app.audit)."""
+    audit.record(db, event, request=request, user_id=user_id, detail=detail)
 
 
 def _public_base(request: Request) -> str:

@@ -2,6 +2,7 @@
 
 The administration area (`/admin`) mixes moderation and configuration. This page
 covers the configuration tabs: **Settings**, **Single sign-on**, **AI error log**.
+Audit forwarding to a SIEM has its own page: [docs/AUDIT_LOGGING.md](AUDIT_LOGGING.md).
 
 Only accounts with the administrator role see them. The first administrator is
 created at boot from `OL_ADMIN_EMAIL` / `OL_ADMIN_PASSWORD`; afterwards another
@@ -77,6 +78,32 @@ SMTP settings used for password resets and account notices.
 When mail is not configured, the *Forgotten password?* link still exists but the
 API answers 503 with a neutral message, and the interface says so. Accounts
 created by an administrator then need a manual password change.
+
+### Audit forwarding
+
+Where security events go: a syslog collector, an HTTP endpoint, or both. Every
+sign-in, failed sign-in, AI call, content creation, edit and deletion is written
+to the instance's own trail and, when a target is configured, sent to the XDR or
+the SIEM in the same breath.
+
+| Setting | Meaning |
+| --- | --- |
+| Turn forwarding on | Master switch. With no target, nothing leaves the instance, whatever this says. |
+| Syslog host, port, protocol | RFC 5424 over `udp`, `tcp` or `tls`. Default port 514, default facility 13 (*log audit*). |
+| Reported hostname | The hostname in the syslog header; the instance name if empty. |
+| Collector URL | Must be `http://` or `https://` — any other scheme is refused when the setting is saved. |
+| Collector token | Sent as `Authorization: Bearer …`, stored write-only and never shown again. |
+
+**Send a test event** delivers one event synchronously and reports the answer of
+each target separately, so a wrong port or a refused token is found from the
+settings page rather than during an incident. The counters (`sent`, `dropped`,
+`failed`, `paused_seconds`, `last_error`) are on
+`GET /api/v1/admin/log/status`; after five consecutive failures the sender backs
+off for 30 seconds, then longer, and drops events rather than buffering for ever.
+
+The event schema, the exact list of actions, the collector recipes for Splunk,
+Sentinel, Google SecOps and Sekoia, and the properties the tests enforce are in
+[docs/AUDIT_LOGGING.md](AUDIT_LOGGING.md).
 
 ### Registration and security
 
