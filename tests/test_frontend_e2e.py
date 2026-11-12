@@ -1644,12 +1644,12 @@ def test_pro_tab_pdf_export_and_the_assessment_card(browser):
     context, page, recorder = new_page(browser, viewport=(1440, 980))
     try:
         page.goto(f"{BASE_URL}/about", wait_until="networkidle")
-        # Each view carries its own switch (the pro view is hidden, not removed).
-        expect(page.locator(".ld-switch-btn:visible")).to_have_count(2)
+        # Each view carries its own switch (the other views are hidden, not removed).
+        expect(page.locator(".ld-switch-btn:visible")).to_have_count(3)
         page.locator('.ld-switch-btn[data-tab="pro"]:visible').click()
-        expect(page.locator(".pro-card")).to_have_count(4)
-        expect(page.locator(".pro-free h2")).to_be_visible()
-        expect(page.locator(".pro-free")).to_contain_text("Free for everyone")
+        expect(page.locator('[data-view="pro"] .pro-card')).to_have_count(4)
+        expect(page.locator('[data-view="pro"] .pro-free h2')).to_be_visible()
+        expect(page.locator('[data-view="pro"] .pro-free')).to_contain_text("Free for everyone")
 
         email = f"lot9-{uuid.uuid4().hex[:8]}@example.com"
         register_through_ui(page, email, "Yann Pro")
@@ -3448,6 +3448,49 @@ def test_the_two_sharing_switches_hide_one_block_each(browser):
             expect(page.locator(".share-links")).to_be_visible(timeout=15000)
         finally:
             switches(True, True)
+        assert not [error for error in recorder.errors if "pageerror" in error], recorder.errors
+    finally:
+        context.close()
+
+
+def test_the_presentation_speaks_to_it_and_cisos(browser):
+    """Third view: what a deployment changes, stated as the code does it.
+
+    The claims have to be checkable — three databases, container or not, OIDC
+    and SAML, what stops on an isolated network — so this asserts the section
+    exists with its cards and notes, is reachable by its own address, and that
+    switching views does not leave two views painted.
+    """
+    context, page, recorder = new_page(browser, viewport=(1440, 960))
+    try:
+        page.goto(f"{BASE_URL}/about#securite", wait_until="networkidle")
+        security = page.locator('[data-view="security"]')
+        expect(security).to_be_visible(timeout=15000)
+        # The switch bar is painted in every view; only one copy is on screen.
+        assert (
+            page.locator('.ld-switch-btn[data-tab="security"]:visible').get_attribute("aria-selected")
+            == "true"
+        )
+        expect(security.locator(".pro-card")).to_have_count(6)
+        expect(security.locator(".sec-notes-list li")).to_have_count(5)
+
+        body = security.inner_text()
+        for claim in ("SQLite", "PostgreSQL", "MariaDB", "SAML", "OIDC", "AGPL"):
+            assert claim in body, f"{claim} is missing from the security view"
+
+        # One view at a time: the pro view must not stay painted underneath.
+        page.locator('.ld-switch-btn[data-tab="pro"]:visible').click()
+        expect(security).to_be_hidden(timeout=5000)
+        page.locator('.ld-switch-btn[data-tab="security"]:visible').click()
+        expect(security).to_be_visible(timeout=5000)
+        assert "securite" in page.url
+
+        page.set_viewport_size({"width": 390, "height": 844})
+        page.wait_for_timeout(300)
+        overflow = page.evaluate(
+            "() => document.documentElement.scrollWidth - document.documentElement.clientWidth"
+        )
+        assert overflow <= 1, f"the security view overflows by {overflow}px on a phone"
         assert not [error for error in recorder.errors if "pageerror" in error], recorder.errors
     finally:
         context.close()
