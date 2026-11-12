@@ -3517,6 +3517,10 @@ def test_every_block_of_the_presentation_has_its_own_address(browser):
         # The mark copies the address of its own block, not the page's.
         mark = page.locator("#securite-database h2 .ld-anchor")
         assert mark.count() == 1
+        # Seen without a pointer: a phone has no hover, and a hidden mark is a
+        # link nobody copies.
+        opacity = float(page.evaluate("() => getComputedStyle(document.querySelector('.ld-anchor')).opacity"))
+        assert 0 < opacity < 1, opacity
         mark.click()
         page.wait_for_timeout(300)
         expected = f"{BASE_URL}/about#securite-database"

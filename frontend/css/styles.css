@@ -1731,13 +1731,15 @@ body.qr-open { overflow: hidden; }
   font-weight: 500;
   color: var(--muted);
   text-decoration: none;
-  opacity: 0;
+  /* Faint but present: a touch screen has no hover, and a mark nobody sees
+     is a link nobody copies. */
+  opacity: .3;
   transition: opacity .15s ease, color .15s ease;
 }
 h2:hover > .ld-anchor,
 h2:focus-within > .ld-anchor,
 .sec-block:hover .ld-anchor,
-.ld-anchor:focus-visible { opacity: .75; }
+.ld-anchor:focus-visible { opacity: .8; }
 .ld-anchor:hover { opacity: 1; color: var(--accent-2); }
 /* A linked block lands below the sticky header, not under it. */
 [id="decouvrir"], [id="pro"], [id="securite"], .ld-scene, .ld-steps, .ld-final,
