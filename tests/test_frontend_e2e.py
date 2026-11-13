@@ -20,6 +20,11 @@ from urllib.parse import quote
 
 import pytest
 
+try:  # httpx ships with the application; the E2E image always has it
+    import httpx
+except ImportError:  # pragma: no cover - only for a stripped-down runner
+    httpx = None
+
 playwright_sync = pytest.importorskip("playwright.sync_api")
 from playwright.sync_api import expect, sync_playwright  # noqa: E402
 
@@ -1826,17 +1831,36 @@ def test_a_wiki_card_opens_on_a_page_that_exists(browser):
     "environment". The card pointed at /wiki/34/climate-and-resources, no page
     matched that slug, and the reader announced an empty wiki holding four
     pages. The link, the reader fallback and the server canonical must agree.
+
+    The wiki is created here rather than taken from the catalogue: a fresh
+    instance has no demo content, and a scenario that needs one is a scenario
+    that never runs.
     """
     context, page, recorder = new_page(browser, viewport=(1440, 980))
+    title = f"Catalogue sonde {uuid.uuid4().hex[:6]} — ressources"
     try:
         email = f"wiki-links-{uuid.uuid4().hex[:8]}@example.com"
         register_through_ui(page, email, "Link Tester")
 
+        csrf = next(
+            (cookie["value"] for cookie in context.cookies() if cookie["name"] == "ol_csrf"), ""
+        )
+        created = context.request.post(
+            f"{BASE_URL}/api/v1/wiki",
+            headers={"X-CSRF-Token": csrf},
+            data={"title": title, "description": "Sonde du catalogue.", "default_language": "fr"},
+        )
+        assert created.status == 201, created.text()
+        wiki = created.json()
+        assert wiki["slug"] and wiki["slug"] != title, wiki["slug"]
+
         page.goto(f"{BASE_URL}/wiki", wait_until="networkidle")
-        cards = page.locator(".wiki-card a[data-link]")
-        expect(cards.first).to_be_visible(timeout=15000)
-        href = cards.first.get_attribute("href")
+        card = page.locator(f".wiki-card:has-text('{title}') a[data-link]").first
+        expect(card).to_be_visible(timeout=15000)
+        href = card.get_attribute("href")
+        # A slug, never the title: no space, no accent, no em dash.
         assert re.fullmatch(r"/wiki/\d+/[a-z0-9-]+", href or ""), href
+        assert href.endswith(wiki["slug"]), (href, wiki["slug"])
 
         # The catalogue's own link, opened as a visitor would open it.
         page.goto(f"{BASE_URL}{href}", wait_until="networkidle")
@@ -3582,25 +3606,283 @@ def test_an_administrator_can_wire_the_audit_forwarder(browser):
         page.click("#login-form button[type=submit]")
         expect(page).to_have_url(re.compile(r".*/(dashboard)?$"), timeout=15000)
 
-        page.goto(f"{BASE_URL}/admin#settings", wait_until="networkidle")
-        page.locator('[data-tab="settings"]').click()
-        panel = page.locator('[data-section="log"]')
-        expect(panel).to_be_visible(timeout=15000)
-        panel.scroll_into_view_if_needed()
-        assert panel.locator('[data-key="log.syslog_host"]').count() == 1
-        assert panel.locator('[data-key="log.http_url"]').count() == 1
-        # The token is write-only: the field must not come back filled.
-        token = panel.locator('[data-key="log.http_token"]')
+        # Syslog and HTTP POST are two transports, so they are two tabs: a page
+        # that mixes them is how a Sekoia intake ends up in a UDP socket.
+        page.goto(f"{BASE_URL}/admin?tab=settings.syslog", wait_until="networkidle")
+        # The environment bootstrap sits in a fold, folded by design: presence in
+        # the DOM is what this checks, not visibility.
+        page.wait_for_selector('[data-key="log.syslog_host"]', state="attached", timeout=15000)
+        assert page.locator('[data-key="log.http_url"]').count() == 0
+
+        page.goto(f"{BASE_URL}/admin?tab=settings.http", wait_until="networkidle")
+        page.wait_for_selector('[data-key="log.http_url"]', state="attached", timeout=15000)
+        assert page.locator('[data-key="log.syslog_host"]').count() == 0
+        # A token is write-only: the field must not come back filled.
+        token = page.locator('[data-key="log.http_token"]')
         assert token.count() == 1 and token.input_value() == ""
 
-        page.locator('[data-test="log"]').click()
-        page.wait_for_timeout(1500)
-        banner = page.locator("#settings-output .banner")
-        expect(banner).to_be_visible(timeout=10000)
-        assert banner.inner_text().strip(), "an answer, even a refusal, must be shown"
+        # A destination can be added from the page, with its own headers: that is
+        # what makes the forwarder usable against an intake that wants a key.
+        page.locator("[data-new]").click()
+        form = page.locator("#log-target-form")
+        expect(form).to_be_visible(timeout=10000)
+        form.locator("#log-url").fill("https://collector.invalid/v1/events")
+        form.locator('input[name="label"]').fill("Sonde E2E")
+        form.locator("[data-header-name]").first.fill("intake-key")
+        form.locator("[data-header-value]").first.fill("cle-de-sonde")
+        form.locator('button[type="submit"]').click()
+
+        row = page.locator("tr", has_text="Sonde E2E")
+        expect(row).to_be_visible(timeout=15000)
+        # A probe must not stay behind on the instance it was written on.
+        page.once("dialog", lambda dialog: dialog.accept())
+        row.locator("[data-delete]").click()
+        expect(page.locator("tr", has_text="Sonde E2E")).to_have_count(0, timeout=15000)
         assert not [error for error in recorder.errors if "pageerror" in error], recorder.errors
     finally:
         context.close()
+
+
+def test_the_content_rubric_lists_what_it_can_delete(browser):
+    """Administration must be able to see a wiki or a questionnaire and remove it.
+
+    A moderator could approve or reject, but nobody could list the wikis or take
+    one down, and a questionnaire had no delete button at all. Each removal is
+    checked against the API, so the page cannot claim one that did not happen.
+    """
+    admin_email = os.environ.get("OL_TEST_ADMIN_EMAIL", "")
+    admin_password = os.environ.get("OL_TEST_ADMIN_PASSWORD", "")
+    if not (admin_email and admin_password):
+        pytest.skip("OL_TEST_ADMIN_EMAIL / OL_TEST_ADMIN_PASSWORD are not set.")
+
+    context, page, recorder = new_page(browser, viewport=(1440, 950))
+    title = f"Sonde administration {uuid.uuid4().hex[:8]}"
+    quiz_title = f"Sonde questionnaire {uuid.uuid4().hex[:8]}"
+    wiki_id = None
+    try:
+        page.goto(f"{BASE_URL}/login", wait_until="networkidle")
+        page.fill("#email", admin_email)
+        page.fill("#password", admin_password)
+        page.click("#login-form button[type=submit]")
+        expect(page).to_have_url(re.compile(r".*/(dashboard)?$"), timeout=15000)
+
+        csrf = next(
+            (cookie["value"] for cookie in context.cookies() if cookie["name"] == "ol_csrf"), ""
+        )
+        created = context.request.post(
+            f"{BASE_URL}/api/v1/wiki",
+            headers={"X-CSRF-Token": csrf},
+            data={"title": title, "description": "probe", "default_language": "fr"},
+        )
+        assert created.ok, created.text()
+        wiki_id = created.json()["id"]
+
+        made = context.request.post(
+            f"{BASE_URL}/api/v1/quizzes",
+            headers={"X-CSRF-Token": csrf},
+            data={
+                "title": quiz_title,
+                "description": "probe",
+                "mode": "qcm",
+                "questions": [
+                    {
+                        "text_html": "<p>Sonde?</p>",
+                        "options": [
+                            {"text": "Oui", "is_correct": True},
+                            {"text": "Non", "is_correct": False},
+                        ],
+                    }
+                ],
+            },
+        )
+        assert made.ok, made.text()
+        quiz_id = made.json()["id"]
+
+        page.goto(f"{BASE_URL}/admin?tab=content.wikis", wait_until="networkidle")
+        row = page.locator("tr", has_text=title)
+        expect(row).to_be_visible(timeout=15000)
+        assert row.locator("a[href]").count() >= 1, "no link to open the wiki"
+        assert row.locator("[data-act='delete-wiki']").count() == 1
+
+        page.goto(f"{BASE_URL}/admin?tab=content.quizzes", wait_until="networkidle")
+        quiz_row = page.locator("[data-row-quiz]", has_text=quiz_title)
+        expect(quiz_row).to_be_visible(timeout=15000)
+        assert quiz_row.locator("[data-act='delete-quiz']").count() == 1
+        quiz_row.locator("[data-act='delete-quiz']").click()
+        page.click('[data-action="confirm"]')
+        expect(page.locator("[data-row-quiz]", has_text=quiz_title)).to_have_count(0, timeout=15000)
+        assert context.request.get(f"{BASE_URL}/api/v1/admin/quizzes/{quiz_id}").status == 404
+
+        page.goto(f"{BASE_URL}/admin?tab=content.wikis", wait_until="networkidle")
+        row = page.locator("tr", has_text=title)
+        expect(row).to_be_visible(timeout=15000)
+        row.locator("[data-act='delete-wiki']").click()
+        page.click('[data-action="confirm"]')
+        expect(page.locator("tr", has_text=title)).to_have_count(0, timeout=15000)
+
+        gone = context.request.get(f"{BASE_URL}/api/v1/admin/wikis?q={title}").json()
+        items = gone["items"] if isinstance(gone, dict) else gone
+        assert items == [], "the page said deleted, the API still has it"
+        wiki_id = None
+        assert not [error for error in recorder.errors if "pageerror" in error], recorder.errors
+    finally:
+        if wiki_id:
+            context.request.delete(f"{BASE_URL}/api/v1/admin/wikis/{wiki_id}")
+        context.close()
+
+
+def test_the_administration_page_is_grouped_by_rubric(browser):
+    """Administration is four rubrics, not one long row of tabs.
+
+    The rubric row is what makes the page legible: content, moderation, AI and
+    platform settings. Three things are checked beyond the layout — an old deep
+    link still lands where it used to, the two log transports are two separate
+    tabs, and the environment page is a read-only mirror that links to the
+    documentation of each variable.
+    """
+    admin_email = os.environ.get("OL_TEST_ADMIN_EMAIL", "")
+    admin_password = os.environ.get("OL_TEST_ADMIN_PASSWORD", "")
+    if not (admin_email and admin_password):
+        pytest.skip("OL_TEST_ADMIN_EMAIL / OL_TEST_ADMIN_PASSWORD are not set.")
+
+    context, page, recorder = new_page(browser, viewport=(1440, 950))
+    try:
+        page.goto(f"{BASE_URL}/login", wait_until="networkidle")
+        page.fill("#email", admin_email)
+        page.fill("#password", admin_password)
+        page.click("#login-form button[type=submit]")
+        expect(page).to_have_url(re.compile(r".*/(dashboard)?$"), timeout=15000)
+
+        page.goto(f"{BASE_URL}/admin", wait_until="networkidle")
+        groups = page.locator("[data-group]")
+        expect(groups).to_have_count(4, timeout=15000)
+        names = [groups.nth(index).get_attribute("data-group") for index in range(4)]
+        assert names == ["content", "moderation", "ai", "settings"], names
+
+        # A bookmark written before the reorganisation must still open its tab.
+        page.goto(f"{BASE_URL}/admin?tab=queue", wait_until="networkidle")
+        expect(page.locator('[data-group="moderation"]')).to_have_class(
+            re.compile(r"is-active"), timeout=15000
+        )
+        assert page.locator('[data-tab="quizzes"]').get_attribute("aria-selected") == "true"
+
+        # Syslog and HTTP POST are two transports: one tab each, never a mixed page.
+        page.goto(f"{BASE_URL}/admin?tab=settings.syslog", wait_until="networkidle")
+        page.wait_for_selector('[data-key="log.syslog_host"]', state="attached", timeout=15000)
+        assert page.locator('[data-key="log.http_url"]').count() == 0
+
+        # The environment is a mirror of what the process reads, and it is not editable.
+        page.goto(f"{BASE_URL}/admin?tab=settings.environment", wait_until="networkidle")
+        rows = page.locator(".env-table tbody tr")
+        expect(rows.first).to_be_visible(timeout=15000)
+        assert rows.count() >= 40, rows.count()
+        assert page.locator(".env-table input, .env-table select, .env-table textarea").count() == 0
+        assert page.locator('.env-table [data-env="OL_SECRET_KEY"]').count() == 1
+        link = rows.first.locator("a[href*='docs/ENVIRONMENT.md']")
+        href = link.get_attribute("href")
+        assert href and "#ol_" in href, href
+
+        assert not [error for error in recorder.errors if "pageerror" in error], recorder.errors
+    finally:
+        context.close()
+
+
+def test_leaving_the_page_silences_the_narrator(browser):
+    """A transcript that keeps talking after the page is gone cannot be stopped.
+
+    The player lives in a detached ``Audio`` object, so replacing the view used to
+    leave it playing with no control anywhere on screen. The router now announces
+    the departure and every player stops itself; this asserts the sound is really
+    paused, not merely removed from the markup.
+    """
+    admin_email = os.environ.get("OL_TEST_ADMIN_EMAIL", "")
+    admin_password = os.environ.get("OL_TEST_ADMIN_PASSWORD", "")
+    if not (admin_email and admin_password):
+        pytest.skip("OL_TEST_ADMIN_EMAIL / OL_TEST_ADMIN_PASSWORD are not set.")
+    status = httpx.get(f"{BASE_URL}/api/v1/audio/status", timeout=20).json()
+    if not status.get("enabled"):
+        pytest.skip("this instance has no speech engine.")
+
+    context, page, recorder = new_page(browser, viewport=(1440, 950))
+    page.add_init_script(
+        """
+        window.__audios = [];
+        const Original = window.Audio;
+        window.Audio = function (...args) {
+          const audio = new Original(...args);
+          window.__audios.push(audio);
+          return audio;
+        };
+        """
+    )
+    wiki_id = None
+    try:
+        page.goto(f"{BASE_URL}/login", wait_until="networkidle")
+        page.fill("#email", admin_email)
+        page.fill("#password", admin_password)
+        page.click("#login-form button[type=submit]")
+        expect(page).to_have_url(re.compile(r".*/(dashboard)?$"), timeout=15000)
+
+        csrf = next(
+            (cookie["value"] for cookie in context.cookies() if cookie["name"] == "ol_csrf"), ""
+        )
+        headers = {"X-CSRF-Token": csrf}
+        title = f"Silence {uuid.uuid4().hex[:8]}"
+        made = context.request.post(
+            f"{BASE_URL}/api/v1/wiki",
+            headers=headers,
+            data={"title": title, "description": "probe", "default_language": "fr"},
+        )
+        assert made.ok, made.text()
+        wiki_id = made.json()["id"]
+        created = context.request.post(
+            f"{BASE_URL}/api/v1/wiki/{wiki_id}/pages",
+            headers=headers,
+            data={"title": "Une page", "content_md": "# Une page\n\nLe vent tourne.", "tags": []},
+        )
+        assert created.ok, created.text()
+        page_row = created.json()
+
+        started = context.request.post(
+            f"{BASE_URL}/api/v1/audio/render",
+            headers=headers,
+            data={"owner_type": "page", "owner_id": page_row["id"], "voice": "female", "tone": "warm"},
+        )
+        assert started.status_code == 202, started.text()
+        job = started.json()["job_id"]
+        deadline = time.time() + 420
+        while time.time() < deadline:
+            state = context.request.get(f"{BASE_URL}/api/v1/audio/jobs/{job}").json()
+            if state["status"] in ("done", "error"):
+                break
+            time.sleep(3)
+        assert state["status"] == "done", state
+
+        page.goto(f"{BASE_URL}/wiki/{wiki_id}/p/{page_row['slug']}", wait_until="networkidle")
+        page.wait_for_selector("#wiki-audio [data-audio-toggle]", timeout=20000)
+        page.click("#wiki-audio [data-audio-toggle]")
+        page.wait_for_function(
+            "() => (window.__audios[0] || {}).currentTime > 0", timeout=15000
+        )
+        assert page.evaluate("() => window.__audios[0].paused") is False
+
+        # A real in-app link: a reload would prove nothing about the router.
+        page.click("a[data-link][href='/']")
+        page.wait_for_url(re.compile(rf"{re.escape(BASE_URL)}/$"), timeout=15000)
+        page.wait_for_timeout(500)
+        assert page.evaluate("() => window.__audios.every((a) => a.paused)") is True
+        assert page.locator("#wiki-audio [data-audio-toggle]").count() == 0
+        assert not [error for error in recorder.errors if "pageerror" in error], recorder.errors
+    finally:
+        if wiki_id:
+            csrf = next(
+                (cookie["value"] for cookie in context.cookies() if cookie["name"] == "ol_csrf"), ""
+            )
+            context.request.delete(
+                f"{BASE_URL}/api/v1/admin/wikis/{wiki_id}", headers={"X-CSRF-Token": csrf}
+            )
+        context.close()
+
 
 def test_the_transcript_button_matches_the_instance_setting(browser):
     """Speech is a deployment choice, and the interface must agree with it.

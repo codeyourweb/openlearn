@@ -10,10 +10,10 @@ from __future__ import annotations
 
 import re
 import time
-from typing import Any
+from typing import Any, Literal
 
 import httpx
-from fastapi import APIRouter, Depends, HTTPException, Query, Request, status
+from fastapi import APIRouter, Depends, HTTPException, Query, Request, Response, status
 from pydantic import BaseModel, Field
 from sqlalchemy import delete, func, select
 from sqlalchemy.orm import Session as OrmSession
@@ -22,7 +22,7 @@ from .. import audit, log_forward, mailer, runtime, sso
 from ..config import settings
 from ..db import get_db
 from ..deps import require_admin
-from ..models import AiErrorLog, SsoProvider, User
+from ..models import AiErrorLog, LogTarget, SsoProvider, User
 
 router = APIRouter(prefix="/api/v1/admin", tags=["admin"])
 
@@ -31,6 +31,32 @@ SLUG = re.compile(r"^[a-z0-9][a-z0-9-]{1,38}[a-z0-9]$")
 
 class SettingsIn(BaseModel):
     values: dict[str, Any] = Field(default_factory=dict)
+
+
+class LogTargetIn(BaseModel):
+    """One collector.
+
+    Both shapes travel in the same body so the interface can post one object
+    without deciding the kind first; the unused half is simply ignored.
+    """
+
+    label: str = Field(default="", max_length=80)
+    kind: Literal["syslog", "http"] = "http"
+    enabled: bool = True
+    # syslog
+    host: str = Field(default="", max_length=200)
+    port: int = Field(default=514, ge=1, le=65535)
+    protocol: Literal["udp", "tcp", "tls"] = "udp"
+    facility: int = Field(default=13, ge=0, le=23)
+    hostname: str = Field(default="", max_length=80)
+    tls_verify: bool = True
+    # http
+    url: str = Field(default="", max_length=500)
+    timeout_seconds: int = Field(default=5, ge=1, le=60)
+    verify_tls: bool = True
+    # ``intake-key`` for Sekoia, ``Authorization: Splunk …`` for a HEC, nothing
+    # for a plain webhook: a collector's credentials are the operator's business.
+    headers: dict[str, str] = Field(default_factory=dict)
 
 
 class MailTestIn(BaseModel):
@@ -179,6 +205,265 @@ def log_test(
         source="admin",
     )
     return result
+
+
+# --------------------------------------------------------------------------- #
+# Audit forwarding targets: a fan-out, not a pair of settings
+
+_HEADER_NAME = log_forward.HEADER_NAME
+
+
+def _clean_headers(raw: dict[str, str], previous: dict[str, str] | None = None) -> dict[str, str]:
+    """Validate header names and values; keep a stored secret left blank.
+
+    The interface never receives the value of a credential header, so a blank
+    field means "unchanged", exactly like the password fields of the settings
+    form. A blank non-secret header is a removal.
+    """
+    previous = previous or {}
+    out: dict[str, str] = {}
+    for name, value in raw.items():
+        name = str(name).strip()
+        if not name:
+            continue
+        if not _HEADER_NAME.match(name):
+            raise HTTPException(status_code=422, detail=f"Invalid header name: {name[:60]}")
+        text = str(value or "")
+        # A newline inside a header is a request-splitting attempt.
+        if any(ord(char) < 32 or ord(char) == 127 for char in text):
+            raise HTTPException(status_code=422, detail=f"Header {name[:60]} contains control characters.")
+        if not text:
+            if log_forward.SECRET_HEADER.search(name) and previous.get(name):
+                out[name] = previous[name]
+            continue
+        out[name] = text[:500]
+    return out
+
+
+def _target_values(payload: LogTargetIn, previous: LogTarget | None = None) -> dict[str, Any]:
+    if payload.kind == "syslog":
+        host = payload.host.strip()
+        if not host:
+            raise HTTPException(status_code=422, detail="A syslog target needs a host.")
+        if any(char in host for char in "\r\n <>\"'"):
+            raise HTTPException(status_code=422, detail="That host name is not acceptable.")
+        return {
+            "label": payload.label.strip() or host[:80],
+            "kind": "syslog",
+            "enabled": payload.enabled,
+            "host": host,
+            "port": payload.port,
+            "protocol": payload.protocol,
+            "facility": payload.facility,
+            "hostname": payload.hostname.strip()[:80],
+            "tls_verify": payload.tls_verify,
+        }
+    url = payload.url.strip()
+    if not url.startswith(("http://", "https://")):
+        # Only a webhook: no file://, no gopher://, nothing httpx would open.
+        raise HTTPException(status_code=422, detail="An HTTP target needs an http(s) URL.")
+    return {
+        "label": payload.label.strip() or url.split("//", 1)[-1][:80],
+        "kind": "http",
+        "enabled": payload.enabled,
+        "url": url,
+        "timeout_seconds": payload.timeout_seconds,
+        "verify_tls": payload.verify_tls,
+        "headers": _clean_headers(payload.headers, (previous.headers or {}) if previous else None),
+    }
+
+
+def _target_out(row: LogTarget) -> dict[str, Any]:
+    return {
+        "id": row.id,
+        "label": row.label,
+        "kind": row.kind,
+        "enabled": row.enabled,
+        "host": row.host,
+        "port": row.port,
+        "protocol": row.protocol,
+        "facility": row.facility,
+        "hostname": row.hostname,
+        "tls_verify": row.tls_verify,
+        "url": row.url,
+        "timeout_seconds": row.timeout_seconds,
+        "verify_tls": row.verify_tls,
+        "headers": log_forward.mask_headers(row.headers or {}),
+        "updated_at": row.updated_at,
+    }
+
+
+@router.get("/log/targets", summary="Every destination of the audit trail")
+def list_log_targets(
+    db: OrmSession = Depends(get_db), _admin: User = Depends(require_admin)
+) -> dict[str, Any]:
+    rows = db.scalars(select(LogTarget).order_by(LogTarget.kind, LogTarget.id)).all()
+    legacy = not rows
+    return {
+        "items": [_target_out(row) for row in rows],
+        # While the table is empty, the bootstrap settings are what actually
+        # forwards: saying so avoids an empty page that hides a live collector.
+        "using_environment": legacy,
+        "legacy": {
+            "syslog": bool(runtime.log_config(db).syslog_host),
+            "http": bool(runtime.log_config(db).http_url),
+        },
+    }
+
+
+@router.post("/log/targets", status_code=status.HTTP_201_CREATED, summary="Add a destination")
+def create_log_target(
+    payload: LogTargetIn,
+    request: Request,
+    db: OrmSession = Depends(get_db),
+    admin: User = Depends(require_admin),
+) -> dict[str, Any]:
+    values = _target_values(payload)
+    row = LogTarget(**values)
+    db.add(row)
+    db.commit()
+    db.refresh(row)
+    runtime.invalidate()
+    audit.record(
+        db, "log_target_created", request, None, f"{row.kind}:{row.label}"[:300],
+        user=admin, target={"type": "log_target", "id": row.id}, source="admin",
+    )
+    return _target_out(row)
+
+
+@router.put("/log/targets/{target_id}", summary="Change a destination")
+def update_log_target(
+    target_id: int,
+    payload: LogTargetIn,
+    request: Request,
+    db: OrmSession = Depends(get_db),
+    admin: User = Depends(require_admin),
+) -> dict[str, Any]:
+    row = db.get(LogTarget, target_id)
+    if row is None:
+        raise HTTPException(status_code=404, detail="Target not found.")
+    values = _target_values(payload, row)
+    # Switching kind leaves the other half's columns behind; clear them so a
+    # syslog row cannot keep a stale URL that a later read would report.
+    cleared = (
+        {"url": "", "headers": {}, "timeout_seconds": 5, "verify_tls": True}
+        if values["kind"] == "syslog"
+        else {"host": "", "port": 514, "protocol": "udp", "hostname": "", "tls_verify": True}
+    )
+    for key, value in {**cleared, **values}.items():
+        setattr(row, key, value)
+    db.commit()
+    db.refresh(row)
+    runtime.invalidate()
+    audit.record(
+        db, "log_target_updated", request, None, f"{row.kind}:{row.label}"[:300],
+        user=admin, target={"type": "log_target", "id": row.id}, source="admin",
+    )
+    return _target_out(row)
+
+
+@router.delete("/log/targets/{target_id}", status_code=status.HTTP_204_NO_CONTENT)
+def delete_log_target(
+    target_id: int,
+    request: Request,
+    db: OrmSession = Depends(get_db),
+    admin: User = Depends(require_admin),
+) -> Response:
+    row = db.get(LogTarget, target_id)
+    if row is None:
+        raise HTTPException(status_code=404, detail="Target not found.")
+    label = f"{row.kind}:{row.label}"
+    db.delete(row)
+    db.commit()
+    runtime.invalidate()
+    audit.record(
+        db, "log_target_deleted", request, None, label[:300],
+        user=admin, target={"type": "log_target", "id": target_id}, source="admin",
+    )
+    return Response(status_code=status.HTTP_204_NO_CONTENT)
+
+
+@router.post("/log/targets/{target_id}/test", summary="Send one test event to that destination")
+def test_log_target(
+    target_id: int,
+    request: Request,
+    db: OrmSession = Depends(get_db),
+    admin: User = Depends(require_admin),
+) -> dict[str, Any]:
+    row = db.get(LogTarget, target_id)
+    if row is None:
+        raise HTTPException(status_code=404, detail="Target not found.")
+    target = next(
+        (item for item in runtime.log_targets(db) if item.id == target_id), None
+    )
+    if target is None:
+        raise HTTPException(status_code=404, detail="Target not found.")
+    if not target.ready:
+        return {"ok": False, "detail": "This destination is disabled or incomplete.", "targets": {}}
+    result = log_forward.send_test(target=target)
+    audit.record(
+        db, "audit_test_sent", request, None,
+        f"{target.key}:{'ok' if result.get('ok') else 'failed'}"[:300],
+        user=admin,
+        target={"type": "log_target", "id": target_id},
+        source="admin",
+    )
+    return result
+
+
+# --------------------------------------------------------------------------- #
+# The environment, read-only
+
+#: A field whose name says it holds a credential is shown as "set", never printed.
+_SECRET_FIELD = re.compile(r"(password|secret|token|key|credential)", re.IGNORECASE)
+_URL_CREDENTIALS = re.compile(r"(://[^:/@\s]+:)[^@\s]+@")
+
+
+def _environment_rows() -> list[dict[str, Any]]:
+    """Every ``OL_*`` the process reads, with the value it actually runs with.
+
+    The point is not to edit them — that is the settings page — but to answer the
+    question an operator asks at 2 a.m.: what is this instance really configured
+    with? Values come from the loaded settings object, so a variable set in the
+    compose file but ignored by the process shows as it is used, not as declared.
+    """
+    rows: list[dict[str, Any]] = []
+    fields = type(settings).model_fields
+    for name, declared in fields.items():
+        env = f"OL_{name.upper()}"
+        raw = getattr(settings, name, None)
+        secret = bool(_SECRET_FIELD.search(name))
+        if secret:
+            shown = "set" if raw else ""
+        elif isinstance(raw, (bool, int, float)) or raw is None:
+            shown = raw
+        else:
+            shown = _URL_CREDENTIALS.sub(r"\1***@", str(raw))
+        rows.append(
+            {
+                "name": name,
+                "env": env,
+                "type": declared.annotation.__name__ if hasattr(declared.annotation, "__name__") else "str",
+                "secret": secret,
+                "value": shown,
+                "is_default": raw == declared.default,
+                "section": name.split("_")[0],
+                # GitHub keeps underscores in a heading anchor, so the link and
+                # the generated documentation agree by construction.
+                "doc": f"{settings.github_url.rstrip('/')}/blob/main/docs/ENVIRONMENT.md#{env.lower()}",
+            }
+        )
+    return rows
+
+
+@router.get("/environment", summary="The OL_* variables this instance runs with (read-only)")
+def read_environment(_admin: User = Depends(require_admin)) -> dict[str, Any]:
+    rows = _environment_rows()
+    return {
+        "items": rows,
+        "docs": f"{settings.github_url.rstrip('/')}/blob/main/docs/ENVIRONMENT.md",
+        "count": len(rows),
+    }
 
 
 @router.post("/settings/ai/test", summary="Call the configured model once")

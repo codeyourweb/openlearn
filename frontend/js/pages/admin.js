@@ -1,6 +1,12 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 // Copyright (C) 2026 Jean-Pierre GARNIER (@codeyourweb)
-/* Administration: moderation queue, all quizzes, wikis, accounts, AI reviews, audit.
+/* Administration, grouped by what an operator is actually doing.
+ *
+ * Four rubrics, each with its own sub-tabs: **content** (accounts, quizzes,
+ * wikis — look, edit, delete), **moderation** (what waits for a decision, shared
+ * with moderators), **AI** (reviews, provider, error log) and **settings**
+ * (instance, mail, sign-in, legal, audit trail, syslog, HTTP POST, environment).
+ * The old flat tab names still resolve, so a bookmark keeps working.
  *
  * Every rubric is a list that can outgrow one screen, so every rubric has a
  * filter field and a pager; both are served by the API (`q`, `limit`, `offset`,
@@ -12,7 +18,7 @@ import { t } from "../i18n.js";
 import { navigate } from "../router.js";
 import { state } from "../store.js";
 import { bindPager, confirmDialog, escapeHtml, pagerHtml, toast } from "../ui.js";
-import { aiLogView, settingsView, ssoView } from "./adminSettings.js";
+import { aiLogView, environmentView, logTargetsView, settingsView, ssoView } from "./adminSettings.js";
 import { legalEditorView } from "./legalEditor.js";
 
 const PAGE_SIZE = 25;
@@ -53,6 +59,22 @@ async function page_(endpoint, params, page) {
   return { rows: meta.data || [], total: Number(meta.headers.get("X-Total-Count") || (meta.data || []).length) };
 }
 
+/** One rubric: a heading, the shared filter, the rows and the pager. */
+function rubric(panel, { id, term, placeholder, render }) {
+  panel.innerHTML = `
+    <div class="list-head">${filterBar(`${id}-filter`, term, placeholder)}</div>
+    <div id="admin-rows" class="mt-2"><p class="muted">…</p></div>
+    <div id="admin-pager" class="pager-slot"></div>`;
+  return panel.querySelector("#admin-rows");
+}
+
+function paintPager(panel, page, total, again) {
+  const pager = panel.querySelector("#admin-pager");
+  if (!pager) return;
+  pager.innerHTML = pagerHtml(page, total, PAGE_SIZE);
+  bindPager(pager, (next) => again(next));
+}
+
 export async function renderAdmin({ query }) {
   if (!state.user || !state.user.is_staff) {
     const root = document.createElement("div");
@@ -65,9 +87,90 @@ export async function renderAdmin({ query }) {
   }
 
   const root = document.createElement("div");
-  const ADMIN_ONLY_TABS = ["settings", "sso", "ailog", "legal"];
-  let tab = (query && query.tab) || "queue";
-  if (!state.user.is_admin && ADMIN_ONLY_TABS.includes(tab)) tab = "queue";
+
+  /* ---------------------------------------------------------------- */
+  /* Rubrics                                                          */
+  /* ---------------------------------------------------------------- */
+  const GROUPS = [
+    {
+      id: "content",
+      label: "admin.group_content",
+      tabs: [
+        { id: "users", label: "admin.tab_users", view: usersView },
+        { id: "quizzes", label: "admin.tab_quizzes", view: quizzesView },
+        { id: "wikis", label: "admin.tab_wikis", view: wikisView },
+      ],
+    },
+    {
+      id: "moderation",
+      label: "admin.group_moderation",
+      tabs: [
+        { id: "quizzes", label: "admin.tab_quiz_queue", view: queueView },
+        { id: "wikis", label: "admin.tab_wiki_queue", view: wikiQueueView },
+      ],
+    },
+    {
+      id: "ai",
+      label: "admin.group_ai",
+      admin: true,
+      tabs: [
+        { id: "reviews", label: "admin.tab_reviews", view: reviewsView },
+        { id: "provider", label: "admin.tab_ai_provider", view: sectionView("ai") },
+        { id: "errors", label: "admin.tab_ai_log", view: aiLogView },
+      ],
+    },
+    {
+      id: "settings",
+      label: "admin.group_settings",
+      admin: true,
+      tabs: [
+        { id: "instance", label: "admin.tab_instance", view: sectionView("instance", "sharing") },
+        { id: "mail", label: "admin.tab_mail", view: sectionView("mail") },
+        { id: "security", label: "admin.tab_security", view: sectionView("security") },
+        { id: "sso", label: "admin.tab_sso", view: ssoView },
+        { id: "legal", label: "admin.tab_legal", view: legalEditorView },
+        { id: "audit", label: "admin.tab_events", view: eventsView },
+        { id: "syslog", label: "admin.tab_syslog", view: logTargetsView("syslog") },
+        { id: "http", label: "admin.tab_http", view: logTargetsView("http") },
+        { id: "environment", label: "admin.tab_environment", view: environmentView },
+      ],
+    },
+  ];
+
+  // A link written before the reorganisation names a rubric, not a pair: read it
+  // as its natural home instead of dropping the person on the first tab.
+  const LEGACY = {
+    queue: "moderation.quizzes",
+    quizzes: "content.quizzes",
+    wikis: "moderation.wikis",
+    wikis_all: "content.wikis",
+    users: "content.users",
+    reviews: "ai.reviews",
+    settings: "settings.instance",
+    sso: "settings.sso",
+    ailog: "ai.errors",
+    legal: "settings.legal",
+    events: "settings.audit",
+  };
+
+  const visibleGroups = () => GROUPS.filter((group) => !group.admin || state.user.is_admin);
+
+  const resolve = (wanted) => {
+    const groups = visibleGroups();
+    const name = LEGACY[wanted] || wanted || "moderation.quizzes";
+    const [group, tab = ""] = String(name).split(".");
+    const found = groups.find((row) => row.id === group) || groups[0];
+    const chosen = found.tabs.find((row) => row.id === tab) || found.tabs[0];
+    return { group: found, tab: chosen };
+  };
+
+  let current = resolve((query && query.tab) || "");
+
+  const go = (group, tab) => {
+    current = { group, tab };
+    navigate(`/admin?tab=${group.id}.${tab.id}`, { replace: true });
+    void render();
+  };
 
   const render = async () => {
     root.innerHTML = `<div class="loading">${t("common.loading")}</div>`;
@@ -79,6 +182,9 @@ export async function renderAdmin({ query }) {
       return;
     }
     const pendingCount = (stats.quizzes.by_status || {}).pending || 0;
+    const pendingWikis = (stats.wikis || {}).pending || 0;
+
+    const badge = (count) => (count ? `<span class="tab-count">${count}</span>` : "");
 
     root.innerHTML = `
       <div class="row between">
@@ -89,64 +195,61 @@ export async function renderAdmin({ query }) {
       </div>
       <div class="grid grid-4 mt-2">
         <div class="card"><div class="muted small">${t("admin.stats_total")}</div><div class="pin-display sm">${stats.quizzes.total}</div></div>
-        <div class="card"><div class="muted small">${t("admin.stats_pending")}</div><div class="pin-display sm">${pendingCount}</div></div>
+        <div class="card"><div class="muted small">${t("admin.stats_pending")}</div><div class="pin-display sm">${pendingCount + pendingWikis}</div></div>
         <div class="card"><div class="muted small">${t("admin.stats_users")}</div><div class="pin-display sm">${stats.users.total}</div></div>
         <div class="card"><div class="muted small">${t("admin.stats_blocked")}</div><div class="pin-display sm">${stats.reviews.blocked}</div></div>
       </div>
-      <div class="tabs mt-3">
-        <button class="tab ${tab === "queue" ? "is-active" : ""}" data-tab="queue">${t("admin.tab_queue")}<span class="tab-count">${pendingCount}</span></button>
-        <button class="tab ${tab === "quizzes" ? "is-active" : ""}" data-tab="quizzes">${t("admin.tab_quizzes")}</button>
-        <button class="tab ${tab === "wikis" ? "is-active" : ""}" data-tab="wikis">${t("admin.tab_wikis")}<span class="tab-count">${(stats.wikis || {}).pending || 0}</span></button>
-        <button class="tab ${tab === "users" ? "is-active" : ""}" data-tab="users">${t("admin.tab_users")}</button>
-        <button class="tab ${tab === "reviews" ? "is-active" : ""}" data-tab="reviews">${t("admin.tab_reviews")}</button>
-        <button class="tab ${tab === "events" ? "is-active" : ""}" data-tab="events">${t("admin.tab_events")}</button>
-        ${
-          // AI, mail and SSO configuration stay with the administrator; a
-          // moderator only validates content.
-          state.user.is_admin
-            ? `<button class="tab ${tab === "settings" ? "is-active" : ""}" data-tab="settings">${t("admin.tab_settings")}</button>
-        <button class="tab ${tab === "sso" ? "is-active" : ""}" data-tab="sso">${t("admin.tab_sso")}</button>
-        <button class="tab ${tab === "ailog" ? "is-active" : ""}" data-tab="ailog">${t("admin.tab_ai_log")}</button>
-        <button class="tab ${tab === "legal" ? "is-active" : ""}" data-tab="legal">${t("admin.tab_legal")}</button>`
-            : ""
-        }
+      <div class="tabs tabs-groups mt-3" role="tablist">
+        ${visibleGroups()
+          .map(
+            (group) => `
+          <button class="tab tab-group ${group.id === current.group.id ? "is-active" : ""}"
+                  role="tab" aria-selected="${group.id === current.group.id}"
+                  data-group="${group.id}">${t(group.label)}</button>`,
+          )
+          .join("")}
+      </div>
+      <div class="tabs tabs-sub" role="tablist" data-group-tabs="${current.group.id}">
+        ${current.group.tabs
+          .map(
+            (row) => `
+          <button class="tab ${row.id === current.tab.id ? "is-active" : ""}" role="tab"
+                  aria-selected="${row.id === current.tab.id}" data-tab="${row.id}">
+            ${t(row.label)}${row.id === "quizzes" && current.group.id === "moderation" ? badge(pendingCount) : ""}${
+              row.id === "wikis" && current.group.id === "moderation" ? badge(pendingWikis) : ""
+            }
+          </button>`,
+          )
+          .join("")}
       </div>
       <div id="tab-panel"></div>`;
 
+    root.querySelectorAll("[data-group]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const group = visibleGroups().find((row) => row.id === button.dataset.group);
+        if (group) go(group, group.tabs[0]);
+      });
+    });
     root.querySelectorAll("[data-tab]").forEach((button) => {
       button.addEventListener("click", () => {
-        tab = button.dataset.tab;
-        navigate(`/admin?tab=${tab}`, { replace: true });
-        render();
+        const tab = current.group.tabs.find((row) => row.id === button.dataset.tab);
+        if (tab) go(current.group, tab);
       });
     });
 
     const panel = root.querySelector("#tab-panel");
-    const views = {
-      queue: queueView,
-      quizzes: quizzesView,
-      wikis: wikisView,
-      users: usersView,
-      reviews: reviewsView,
-      events: eventsView,
-      settings: settingsView,
-      sso: ssoView,
-      ailog: aiLogView,
-      legal: legalEditorView,
-    };
-    await (views[tab] || queueView)(panel, "", 0);
+    await current.tab.view(panel, "", 0);
   };
 
   /* ------------------------------------------------------------------ */
-  /* Moderation queue                                                   */
+  /* Moderation: the questionnaire queue                                */
   /* ------------------------------------------------------------------ */
-  const queueView = async (panel, term, page) => {
-    panel.innerHTML = `
-      <div class="list-head">${filterBar("queue-filter", term, t("admin.filter_quizzes"))}</div>
-      <div id="admin-rows" class="mt-2"><p class="muted">…</p></div>
-      <div id="admin-pager" class="pager-slot"></div>`;
-
-    const slot = panel.querySelector("#admin-rows");
+  async function queueView(panel, term, page) {
+    const slot = rubric(panel, {
+      id: "queue",
+      term,
+      placeholder: t("admin.filter_quizzes"),
+    });
     let data;
     try {
       data = await page_("/api/v1/admin/quizzes", { status: "pending", ...(term ? { q: term } : {}) }, page);
@@ -185,71 +288,15 @@ export async function renderAdmin({ query }) {
           </tbody></table></div>`
       : `<div class="empty"><p class="muted">${term ? t("common.no_result") : t("admin.queue_empty")}</p></div>`;
 
-    const pager = panel.querySelector("#admin-pager");
-    pager.innerHTML = pagerHtml(page, data.total, PAGE_SIZE);
-    bindPager(pager, (next) => queueView(panel, term, next));
+    paintPager(panel, page, data.total, (next) => queueView(panel, term, next));
     bindFilter(panel, "queue-filter", (value) => queueView(panel, value, 0));
   };
 
   /* ------------------------------------------------------------------ */
-  /* All questionnaires                                                 */
+  /* Moderation: the wiki queue                                         */
   /* ------------------------------------------------------------------ */
-  const quizzesView = async (panel, term, page) => {
-    panel.innerHTML = `
-      <div class="list-head">${filterBar("quiz-filter", term, t("admin.filter_quizzes"))}</div>
-      <div id="admin-rows" class="mt-2"><p class="muted">…</p></div>
-      <div id="admin-pager" class="pager-slot"></div>`;
-
-    const slot = panel.querySelector("#admin-rows");
-    let data;
-    try {
-      data = await page_("/api/v1/admin/quizzes", term ? { q: term } : {}, page);
-    } catch (error) {
-      slot.innerHTML = `<div class="banner warn">${escapeHtml(error.detail || t("common.error"))}</div>`;
-      return;
-    }
-    slot.innerHTML = data.rows.length
-      ? `<div class="table-wrap"><table class="table">
-          <thead><tr>
-            <th>${t("dash.col_title")}</th><th>${t("common.status")}</th><th>${t("common.owner")}</th>
-            <th>${t("dash.col_questions")}</th><th class="right">${t("common.actions")}</th>
-          </tr></thead>
-          <tbody>
-            ${data.rows
-              .map(
-                (row) => `
-              <tr>
-                <td><a href="/quizzes/${row.id}" data-link>${escapeHtml(row.title)}</a></td>
-                <td>
-                  <span class="pill ${escapeHtml(row.status)}">${t(`dash.status.${row.status}`)}</span>
-                  ${row.pending_version ? `<span class="badge warn">v${row.pending_version}</span>` : ""}
-                  ${row.published_version ? `<span class="badge">v${row.published_version}</span>` : ""}
-                </td>
-                <td class="small-note">${escapeHtml(row.owner_email)}</td>
-                <td>${row.question_count}</td>
-                <td class="right"><a class="btn btn-sm" href="${row.mode === "adventure" ? `/adventures/${row.id}/edit` : `/quizzes/${row.id}/edit`}" data-link>${t("action.edit")}</a></td>
-              </tr>`,
-              )
-              .join("")}
-          </tbody></table></div>`
-      : `<div class="empty"><p class="muted">${t("common.no_result")}</p></div>`;
-
-    const pager = panel.querySelector("#admin-pager");
-    pager.innerHTML = pagerHtml(page, data.total, PAGE_SIZE);
-    bindPager(pager, (next) => quizzesView(panel, term, next));
-    bindFilter(panel, "quiz-filter", (value) => quizzesView(panel, value, 0));
-  };
-
-  /* ------------------------------------------------------------------ */
-  /* Wiki moderation                                                    */
-  /* ------------------------------------------------------------------ */
-  const wikisView = async (panel, term, page) => {
-    panel.innerHTML = `
-      <div class="list-head">${filterBar("wiki-filter", term, t("admin.filter_wikis"))}</div>
-      <div id="admin-rows" class="mt-2"><p class="muted">…</p></div>
-      <div id="admin-pager" class="pager-slot"></div>`;
-
-    const slot = panel.querySelector("#admin-rows");
+  async function wikiQueueView(panel, term, page) {
+    const slot = rubric(panel, { id: "wikiq", term, placeholder: t("admin.filter_wikis") });
     let data;
     try {
       data = await page_("/api/v1/admin/wikis", { status: "pending", ...(term ? { q: term } : {}) }, page);
@@ -272,7 +319,7 @@ export async function renderAdmin({ query }) {
                   <a href="/wiki/${row.id}" data-link><strong>${escapeHtml(row.title)}</strong></a>
                   <div class="small-note">${escapeHtml((row.description || "").slice(0, 120))}</div>
                 </td>
-                <td class="small-note">${escapeHtml(row.owner_name || "—")}<br />${escapeHtml(row.owner_email || "")}</td>
+                <td class="small-note">${escapeHtml((row.owner && row.owner.display_name) || "—")}<br />${escapeHtml((row.owner && row.owner.email) || "")}</td>
                 <td>${row.page_count}</td>
                 <td><input class="input" data-note maxlength="300" placeholder="${t("admin.note")}" /></td>
                 <td class="right">
@@ -288,22 +335,110 @@ export async function renderAdmin({ query }) {
           </tbody></table></div>`
       : `<div class="empty"><p class="muted">${term ? t("common.no_result") : t("admin.wikis_empty")}</p></div>`;
 
-    const pager = panel.querySelector("#admin-pager");
-    pager.innerHTML = pagerHtml(page, data.total, PAGE_SIZE);
-    bindPager(pager, (next) => wikisView(panel, term, next));
+    paintPager(panel, page, data.total, (next) => wikiQueueView(panel, term, next));
+    bindFilter(panel, "wikiq-filter", (value) => wikiQueueView(panel, value, 0));
+  };
+
+  /* ------------------------------------------------------------------ */
+  /* Content: every questionnaire, with the three actions               */
+  /* ------------------------------------------------------------------ */
+  async function quizzesView(panel, term, page) {
+    const slot = rubric(panel, { id: "quiz", term, placeholder: t("admin.filter_quizzes") });
+    let data;
+    try {
+      data = await page_("/api/v1/admin/quizzes", term ? { q: term } : {}, page);
+    } catch (error) {
+      slot.innerHTML = `<div class="banner warn">${escapeHtml(error.detail || t("common.error"))}</div>`;
+      return;
+    }
+    slot.innerHTML = data.rows.length
+      ? `<div class="table-wrap"><table class="table">
+          <thead><tr>
+            <th>${t("dash.col_title")}</th><th>${t("common.status")}</th><th>${t("common.owner")}</th>
+            <th>${t("dash.col_questions")}</th><th class="right">${t("common.actions")}</th>
+          </tr></thead>
+          <tbody>
+            ${data.rows
+              .map(
+                (row) => `
+              <tr data-row-quiz="${row.id}">
+                <td><a href="/quizzes/${row.id}" data-link>${escapeHtml(row.title)}</a></td>
+                <td>
+                  <span class="pill ${escapeHtml(row.status)}">${t(`dash.status.${row.status}`)}</span>
+                  ${row.pending_version ? `<span class="badge warn">v${row.pending_version}</span>` : ""}
+                  ${row.published_version ? `<span class="badge">v${row.published_version}</span>` : ""}
+                </td>
+                <td class="small-note">${escapeHtml(row.owner_email)}</td>
+                <td>${row.question_count}</td>
+                <td class="right">
+                  <div class="row-wrap end">
+                    <a class="btn btn-sm btn-ghost" href="/quizzes/${row.id}" data-link>${t("action.view")}</a>
+                    <a class="btn btn-sm" href="${row.mode === "adventure" ? `/adventures/${row.id}/edit` : `/quizzes/${row.id}/edit`}" data-link>${t("action.edit")}</a>
+                    <button class="btn btn-sm btn-danger" data-act="delete-quiz">${t("action.delete")}</button>
+                  </div>
+                </td>
+              </tr>`,
+              )
+              .join("")}
+          </tbody></table></div>`
+      : `<div class="empty"><p class="muted">${t("common.no_result")}</p></div>`;
+
+    paintPager(panel, page, data.total, (next) => quizzesView(panel, term, next));
+    bindFilter(panel, "quiz-filter", (value) => quizzesView(panel, value, 0));
+  };
+
+  /* ------------------------------------------------------------------ */
+  /* Content: every wiki, with the three actions                        */
+  /* ------------------------------------------------------------------ */
+  async function wikisView(panel, term, page) {
+    const slot = rubric(panel, { id: "wiki", term, placeholder: t("admin.filter_wikis") });
+    let data;
+    try {
+      data = await page_("/api/v1/admin/wikis", term ? { q: term } : {}, page);
+    } catch (error) {
+      slot.innerHTML = `<div class="banner warn">${escapeHtml(error.detail || t("common.error"))}</div>`;
+      return;
+    }
+    slot.innerHTML = data.rows.length
+      ? `<div class="table-wrap"><table class="table">
+          <thead><tr>
+            <th>${t("dash.col_title")}</th><th>${t("common.status")}</th><th>${t("common.owner")}</th>
+            <th>${t("admin.wiki_pages_count")}</th><th class="right">${t("common.actions")}</th>
+          </tr></thead>
+          <tbody>
+            ${data.rows
+              .map(
+                (row) => `
+              <tr data-row-wiki="${row.id}">
+                <td><a href="/wiki/${row.id}" data-link>${escapeHtml(row.title)}</a></td>
+                <td>
+                  <span class="pill ${escapeHtml(row.status)}">${t(`dash.status.${row.status}`) || escapeHtml(row.status)}</span>
+                  ${row.is_public ? `<span class="pill public">${t("admin.public")}</span>` : ""}
+                </td>
+                <td class="small-note">${escapeHtml((row.owner && row.owner.email) || "—")}</td>
+                <td>${row.page_count}</td>
+                <td class="right">
+                  <div class="row-wrap end">
+                    <a class="btn btn-sm btn-ghost" href="/wiki/${row.id}" data-link>${t("action.view")}</a>
+                    <a class="btn btn-sm" href="/wiki/${row.id}/edit" data-link>${t("action.edit")}</a>
+                    <button class="btn btn-sm btn-danger" data-act="delete-wiki">${t("action.delete")}</button>
+                  </div>
+                </td>
+              </tr>`,
+              )
+              .join("")}
+          </tbody></table></div>`
+      : `<div class="empty"><p class="muted">${t("common.no_result")}</p></div>`;
+
+    paintPager(panel, page, data.total, (next) => wikisView(panel, term, next));
     bindFilter(panel, "wiki-filter", (value) => wikisView(panel, value, 0));
   };
 
   /* ------------------------------------------------------------------ */
-  /* Accounts                                                           */
+  /* Content: accounts                                                  */
   /* ------------------------------------------------------------------ */
-  const usersView = async (panel, term, page) => {
-    panel.innerHTML = `
-      <div class="list-head">${filterBar("user-filter", term, t("admin.filter_users"))}</div>
-      <div id="admin-rows" class="mt-2"><p class="muted">…</p></div>
-      <div id="admin-pager" class="pager-slot"></div>`;
-
-    const slot = panel.querySelector("#admin-rows");
+  async function usersView(panel, term, page) {
+    const slot = rubric(panel, { id: "user", term, placeholder: t("admin.filter_users") });
     let data;
     try {
       data = await page_("/api/v1/admin/users", term ? { q: term } : {}, page);
@@ -334,7 +469,6 @@ export async function renderAdmin({ query }) {
                   ${row.is_trusted ? `<span class="pill public">${t("admin.trusted")}</span>` : ""}
                   ${row.is_active ? "" : `<span class="pill rejected">${t("admin.disable")}</span>`}
                   ${
-                    // A blank role cell is ambiguous: say "member" rather than nothing.
                     row.is_admin || row.is_moderator || row.is_trusted || !row.is_active
                       ? ""
                       : `<span class="pill">${escapeHtml(t("admin.member"))}</span>`
@@ -365,22 +499,15 @@ export async function renderAdmin({ query }) {
           </tbody></table></div>`
       : `<div class="empty"><p class="muted">${t("common.no_result")}</p></div>`;
 
-    const pager = panel.querySelector("#admin-pager");
-    pager.innerHTML = pagerHtml(page, data.total, PAGE_SIZE);
-    bindPager(pager, (next) => usersView(panel, term, next));
+    paintPager(panel, page, data.total, (next) => usersView(panel, term, next));
     bindFilter(panel, "user-filter", (value) => usersView(panel, value, 0));
   };
 
   /* ------------------------------------------------------------------ */
-  /* AI reviews                                                         */
+  /* AI: what the model said about published content                    */
   /* ------------------------------------------------------------------ */
-  const reviewsView = async (panel, term, page) => {
-    panel.innerHTML = `
-      <div class="list-head">${filterBar("review-filter", term, t("admin.filter_reviews"))}</div>
-      <div id="admin-rows" class="mt-2"><p class="muted">…</p></div>
-      <div id="admin-pager" class="pager-slot"></div>`;
-
-    const slot = panel.querySelector("#admin-rows");
+  async function reviewsView(panel, term, page) {
+    const slot = rubric(panel, { id: "review", term, placeholder: t("admin.filter_reviews") });
     let data;
     try {
       data = await page_("/api/v1/admin/reviews", term ? { q: term } : {}, page);
@@ -411,22 +538,15 @@ export async function renderAdmin({ query }) {
           </tbody></table></div>`
       : `<div class="empty"><p class="muted">${term ? t("common.no_result") : t("admin.no_reviews")}</p></div>`;
 
-    const pager = panel.querySelector("#admin-pager");
-    pager.innerHTML = pagerHtml(page, data.total, PAGE_SIZE);
-    bindPager(pager, (next) => reviewsView(panel, term, next));
+    paintPager(panel, page, data.total, (next) => reviewsView(panel, term, next));
     bindFilter(panel, "review-filter", (value) => reviewsView(panel, value, 0));
   };
 
   /* ------------------------------------------------------------------ */
-  /* Audit trail                                                        */
+  /* Settings: the local audit trail                                    */
   /* ------------------------------------------------------------------ */
-  const eventsView = async (panel, term, page) => {
-    panel.innerHTML = `
-      <div class="list-head">${filterBar("event-filter", term, t("admin.filter_events"))}</div>
-      <div id="admin-rows" class="mt-2"><p class="muted">…</p></div>
-      <div id="admin-pager" class="pager-slot"></div>`;
-
-    const slot = panel.querySelector("#admin-rows");
+  async function eventsView(panel, term, page) {
+    const slot = rubric(panel, { id: "event", term, placeholder: t("admin.filter_events") });
     let data;
     try {
       data = await page_("/api/v1/admin/events", term ? { q: term } : {}, page);
@@ -436,7 +556,7 @@ export async function renderAdmin({ query }) {
     }
     slot.innerHTML = data.rows.length
       ? `<div class="table-wrap"><table class="table">
-          <thead><tr><th>${t("common.updated")}</th><th>Event</th><th>IP</th><th>${t("admin.user")}</th><th>Detail</th></tr></thead>
+          <thead><tr><th>${t("common.updated")}</th><th>${t("admin.event")}</th><th>${t("admin.ip")}</th><th>${t("admin.user")}</th><th>${t("admin.detail")}</th></tr></thead>
           <tbody>
             ${data.rows
               .map(
@@ -453,9 +573,7 @@ export async function renderAdmin({ query }) {
           </tbody></table></div>`
       : `<div class="empty"><p class="muted">${term ? t("common.no_result") : t("admin.no_events")}</p></div>`;
 
-    const pager = panel.querySelector("#admin-pager");
-    pager.innerHTML = pagerHtml(page, data.total, PAGE_SIZE);
-    bindPager(pager, (next) => eventsView(panel, term, next));
+    paintPager(panel, page, data.total, (next) => eventsView(panel, term, next));
     bindFilter(panel, "event-filter", (value) => eventsView(panel, value, 0));
   };
 
@@ -468,6 +586,8 @@ export async function renderAdmin({ query }) {
     const action = button.dataset.act;
     const quizRow = button.closest("[data-quiz]");
     const wikiRow = button.closest("[data-wiki]");
+    const contentQuiz = button.closest("[data-row-quiz]");
+    const contentWiki = button.closest("[data-row-wiki]");
     const userRow = button.closest("[data-user]");
 
     if (quizRow) {
@@ -491,6 +611,44 @@ export async function renderAdmin({ query }) {
         const verb = action === "wiki-approve" ? "approve" : "reject";
         await api.post(`/api/v1/admin/wikis/${wikiRow.dataset.wiki}/${verb}`, { note });
         toast(action === "wiki-approve" ? t("admin.approved") : t("admin.rejected"), "success");
+        await render();
+      } catch (error) {
+        button.disabled = false;
+        toast(error.detail || t("common.error"), "error");
+      }
+      return;
+    }
+
+    if (contentQuiz && action === "delete-quiz") {
+      const agreed = await confirmDialog(
+        t("action.delete"),
+        t("admin.delete_quiz_confirm"),
+        t("action.delete"),
+      );
+      if (!agreed) return;
+      button.disabled = true;
+      try {
+        await api.del(`/api/v1/admin/quizzes/${contentQuiz.dataset.rowQuiz}`);
+        toast(t("admin.deleted"), "success");
+        await render();
+      } catch (error) {
+        button.disabled = false;
+        toast(error.detail || t("common.error"), "error");
+      }
+      return;
+    }
+
+    if (contentWiki && action === "delete-wiki") {
+      const agreed = await confirmDialog(
+        t("action.delete"),
+        t("admin.delete_wiki_confirm"),
+        t("action.delete"),
+      );
+      if (!agreed) return;
+      button.disabled = true;
+      try {
+        await api.del(`/api/v1/admin/wikis/${contentWiki.dataset.rowWiki}`);
+        toast(t("admin.deleted"), "success");
         await render();
       } catch (error) {
         button.disabled = false;
@@ -538,4 +696,9 @@ export async function renderAdmin({ query }) {
 
   await render();
   return root;
+}
+
+/** Settings cards, addressed by their sections. */
+function sectionView(...sections) {
+  return (panel) => settingsView(panel, sections);
 }

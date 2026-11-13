@@ -82,7 +82,7 @@ function collect(panel) {
   return values;
 }
 
-export async function settingsView(panel) {
+export async function settingsView(panel, only = null) {
   panel.innerHTML = `<div class="loading">${t("common.loading")}</div>`;
   let data;
   try {
@@ -91,10 +91,15 @@ export async function settingsView(panel) {
     panel.innerHTML = `<div class="banner warn">${escapeHtml(error.detail || t("error.generic"))}</div>`;
     return;
   }
-  const env = data.environment || {};
+  // One section, or all of them: the environment has its own read-only page now,
+  // so a single section renders without the summary card that used to follow it.
+  const wanted = only ? (Array.isArray(only) ? only : [only]) : null;
+  const sections = wanted
+    ? Object.fromEntries(wanted.map((name) => [name, data.sections[name] || []]))
+    : data.sections;
   panel.innerHTML = `
     <div class="settings-grid">
-      ${Object.entries(data.sections)
+      ${Object.entries(sections)
         .map(
           ([section, rows]) => `
         <section class="card settings-card" data-section="${section}">
@@ -115,18 +120,6 @@ export async function settingsView(panel) {
         )
         .join("")}
     </div>
-    <section class="card settings-card mt-3">
-      <header class="settings-head">
-        <h2>${t("admin.set_env_title")}</h2>
-        <p class="muted small">${t("admin.set_env_lead")}</p>
-      </header>
-      <div class="settings-body env-facts">
-        <span>${t("admin.set_env_demo")}: <strong>${env.demo_mode ? t("common.yes") : t("common.no")}</strong></span>
-        <span>${t("admin.set_env_database")}: <strong>${escapeHtml(env.database || "")}</strong></span>
-        <span>${t("admin.set_env_tls")}: <strong>${env.tls_enabled ? t("common.yes") : t("common.no")}</strong></span>
-        <span>${t("admin.set_env_mcp")}: <strong>${env.mcp_enabled ? t("common.yes") : t("common.no")}</strong></span>
-      </div>
-    </section>
     <div id="settings-output" class="mt-2"></div>`;
 
   const output = panel.querySelector("#settings-output");
@@ -139,7 +132,7 @@ export async function settingsView(panel) {
       try {
         await api.put("/api/v1/admin/settings", { values: collect(card) });
         toast(t("admin.set_saved"), "success");
-        await settingsView(panel);
+        await settingsView(panel, only);
       } catch (error) {
         output.innerHTML = `<div class="banner warn">${escapeHtml(error.detail || t("error.generic"))}</div>`;
         setBusy(button, false);
@@ -475,4 +468,402 @@ export async function aiLogView(panel) {
       await aiLogView(panel);
     });
   }
+}
+
+/* ------------------------------------------------------------------ */
+/* Audit forwarding: one tab per transport, many destinations          */
+/* ------------------------------------------------------------------ */
+
+const SECRET_HEADER = /(authorization|auth|token|key|secret|password|credential|intake)/i;
+
+/** The bootstrap fields, shown as what they are: the fallback, not the model. */
+async function legacyLogCard(panel, kind) {
+  panel.innerHTML = `<div class="loading">${t("common.loading")}</div>`;
+  let data;
+  try {
+    data = await api.get("/api/v1/admin/settings");
+  } catch (error) {
+    panel.innerHTML = `<div class="banner warn">${escapeHtml(error.detail || t("error.generic"))}</div>`;
+    return;
+  }
+  const prefix = kind === "syslog" ? "log.syslog_" : "log.http_";
+  const rows = (data.sections.log || []).filter(
+    (row) => row.key === "log.enabled" || row.key.startsWith(prefix),
+  );
+  panel.innerHTML = `
+    <div class="settings-body">${rows.map(renderField).join("")}</div>
+    <footer class="settings-foot">
+      <button class="btn" type="button" data-save-bootstrap>${t("action.save")}</button>
+      <button class="btn" type="button" data-test-bootstrap>${t("admin.set_test")}</button>
+    </footer>
+    <div id="bootstrap-output" class="mt-2"></div>`;
+  panel.querySelector("[data-test-bootstrap]").addEventListener("click", async (event) => {
+    const button = event.currentTarget;
+    const output = panel.querySelector("#bootstrap-output");
+    setBusy(button, true);
+    try {
+      const result = await api.post("/api/v1/admin/log/test", {});
+      const detail = Object.entries(result.targets || {})
+        .map(([name, value]) => `${name}: ${value}`)
+        .join(" · ");
+      output.innerHTML = result.ok
+        ? `<div class="banner ok">${escapeHtml(detail || t("admin.log_test_ok"))}</div>`
+        : `<div class="banner warn">${escapeHtml(detail || result.error || result.detail || t("error.generic"))}</div>`;
+    } catch (error) {
+      output.innerHTML = `<div class="banner warn">${escapeHtml(error.detail || t("error.generic"))}</div>`;
+    } finally {
+      setBusy(button, false);
+    }
+  });
+  panel.querySelector("[data-save-bootstrap]").addEventListener("click", async (event) => {
+    const button = event.currentTarget;
+    setBusy(button, true);
+    try {
+      await api.put("/api/v1/admin/settings", { values: collect(panel) });
+      toast(t("admin.set_saved"), "success");
+    } catch (error) {
+      toast(error.detail || t("error.generic"), "error");
+    } finally {
+      setBusy(button, false);
+    }
+  });
+}
+
+function headerRow(name = "", value = "", secret = false, isSet = false) {
+  const placeholder = secret && isSet ? t("admin.set_secret_kept") : "";
+  return `
+    <div class="log-header-row" data-header-row>
+      <input class="input" data-header-name list="log-header-names" maxlength="64"
+             placeholder="${escapeHtml(t("admin.log_header_name"))}" value="${escapeHtml(name)}" />
+      <input class="input" data-header-value maxlength="500"
+             placeholder="${escapeHtml(placeholder || t("admin.log_header_value"))}" value="${escapeHtml(value)}" />
+      <button class="icon-btn danger" type="button" data-header-remove title="${t("action.delete")}">✕</button>
+    </div>`;
+}
+
+function targetForm(target = {}) {
+  const kind = target.kind || "http";
+  const headers = Object.entries(target.headers || {}).map(([name, meta]) =>
+    headerRow(name, meta.secret ? "" : meta.value || "", Boolean(meta.secret), Boolean(meta.is_set)),
+  );
+  return `
+    <form class="card settings-card mt-2" id="log-target-form" data-id="${target.id || ""}">
+      <header class="settings-head">
+        <h2>${target.id ? t("admin.log_target_edit") : t("admin.log_target_add")}</h2>
+        <p class="muted small">${escapeHtml(t(kind === "syslog" ? "admin.tab_syslog" : "admin.tab_http"))}</p>
+      </header>
+      <div class="settings-body">
+        <div class="grid grid-2">
+          <div class="field">
+            <label class="label" for="log-label">${t("admin.log_label")}</label>
+            <input class="input" id="log-label" name="label" maxlength="80" value="${escapeHtml(target.label || "")}"
+                   placeholder="${escapeHtml(kind === "syslog" ? "rsyslog" : "Sekoia")}" />
+          </div>
+          <div class="field checkline">
+            <label><input type="checkbox" name="enabled" ${target.enabled === false ? "" : "checked"} /> ${t("admin.log_enabled")}</label>
+          </div>
+        </div>
+        ${
+          kind === "syslog"
+            ? `<div class="grid grid-3">
+                 <div class="field">
+                   <label class="label" for="log-host">${t("admin.log_host")}</label>
+                   <input class="input" id="log-host" name="host" maxlength="200" required value="${escapeHtml(target.host || "")}" />
+                 </div>
+                 <div class="field">
+                   <label class="label" for="log-port">${t("admin.log_port")}</label>
+                   <input class="input" id="log-port" name="port" type="number" min="1" max="65535" value="${target.port || 514}" />
+                 </div>
+                 <div class="field">
+                   <label class="label" for="log-protocol">${t("admin.log_protocol")}</label>
+                   <select class="input" id="log-protocol" name="protocol">
+                     ${["udp", "tcp", "tls"]
+                       .map((value) => `<option value="${value}" ${(target.protocol || "udp") === value ? "selected" : ""}>${value.toUpperCase()}</option>`)
+                       .join("")}
+                   </select>
+                 </div>
+                 <div class="field">
+                   <label class="label" for="log-facility">${t("admin.log_facility")}</label>
+                   <input class="input" id="log-facility" name="facility" type="number" min="0" max="23" value="${target.facility ?? 13}" />
+                 </div>
+                 <div class="field">
+                   <label class="label" for="log-hostname">${t("admin.log_hostname")}</label>
+                   <input class="input" id="log-hostname" name="hostname" maxlength="80" value="${escapeHtml(target.hostname || "")}" />
+                 </div>
+               </div>
+               <label class="checkline"><input type="checkbox" name="tls_verify" ${target.tls_verify === false ? "" : "checked"} /> ${t("admin.log_verify_tls")}</label>`
+            : `<div class="field">
+                 <label class="label" for="log-url">${t("admin.log_url")}</label>
+                 <input class="input" id="log-url" name="url" type="url" maxlength="500" required
+                        value="${escapeHtml(target.url || "")}" placeholder="https://api.sekoia.io/v1/events" />
+               </div>
+               <div class="grid grid-2">
+                 <div class="field">
+                   <label class="label" for="log-timeout">${t("admin.log_timeout")}</label>
+                   <input class="input" id="log-timeout" name="timeout_seconds" type="number" min="1" max="60" value="${target.timeout_seconds || 5}" />
+                 </div>
+                 <div class="field checkline">
+                   <label><input type="checkbox" name="verify_tls" ${target.verify_tls === false ? "" : "checked"} /> ${t("admin.log_verify_tls")}</label>
+                 </div>
+               </div>
+               <fieldset class="field">
+                 <legend>${t("admin.log_headers")}</legend>
+                 <p class="hint">${escapeHtml(t("admin.log_headers_help"))}</p>
+                 <datalist id="log-header-names">
+                   <option value="intake-key"></option>
+                   <option value="Authorization"></option>
+                   <option value="X-API-Key"></option>
+                   <option value="X-Source-Token"></option>
+                 </datalist>
+                 <div id="log-header-list">${headers.join("") || headerRow()}</div>
+                 <button class="btn btn-sm" type="button" data-header-add>+ ${t("admin.log_header_add")}</button>
+               </fieldset>`
+        }
+      </div>
+      <footer class="settings-foot">
+        <button class="btn btn-primary" type="submit">${t("action.save")}</button>
+        <button class="btn" type="button" data-cancel>${t("action.cancel")}</button>
+      </footer>
+    </form>`;
+}
+
+function collectHeaders(form) {
+  const headers = {};
+  form.querySelectorAll("[data-header-row]").forEach((row) => {
+    const name = row.querySelector("[data-header-name]").value.trim();
+    const value = row.querySelector("[data-header-value]").value;
+    if (!name) return;
+    headers[name] = value;
+  });
+  return headers;
+}
+
+export function logTargetsView(kind) {
+  return async (panel) => {
+    panel.innerHTML = `<div class="loading">${t("common.loading")}</div>`;
+    let data;
+    let status;
+    try {
+      [data, status] = await Promise.all([
+        api.get("/api/v1/admin/log/targets"),
+        api.get("/api/v1/admin/log/status"),
+      ]);
+    } catch (error) {
+      panel.innerHTML = `<div class="banner warn">${escapeHtml(error.detail || t("error.generic"))}</div>`;
+      return;
+    }
+
+    const rows = (data.items || []).filter((row) => row.kind === kind);
+    const legacyActive = data.using_environment && data.legacy && data.legacy[kind];
+    const counters = `
+      <div class="env-facts">
+        <span>${t("admin.log_sent")}: <strong>${status.sent || 0}</strong></span>
+        <span>${t("admin.log_dropped")}: <strong>${status.dropped || 0}</strong></span>
+        <span>${t("admin.log_failed")}: <strong>${status.failed || 0}</strong></span>
+        <span>${t("admin.log_pending")}: <strong>${status.pending || 0}</strong></span>
+      </div>
+      ${status.last_error ? `<div class="banner warn mt-1">${escapeHtml(status.last_error)}</div>` : ""}`;
+
+    panel.innerHTML = `
+      <div class="row between">
+        <p class="muted small">${escapeHtml(t(kind === "syslog" ? "admin.log_syslog_lead" : "admin.log_http_lead"))}</p>
+        <button class="btn btn-primary" type="button" data-new>${t("admin.log_target_add")}</button>
+      </div>
+      ${
+        legacyActive
+          ? `<div class="banner mt-2">${escapeHtml(t("admin.log_using_env"))}</div>`
+          : ""
+      }
+      ${
+        rows.length
+          ? `<div class="table-wrap mt-2"><table class="table">
+              <thead><tr><th>${t("admin.log_label")}</th><th>${t("admin.log_destination")}</th>
+              <th>${t("common.status")}</th><th class="right">${t("common.actions")}</th></tr></thead>
+              <tbody>
+                ${rows
+                  .map(
+                    (row) => `<tr>
+                      <td><strong>${escapeHtml(row.label)}</strong></td>
+                      <td class="small-note mono wrap-anywhere">${escapeHtml(
+                        kind === "syslog"
+                          ? `${row.host}:${row.port}/${row.protocol}`
+                          : row.url,
+                      )}</td>
+                      <td>${
+                        !row.enabled
+                          ? `<span class="chip">${t("admin.log_disabled")}</span>`
+                          : `<span class="chip chip-ok">${t("admin.log_active")}</span>`
+                      }</td>
+                      <td class="right">
+                        <button class="icon-btn" type="button" data-test="${row.id}" title="${t("admin.set_test")}">⚡</button>
+                        <button class="icon-btn" type="button" data-edit="${row.id}" title="${t("action.edit")}">✎</button>
+                        <button class="icon-btn danger" type="button" data-delete="${row.id}" title="${t("action.delete")}">🗑</button>
+                      </td>
+                    </tr>`,
+                  )
+                  .join("")}
+              </tbody></table></div>`
+          : `<div class="empty mt-2">${t("admin.log_no_target")}</div>`
+      }
+      ${counters}
+      <div id="log-editor" class="mt-2"></div>
+      <div id="log-output" class="mt-2"></div>
+      <details class="card settings-card mt-3" ${legacyActive ? "open" : ""}>
+        <summary>${t("admin.log_bootstrap")}</summary>
+        <p class="muted small">${t("admin.log_bootstrap_lead")}</p>
+        <div id="log-legacy"></div>
+      </details>`;
+
+    const editor = panel.querySelector("#log-editor");
+    const output = panel.querySelector("#log-output");
+
+    panel.querySelector("[data-new]").addEventListener("click", () => openForm(null));
+
+    const openForm = (target) => {
+      editor.innerHTML = targetForm({ kind, ...(target || {}) });
+      const form = editor.querySelector("#log-target-form");
+      form.querySelector("[data-cancel]").addEventListener("click", () => {
+        editor.innerHTML = "";
+      });
+      form.addEventListener("click", (event) => {
+        if (event.target.closest("[data-header-add]")) {
+          form.querySelector("#log-header-list").insertAdjacentHTML("beforeend", headerRow());
+        }
+        const remove = event.target.closest("[data-header-remove]");
+        if (remove) {
+          const list = form.querySelector("#log-header-list");
+          remove.closest("[data-header-row]").remove();
+          if (!list.querySelector("[data-header-row]")) list.innerHTML = headerRow();
+        }
+      });
+      form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        const body = new FormData(form);
+        const payload = {
+          kind,
+          label: String(body.get("label") || "").trim(),
+          enabled: body.get("enabled") === "on",
+          host: String(body.get("host") || "").trim(),
+          port: Number(body.get("port") || 514),
+          protocol: String(body.get("protocol") || "udp"),
+          facility: Number(body.get("facility") || 13),
+          hostname: String(body.get("hostname") || "").trim(),
+          tls_verify: body.get("tls_verify") === "on",
+          url: String(body.get("url") || "").trim(),
+          timeout_seconds: Number(body.get("timeout_seconds") || 5),
+          verify_tls: body.get("verify_tls") === "on",
+          headers: kind === "http" ? collectHeaders(form) : {},
+        };
+        const button = form.querySelector('button[type="submit"]');
+        setBusy(button, true);
+        try {
+          if (form.dataset.id) await api.put(`/api/v1/admin/log/targets/${form.dataset.id}`, payload);
+          else await api.post("/api/v1/admin/log/targets", payload);
+          toast(t("admin.log_target_saved"), "success");
+          await logTargetsView(kind)(panel);
+        } catch (error) {
+          output.innerHTML = `<div class="banner warn">${escapeHtml(error.detail || t("error.generic"))}</div>`;
+          setBusy(button, false);
+        }
+      });
+    };
+
+    panel.querySelectorAll("[data-edit]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const target = rows.find((row) => String(row.id) === button.dataset.edit);
+        if (target) {
+          openForm(target);
+          editor.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        }
+      });
+    });
+    panel.querySelectorAll("[data-test]").forEach((button) => {
+      button.addEventListener("click", async () => {
+        setBusy(button, true);
+        try {
+          const result = await api.post(`/api/v1/admin/log/targets/${button.dataset.test}/test`, {});
+          const detail = Object.entries(result.targets || {})
+            .map(([name, value]) => `${name}: ${value}`)
+            .join(" · ");
+          output.innerHTML = result.ok
+            ? `<div class="banner ok">${escapeHtml(detail || t("admin.log_test_ok"))}</div>`
+            : `<div class="banner warn">${escapeHtml(detail || result.detail || t("error.generic"))}</div>`;
+        } catch (error) {
+          output.innerHTML = `<div class="banner warn">${escapeHtml(error.detail || t("error.generic"))}</div>`;
+        } finally {
+          setBusy(button, false);
+        }
+      });
+    });
+    panel.querySelectorAll("[data-delete]").forEach((button) => {
+      button.addEventListener("click", async () => {
+        if (!window.confirm(t("admin.log_target_confirm_delete"))) return;
+        try {
+          await api.del(`/api/v1/admin/log/targets/${button.dataset.delete}`);
+          toast(t("admin.log_target_deleted"), "success");
+          await logTargetsView(kind)(panel);
+        } catch (error) {
+          output.innerHTML = `<div class="banner warn">${escapeHtml(error.detail || t("error.generic"))}</div>`;
+        }
+      });
+    });
+
+    await legacyLogCard(panel.querySelector("#log-legacy"), kind);
+  };
+}
+
+/* ------------------------------------------------------------------ */
+/* The environment, read-only                                          */
+/* ------------------------------------------------------------------ */
+
+export async function environmentView(panel) {
+  panel.innerHTML = `<div class="loading">${t("common.loading")}</div>`;
+  let data;
+  try {
+    data = await api.get("/api/v1/admin/environment");
+  } catch (error) {
+    panel.innerHTML = `<div class="banner warn">${escapeHtml(error.detail || t("error.generic"))}</div>`;
+    return;
+  }
+  const groups = data.items.reduce((acc, row) => {
+    (acc[row.section] = acc[row.section] || []).push(row);
+    return acc;
+  }, {});
+  const show = (row) => {
+    if (row.secret) return row.value ? t("admin.env_secret_set") : "—";
+    if (typeof row.value === "boolean") return row.value ? t("common.yes") : t("common.no");
+    return row.value === "" || row.value === null ? "—" : String(row.value);
+  };
+  panel.innerHTML = `
+    <p class="muted small">${escapeHtml(t("admin.env_lead", { count: String(data.count || 0) }))}</p>
+    ${Object.entries(groups)
+      .map(
+        ([section, rows]) => `
+      <section class="card settings-card">
+        <header class="settings-head"><h2>${escapeHtml(section)}</h2></header>
+        <div class="table-wrap">
+          <table class="table env-table">
+            <thead><tr><th>${t("admin.env_variable")}</th><th>${t("admin.env_value")}</th><th>${t("common.status")}</th><th class="right">${t("admin.env_docs")}</th></tr></thead>
+            <tbody>
+              ${rows
+                .map(
+                  (row) => `<tr data-env="${escapeHtml(row.env)}">
+                    <td class="mono small-note">${escapeHtml(row.env)}</td>
+                    <td class="mono wrap-anywhere">${escapeHtml(show(row))}</td>
+                    <td>${
+                      row.is_default
+                        ? `<span class="chip">${t("admin.env_default")}</span>`
+                        : `<span class="chip chip-ok">${t("admin.env_changed")}</span>`
+                    }</td>
+                    <td class="right"><a class="btn btn-sm btn-ghost" href="${escapeHtml(row.doc)}" target="_blank" rel="noopener">${t("admin.env_docs")}</a></td>
+                  </tr>`,
+                )
+                .join("")}
+            </tbody>
+          </table>
+        </div>
+      </section>`,
+      )
+      .join("")}
+    <p class="mt-2"><a class="btn" href="${escapeHtml(data.docs)}" target="_blank" rel="noopener">${t("admin.env_all_docs")}</a></p>`;
 }

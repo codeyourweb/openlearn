@@ -103,12 +103,41 @@ the test button reports each one separately.
 
 ## Configuration
 
-In **Administration → Settings → Audit forwarding**, or in the environment (settings stored in the
-database take precedence, and can be changed without a restart):
+In **Administration → Platform settings → Syslog export** or **HTTP POST
+export**. Forwarding is a list of destinations: add as many as you need, of
+either transport, and each one is tried independently. Two tabs, because a UDP
+socket and an HTTPS intake with a key are not the same thing to configure.
+
+| Field | Transport | Meaning |
+| --- | --- | --- |
+| Name | both | Label shown in the list. |
+| Enabled | both | Keep a destination without using it. |
+| Host, port, transport | syslog | `udp`, `tcp` or `tls`; default port 514, facility 13. |
+| Reported hostname | syslog | Header hostname, `openlearn` when empty. |
+| Endpoint URL | HTTP POST | `http(s)` only. |
+| Timeout | HTTP POST | Seconds before the delivery counts as failed (1–60). |
+| Headers | HTTP POST | One line per header: `intake-key: …` for Sekoia, `Authorization: Splunk <token>` for a Splunk HEC, `X-API-Key: …` elsewhere. |
+
+A header whose name looks like a credential is write-only: the page shows the
+name and whether a value is set, never the value itself, and saving an empty
+field leaves it unchanged. Names are validated as HTTP tokens and values cannot
+carry a control character, so a stored header cannot split the request.
+
+**Send a test event** (per destination, or under the collapsed bootstrap
+settings) delivers one synthetic event synchronously and reports the answer of
+each destination separately (`Syslog: ok · HTTP POST: ok`). Do it right after
+configuring: a wiring problem found in daylight costs a minute, the same problem
+found during an incident costs the incident.
+
+### Bootstrap from the environment
+
+The `OL_LOG_*` variables remain supported. They apply **only while the
+destination list is empty** — that is how an instance configured before the
+destination list existed keeps forwarding after an upgrade:
 
 | Variable | Default | Purpose |
 | --- | --- | --- |
-| `OL_LOG_ENABLED` | `false` | Master switch. No target, no output. |
+| `OL_LOG_ENABLED` | `false` | Bootstrap switch. |
 | `OL_LOG_SYSLOG_HOST` | empty | Collector hostname or IP. |
 | `OL_LOG_SYSLOG_PORT` | `514` | UDP/TCP/TLS port. |
 | `OL_LOG_SYSLOG_PROTOCOL` | `udp` | `udp`, `tcp` or `tls`. |
@@ -119,10 +148,6 @@ database take precedence, and can be changed without a restart):
 | `OL_LOG_HTTP_TOKEN` | empty | Bearer token, write-only. |
 | `OL_LOG_HTTP_VERIFY_TLS` | `true` | Verify the endpoint certificate. |
 | `OL_LOG_HTTP_TIMEOUT_SECONDS` | `5` | Delivery timeout, 1–60. |
-
-**Send a test event** delivers one synthetic event synchronously and reports the collector's answer
-per target (`syslog: ok · http: ok`). Do it right after configuring: a wiring problem found in
-daylight costs a minute, the same problem found during an incident costs the incident.
 
 ## Collector recipes
 

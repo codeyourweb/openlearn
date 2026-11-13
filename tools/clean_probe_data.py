@@ -13,7 +13,6 @@ from __future__ import annotations
 
 import os
 import re
-import sys
 
 from sqlalchemy import create_engine, text
 

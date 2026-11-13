@@ -156,7 +156,7 @@ def compare(reference: pathlib.Path, candidate: pathlib.Path, report: pathlib.Pa
         changed += 1
 
     rows.sort(key=lambda row: -row[3])
-    for name, kind, detail, share in rows:
+    for name, _kind, detail, share in rows:
         print(f"  {name:34s} {share:6.3f}%  {detail}")
 
     print(f"\n{changed} view(s) differ, {len(missing)} gone, {len(added)} new")

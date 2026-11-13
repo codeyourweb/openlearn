@@ -612,15 +612,12 @@ def update_wiki(
     return _serialise_wiki(db, wiki, role, user)
 
 
-@router.delete("/{wiki_id}", status_code=204, summary="Delete a wiki and its pages")
-def delete_wiki(
-    wiki_id: int,
-    db: OrmSession = Depends(get_db),
-    user: User = Depends(require_user),
-):
-    wiki = _get_wiki(db, wiki_id)
-    if wiki.owner_id != user.id and not user.is_staff:
-        raise HTTPException(status_code=403, detail="Only the owner can delete this wiki.")
+def purge_wiki(db: OrmSession, wiki: Wiki) -> list[int]:
+    """Remove a wiki and everything hanging off it, returning the page ids.
+
+    Shared by the owner's route and the administration, so a wiki deleted from
+    the admin page cannot leave orphaned pages, versions or member rows behind.
+    """
     page_ids = list(db.scalars(select(WikiPage.id).where(WikiPage.wiki_id == wiki.id)).all())
     if page_ids:
         db.execute(delete(WikiLink).where(WikiLink.from_page_id.in_(page_ids)))
@@ -631,11 +628,24 @@ def delete_wiki(
     db.execute(delete(WikiTemplate).where(WikiTemplate.wiki_id == wiki.id))
     db.execute(delete(WikiMember).where(WikiMember.wiki_id == wiki.id))
     db.execute(delete(WikiPage).where(WikiPage.wiki_id == wiki.id))
-    title = wiki.title
     db.execute(delete(Wiki).where(Wiki.id == wiki.id))
     db.commit()
     for page_id in page_ids:
         collab.drop(page_id)
+    return page_ids
+
+
+@router.delete("/{wiki_id}", status_code=204, summary="Delete a wiki and its pages")
+def delete_wiki(
+    wiki_id: int,
+    db: OrmSession = Depends(get_db),
+    user: User = Depends(require_user),
+):
+    wiki = _get_wiki(db, wiki_id)
+    if wiki.owner_id != user.id and not user.is_staff:
+        raise HTTPException(status_code=403, detail="Only the owner can delete this wiki.")
+    title = wiki.title
+    purge_wiki(db, wiki)
     audit.content(
         db, "wiki_deleted", request=None, user=user, kind="wiki", item_id=wiki_id, name=title
     )

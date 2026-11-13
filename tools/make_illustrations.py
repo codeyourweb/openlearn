@@ -251,7 +251,7 @@ def motif_logs(draw, cx, cy, scale=1.0, colour=CYAN):
 
 def motif_disks(draw, cx, cy, scale=1.0, colour=TEAL):
     s = scale
-    for index, dx in enumerate((-190, 60)):
+    for _index, dx in enumerate((-190, 60)):  # noqa: B007 - the offset is what is used
         left = cx + dx * s
         draw.ellipse((left, cy - 150 * s, left + 170 * s, cy - 90 * s), fill=(18, 30, 40, 255),
                      outline=(200, 220, 235, 255), width=int(5 * s))
@@ -305,7 +305,7 @@ def motif_soc(draw, cx, cy, scale=1.0, colour=CYAN):
     # Phone ringing.
     draw.rounded_rectangle((cx + 380 * s, cy + 20 * s, cx + 470 * s, cy + 170 * s), radius=12 * s,
                            fill=(16, 22, 40, 255), outline=AMBER + (255,), width=int(5 * s))
-    for index, inset in enumerate((0, 18, 36)):
+    for _index, inset in enumerate((0, 18, 36)):  # noqa: B007 - same
         draw.arc(
             (cx + 480 * s + inset * s, cy + 30 * s + inset * s, cx + 560 * s + inset * s,
              cy + 120 * s + inset * s),

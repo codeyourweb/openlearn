@@ -4730,3 +4730,109 @@ html[data-demo="off"] [data-nav="about"] { display: none !important; }
 .ed-audio {
   align-items: center;
 }
+
+
+/* ------------------------------------------------------------------ */
+/* Administration: rubrics, sub-tabs, destinations                     */
+/* ------------------------------------------------------------------ */
+
+/* Two levels: the rubric a person is in, then what they are doing there. */
+.tabs-groups {
+  gap: 6px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 10px;
+}
+
+.tab-group {
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: 10px;
+  border: 1px solid transparent;
+}
+
+.tab-group.is-active {
+  background: var(--surface-2, var(--surface));
+  border-color: var(--border);
+}
+
+.tabs-sub {
+  margin-top: 10px;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.tabs-sub .tab {
+  font-size: 0.92rem;
+  padding: 6px 12px;
+}
+
+/* The count of what waits for a decision, readable at a glance. */
+.tab-count {
+  display: inline-block;
+  min-width: 20px;
+  margin-left: 6px;
+  padding: 1px 6px;
+  border-radius: 999px;
+  background: var(--accent, #3b6cf6);
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1.5;
+  text-align: center;
+}
+
+/* A destination row: label, destination, state, three quiet buttons. */
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  color: inherit;
+  cursor: pointer;
+}
+
+.icon-btn:hover { background: var(--surface-2, rgba(0, 0, 0, 0.04)); }
+.icon-btn.danger { color: var(--danger, #b3261e); }
+
+.log-header-row {
+  display: grid;
+  grid-template-columns: minmax(120px, 1fr) minmax(160px, 2fr) 32px;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+@media (max-width: 700px) {
+  .log-header-row { grid-template-columns: 1fr 32px; }
+  .log-header-row [data-header-name] { grid-column: 1 / -1; }
+}
+
+.chip {
+  display: inline-block;
+  padding: 2px 9px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  font-size: 0.78rem;
+  color: var(--muted, #5b6472);
+}
+
+.chip-ok {
+  border-color: color-mix(in srgb, var(--ok, #1e7f4f) 45%, transparent);
+  background: color-mix(in srgb, var(--ok, #1e7f4f) 12%, transparent);
+  color: var(--ok, #1e7f4f);
+}
+
+.wrap-anywhere { overflow-wrap: anywhere; }
+
+.settings-card summary {
+  cursor: pointer;
+  font-weight: 600;
+  padding: 4px 0;
+}
+
+fieldset.field { border: 1px solid var(--border); border-radius: 10px; padding: 12px; }
+fieldset.field legend { padding: 0 6px; font-weight: 600; font-size: 0.9rem; }

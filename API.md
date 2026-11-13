@@ -647,9 +647,13 @@ account (`409`), so a single-operator instance can never lock itself out.
 
 | Method | Path | Description |
 | --- | --- | --- |
-| `GET` | `/admin/wikis` | Wikis; `?status=pending\|public\|private\|draft` |
+| `GET` | `/admin/wikis` | Wikis; `?status=pending\|public\|private\|draft`, `?q=`, `?limit=`, `?offset=`. `X-Total-Count` carries the total |
+| `DELETE` | `/admin/wikis/{id}` | Delete the wiki with its pages, versions, links, references, proposals and members (`204`, `404` when absent) |
 | `POST` | `/admin/wikis/{id}/approve` | Publish publicly, body `{"note": "..."}` |
 | `POST` | `/admin/wikis/{id}/reject` | Send back to private, with a note |
+
+The list endpoints above answer `X-Total-Count`, which is what the pager of the
+administration page reads; filtering happens in SQL, not in the browser.
 
 Administrators also read every wiki and write in it as `maintainer`: editing a
 page, renaming a wiki or saving its canvas answers `200`, not a `403` telling
@@ -658,7 +662,54 @@ the two routes above.
 
 ---
 
-### 8.2 Legal notice
+### 8.2 Audit forwarding destinations
+
+Forwarding to an XDR or a SIEM is a list of destinations, of either transport.
+Each one is tried independently, so a collector that is down never silences the
+others.
+
+| Method | Path | Description |
+| --- | --- | --- |
+| `GET` | `/admin/log/targets` | `{items: [...], using_environment: bool, legacy: {syslog, http}}`. `using_environment` says the `OL_LOG_*` bootstrap is what forwards today |
+| `POST` | `/admin/log/targets` | Add a destination (`201`). Body below |
+| `PUT` | `/admin/log/targets/{id}` | Replace a destination |
+| `DELETE` | `/admin/log/targets/{id}` | Remove it (`204`) |
+| `POST` | `/admin/log/targets/{id}/test` | Send one event to **that** destination, `{ok, targets: {name: "ok" \| "Error: …"}}` |
+| `POST` | `/admin/log/test` | Send one event to every ready destination |
+| `GET` | `/admin/log/status` | `{configured, targets: [{id, label, kind, enabled, ready, destination}], sent, dropped, failed, pending, queue_max, paused_seconds, last_error}` |
+
+```json
+{
+  "label": "Sekoia",
+  "kind": "http",
+  "enabled": true,
+  "url": "https://api.sekoia.io/v1/events",
+  "timeout_seconds": 5,
+  "verify_tls": true,
+  "headers": {"intake-key": "…", "X-Source": "openlearn"}
+}
+```
+
+A syslog destination uses `host`, `port`, `protocol` (`udp|tcp|tls`), `facility`
+and `hostname` instead of `url` and `headers`. Header names must be HTTP tokens
+and values cannot contain control characters, so a stored header cannot split
+the request. `GET` never returns the value of a header whose name looks like a
+credential (`authorization`, `token`, `key`, `secret`, `intake`…): it returns
+`{"secret": true, "is_set": true}`, and sending an empty string on `PUT` leaves
+the stored value unchanged.
+
+### 8.3 Environment (read-only)
+
+| Method | Path | Description |
+| --- | --- | --- |
+| `GET` | `/admin/environment` | `{items: [{name, env, type, secret, value, is_default, section, doc}], count, docs}` |
+
+Every `OL_*` variable the process reads, with the value it is **actually**
+running with. A secret is returned as `"set"` or `""`, never printed. `doc` is
+the GitHub anchor of the matching heading in `docs/ENVIRONMENT.md`. There is no
+write route: the page documents, the settings page configures.
+
+### 8.4 Legal notice
 
 | Method | Path | Description |
 | --- | --- | --- |
@@ -833,3 +884,45 @@ curl -s "$BASE/sessions/$CODE/results" -H "X-Host-Token: $HOST"
 | `/docs` | Reference rendered by the app from the live OpenAPI document |
 | `/api/openapi.json` | OpenAPI 3.1 document of this instance |
 | `/api/docs`, `/api/redoc` | `307` redirect to `/docs` |
+
+---
+
+## 12. Speech (optional)
+
+Available only when the instance configured a speech engine
+(`OL_AUDIO_ENABLED` + `OL_AUDIO_SERVICE_URL`); `GET /audio/status` answers
+`{"enabled": false}` otherwise and every other route answers `503`.
+
+A transcript belongs to **one** page or **one** adventure scene — never to a
+whole document tree, and never to a quiz.
+
+| Method | Path | Description |
+| --- | --- | --- |
+| `GET` | `/audio/status` | `{enabled, languages: ["fr", …]}` |
+| `POST` | `/audio/render` | `202` with `{job_id}`. Body below. The author of the page, or the owner of the wiki/adventure, only |
+| `GET` | `/audio/jobs/{job_id}` | `{status: "queued"\|"running"\|"done"\|"error", done, total, error}` |
+| `GET` | `/audio/renditions?owner_type=page&owner_id=12` | `{renditions: [{id, language, voice, tone, title, duration_seconds, created_at}]}` |
+| `DELETE` | `/audio/renditions/{id}` | `204`. Removes the recording **and the cached pieces nothing else uses**, so asking again really synthesises |
+
+```json
+{
+  "owner_type": "page",
+  "owner_id": 12,
+  "voice": "female",
+  "tone": "warm",
+  "language": "fr"
+}
+```
+
+`tone` is `neutral` (default), `formal`, `warm` or `lively`; it is sent to the
+engine as a direction, and it is part of the cache key — the same paragraph read
+warmly is a second recording. `voice` is `female` or `male`; the engine names
+behind those two labels are instance settings, not API values. `language`
+defaults to the document's own language and is never translated.
+
+Rendering again with the same `voice`/`tone`/`language` replaces the previous
+rendition, so an author who dislikes a reading never ends up with two.
+
+A transcript is read by an authenticated visitor, or by a visitor holding the
+share link of a private document; `404` otherwise, so the list cannot be used to
+probe for private content.

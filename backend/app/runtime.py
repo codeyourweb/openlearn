@@ -20,7 +20,7 @@ import json
 import logging
 import threading
 import time
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Any
 
 from sqlalchemy import select
@@ -309,6 +309,130 @@ def log_config(db: OrmSession | None = None) -> LogConfig:
         http_verify_tls=bool(get(db, "log.http_verify_tls")),
         http_timeout_seconds=int(get(db, "log.http_timeout_seconds")),
     )
+
+
+@dataclass(frozen=True)
+class LogTargetConfig:
+    """One collector, whatever its kind.
+
+    A row of ``log_targets`` keeps both shapes flat so the forwarder does not
+    branch on a dictionary: a syslog target reads its host and port, an HTTP
+    target its URL and headers, and neither ever sees the other's fields.
+    """
+
+    id: int
+    label: str
+    kind: str
+    enabled: bool
+    # syslog
+    host: str = ""
+    port: int = 514
+    protocol: str = "udp"
+    facility: int = 13
+    hostname: str = ""
+    tls_verify: bool = True
+    # http
+    url: str = ""
+    timeout_seconds: int = 5
+    verify_tls: bool = True
+    headers: dict[str, str] = field(default_factory=dict)
+
+    @property
+    def ready(self) -> bool:
+        if not self.enabled:
+            return False
+        return bool(self.host) if self.kind == "syslog" else bool(self.url)
+
+    @property
+    def key(self) -> str:
+        """Stable name a collector result is reported under."""
+        return f"{self.label or self.kind}#{self.id}" if self.id else (self.label or self.kind)
+
+
+def log_targets(db: OrmSession | None = None) -> list[LogTargetConfig]:
+    """Every configured collector, newest rows first.
+
+    The legacy ``log.syslog_*`` / ``log.http_*`` settings are the bootstrap: they
+    become targets only while the table is empty, so an installation that never
+    opened the new page keeps forwarding exactly as before.
+    """
+    from .db import SessionLocal
+    from .models import LogTarget
+
+    cached = db is None
+    if cached:
+        fresh, value = _cached("log.targets")
+        if fresh:
+            return value
+
+    own = db is None
+    session = SessionLocal() if own else db
+    try:
+        rows = session.scalars(select(LogTarget).order_by(LogTarget.id)).all()
+    finally:
+        if own:
+            session.close()
+
+    out: list[LogTargetConfig] = []
+    if rows:
+        out = [
+            LogTargetConfig(
+                id=row.id,
+                label=row.label or "",
+                kind=row.kind,
+                enabled=bool(row.enabled),
+                host=row.host or "",
+                port=int(row.port or 514),
+                protocol=row.protocol or "udp",
+                facility=int(row.facility if row.facility is not None else 13),
+                hostname=row.hostname or "",
+                tls_verify=bool(row.tls_verify),
+                url=row.url or "",
+                timeout_seconds=int(row.timeout_seconds or 5),
+                verify_tls=bool(row.verify_tls),
+                headers=dict(row.headers or {}),
+            )
+            for row in rows
+        ]
+    else:
+        legacy = log_config(db)
+        if legacy.enabled and legacy.syslog_host:
+            out.append(
+                LogTargetConfig(
+                    id=0,
+                    label="Syslog",
+                    kind="syslog",
+                    enabled=True,
+                    host=legacy.syslog_host,
+                    port=legacy.syslog_port,
+                    protocol=legacy.syslog_protocol,
+                    facility=legacy.syslog_facility,
+                    hostname=legacy.syslog_hostname,
+                    tls_verify=legacy.syslog_tls_verify,
+                )
+            )
+        if legacy.enabled and legacy.http_url:
+            headers = (
+                {"Authorization": f"Bearer {legacy.http_token}"} if legacy.http_token else {}
+            )
+            out.append(
+                LogTargetConfig(
+                    id=0,
+                    label="HTTP POST",
+                    kind="http",
+                    enabled=True,
+                    url=legacy.http_url,
+                    timeout_seconds=legacy.http_timeout_seconds,
+                    verify_tls=legacy.http_verify_tls,
+                    headers=headers,
+                )
+            )
+
+    if cached:
+        # An empty answer is cacheable too: emit() runs on every request and must
+        # not read the table each time.
+        _store("log.targets", out)
+    return out
 
 
 def ai_config(db: OrmSession | None = None) -> AiConfig:

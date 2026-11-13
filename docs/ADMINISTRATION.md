@@ -26,6 +26,31 @@ The three flags are independent columns on the user (`is_admin`,
 `is_moderator`, `is_trusted`). Promoting to moderator does not grant
 administrator rights, and demoting does not silently remove *trusted*.
 
+## The four rubrics
+
+The page is grouped by what an operator is doing, not by where a value lives:
+
+| Rubric | Tabs | Who |
+| --- | --- | --- |
+| **Content** | Accounts, Quizzes, Wikis — each row offers *view*, *edit* and *delete* | administrator (accounts) and moderators (content) |
+| **Moderation** | Quiz queue, Wiki queue, with a decision note and a counter on the tab | administrators and moderators |
+| **AI** | Reviews, Model provider, Error log | administrator only |
+| **Platform settings** | Instance, Email, Security, Sign-in, Legal notice, Audit trail, Syslog export, HTTP POST export, Environment | administrator only |
+
+Deleting a wiki from **Content → Wikis** removes its pages, versions, links,
+references, proposals and members in one transaction; deleting a quiz removes
+its questions, options, runs and reviews. Both ask for confirmation and both are
+recorded in the audit trail with the name of what disappeared.
+
+### Environment
+
+**Settings → Environment** lists every `OL_*` variable the process reads, with
+the value it is *actually* running with — not the value declared in the compose
+file. Secrets are shown as *set* or empty, never printed, and each row links to
+its heading in [docs/ENVIRONMENT.md](ENVIRONMENT.md). The page is read-only by
+design: it answers "what is this instance configured with?", and changing a value
+belongs to the settings page or the environment file.
+
 ## How settings are stored
 
 Runtime settings live in the database (`app_settings`). The environment is the
@@ -81,25 +106,41 @@ created by an administrator then need a manual password change.
 
 ### Audit forwarding
 
-Where security events go: a syslog collector, an HTTP endpoint, or both. Every
-sign-in, failed sign-in, AI call, content creation, edit and deletion is written
-to the instance's own trail and, when a target is configured, sent to the XDR or
-the SIEM in the same breath.
+Forwarding is not a pair of settings any more: it is a list of **destinations**.
+The administration page has one tab per transport — **Syslog export** and
+**HTTP POST export** — and each tab lists its own destinations, with a test
+button on every row. That is what a fan-out looks like: Splunk receives RFC 5424
+over UDP while Sekoia receives JSON over HTTPS, and one collector being down
+never silences the other.
 
-| Setting | Meaning |
-| --- | --- |
-| Turn forwarding on | Master switch. With no target, nothing leaves the instance, whatever this says. |
-| Syslog host, port, protocol | RFC 5424 over `udp`, `tcp` or `tls`. Default port 514, default facility 13 (*log audit*). |
-| Reported hostname | The hostname in the syslog header; the instance name if empty. |
-| Collector URL | Must be `http://` or `https://` — any other scheme is refused when the setting is saved. |
-| Collector token | Sent as `Authorization: Bearer …`, stored write-only and never shown again. |
+| Field | Applies to | Meaning |
+| --- | --- | --- |
+| Name | both | A label you recognise in the list, for example `rsyslog` or `Sekoia`. |
+| Enabled | both | A destination can be kept without being used. |
+| Host, port, transport | syslog | RFC 5424 over `udp`, `tcp` or `tls`. Default port 514, facility 13 (*log audit*). |
+| Reported hostname | syslog | The hostname in the header; `openlearn` when empty. |
+| Verify the certificate | both | Off accepts a self-signed collector; on is the default. |
+| Endpoint URL | HTTP POST | `http://` or `https://` only; any other scheme is refused when the row is saved. |
+| Timeout | HTTP POST | Seconds one delivery may take before it is counted as failed. |
+| HTTP headers | HTTP POST | One line per header, as many as needed. This is how an intake that wants a key is served: `intake-key` for Sekoia, `Authorization: Splunk <token>` for a Splunk HEC, `X-API-Key` elsewhere. |
+
+Header names are validated (`RFC 7230` tokens) and values cannot contain a
+control character, so a stored header cannot split the request. A header whose
+name looks like a credential (`authorization`, `token`, `key`, `secret`,
+`intake`…) is stored write-only: the API returns the name and whether a value is
+set, never the value, and an empty field on save means *unchanged*.
 
 **Send a test event** delivers one event synchronously and reports the answer of
-each target separately, so a wrong port or a refused token is found from the
-settings page rather than during an incident. The counters (`sent`, `dropped`,
-`failed`, `paused_seconds`, `last_error`) are on
-`GET /api/v1/admin/log/status`; after five consecutive failures the sender backs
-off for 30 seconds, then longer, and drops events rather than buffering for ever.
+each destination separately. The counters (`sent`, `dropped`, `failed`,
+`pending`, `last_error`) are on `GET /api/v1/admin/log/status`; after five
+consecutive failures the sender backs off for 30 seconds, then longer, and drops
+events rather than buffering for ever.
+
+**Bootstrap settings.** The `OL_LOG_*` variables below still work: while no
+destination is defined, they are what forwards, so an instance configured before
+this page existed keeps sending. Adding the first destination retires them; the
+two tabs show them collapsed under *Bootstrap settings (environment)* so the
+change is visible, and their own test button proves the wiring.
 
 The event schema, the exact list of actions, the collector recipes for Splunk,
 Sentinel, Google SecOps and Sekoia, and the properties the tests enforce are in

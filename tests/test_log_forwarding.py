@@ -203,7 +203,8 @@ def test_a_target_without_the_switch_stays_silent(client, http_collector):
 
     log_forward.flush(1)
     assert _events(received) == []
-    assert log_forward.status()["targets"] == {"syslog": False, "http": False}
+    # No row in ``log_targets`` and no bootstrap host: the list is simply empty.
+    assert log_forward.status()["targets"] == []
 
 
 # --------------------------------------------------------------------------- #
@@ -364,25 +365,22 @@ def test_changing_a_setting_forwards_the_key_names_only(client, http_collector):
 def test_a_newline_in_content_cannot_forge_a_second_syslog_record():
     from app import log_forward, runtime
 
-    config = runtime.LogConfig(
-        enabled=True,
-        syslog_host="127.0.0.1",
-        syslog_port=514,
-        syslog_protocol="udp",
-        syslog_facility=13,
-        syslog_hostname="host] <34>1 forged",
-        syslog_tls_verify=True,
-        http_url="",
-        http_token="",
-        http_verify_tls=True,
-        http_timeout_seconds=5,
-    )
     event = log_forward.build_event(
         "quiz_deleted\n<34>1 2026-01-01T00:00:00Z forged host openlearn - evil",
         detail={"name": "line one\r\n<34>1 forged"},
         target={"type": "quiz", "id": 7, "name": "a\nb"},
     )
-    line = log_forward.rfc5424(event, config).decode("utf-8")
+    target = runtime.LogTargetConfig(
+        id=0,
+        label="Syslog",
+        kind="syslog",
+        enabled=True,
+        host="127.0.0.1",
+        port=514,
+        hostname="host] <34>1 forged",
+        facility=13,
+    )
+    line = log_forward.rfc5424(event, target).decode("utf-8")
 
     # One datagram is one line: a newline inside a title cannot start a second
     # record, and a bracket in the hostname cannot close the structured data.
@@ -404,11 +402,36 @@ def test_a_full_queue_drops_the_event_instead_of_growing(monkeypatch):
     monkeypatch.setattr(
         log_forward,
         "runtime",
-        type("R", (), {"log_config": staticmethod(lambda: _EnabledLogConfig())}),
+        type(
+            "R",
+            (),
+            {
+                "log_config": staticmethod(lambda: _EnabledLogConfig()),
+                # The forwarder asks for targets, not for a pair of settings.
+                "log_targets": staticmethod(
+                    lambda: [
+                        _target_config(
+                            id=0,
+                            label="HTTP POST",
+                            kind="http",
+                            enabled=True,
+                            url="http://127.0.0.1:9/ingest",
+                        )
+                    ]
+                ),
+            },
+        ),
     )
 
     assert log_forward.emit("login_success") is False
     assert log_forward.status()["dropped"] >= 1
+
+
+def _target_config(**values):
+    """The real config class, taken before ``runtime`` is replaced by a stub."""
+    from app.runtime import LogTargetConfig
+
+    return LogTargetConfig(**values)
 
 
 class _EnabledLogConfig:
@@ -449,7 +472,7 @@ def test_a_dead_collector_does_not_fail_the_login(client):
     status = log_forward.status()
     assert status["failed"] >= 1
     assert status["dropped"] >= 1
-    assert "http" in status["last_error"]
+    assert "http" in status["last_error"].lower()
 
 
 def test_a_broken_syslog_target_does_not_silence_the_http_one(client, http_collector):
@@ -472,7 +495,7 @@ def test_a_broken_syslog_target_does_not_silence_the_http_one(client, http_colle
 
     from app import log_forward
 
-    assert "syslog" in log_forward.status()["last_error"]
+    assert "syslog" in log_forward.status()["last_error"].lower()
 
 
 # --------------------------------------------------------------------------- #
@@ -520,7 +543,7 @@ def test_the_test_endpoint_proves_each_target_and_leaves_a_trace(client, http_co
     assert response.status_code == 200, response.text
     result = response.json()
     assert result["ok"] is True
-    assert result["targets"] == {"syslog": "ok", "http": "ok"}
+    assert result["targets"] == {"Syslog": "ok", "HTTP POST": "ok"}
 
     assert _wait_named(received, "audit.test")["detail"]["message"]
     assert "audit.test" in _wait_datagram(datagrams, b"audit.test")
@@ -543,7 +566,11 @@ def test_the_status_reports_targets_counters_and_queue_size(client, http_collect
 
     body = client.get("/api/v1/admin/log/status").json()
     assert body["configured"] is True
-    assert body["targets"] == {"syslog": False, "http": True}
+    # One destination, named, with the transport it speaks: the page lists them
+    # one by one now, since a fan-out has no single "targets" boolean.
+    assert [row["kind"] for row in body["targets"]] == ["http"]
+    assert body["targets"][0]["ready"] is True
+    assert body["targets"][0]["destination"].startswith("http://127.0.0.1")
     for key in ("sent", "dropped", "failed", "pending", "queue_max", "paused_seconds"):
         assert key in body
 

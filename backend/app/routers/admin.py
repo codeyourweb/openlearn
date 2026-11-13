@@ -10,7 +10,7 @@ from fastapi import APIRouter, Depends, HTTPException, Query, Request, Response,
 from sqlalchemy import func, or_, select
 from sqlalchemy.orm import Session as OrmSession
 
-from .. import abuse, mailer, runtime, verification, versions
+from .. import abuse, audit, mailer, runtime, verification, versions
 from ..config import settings
 from ..db import get_db
 from ..deps import client_ip, require_admin, require_staff
@@ -28,6 +28,7 @@ from ..models import (
 )
 from ..schemas import AdminUserOut, AdminUserPatch, ModerationIn, QuizIn
 from .quizzes import _apply_quiz, _sync_public_flag, serialise_quiz
+from .wiki import purge_wiki
 
 router = APIRouter(prefix="/api/v1/admin", tags=["admin"])
 
@@ -143,6 +144,7 @@ def stats(staff: User = Depends(require_staff), db: OrmSession = Depends(get_db)
 
 @router.get("/quizzes")
 def list_quizzes(
+    response: Response,
     status_filter: str | None = Query(default=None, alias="status", max_length=12),
     q: str | None = Query(default=None, max_length=100),
     limit: int = Query(default=50, ge=1, le=200),
@@ -162,6 +164,8 @@ def list_quizzes(
     if q and q.strip():
         pattern = f"%{q.strip()}%"
         stmt = stmt.where(Quiz.title.ilike(pattern))
+    total = db.scalar(select(func.count()).select_from(stmt.subquery())) or 0
+    response.headers["X-Total-Count"] = str(total)
     stmt = stmt.order_by(Quiz.updated_at.desc()).limit(limit).offset(offset)
     return [_quiz_row(db, quiz) for quiz in db.scalars(stmt).unique()]
 
@@ -478,6 +482,7 @@ def _wiki_row(db: OrmSession, wiki: Wiki) -> dict:
 
 @router.get("/wikis")
 def list_wikis_admin(
+    response: Response,
     status_filter: str | None = Query(default=None, alias="status", max_length=12),
     q: str | None = Query(default=None, max_length=100),
     limit: int = Query(default=50, ge=1, le=200),
@@ -490,6 +495,8 @@ def list_wikis_admin(
         statement = statement.where(Wiki.status == status_filter)
     if q and q.strip():
         statement = statement.where(Wiki.title.ilike(f"%{q.strip()}%"))
+    total = db.scalar(select(func.count()).select_from(statement.subquery())) or 0
+    response.headers["X-Total-Count"] = str(total)
     rows = db.scalars(statement.order_by(Wiki.updated_at.desc()).limit(limit).offset(offset)).all()
     return [_wiki_row(db, wiki) for wiki in rows]
 
@@ -575,3 +582,21 @@ def reject_wiki(
     db.commit()
     db.refresh(wiki)
     return _wiki_row(db, wiki)
+
+
+@router.delete("/wikis/{wiki_id}", status_code=status.HTTP_204_NO_CONTENT)
+def delete_wiki_admin(
+    wiki_id: int,
+    staff: User = Depends(require_admin),
+    db: OrmSession = Depends(get_db),
+) -> Response:
+    """Remove a wiki from the administration, pages and versions included."""
+    wiki = db.get(Wiki, wiki_id)
+    if wiki is None:
+        raise HTTPException(status_code=404, detail="Wiki not found.")
+    title = wiki.title
+    purge_wiki(db, wiki)
+    audit.content(
+        db, "wiki_deleted", request=None, user=staff, kind="wiki", item_id=wiki_id, name=title
+    )
+    return Response(status_code=status.HTTP_204_NO_CONTENT)

@@ -165,14 +165,14 @@ def build_event(
 _FACILITY_MAX = 23
 
 
-def rfc5424(payload: dict[str, Any], config: runtime.LogConfig) -> bytes:
+def rfc5424(payload: dict[str, Any], config: runtime.LogTargetConfig) -> bytes:
     """``<PRI>1 TS HOST APP PID MSGID [SD] MSG`` — one datagram, one line.
 
     The structured data repeats what a collector filters on (event, outcome,
     actor, target) so a rule can match without parsing the JSON message.
     """
     severity = 6 if payload.get("outcome") == "success" else 4
-    facility = max(0, min(_FACILITY_MAX, int(config.syslog_facility)))
+    facility = max(0, min(_FACILITY_MAX, int(config.facility)))
     priority = facility * 8 + severity
     structured = [
         f'event="{_sd(payload.get("event"))}"',
@@ -192,7 +192,7 @@ def rfc5424(payload: dict[str, Any], config: runtime.LogConfig) -> bytes:
         structured.append(f'ip="{_sd(payload.get("ip"))}"')
     message = json.dumps(payload, ensure_ascii=False, separators=(",", ":"))
     line = (
-        f"<{priority}>1 {payload['ts']} {_sd(config.syslog_hostname or 'openlearn')} "
+        f"<{priority}>1 {payload['ts']} {_sd(config.hostname or 'openlearn')} "
         f"openlearn - {payload.get('event', 'event')} "
         f"[openlearn@32473 {' '.join(structured)}] {message}"
     )
@@ -209,10 +209,10 @@ def _sd(value: Any) -> str:
 # Delivery
 
 
-def _send_syslog(payload: dict[str, Any], config: runtime.LogConfig) -> None:
+def _send_syslog(payload: dict[str, Any], config: runtime.LogTargetConfig) -> None:
     line = rfc5424(payload, config)
-    protocol = (config.syslog_protocol or "udp").lower()
-    host, port = config.syslog_host, int(config.syslog_port)
+    protocol = (config.protocol or "udp").lower()
+    host, port = config.host, int(config.port)
     if protocol == "udp":
         with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
             sock.settimeout(3)
@@ -221,7 +221,7 @@ def _send_syslog(payload: dict[str, Any], config: runtime.LogConfig) -> None:
     with socket.create_connection((host, port), timeout=3) as raw:
         if protocol == "tls":
             context = ssl.create_default_context()
-            if not config.syslog_tls_verify:
+            if not config.tls_verify:
                 context.check_hostname = False
                 context.verify_mode = ssl.CERT_NONE
             with context.wrap_socket(raw, server_hostname=host) as tls:
@@ -230,38 +230,64 @@ def _send_syslog(payload: dict[str, Any], config: runtime.LogConfig) -> None:
             raw.sendall(line + b"\n")
 
 
-def _send_http(events: list[dict[str, Any]], config: runtime.LogConfig) -> None:
+#: A header a collector reads as a credential: it is never sent back by the API.
+SECRET_HEADER = re.compile(
+    r"(authorization|auth|token|key|secret|password|credential|intake|api[_-]?key)",
+    re.IGNORECASE,
+)
+#: A header name HTTP accepts; anything else is a request splitter's dream.
+HEADER_NAME = re.compile(r"^[A-Za-z0-9][A-Za-z0-9!#$%&'*+.^_`|~-]{0,63}$")
+
+
+def mask_headers(headers: dict[str, Any] | None) -> dict[str, Any]:
+    """What the administration page may see: names, and whether a value is set."""
+    out: dict[str, Any] = {}
+    for name, value in (headers or {}).items():
+        if SECRET_HEADER.search(str(name)):
+            out[name] = {"secret": True, "is_set": bool(value)}
+        else:
+            out[name] = {"secret": False, "value": clean_text(value, 500)}
+    return out
+
+
+def _send_http(events: list[dict[str, Any]], config: runtime.LogTargetConfig) -> None:
     headers = {"Content-Type": "application/json", "User-Agent": "openlearn-audit/1"}
-    if config.http_token:
-        # Bearer by default; collectors that want another scheme use a URL with
-        # its own credential, e.g. a Splunk HEC token embedded by the operator.
-        headers["Authorization"] = f"Bearer {config.http_token}"
+    for name, value in (config.headers or {}).items():
+        if not HEADER_NAME.match(str(name)):
+            raise ValueError(f"invalid header name: {name!r}")
+        # A newline in a header is a request-splitting attempt, not a token.
+        text = clean_text(value, 500)
+        if text:
+            headers[str(name)] = text
     body = {
         "source": "openlearn",
         "schema": "openlearn.audit/1",
         "events": events,
     }
-    with httpx.Client(timeout=int(config.http_timeout_seconds), verify=config.http_verify_tls) as client:
-        response = client.post(config.http_url, json=body, headers=headers)
+    with httpx.Client(timeout=int(config.timeout_seconds), verify=config.verify_tls) as client:
+        response = client.post(config.url, json=body, headers=headers)
         response.raise_for_status()
 
 
-def _deliver(batch: list[dict[str, Any]], config: runtime.LogConfig) -> dict[str, str]:
-    """Try every configured target; report each one separately."""
+def _deliver(batch: list[dict[str, Any]], targets: list[runtime.LogTargetConfig]) -> dict[str, str]:
+    """Try every enabled target; report each one separately.
+
+    One collector refusing its events never silences the others: the whole point
+    of a fan-out is that a Splunk can be down while a Sekoia keeps receiving.
+    """
     results: dict[str, str] = {}
-    if config.syslog_host:
+    for target in targets:
+        if not target.ready:
+            continue
         try:
-            for payload in batch:
-                _send_syslog(payload, config)
-            results["syslog"] = "ok"
+            if target.kind == "syslog":
+                for payload in batch:
+                    _send_syslog(payload, target)
+            else:
+                _send_http(batch, target)
+            results[target.key] = "ok"
         except Exception as exc:  # a collector is external: never fatal
-            results["syslog"] = f"{type(exc).__name__}: {clean_text(exc, 120)}"
-    if config.http_url:
-        try:
-            _send_http(batch, config)
-            results["http"] = "ok"
-        except Exception as exc:  # pragma: no cover - depends on the collector
-            results["http"] = f"{type(exc).__name__}: {clean_text(exc, 120)}"
+            results[target.key] = f"{type(exc).__name__}: {clean_text(exc, 120)}"
     return results
 
 
@@ -299,8 +325,8 @@ def _loop() -> None:
                 break
             batch.append(nxt)
 
-        config = runtime.log_config()
-        if not config.configured:
+        targets = [target for target in runtime.log_targets() if target.ready]
+        if not targets:
             _state["dropped"] += len(batch)
             continue
 
@@ -309,7 +335,7 @@ def _loop() -> None:
             _state["dropped"] += len(batch)
             continue
 
-        results = _deliver(batch, config)
+        results = _deliver(batch, targets)
         failed = {name: error for name, error in results.items() if error != "ok"}
         if failed:
             _consecutive_failures += 1
@@ -345,8 +371,8 @@ def emit(
     incapable of turning an audit problem into a 500.
     """
     try:
-        config = runtime.log_config()
-        if not config.configured:
+        targets = [target for target in runtime.log_targets() if target.ready]
+        if not targets:
             return False
         payload = build_event(
             event, outcome=outcome, actor=actor, target=target, detail=detail, ip=ip, source=source
@@ -370,13 +396,20 @@ def emit(
 
 def status() -> dict[str, Any]:
     """Counters for the administration page: what was sent, and what was lost."""
-    config = runtime.log_config()
+    targets = runtime.log_targets()
     return {
-        "configured": config.configured,
-        "targets": {
-            "syslog": bool(config.syslog_host),
-            "http": bool(config.http_url),
-        },
+        "configured": any(target.ready for target in targets),
+        "targets": [
+            {
+                "id": target.id,
+                "label": target.label,
+                "kind": target.kind,
+                "enabled": target.enabled,
+                "ready": target.ready,
+                "destination": target.url if target.kind == "http" else f"{target.host}:{target.port}",
+            }
+            for target in targets
+        ],
         "queue_max": QUEUE_MAX,
         "pending": _queue.qsize() if _queue is not None else 0,
         "paused_seconds": max(0, round(_backoff_until - time.monotonic())) if _backoff_until else 0,
@@ -399,11 +432,13 @@ def flush(timeout: float = 5.0) -> bool:
     return False
 
 
-def send_test(*, source: str = "admin") -> dict[str, Any]:
+def send_test(*, source: str = "admin", target: runtime.LogTargetConfig | None = None) -> dict[str, Any]:
     """Deliver one synthetic event synchronously, so an administrator can prove
     the wiring from the settings page instead of waiting for a real incident."""
-    config = runtime.log_config()
-    if not config.configured:
+    targets = [row for row in runtime.log_targets() if row.ready]
+    if target is not None:
+        targets = [target] if target.ready else []
+    if not targets:
         return {"ok": False, "error": "no target configured", "targets": {}}
     payload = build_event(
         "audit.test",
@@ -411,6 +446,6 @@ def send_test(*, source: str = "admin") -> dict[str, Any]:
         detail={"message": "test event from the administration page"},
         source=source,
     )
-    results = _deliver([payload], config)
-    ok = all(value == "ok" for value in results.values())
+    results = _deliver([payload], targets)
+    ok = bool(results) and all(value == "ok" for value in results.values())
     return {"ok": ok, "targets": results, "event": payload}

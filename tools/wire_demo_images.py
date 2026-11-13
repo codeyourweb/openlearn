@@ -140,7 +140,7 @@ def wire_swipe(client: httpx.Client, quiz_id: int, uploads: dict[str, str]) -> N
     assert len(questions) == len(SWIPE_ORDER), f"expected {len(SWIPE_ORDER)} cards, got {len(questions)}"
     payload = quiz_shell(quiz)
     payload["questions"] = [
-        question_payload(question, uploads[name]) for question, name in zip(questions, SWIPE_ORDER)
+        question_payload(question, uploads[name]) for question, name in zip(questions, SWIPE_ORDER, strict=False)
     ]
     payload["adventure"] = None
     response = client.put(f"/api/v1/quizzes/{quiz_id}", json=payload)
