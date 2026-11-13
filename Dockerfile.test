@@ -21,8 +21,9 @@ COPY frontend /app/frontend
 COPY tests /app/tests
 COPY demo /app/demo
 COPY tools /app/tools
+COPY docs /app/docs
 COPY pytest.ini /app/pytest.ini
-RUN chmod -R a+rX /app/backend /app/frontend /app/tests /app/demo /app/tools
+RUN chmod -R a+rX /app/backend /app/frontend /app/tests /app/demo /app/tools /app/docs
 
 ENV PYTHONPATH=/app/backend \
     OL_TEST_BASE_URL=http://127.0.0.1:8000

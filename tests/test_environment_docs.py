@@ -21,6 +21,12 @@ from app.config import Settings
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 DOC = ROOT / "docs" / "ENVIRONMENT.md"
 
+if not DOC.exists():  # pragma: no cover - a broken test image, not a broken app
+    raise RuntimeError(
+        f"{DOC} is missing: the test image copies backend, frontend, tests, demo and "
+        "tools but must also copy docs (see COPY docs in Dockerfile.test)."
+    )
+
 
 @pytest.fixture()
 def admin(client):
