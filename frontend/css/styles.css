@@ -4715,6 +4715,41 @@ html[data-demo="off"] [data-nav="about"] { display: none !important; }
   align-items: center;
   gap: 0.5rem;
 }
+.audio-progress {
+  position: relative;
+  height: 8px;
+  margin: 0.55rem 0 0.35rem;
+  border-radius: 999px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+
+.audio-progress-fill {
+  height: 100%;
+  width: 0;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  transition: width 0.35s ease;
+}
+
+/* Nothing measured yet: a band travelling across says "working" without
+   pretending to know how far along it is. */
+.audio-progress[data-state="queued"] .audio-progress-fill {
+  width: 35%;
+  animation: audio-progress-sweep 1.4s ease-in-out infinite;
+}
+
+@keyframes audio-progress-sweep {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(300%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .audio-progress[data-state="queued"] .audio-progress-fill { animation: none; width: 100%; opacity: 0.45; }
+  .audio-progress-fill { transition: none; }
+}
+
 .audio-controls-state {
   font-size: 0.9rem;
   /* Darker than the muted grey: this line sits on the lilac strip, where the
@@ -4750,9 +4785,20 @@ html[data-demo="off"] [data-nav="about"] { display: none !important; }
   border: 1px solid transparent;
 }
 
+/* The active rubric is ink on a tinted surface, never --on-accent: that
+   variable is the ink for the accent gradient (white in the light theme,
+   near-black in the dark one), and pairing it with --surface-2 produced white
+   on white and black on black. The accent pair is readable in both themes and
+   stays distinct from the gradient pill of the selected sub-tab. */
 .tab-group.is-active {
-  background: var(--surface-2, var(--surface));
-  border-color: var(--border);
+  background: var(--accent-soft);
+  color: var(--accent-text);
+  border-color: var(--accent);
+}
+
+.tab-group.is-active:hover {
+  background: var(--accent-soft);
+  color: var(--accent-text);
 }
 
 .tabs-sub {

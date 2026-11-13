@@ -107,9 +107,23 @@ A transcript belongs to **one page or one scene**, never to a whole story. The
 author controls it from the document itself:
 
 - nothing yet → “Create the transcript”, with the choice of a female or a male
-  voice **and a narrator tone**;
+  voice **and a narrator tone**, an estimate of the audio length and of the CPU
+  time, and a progress bar that follows the job;
 - ready → “Transcript ready · 0:42”, then *Listen*, *Make it again* and *Remove*;
 - unavailable → the block is not rendered at all.
+
+### The estimate and the bar
+
+The estimate is arithmetic: the character count, read at roughly 15 characters
+per second of audio, on a processor that runs about a quarter of real time. It
+answers "may I go and make coffee?" before anything is spent.
+
+The bar answers something else — what the engine is actually doing. Every
+portion committed updates the job's `progress`, so the bar advances portion by
+portion: a scene is one step, a long page moves several times. Until the first
+portion is measured the bar travels rather than inventing a percentage, and it
+is a `role="progressbar"` with `aria-valuenow`, so a screen reader hears the
+advance instead of silence.
 
 ### The narrator tone
 

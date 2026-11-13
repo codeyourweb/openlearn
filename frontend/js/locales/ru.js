@@ -1637,6 +1637,7 @@ export const ru = {
   "audio.start": "Запустить транскрипт",
   "audio.queued": "Ожидание синтезатора…",
   "audio.progress": "{message} — {percent} %",
+  "audio.progress_label": "Ход транскрипции",
   "audio.ready": "Транскрипт готов.",
   "audio.failed": "Не удалось создать транскрипт.",
   "audio.generate": "Создать аудиотранскрипт",

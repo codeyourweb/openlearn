@@ -1637,6 +1637,7 @@ export const es = {
   "audio.start": "Iniciar la transcripción",
   "audio.queued": "Esperando al motor de voz…",
   "audio.progress": "{message} — {percent} %",
+  "audio.progress_label": "Progreso de la transcripción",
   "audio.ready": "Transcripción lista.",
   "audio.failed": "La transcripción ha fallado.",
   "audio.generate": "Crear una transcripción de audio",

@@ -1637,6 +1637,7 @@ export const ja = {
   "audio.start": "作成を開始",
   "audio.queued": "音声エンジンを待っています…",
   "audio.progress": "{message} — {percent} %",
+  "audio.progress_label": "文字起こしの進捗",
   "audio.ready": "文字起こしの準備ができました。",
   "audio.failed": "文字起こしに失敗しました。",
   "audio.generate": "音声文字起こしを作成",

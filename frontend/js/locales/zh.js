@@ -1637,6 +1637,7 @@ export const zh = {
   "audio.start": "开始生成",
   "audio.queued": "正在等待语音引擎……",
   "audio.progress": "{message} — {percent} %",
+  "audio.progress_label": "转录进度",
   "audio.ready": "转录已就绪。",
   "audio.failed": "生成转录失败。",
   "audio.generate": "创建语音转录",

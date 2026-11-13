@@ -1637,6 +1637,7 @@ export const fr = {
   "audio.start": "Lancer la transcription",
   "audio.queued": "En attente du moteur de synthèse…",
   "audio.progress": "{message} — {percent} %",
+  "audio.progress_label": "Progression de la transcription",
   "audio.ready": "Transcription prête.",
   "audio.failed": "La transcription a échoué.",
   "audio.generate": "Créer une transcription audio",

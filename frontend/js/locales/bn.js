@@ -1637,6 +1637,7 @@ export const bn = {
   "audio.start": "ট্রান্সক্রিপ্ট শুরু করুন",
   "audio.queued": "কণ্ঠ ইঞ্জিনের অপেক্ষায়…",
   "audio.progress": "{message} — {percent} %",
+  "audio.progress_label": "প্রতিলিপির অগ্রগতি",
   "audio.ready": "ট্রান্সক্রিপ্ট প্রস্তুত।",
   "audio.failed": "ট্রান্সক্রিপ্ট তৈরি হয়নি।",
   "audio.generate": "অডিও ট্রান্সক্রিপ্ট তৈরি করুন",

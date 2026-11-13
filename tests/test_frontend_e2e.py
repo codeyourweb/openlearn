@@ -73,6 +73,51 @@ class ConsoleRecorder:
                 return
             self.errors.append(f"console: {text}")
 
+CONTRAST_RATIO = """
+() => {
+  const element = document.querySelector(".tab-group.is-active");
+  if (!element) return 0;
+  const parse = (value) => {
+    const match = /rgba?\\(([^)]+)\\)/.exec(value || "");
+    if (!match) return null;
+    const parts = match[1].split(/[\\s,\\/]+/).filter(Boolean).map(Number);
+    return { r: parts[0], g: parts[1], b: parts[2], a: parts.length > 3 ? parts[3] : 1 };
+  };
+  // The active rubric paints a translucent tint over whatever surface holds
+  // it, so the real background is the composite down to the first opaque one.
+  const layers = [];
+  for (let node = element; node; node = node.parentElement) {
+    const colour = parse(getComputedStyle(node).backgroundColor);
+    if (colour && colour.a > 0) layers.push(colour);
+    if (colour && colour.a >= 1) break;
+  }
+  const page = parse(getComputedStyle(document.body).backgroundColor);
+  let background = page && page.a >= 1 ? page : { r: 255, g: 255, b: 255, a: 1 };
+  for (let index = layers.length - 1; index >= 0; index -= 1) {
+    const top = layers[index];
+    background = {
+      r: top.r * top.a + background.r * (1 - top.a),
+      g: top.g * top.a + background.g * (1 - top.a),
+      b: top.b * top.a + background.b * (1 - top.a),
+      a: 1,
+    };
+  }
+  const luminance = (colour) => {
+    const channel = (value) => {
+      const scaled = value / 255;
+      return scaled <= 0.03928 ? scaled / 12.92 : ((scaled + 0.055) / 1.055) ** 2.4;
+    };
+    return 0.2126 * channel(colour.r) + 0.7152 * channel(colour.g) + 0.0722 * channel(colour.b);
+  };
+  const text = parse(getComputedStyle(element).color) || { r: 0, g: 0, b: 0 };
+  const first = luminance(text);
+  const second = luminance(background);
+  const lighter = Math.max(first, second);
+  const darker = Math.min(first, second);
+  return (lighter + 0.05) / (darker + 0.05);
+}
+"""
+
 
 def new_page(browser, viewport=(1280, 900), force_language: bool = True):
     context = browser.new_context(viewport={"width": viewport[0], "height": viewport[1]})
@@ -2803,6 +2848,127 @@ def test_a_new_scene_opens_at_the_top_of_the_page(browser):
         page.wait_for_timeout(1200)
         assert page.evaluate("window.scrollY") <= 4, "the next scene opened where the previous one ended"
         assert "Second scene." in page.locator(".adv-text").first.inner_text()
+        assert not [error for error in recorder.errors if "pageerror" in error], recorder.errors
+    finally:
+        context.close()
+
+
+def test_a_scene_offers_a_transcript_that_opens(browser):
+    """The button on an adventure scene must open the dialog, not swallow the click.
+
+    Amandine reported a button that did nothing. The handler read the tone of a
+    rendition that did not exist yet, threw inside the listener, and left the
+    page looking untouched — the failure that tells an author nothing.
+    """
+    context, page, recorder = new_page(browser, viewport=(1440, 950))
+    try:
+        register_through_ui(page, f"scene-speech-{uuid.uuid4().hex[:10]}@example.org", "Autrice")
+        api = context.request
+        status = api.get(f"{BASE_URL}/api/v1/audio/status").json()
+        if not status.get("enabled"):
+            pytest.skip("this instance has no speech engine.")
+
+        csrf = next(
+            (cookie["value"] for cookie in context.cookies() if cookie["name"] == "ol_csrf"), ""
+        )
+        created = api.post(
+            f"{BASE_URL}/api/v1/quizzes",
+            headers={"X-CSRF-Token": csrf},
+            data={
+                "title": "La scène qu'on écoute",
+                "description": "One scene, one narrator.",
+                "mode": "adventure",
+                "is_public": False,
+                "adventure": {
+                    "start": "start",
+                    "death_text_html": "<p>Perdu.</p>",
+                    "victory_text_html": "<p>Gagné.</p>",
+                    "attributes": [
+                        {"key": "hope", "label": "Espoir", "initial_value": 2,
+                         "min_value": 0, "max_value": 10}
+                    ],
+                    "nodes": [
+                        {
+                            "key": "start",
+                            "kind": "question",
+                            "text_html": "<p>Le vent se lève sur la lande et la porte claque.</p>",
+                            "pos_x": 0,
+                            "pos_y": 0,
+                            "choices": [
+                                {"key": "go", "text": "Avancer", "target": "next", "effects": []},
+                                {"key": "wait", "text": "Attendre", "target": "next", "effects": []},
+                            ],
+                        },
+                        {
+                            "key": "next",
+                            "kind": "ending",
+                            "text_html": "<p>La lande s'ouvre sur la mer.</p>",
+                            "pos_x": 400,
+                            "pos_y": 0,
+                            "outcomes": [
+                                {"kind": "default", "text_html": "<p>Fini.</p>", "priority": 9}
+                            ],
+                        },
+                    ],
+                },
+            },
+        )
+        assert created.status == 201, created.text()
+        quiz_id = created.json()["id"]
+
+        page.goto(f"{BASE_URL}/adventures/{quiz_id}/edit", wait_until="networkidle")
+        page.wait_for_selector('[data-node="start"]', timeout=20000)
+        page.click('[data-node="start"]')
+
+        generate = page.locator('#scene-audio [data-audio-action="generate"]')
+        expect(generate).to_be_visible(timeout=20000)
+        generate.click()
+
+        dialog = page.locator("#audio-gen")
+        expect(dialog).to_be_visible(timeout=10000)
+        assert dialog.locator("[data-audio-start]").count() == 1, "the dialog offers no start button"
+        assert dialog.locator("[data-audio-estimate]").inner_text().strip(), "no estimate is shown"
+        assert dialog.locator("[data-audio-progress]").is_hidden(), "the bar shows before any work"
+
+        page.click('#audio-gen button[value="cancel"]')
+        expect(dialog).to_be_hidden(timeout=5000)
+        assert not [error for error in recorder.errors if "pageerror" in error], recorder.errors
+    finally:
+        context.close()
+
+
+def test_the_selected_rubric_stays_readable_in_both_themes(browser):
+    """A rubric tab carries --on-accent on a surface tint: white on white, black on black.
+
+    The selected rubric used the ink meant for the accent gradient while its
+    background was a pale surface, so the label vanished in both themes. The
+    ratio is measured, not eyeballed, because the defect is exactly what an
+    eyeball misses on a quick pass.
+    """
+    admin_email = os.environ.get("OL_TEST_ADMIN_EMAIL", "")
+    admin_password = os.environ.get("OL_TEST_ADMIN_PASSWORD", "")
+    if not (admin_email and admin_password):
+        pytest.skip("OL_TEST_ADMIN_EMAIL / OL_TEST_ADMIN_PASSWORD are not set.")
+
+    context, page, recorder = new_page(browser, viewport=(1440, 950))
+    try:
+        page.goto(f"{BASE_URL}/login", wait_until="networkidle")
+        page.fill("#email", admin_email)
+        page.fill("#password", admin_password)
+        page.click("#login-form button[type=submit]")
+        expect(page).to_have_url(re.compile(r".*/(dashboard)?$"), timeout=15000)
+
+        page.goto(f"{BASE_URL}/admin", wait_until="networkidle")
+        page.wait_for_selector(".tab-group.is-active", timeout=20000)
+        assert page.locator(".tab-group").count() == 4, "the first block no longer holds four rubrics"
+
+        dark = page.evaluate(CONTRAST_RATIO)
+        page.evaluate("() => { document.documentElement.dataset.theme = 'light'; }")
+        page.wait_for_timeout(200)
+        light = page.evaluate(CONTRAST_RATIO)
+
+        assert dark >= 4.5, f"the selected rubric is unreadable in the dark theme (ratio {dark:.2f})"
+        assert light >= 4.5, f"the selected rubric is unreadable in the light theme (ratio {light:.2f})"
         assert not [error for error in recorder.errors if "pageerror" in error], recorder.errors
     finally:
         context.close()

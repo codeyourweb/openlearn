@@ -276,6 +276,11 @@ export function openGenerator({ ownerType, ownerId, language, chars = 0, title =
       <p class="muted small" data-audio-estimate>
         ${escapeHtml(t("audio.estimate", { minutes: cpuMinutes, audio: clock(audioSeconds) }))}
       </p>
+      <div class="audio-progress" data-audio-progress role="progressbar" hidden
+           aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"
+           aria-label="${escapeHtml(t("audio.progress_label"))}" data-state="queued">
+        <div class="audio-progress-fill" data-audio-progress-fill></div>
+      </div>
       <p class="audio-gen-status" data-audio-status role="status" aria-live="polite"></p>
       <div class="row-wrap end">
         <button class="btn btn-ghost" value="cancel" formnovalidate>${escapeHtml(t("action.cancel"))}</button>
@@ -286,7 +291,22 @@ export function openGenerator({ ownerType, ownerId, language, chars = 0, title =
 
   const status = dialog.querySelector("[data-audio-status]");
   const startButton = dialog.querySelector("[data-audio-start]");
+  const progress = dialog.querySelector("[data-audio-progress]");
+  const progressFill = dialog.querySelector("[data-audio-progress-fill]");
   let timer = null;
+
+  // The estimate above is a guess made from the character count; this is the
+  // engine's own answer. Queued has no measurement yet, so the bar travels
+  // instead of pretending to know.
+  const showProgress = (value) => {
+    const percent = Math.max(0, Math.min(100, Math.round(Number(value) || 0)));
+    progress.hidden = false;
+    progress.dataset.state = percent >= 100 ? "done" : percent > 0 ? "running" : "queued";
+    // Zero clears the inline width so the travelling band of the queued state
+    // can play; an inline `0%` would outrank that rule.
+    progressFill.style.width = percent === 0 ? "" : percent >= 100 ? "100%" : `${percent}%`;
+    progress.setAttribute("aria-valuenow", String(percent));
+  };
 
   const close = () => {
     if (timer) clearInterval(timer);
@@ -303,6 +323,7 @@ export function openGenerator({ ownerType, ownerId, language, chars = 0, title =
     const voice = dialog.querySelector('[name="audio-voice"]:checked')?.value || "female";
     const chosenTone = dialog.querySelector("#audio-tone")?.value || "neutral";
     startButton.disabled = true;
+    showProgress(0);
     status.textContent = t("audio.queued");
     let job;
     try {
@@ -326,12 +347,14 @@ export function openGenerator({ ownerType, ownerId, language, chars = 0, title =
       try {
         const state = await api.get(`/api/v1/audio/jobs/${job.job_id}`);
         if (state.status === "running" || state.status === "queued") {
+          showProgress(state.progress);
           status.textContent = t("audio.progress", { message: state.message || "…", percent: state.progress });
           return;
         }
         clearInterval(timer);
         timer = null;
         if (state.status === "done") {
+          showProgress(100);
           status.textContent = t("audio.ready");
           toast(t("audio.ready"), "success");
           onReady?.(state.result);
@@ -402,11 +425,12 @@ export async function mountAudioControls(container, { ownerType, ownerId, langua
     const row = document.createElement("div");
     row.className = "audio-controls-row";
 
-    const button = (label, className, action) => {
+    const button = (label, className, action, hook = "") => {
       const element = document.createElement("button");
       element.type = "button";
       element.className = className;
       element.textContent = label;
+      if (hook) element.dataset.audioAction = hook;  // stable name for the suite
       element.addEventListener("click", action);
       return element;
     };
@@ -428,12 +452,18 @@ export async function mountAudioControls(container, { ownerType, ownerId, langua
             language,
             title,
             chars,
-            tone: rendition.tone || "neutral",
+            // There is no rendition yet, so there is no tone to read: this
+            // branch used to reach for `rendition`, declared further down and
+            // never initialised here. The read threw inside the click handler
+            // and the button looked dead — the defect Amandine reported on her
+            // adventure. A new transcript starts neutral.
+            tone: "neutral",
             onReady: () => {
               void paint();
               onReady?.();
             },
           }),
+          "generate",
         ),
       );
       container.append(row);
@@ -456,7 +486,7 @@ export async function mountAudioControls(container, { ownerType, ownerId, langua
           void mountPlayer(host, { ownerType, ownerId, language: rendition.language || language });
         }
         host.hidden = false;
-      }),
+      }, "listen"),
       button(t("audio.redo"), "btn btn-sm btn-ghost", () =>
         openGenerator({
           ownerType,
@@ -470,6 +500,7 @@ export async function mountAudioControls(container, { ownerType, ownerId, langua
             onReady?.();
           },
         }),
+        "redo",
       ),
       button(t("audio.remove"), "btn btn-sm btn-ghost btn-danger", async () => {
         const agreed = await confirmDialog(t("audio.remove"), t("audio.remove_confirm"), t("action.delete"));
@@ -483,7 +514,7 @@ export async function mountAudioControls(container, { ownerType, ownerId, langua
         } catch (error) {
           toast(error?.detail || t("error.generic"), "error");
         }
-      }),
+      }, "remove"),
     );
     container.append(row, host);
   };

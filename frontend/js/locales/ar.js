@@ -1637,6 +1637,7 @@ export const ar = {
   "audio.start": "ابدأ النص الصوتي",
   "audio.queued": "في انتظار محرك الصوت…",
   "audio.progress": "{message} — {percent} %",
+  "audio.progress_label": "تقدم النسخ",
   "audio.ready": "النص الصوتي جاهز.",
   "audio.failed": "فشل إنشاء النص الصوتي.",
   "audio.generate": "إنشاء نص صوتي",

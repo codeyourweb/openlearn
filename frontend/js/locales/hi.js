@@ -1637,6 +1637,7 @@ export const hi = {
   "audio.start": "ट्रांसक्रिप्ट शुरू करें",
   "audio.queued": "आवाज़ इंजन की प्रतीक्षा…",
   "audio.progress": "{message} — {percent} %",
+  "audio.progress_label": "ट्रांसक्रिप्ट की प्रगति",
   "audio.ready": "ट्रांसक्रिप्ट तैयार है।",
   "audio.failed": "ट्रांसक्रिप्ट नहीं बन सका।",
   "audio.generate": "ऑडियो ट्रांसक्रिप्ट बनाएँ",
