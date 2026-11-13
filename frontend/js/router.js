@@ -86,6 +86,9 @@ export async function render() {
   /* The route names the screen, so a style or a behaviour can be scoped to it
      without every page carrying a class of its own. */
   document.body.dataset.route = pathname;
+  /* A view is about to disappear: anything it started outside the DOM — a
+     playing transcript, a timer — is told so before its markup is replaced. */
+  document.dispatchEvent(new CustomEvent("ol:leave", { detail: { path: pathname } }));
   const found = matchRoute(pathname);
   const query = Object.fromEntries(new URLSearchParams(search));
   app.innerHTML = '<div class="loading">Loading…</div>';

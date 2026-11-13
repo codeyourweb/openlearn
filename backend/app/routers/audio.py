@@ -103,6 +103,8 @@ def render(
         raise HTTPException(status_code=403, detail="You cannot generate audio for this document.")
     if payload.voice not in audio.VOICES:
         raise HTTPException(status_code=422, detail="voice must be female or male.")
+    if payload.tone not in audio.TONES:
+        raise HTTPException(status_code=422, detail="Unknown tone.")
 
     # An explicit language is honoured or refused; it is never quietly replaced
     # by the document's language, which would produce audio nobody can use.
@@ -123,7 +125,7 @@ def render(
         raise HTTPException(status_code=422, detail=str(exc)) from exc
 
     key = hashlib.sha256(
-        f"{payload.owner_type}:{payload.owner_id}:{language}:{payload.voice}:{digest}".encode()
+        f"{payload.owner_type}:{payload.owner_id}:{language}:{payload.voice}:{payload.tone}:{digest}".encode()
     ).hexdigest()[:32]
     try:
         job = wiki_ai.claim_job(
@@ -137,6 +139,7 @@ def render(
                 "owner_type": payload.owner_type,
                 "owner_id": payload.owner_id,
                 "voice": payload.voice,
+                "tone": payload.tone,
                 "language": language,
                 "fallback": fallback,
                 "segments": len(chunks),
@@ -149,7 +152,12 @@ def render(
             detail={"message": "This transcript is already being generated.", "job_id": conflict.job_id},
         ) from conflict
 
-    audit.record(db, "audio.render", user=user, detail=f"{payload.owner_type}:{payload.owner_id} {language}/{payload.voice}")
+    audit.record(
+        db,
+        "audio.render",
+        user=user,
+        detail=f"{payload.owner_type}:{payload.owner_id} {language}/{payload.voice}/{payload.tone}",
+    )
     tasks.add_task(wiki_ai.run_job, job.id)
     return {
         "job_id": job.id,
@@ -192,6 +200,7 @@ def renditions(
                 "id": row.id,
                 "language": row.language,
                 "voice": row.voice,
+                "tone": row.tone,
                 "title": row.title,
                 "seconds": row.total_seconds,
                 "segments": row.segments,
@@ -215,9 +224,14 @@ def delete_rendition(
         raise HTTPException(status_code=404, detail="Transcript not found.")
     if not writable:
         raise HTTPException(status_code=403, detail="You cannot remove this transcript.")
-    db.delete(row)
-    db.commit()
-    audit.record(db, "audio.delete", user=user, detail=f"{row.owner_type}:{row.owner_id}")
+    owner_type, owner_id, language = row.owner_type, row.owner_id, row.language
+    removed = audio.purge_renditions(db, owner_type, owner_id, rendition=row)
+    audit.record(
+        db,
+        "audio.delete",
+        user=user,
+        detail=f"{owner_type}:{owner_id} {language} ({removed} segments)",
+    )
 
 
 @router.get("/audio/jobs/{job_id}", summary="Progress of a transcript request")

@@ -36,6 +36,21 @@ CHARS_PER_AUDIO_SECOND = 15.4
 
 VOICES = ("female", "male")
 
+# How the narrator carries the text. A wiki article and a children's adventure
+# read the same sentence differently, so this is chosen per transcript, not once
+# for the instance.
+TONES = ("neutral", "formal", "warm", "lively")
+
+# What each tone asks the engine, in its own words. Written as a direction to a
+# narrator rather than an adjective: the engine follows a brief better than a
+# label, and an empty brief is how the neutral voice is obtained.
+TONE_BRIEF = {
+    "neutral": "",
+    "formal": "Read in a calm, precise, professional tone, as in a lecture or a briefing.",
+    "warm": "Read in a warm, kind, unhurried tone, as if explaining to someone you care about.",
+    "lively": "Read with energy and enthusiasm, lively but still clear and articulate.",
+}
+
 # One synthesis at a time across the whole process, whatever the thread pool
 # hands us. Requests queue; nothing is refused for that reason.
 _synthesis = threading.Semaphore(max(1, settings.audio_concurrency))
@@ -259,15 +274,18 @@ def script_for(db: OrmSession, owner_type: str, owner_id: int, language: str) ->
 # ---------------------------------------------------------------------------
 
 
-def _speak(text: str, language: str, voice: str) -> tuple[bytes, float]:
+def _speak(text: str, language: str, voice: str, tone: str = "neutral") -> tuple[bytes, float]:
     url = settings.audio_service_url.rstrip("/") + "/v1/audio/speech"
-    payload = {
+    payload: dict[str, str] = {
         "model": settings.audio_model,
         "input": text,
         "voice": voice_name(voice),
         "language": language,
         "response_format": "mp3",
     }
+    brief = TONE_BRIEF.get(tone, "")
+    if brief:
+        payload["instruct"] = brief
     try:
         with httpx.Client(timeout=settings.audio_timeout_seconds) as client:
             response = client.post(url, json=payload)
@@ -300,17 +318,19 @@ def _store(audio: bytes) -> str:
     return f"/media/{filename}"
 
 
-def _cache_key(text: str, language: str, voice: str) -> str:
-    body = f"{settings.audio_model}|{language}|{voice_name(voice)}|{text}"
+def _cache_key(text: str, language: str, voice: str, tone: str = "neutral") -> str:
+    # The tone belongs to the key: without it, asking for the same paragraph in a
+    # different voice would hand back the neutral recording, forever.
+    body = f"{settings.audio_model}|{language}|{voice_name(voice)}|{tone}|{text}"
     return hashlib.sha256(body.encode("utf-8")).hexdigest()
 
 
-def _segment(db: OrmSession, text: str, language: str, voice: str) -> AudioSegment:
-    key = _cache_key(text, language, voice)
+def _segment(db: OrmSession, text: str, language: str, voice: str, tone: str = "neutral") -> AudioSegment:
+    key = _cache_key(text, language, voice, tone)
     existing = db.scalar(select(AudioSegment).where(AudioSegment.cache_key == key))
     if existing is not None:
         return existing
-    audio, seconds = _speak(text, language, voice)
+    audio, seconds = _speak(text, language, voice, tone)
     if not seconds:
         # Some engines do not report the duration; a 64 kbit/s mono MP3 carries
         # about 8 KiB per second, which is enough to size the player.
@@ -319,6 +339,7 @@ def _segment(db: OrmSession, text: str, language: str, voice: str) -> AudioSegme
         cache_key=key,
         language=language,
         voice=voice,
+        tone=tone,
         model=settings.audio_model,
         path=_store(audio),
         seconds=round(seconds, 2),
@@ -337,6 +358,9 @@ def run_audio_job(db: OrmSession, job: AiJob) -> dict:
     voice = str(payload.get("voice") or "female")
     if voice not in VOICES:
         raise AudioUnavailable("Unknown voice.")
+    tone = str(payload.get("tone") or "neutral")
+    if tone not in TONES:
+        raise AudioUnavailable("Unknown tone.")
     if not is_enabled():
         raise AudioUnavailable("Audio is not enabled on this instance.")
     language = normalise_language(str(payload.get("language") or ""), str(payload.get("fallback") or "en"))
@@ -348,7 +372,7 @@ def run_audio_job(db: OrmSession, job: AiJob) -> dict:
         segments: list[dict] = []
         for index, piece in enumerate(chunks, start=1):
             _progress(db, job, int(100 * (index - 1) / total), f"{index}/{total}")
-            segment = _segment(db, piece["text"], language, voice)
+            segment = _segment(db, piece["text"], language, voice, tone)
             segments.append(
                 {
                     "n": index,
@@ -365,6 +389,7 @@ def run_audio_job(db: OrmSession, job: AiJob) -> dict:
             AudioRendition.owner_id == owner_id,
             AudioRendition.language == language,
             AudioRendition.voice == voice,
+            AudioRendition.tone == tone,
         )
     ).all()
     for old in previous:
@@ -374,6 +399,7 @@ def run_audio_job(db: OrmSession, job: AiJob) -> dict:
         owner_id=owner_id,
         language=language,
         voice=voice,
+        tone=tone,
         model=settings.audio_model,
         title=title[:200],
         content_hash=digest,
@@ -420,3 +446,78 @@ def current_hash(db: OrmSession, owner_type: str, owner_id: int, language: str) 
     except AudioUnavailable:
         return ""
     return digest
+
+
+def purge_renditions(
+    db: OrmSession,
+    owner_type: str,
+    owner_id: int,
+    *,
+    rendition: AudioRendition | None = None,
+    language: str | None = None,
+    voice: str | None = None,
+) -> int:
+    """Delete renditions, then the cached pieces no other document still uses.
+
+    Removing the row alone was not enough: the segment cache kept the file, so the
+    next request returned the old recording in a fraction of a second and the
+    interface said "ready" — the deletion had never happened. A segment is only
+    removed when nothing else points at it, since two pages may share a sentence.
+    """
+    query = select(AudioRendition).where(
+        AudioRendition.owner_type == owner_type, AudioRendition.owner_id == owner_id
+    )
+    if rendition is not None:
+        query = query.where(AudioRendition.id == rendition.id)
+    if language:
+        query = query.where(AudioRendition.language == language)
+    if voice:
+        query = query.where(AudioRendition.voice == voice)
+    rows = list(db.scalars(query).all())
+    if not rows:
+        return 0
+
+    paths: set[str] = set()
+    for row in rows:
+        for segment in row.segments or []:
+            path = str(segment.get("path") or "")
+            if path:
+                paths.add(path)
+        db.delete(row)
+    db.commit()
+
+    if not paths:
+        return 0
+
+    # What the rest of the database still references, read once.
+    still_used: set[str] = set()
+    for other in db.scalars(select(AudioRendition)).all():
+        for segment in other.segments or []:
+            path = str(segment.get("path") or "")
+            if path:
+                still_used.add(path)
+
+    removed = 0
+    for segment in db.scalars(select(AudioSegment).where(AudioSegment.path.in_(paths))).all():
+        if segment.path in still_used:
+            continue
+        media = _media_file(segment.path)
+        db.delete(segment)
+        removed += 1
+        if media is not None:
+            media.unlink(missing_ok=True)
+    db.commit()
+    return removed
+
+
+def _media_file(path: str):
+    """The file behind a ``/media/...`` path, if it is inside the media directory."""
+    name = path.rsplit("/", 1)[-1]
+    if not name or "/" in name or name.startswith("."):
+        return None
+    candidate = settings.media_dir / name
+    try:
+        candidate.resolve().relative_to(settings.media_dir.resolve())
+    except (ValueError, OSError):
+        return None
+    return candidate

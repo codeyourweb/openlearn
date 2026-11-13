@@ -15,6 +15,26 @@ import { confirmDialog, escapeHtml, toast } from "./ui.js";
 
 const SPEEDS = [0.8, 1, 1.25, 1.5];
 
+/* Playback lives in a detached <audio> element, not in the page markup, so
+ * replacing the view does not stop it: the sound went on with no control left
+ * to stop it. The router announces a view change and every mounted player
+ * registers a stopper here; the set is cleared after each announcement, so a
+ * page visited ten times does not hold ten listeners. */
+const stoppers = new Set();
+
+document.addEventListener("ol:leave", () => {
+  for (const stop of stoppers) {
+    try {
+      stop();
+    } catch {
+      /* a player already gone must not block the others */
+    }
+  }
+  stoppers.clear();
+});
+
+const TONES = ["neutral", "formal", "warm", "lively"];
+
 function clock(seconds) {
   const total = Math.max(0, Math.round(seconds));
   const minutes = Math.floor(total / 60);
@@ -125,6 +145,15 @@ export async function mountPlayer(host, { ownerType, ownerId, language = null } 
       button.setAttribute("aria-pressed", "false");
       button.setAttribute("aria-label", t("audio.play"));
     };
+    // Leaving the page must silence the narrator, and release the file.
+    stoppers.add(() => {
+      if (audio) {
+        audio.pause();
+        audio.removeAttribute("src");
+        audio.load();
+      }
+      stop();
+    });
     const start = () => {
       playing = true;
       button.textContent = "❚❚";
@@ -208,7 +237,8 @@ export async function mountPlayer(host, { ownerType, ownerId, language = null } 
  * Everything expensive happens in a background job on the server; this only
  * shows how far along it is, and never blocks the editor.
  */
-export function openGenerator({ ownerType, ownerId, language, chars = 0, title = "", onReady }) {
+export function openGenerator({ ownerType, ownerId, language, chars = 0, title = "", tone = "neutral", onReady }) {
+  const initialTone = TONES.includes(tone) ? tone : "neutral";
   const existing = document.querySelector("#audio-gen");
   existing?.remove();
 
@@ -233,6 +263,16 @@ export function openGenerator({ ownerType, ownerId, language, chars = 0, title =
           <span>${escapeHtml(t("audio.voice_male"))}</span>
         </label>
       </fieldset>
+      <div class="field">
+        <label class="label" for="audio-tone">${escapeHtml(t("audio.tone"))}</label>
+        <select class="input" id="audio-tone" name="audio-tone">
+          ${TONES.map(
+            (tone) =>
+              `<option value="${tone}"${tone === initialTone ? " selected" : ""}>${escapeHtml(t(`audio.tone_${tone}`))}</option>`,
+          ).join("")}
+        </select>
+        <p class="hint">${escapeHtml(t("audio.tone_help"))}</p>
+      </div>
       <p class="muted small" data-audio-estimate>
         ${escapeHtml(t("audio.estimate", { minutes: cpuMinutes, audio: clock(audioSeconds) }))}
       </p>
@@ -261,6 +301,7 @@ export function openGenerator({ ownerType, ownerId, language, chars = 0, title =
   startButton.addEventListener("click", async (event) => {
     event.preventDefault();
     const voice = dialog.querySelector('[name="audio-voice"]:checked')?.value || "female";
+    const chosenTone = dialog.querySelector("#audio-tone")?.value || "neutral";
     startButton.disabled = true;
     status.textContent = t("audio.queued");
     let job;
@@ -269,6 +310,7 @@ export function openGenerator({ ownerType, ownerId, language, chars = 0, title =
         owner_type: ownerType,
         owner_id: ownerId,
         voice,
+        tone: chosenTone,
         language: language || null,
       });
     } catch (error) {
@@ -386,6 +428,7 @@ export async function mountAudioControls(container, { ownerType, ownerId, langua
             language,
             title,
             chars,
+            tone: rendition.tone || "neutral",
             onReady: () => {
               void paint();
               onReady?.();
@@ -398,9 +441,10 @@ export async function mountAudioControls(container, { ownerType, ownerId, langua
     }
 
     const rendition = renditions[0];
+    const toneLabel = rendition.tone && rendition.tone !== "neutral" ? ` · ${t(`audio.tone_${rendition.tone}`)}` : "";
     const state = document.createElement("span");
     state.className = "audio-controls-state";
-    state.textContent = t("audio.ready_at", { duration: clock(totalOf(rendition)) });
+    state.textContent = t("audio.ready_at", { duration: clock(totalOf(rendition)) }) + toneLabel;
     row.append(state);
 
     // Listening here beats reloading the page: the author is judging a voice.
@@ -420,6 +464,7 @@ export async function mountAudioControls(container, { ownerType, ownerId, langua
           language,
           title,
           chars,
+          tone: rendition.tone || "neutral",
           onReady: () => {
             void paint();
             onReady?.();

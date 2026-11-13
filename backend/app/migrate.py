@@ -108,6 +108,14 @@ _COLUMNS: dict[str, dict[str, str]] = {
         # The same framing, on the scene illustration.
         "image_framing": "JSON",
     },
+    "audio_renditions": {
+        # How the narrator carries the text: neutral, formal, warm, lively.
+        "tone": "VARCHAR(16) NOT NULL DEFAULT 'neutral'",
+    },
+    "audio_segments": {
+        # The intonation is part of the cache key, so it is part of the row.
+        "tone": "VARCHAR(16) NOT NULL DEFAULT 'neutral'",
+    },
 }
 
 

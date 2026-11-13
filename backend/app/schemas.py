@@ -959,6 +959,9 @@ class AudioRenderIn(BaseModel):
     owner_type: Literal["page", "quiz", "node"]
     owner_id: int = Field(gt=0)
     voice: Literal["female", "male"] = "female"
+    # How the narrator carries the text: an adventure and a reference article do
+    # not read the same way, and the choice belongs to the author.
+    tone: Literal["neutral", "formal", "warm", "lively"] = "neutral"
     # Optional: an instance where the document is written in a language other
     # than its declared one can say so explicitly.
     language: str | None = Field(default=None, max_length=8)

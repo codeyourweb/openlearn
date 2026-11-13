@@ -107,14 +107,38 @@ A transcript belongs to **one page or one scene**, never to a whole story. The
 author controls it from the document itself:
 
 - nothing yet → “Create the transcript”, with the choice of a female or a male
-  voice;
+  voice **and a narrator tone**;
 - ready → “Transcript ready · 0:42”, then *Listen*, *Make it again* and *Remove*;
 - unavailable → the block is not rendered at all.
 
-*Make it again* replaces the previous rendition for the same voice and language,
-so an author who dislikes a reading never ends up with two versions of it.
-*Remove* deletes the rendition: the player disappears from the page, which is how
-an author gives up on the audio of one portion without touching the rest.
+### The narrator tone
+
+Four readings of the same paragraph:
+
+| Tone | Sent to the engine as |
+| --- | --- |
+| `neutral` | nothing: the engine's own reading |
+| `formal` | “a calm, precise, professional tone, as in a lecture or a briefing” |
+| `warm` | “a warm, kind, unhurried tone, as if explaining to someone you care about” |
+| `lively` | “energy and enthusiasm, lively but still clear and articulate” |
+
+A reference page and a children's adventure do not read the same way, so the
+tone is chosen per transcript, shown beside the duration, and kept when *Make it
+again* is pressed. It is part of the cache key: asking for the same paragraph in
+a warmer voice is a second recording, never the neutral one replayed.
+
+*Make it again* replaces the previous rendition for the same voice, **tone** and
+language, so an author who dislikes a reading never ends up with two versions of
+it. *Remove* deletes the rendition **and the cached pieces nothing else uses**:
+the player disappears from the page and the next request really synthesises
+again. (Removing the row alone used to leave the segments in place, so asking
+again answered from the cache in a fraction of a second — the recording the
+author had just deleted came back.) A segment still pointed at by another page
+survives, since two documents may share a sentence.
+
+Leaving the page stops the narrator: the router announces the view change, and
+every mounted player pauses and releases its file. A detached `Audio` object
+used to keep playing with no control left on screen.
 
 An adventure therefore gets exactly the scenes its author asked for. Rendering
 scene 4 of 13 costs one scene of CPU, not the whole graph.
@@ -123,9 +147,9 @@ scene 4 of 13 costs one scene of CPU, not the whole graph.
 
 - One MP3 per ≈900-character chunk, in the media directory, served like any
   other `/media/...` file.
-- Segments are cached on the hash of their text, voice, language and model: a
-  12 000-character page with one corrected sentence re-synthesises **one**
-  segment, not thirteen.
+- Segments are cached on the hash of their text, voice, **tone**, language and
+  model: a 12 000-character page with one corrected sentence re-synthesises
+  **one** segment, not thirteen.
 - Storage is the only recurring cost on a local engine: about 8 KiB per second
   of audio, so roughly 470 KiB per minute.
 

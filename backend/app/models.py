@@ -1077,6 +1077,9 @@ class AudioSegment(Base):
     cache_key: Mapped[str] = mapped_column(String(64), index=True)
     language: Mapped[str] = mapped_column(String(5), default="en")
     voice: Mapped[str] = mapped_column(String(10), default="female")
+    # The intonation is part of the identity of the file: the same paragraph read
+    # formally and warmly are two recordings, not one.
+    tone: Mapped[str] = mapped_column(String(16), default="neutral")
     model: Mapped[str] = mapped_column(String(60), default="")
     path: Mapped[str] = mapped_column(String(200))
     seconds: Mapped[float] = mapped_column(Float, default=0.0)
@@ -1103,6 +1106,9 @@ class AudioRendition(Base):
     owner_id: Mapped[int] = mapped_column(Integer)
     language: Mapped[str] = mapped_column(String(5), default="en")
     voice: Mapped[str] = mapped_column(String(10), default="female")
+    # How the narrator carries the text (neutral, formal, warm, lively). Stored so
+    # a rendition says what it is, and so two readings of one page can coexist.
+    tone: Mapped[str] = mapped_column(String(16), default="neutral")
     model: Mapped[str] = mapped_column(String(60), default="")
     title: Mapped[str] = mapped_column(String(200), default="")
     # Hash of the script the audio was made from: an edited document shows no
@@ -1114,3 +1120,44 @@ class AudioRendition(Base):
         ForeignKey("users.id", ondelete="SET NULL")
     )
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
+
+
+class LogTarget(Base):
+    """One place the audit trail is shipped to: a syslog collector or a webhook.
+
+    A target is a row rather than a pair of settings keys so an instance can feed
+    several XDR/SIEM at once — a Splunk over HTTP, a Sekoia with its own
+    ``intake-key`` header, and a local rsyslog — and each one fails on its own.
+    The legacy ``log.syslog_*`` / ``log.http_*`` settings stay as the bootstrap:
+    they are turned into targets when this table is empty, so an existing
+    installation keeps forwarding without touching anything.
+    """
+
+    __tablename__ = "log_targets"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    label: Mapped[str] = mapped_column(String(80), default="")
+    kind: Mapped[str] = mapped_column(String(8), default="http")  # syslog | http
+    enabled: Mapped[bool] = mapped_column(Boolean, default=True)
+
+    # syslog
+    host: Mapped[str] = mapped_column(String(200), default="")
+    port: Mapped[int] = mapped_column(Integer, default=514)
+    protocol: Mapped[str] = mapped_column(String(4), default="udp")  # udp | tcp | tls
+    facility: Mapped[int] = mapped_column(Integer, default=13)
+    hostname: Mapped[str] = mapped_column(String(80), default="")
+    tls_verify: Mapped[bool] = mapped_column(Boolean, default=True)
+
+    # http(s) post
+    url: Mapped[str] = mapped_column(String(500), default="")
+    timeout_seconds: Mapped[int] = mapped_column(Integer, default=5)
+    verify_tls: Mapped[bool] = mapped_column(Boolean, default=True)
+    # Extra request headers as a JSON object: Sekoia wants ``intake-key``,
+    # Splunk HEC wants ``Authorization: Splunk <token>``, others want nothing.
+    # A value whose name looks like a credential is never returned by the API.
+    headers: Mapped[dict] = mapped_column(JSON, default=dict)
+
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), default=utcnow, onupdate=utcnow
+    )

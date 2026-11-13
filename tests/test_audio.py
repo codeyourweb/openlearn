@@ -21,10 +21,10 @@ FAKE_MP3 = b"ID3\x04\x00\x00\x00\x00\x00\x00" + b"\x00" * 512
 @pytest.fixture()
 def tts(monkeypatch):
     """Turn the feature on and record every synthesis request."""
-    calls: list[tuple[str, str, str]] = []
+    calls: list[tuple[str, str, str, str]] = []
 
-    def fake_speak(text: str, language: str, voice: str) -> tuple[bytes, float]:
-        calls.append((text, language, voice))
+    def fake_speak(text: str, language: str, voice: str, tone: str = "neutral") -> tuple[bytes, float]:
+        calls.append((text, language, voice, tone))
         return FAKE_MP3, round(len(text) / 15.4, 2)
 
     monkeypatch.setattr(audio, "_speak", fake_speak)
@@ -370,7 +370,7 @@ def test_a_service_that_answers_with_an_error_fails_the_job(client, tts, monkeyp
     register_user(client, "author@example.com")
     _, page = _wiki_with_page(client)
 
-    def exploding(text, language, voice):
+    def exploding(text, language, voice, tone="neutral"):
         raise audio.AudioUnavailable("The speech service is unreachable: ConnectError")
 
     monkeypatch.setattr(audio, "_speak", exploding)
@@ -383,3 +383,103 @@ def test_a_service_that_answers_with_an_error_fails_the_job(client, tts, monkeyp
     assert job["status"] == "error"
     assert "unreachable" in job["error"]
     assert client.get(f"/api/v1/audio/renditions?owner_type=page&owner_id={page['id']}").json()["renditions"] == []
+
+
+# ---------------------------------------------------------------------------
+# Intonation, and what removing a transcript really removes
+# ---------------------------------------------------------------------------
+
+
+def test_the_same_text_can_be_read_in_two_tones(client, tts):
+    """A warmer reading is a second recording, not the neutral one replayed."""
+    register_user(client, "tones@example.com")
+    _, page = _wiki_with_page(client)
+    for tone in ("neutral", "warm"):
+        answer = client.post(
+            "/api/v1/audio/render",
+            json={"owner_type": "page", "owner_id": page["id"], "voice": "female", "tone": tone},
+            headers=csrf_headers(client),
+        )
+        assert answer.status_code == 202, answer.text
+
+    tones = [call[3] for call in tts]
+    assert "neutral" in tones and "warm" in tones
+    # Two readings of the same sentence: the cache key must tell them apart.
+    neutral_texts = [call[0] for call in tts if call[3] == "neutral"]
+    warm_texts = [call[0] for call in tts if call[3] == "warm"]
+    assert set(neutral_texts) == set(warm_texts)
+
+    renditions = client.get(
+        f"/api/v1/audio/renditions?owner_type=page&owner_id={page['id']}"
+    ).json()["renditions"]
+    assert {row["tone"] for row in renditions} == {"neutral", "warm"}
+
+
+def test_an_unknown_tone_is_refused(client, tts):
+    register_user(client, "tone@example.com")
+    _, page = _wiki_with_page(client)
+    answer = client.post(
+        "/api/v1/audio/render",
+        json={"owner_type": "page", "owner_id": page["id"], "tone": "shouted"},
+        headers=csrf_headers(client),
+    )
+    assert answer.status_code == 422
+    assert tts == []
+
+
+def test_a_removed_transcript_is_really_synthesised_again(client, tts):
+    """Removing a transcript used to leave the cached segments in place.
+
+    The next request then answered from the cache in a fraction of a second: the
+    interface said "ready" and the reader got the recording they had just
+    deleted. Deleting frees the segments, so asking again costs real synthesis.
+    """
+    register_user(client, "purge@example.com")
+    _, page = _wiki_with_page(client)
+    body = {"owner_type": "page", "owner_id": page["id"], "voice": "female", "tone": "formal"}
+    client.post("/api/v1/audio/render", json=body, headers=csrf_headers(client))
+    first_pass = len(tts)
+    assert first_pass > 0
+
+    rendition = client.get(
+        f"/api/v1/audio/renditions?owner_type=page&owner_id={page['id']}"
+    ).json()["renditions"][0]
+    assert client.delete(
+        f"/api/v1/audio/renditions/{rendition['id']}", headers=csrf_headers(client)
+    ).status_code == 204
+
+    client.post("/api/v1/audio/render", json=body, headers=csrf_headers(client))
+    assert len(tts) > first_pass, "the second request was served from the removed cache"
+
+
+def test_a_segment_another_page_still_uses_survives_the_deletion(client, tts):
+    """Two pages may share a sentence: removing one must not silence the other."""
+    register_user(client, "shared@example.com")
+    sentence = "# Le DNS\n\nUn resolveur cache les reponses."
+    _, first = _wiki_with_page(client, sentence)
+    _, second = _wiki_with_page(client, sentence)
+    for page in (first, second):
+        client.post(
+            "/api/v1/audio/render",
+            json={"owner_type": "page", "owner_id": page["id"], "voice": "female"},
+            headers=csrf_headers(client),
+        )
+    paid = len(tts)
+    assert paid > 0, "nothing was synthesised"
+
+    rendition = client.get(
+        f"/api/v1/audio/renditions?owner_type=page&owner_id={first['id']}"
+    ).json()["renditions"][0]
+    client.delete(f"/api/v1/audio/renditions/{rendition['id']}", headers=csrf_headers(client))
+
+    # The other page still plays: its segment was kept.
+    still_there = client.get(
+        f"/api/v1/audio/renditions?owner_type=page&owner_id={second['id']}"
+    ).json()["renditions"]
+    assert still_there
+    client.post(
+        "/api/v1/audio/render",
+        json={"owner_type": "page", "owner_id": second["id"], "voice": "female"},
+        headers=csrf_headers(client),
+    )
+    assert len(tts) == paid, "a shared segment was paid for again"
