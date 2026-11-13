@@ -119,6 +119,27 @@ CONTRAST_RATIO = """
 """
 
 
+def _portrait_png(width=900, height=1600, colour=(40, 60, 90)):
+    """A tall picture, built without an image library: the framing is the point."""
+    import struct
+    import zlib
+
+    raw = b"".join(
+        b"\x00" + bytes(colour) * width for _ in range(height)
+    )
+
+    def chunk(kind, payload):
+        body = kind + payload
+        return struct.pack(">I", len(payload)) + body + struct.pack(">I", zlib.crc32(body) & 0xFFFFFFFF)
+
+    header = struct.pack(">IIBBBBB", width, height, 8, 2, 0, 0, 0)
+    return (
+        b"\x89PNG\r\n\x1a\n"
+        + chunk(b"IHDR", header)
+        + chunk(b"IDAT", zlib.compress(raw, 6))
+        + chunk(b"IEND", b"")
+    )
+
 def new_page(browser, viewport=(1280, 900), force_language: bool = True):
     context = browser.new_context(viewport={"width": viewport[0], "height": viewport[1]})
     if force_language:
@@ -2932,6 +2953,143 @@ def test_a_scene_offers_a_transcript_that_opens(browser):
 
         page.click('#audio-gen button[value="cancel"]')
         expect(dialog).to_be_hidden(timeout=5000)
+        assert not [error for error in recorder.errors if "pageerror" in error], recorder.errors
+    finally:
+        context.close()
+
+
+def test_a_scene_keeps_its_words_on_the_first_screen(browser):
+    """Illustration, player, words: all three in the first screen, at three widths.
+
+    A picture capped at 460 px and a player above the paragraph pushed the text to
+    844 px on a 900 px screen — one line visible — and off-screen entirely on a
+    phone. The words are the scene; they must not need a scroll to be believed.
+    """
+    context, page, recorder = new_page(browser, viewport=(1280, 900))
+    try:
+        register_through_ui(page, f"scene-fold-{uuid.uuid4().hex[:10]}@example.org", "Autrice")
+        api = context.request
+        csrf = next(
+            (cookie["value"] for cookie in context.cookies() if cookie["name"] == "ol_csrf"), ""
+        )
+        headers = {"X-CSRF-Token": csrf}
+
+        picture = _portrait_png()
+        uploaded = api.post(
+            f"{BASE_URL}/api/v1/uploads/question-image",
+            headers=headers,
+            multipart={"file": {"name": "portrait.png", "mimeType": "image/png", "buffer": picture}},
+        )
+        assert uploaded.status == 201, uploaded.text()
+        image_path = uploaded.json()["path"]
+
+        created = api.post(
+            f"{BASE_URL}/api/v1/quizzes",
+            headers=headers,
+            data={
+                "title": "Le texte et la voix",
+                "description": "",
+                "mode": "adventure",
+                "is_public": False,
+                "adventure": {
+                    "start": "start",
+                    "death_text_html": "<p>Perdu.</p>",
+                    "victory_text_html": "<p>Gagné.</p>",
+                    "attributes": [
+                        {"key": "hope", "label": "Espoir", "initial_value": 2,
+                         "min_value": 0, "max_value": 10}
+                    ],
+                    "nodes": [
+                        {
+                            "key": "start",
+                            "kind": "question",
+                            "text_html": "<p>" + ("Le vent se lève et la porte claque. " * 14) + "</p>",
+                            "pos_x": 0,
+                            "pos_y": 0,
+                            "image_path": image_path,
+                            "choices": [
+                                {"key": "go", "text": "Sortir", "target": "next", "effects": []},
+                                {"key": "wait", "text": "Rester", "target": "next", "effects": []},
+                            ],
+                        },
+                        {
+                            "key": "next",
+                            "kind": "ending",
+                            "text_html": "<p>La lande s'ouvre sur la mer.</p>",
+                            "pos_x": 400,
+                            "pos_y": 0,
+                            "outcomes": [
+                                {"kind": "default", "text_html": "<p>Fini.</p>", "priority": 9}
+                            ],
+                        },
+                    ],
+                },
+            },
+        )
+        assert created.status == 201, created.text()
+        quiz_id = created.json()["id"]
+
+        # The player is what squeezed the paragraph, so the scenario carries one.
+        page.route(
+            "**/api/v1/audio/status",
+            lambda route: route.fulfill(
+                status=200,
+                content_type="application/json",
+                body='{"enabled": true, "languages": ["fr"], "max_chars": 12000}',
+            ),
+        )
+        page.route(
+            "**/api/v1/audio/renditions**",
+            lambda route: route.fulfill(
+                status=200,
+                content_type="application/json",
+                body=json.dumps(
+                    {
+                        "enabled": True,
+                        "renditions": [
+                            {
+                                "id": 1,
+                                "language": "fr",
+                                "voice": "Serena",
+                                "tone": "neutral",
+                                "title": "",
+                                "seconds": 44,
+                                "segments": [
+                                    {"n": 1, "title": "scene",
+                                     "path": "/media/none.mp3", "seconds": 44}
+                                ],
+                                "created_at": "2026-11-13T10:00:00",
+                            }
+                        ],
+                    }
+                ),
+            ),
+        )
+        page.route("**/media/none.mp3", lambda route: route.fulfill(status=404, body=""))
+
+        for width, height in ((1280, 900), (820, 1180), (390, 844)):
+            page.set_viewport_size({"width": width, "height": height})
+            page.goto(f"{BASE_URL}/adventures/{quiz_id}/play", wait_until="networkidle")
+            page.wait_for_selector(".audio-card", timeout=20000)
+            where = page.evaluate(
+                """() => {
+                  const text = document.querySelector(".adv-text");
+                  const card = document.querySelector(".audio-card");
+                  return {
+                    textTop: text ? Math.round(text.getBoundingClientRect().top) : -1,
+                    cardVisible: Boolean(card && card.offsetParent !== null),
+                    height: window.innerHeight,
+                  };
+                }"""
+            )
+            assert where["cardVisible"], f"no player at {width}x{height}"
+            # One line of the paragraph, not just its first pixel, must be on screen.
+            assert where["textTop"] <= where["height"] - 80, (
+                f"the words start at {where['textTop']} px on a {where['height']} px screen "
+                f"({width}x{height})"
+            )
+            expect(page.locator(".adv-text")).to_be_visible()
+
         assert not [error for error in recorder.errors if "pageerror" in error], recorder.errors
     finally:
         context.close()
