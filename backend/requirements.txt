@@ -1,4 +1,4 @@
-fastapi==0.162.2
+fastapi==0.162.5
 uvicorn[standard]==0.54.0
 sqlalchemy==2.1.8
 pydantic==2.14.3
@@ -10,9 +10,9 @@ nh3==0.3.7
 pillow==13.0.0
 python-multipart==0.0.33
 httpx==0.28.1
-markdown-it-py==4.2.0
-mdit-py-plugins==0.6.1
+markdown-it-py==4.3.0
+mdit-py-plugins==0.7.0
 reportlab==5.1.0
 python3-saml==1.16.0
-psycopg[binary]==3.3.8
-PyMySQL==1.2.3
+psycopg[binary]==3.3.9
+PyMySQL==1.2.4
