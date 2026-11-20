@@ -381,7 +381,7 @@ async function _wikiEditor(root, params) {
   });
 
   const currentMarkdown = () =>
-    model.mode === "wysiwyg" ? htmlToMarkdown(wysiwyg.innerHTML) : textarea.value;
+    model.mode === "wysiwyg" ? htmlToMarkdown(wysiwyg) : textarea.value;
 
   const paintPreview = () => {
     preview.innerHTML = markdownToHtml(currentMarkdown(), { pages: pageSlugMap() });

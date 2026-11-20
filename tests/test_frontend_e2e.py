@@ -1466,6 +1466,45 @@ def test_the_dashboard_row_offers_a_view_button_and_icon_actions(browser):
         context.close()
 
 
+def test_saving_a_page_walks_the_surface_instead_of_reparsing_it(browser):
+    """A table typed inside a paragraph keeps its rows; attributes stay behind.
+
+    `htmlToMarkdown` read `.innerHTML` and parsed it back: a sink shaped like
+    cross-site scripting, and the reason a block the editor had nested in a
+    paragraph lost its rows when the page was saved. The converter now walks a
+    detached clone of the editing surface and lifts the swallowed block itself.
+    """
+    context, page, recorder = new_page(browser, viewport=(1280, 900))
+    try:
+        page.goto(f"{BASE_URL}/", wait_until="networkidle")
+        result = page.evaluate(
+            """async () => {
+              const mod = await import("/js/markdown.js");
+              const surface = document.createElement("div");
+              surface.innerHTML =
+                '<p>Avant<table><tbody><tr><th>A</th><th>B</th></tr>' +
+                '<tr><td>1</td><td>2</td></tr></tbody></table>Apres' +
+                '<img src="/media/x.png" alt="plan" onerror="alert(1)"></p>';
+              const before = surface.innerHTML;
+              const markdown = mod.htmlToMarkdown(surface);
+              return {
+                markdown,
+                html: mod.markdownToHtml(markdown),
+                untouched: surface.innerHTML === before,
+              };
+            }"""
+        )
+        assert result["untouched"], "the editing surface changed while being saved"
+        markdown = result["markdown"]
+        assert "| A | B |" in markdown, markdown
+        assert "Avant" in markdown and "Apres" in markdown, markdown
+        assert "onerror" not in markdown.lower(), markdown
+        assert "![plan](/media/x.png)" in markdown, markdown
+        assert "<table" in result["html"], result["html"]
+    finally:
+        context.close()
+
+
 def test_the_wiki_diff_is_side_by_side_and_a_markdown_file_imports(browser):
     """Two panes, green additions, red removals — and a .md file becomes a page."""
     context, page, recorder = new_page(browser, viewport=(1440, 980))

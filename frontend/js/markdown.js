@@ -499,16 +499,57 @@ function stripLayoutWhitespace(node) {
   }
 }
 
-/** WYSIWYG -> markdown. Inverse of `markdownToHtml`, for the save path. */
-export function htmlToMarkdown(html) {
-  // `<template>` parses its content without a browsing context: no script runs,
-  // no image is fetched, no handler fires. It also keeps the parser's repair
-  // rules — DOMParser does not, and it nests a table inside the paragraph the
-  // editor inserted it into, which used to drop the table from the saved page.
-  const template = document.createElement("template");
-  template.innerHTML = html || "";
-  const container = document.createElement("div");
-  container.append(template.content);
+/** Blocks the HTML parser lifts out of a paragraph, and so must we.
+ *
+ * The editor inserts a table or a list where the caret is, which puts the block
+ * inside the paragraph around it. The parser repairs that nesting by closing the
+ * paragraph first; reading `.innerHTML` back and re-parsing did the same thing,
+ * and that is what used to drop the table from a saved page. */
+const LIFTED_TAGS = new Set([
+  "table", "ul", "ol", "pre", "blockquote", "hr", "figure",
+  "h1", "h2", "h3", "h4", "h5", "h6", "details", "div", "section",
+]);
+
+/** Move the blocks a paragraph swallowed back out, splitting the text around them. */
+function liftBlocksOutOfParagraphs(root) {
+  for (const paragraph of Array.from(root.querySelectorAll("p"))) {
+    const swallowed = Array.from(paragraph.children).some((child) =>
+      LIFTED_TAGS.has(child.tagName.toLowerCase()),
+    );
+    if (!swallowed) continue;
+    const fragment = document.createDocumentFragment();
+    let line = document.createElement("p");
+    const flush = () => {
+      if (line.childNodes.length) fragment.append(line);
+      line = document.createElement("p");
+    };
+    for (const child of Array.from(paragraph.childNodes)) {
+      if (child.nodeType === Node.ELEMENT_NODE && LIFTED_TAGS.has(child.tagName.toLowerCase())) {
+        flush();
+        fragment.append(child);
+      } else {
+        line.append(child);
+      }
+    }
+    flush();
+    paragraph.replaceWith(fragment);
+  }
+}
+
+/** WYSIWYG -> markdown. Inverse of `markdownToHtml`, for the save path.
+ *
+ * `source` is the editing surface itself, or any node holding the same content:
+ * serializing it to a string and parsing it again turned authored text into HTML
+ * for no reason — the shape of a cross-site scripting sink — and lost the parser's
+ * repair of a block the paragraph had swallowed. A detached clone carries the
+ * nodes; `liftBlocksOutOfParagraphs` restores that repair without re-parsing.
+ */
+export function htmlToMarkdown(source) {
+  if (!(source instanceof Node)) {
+    throw new TypeError("htmlToMarkdown takes a node, not markup: parsing markup here was the sink.");
+  }
+  const container = source.cloneNode(true);
+  liftBlocksOutOfParagraphs(container);
   stripLayoutWhitespace(container);
   return childrenToMarkdown(container)
     .replace(/\n{3,}/g, "\n\n")

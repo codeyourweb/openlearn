@@ -94,7 +94,7 @@ export async function legalEditorView(panel) {
   const translateButton = panel.querySelector('[data-act="translate"]');
 
   const currentMarkdown = () =>
-    mode === "rich" ? htmlToMarkdown(surface.innerHTML).trim() : source.value.trim();
+    mode === "rich" ? htmlToMarkdown(surface).trim() : source.value.trim();
 
   const remember = () => {
     draft[language] = currentMarkdown();

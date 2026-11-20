@@ -221,6 +221,10 @@ def _send_syslog(payload: dict[str, Any], config: runtime.LogTargetConfig) -> No
     with socket.create_connection((host, port), timeout=3) as raw:
         if protocol == "tls":
             context = ssl.create_default_context()
+            # A collector is not a reason to accept TLS 1.0: syslog over TLS is
+            # RFC 5425, which asks for 1.2. Old protocols stayed negotiable
+            # because OpenSSL still enables them for compatibility.
+            context.minimum_version = ssl.TLSVersion.TLSv1_2
             if not config.tls_verify:
                 context.check_hostname = False
                 context.verify_mode = ssl.CERT_NONE
