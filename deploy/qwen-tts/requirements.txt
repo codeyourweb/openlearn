@@ -5,3 +5,7 @@ qwen-tts==0.1.1
 soundfile==0.13.1
 lameenc==1.8.1
 numpy==2.3.4
+# Not a dependency of this app: Gradio comes with qwen-tts and pins Pillow < 13,
+# whose releases up to 12.3.0 have three advisories. The Dockerfile removes it
+# and installs the patched Pillow instead.
+pillow==13.0.0

@@ -18,10 +18,16 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 COPY requirements.txt /app/requirements.txt
+# qwen-tts declares the Gradio UI, and Gradio pins Pillow below 13 — while Pillow
+# 12.3.0 and older carry three advisories on image decoding. This service never
+# opens an image and never imports Gradio (app.py is FastAPI + torch + soundfile),
+# so the UI is removed and Pillow moves to the patched release.
 RUN python -m pip install --upgrade pip \
     && python -m pip install --index-url https://download.pytorch.org/whl/cpu \
         torch==2.11.0 torchaudio==2.11.0 \
-    && python -m pip install -r /app/requirements.txt
+    && python -m pip install -r /app/requirements.txt \
+    && python -m pip uninstall -y gradio \
+    && python -m pip install "pillow==13.0.0"
 
 COPY app.py /app/app.py
 
