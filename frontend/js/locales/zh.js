@@ -594,6 +594,7 @@ export const zh = {
   "editor.correct": "正确",
   "editor.add_answer": "添加选项",
   "editor.delete_question": "删除此题目",
+  "editor.delete_question_confirm": "它的答案也会被删除。此操作无法撤销。",
   "editor.move_up": "上移",
   "editor.move_down": "下移",
   "editor.save": "保存测验",

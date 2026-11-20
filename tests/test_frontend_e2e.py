@@ -740,6 +740,184 @@ def test_editor_autosaves_the_draft_across_a_reload(browser):
         context.close()
 
 
+def test_the_editor_deletes_the_question_that_was_clicked(browser):
+    """The cross removes the card under the pointer, not the last one, and asks first.
+
+    A report from the demo's author: deleting the first question removed the last
+    one. The repaint read the cards back into the model after the list had
+    already changed, so every card wrote its text on its neighbour.
+    """
+    context, page, recorder = new_page(browser)
+    try:
+        email = f"delete-{uuid.uuid4().hex[:8]}@example.com"
+        register_through_ui(page, email, "Delete Tester")
+        csrf = next(cookie["value"] for cookie in context.cookies() if cookie["name"] == "ol_csrf")
+        headers = {"X-CSRF-Token": csrf}
+        created = context.request.post(
+            f"{BASE_URL}/api/v1/quizzes",
+            headers=headers,
+            data={
+                "title": "Quatre questions numérotées",
+                "description": "",
+                "mode": "qcm",
+                "questions": [
+                    {
+                        "text_html": f"<p>Question {number}</p>",
+                        "time_limit_seconds": 30,
+                        "points": 100,
+                        "options": [
+                            {"text": f"Bonne {number}", "is_correct": True},
+                            {"text": f"Mauvaise {number}", "is_correct": False},
+                        ],
+                    }
+                    for number in range(1, 5)
+                ],
+            },
+        )
+        assert created.ok, created.text()
+        quiz_id = created.json()["id"]
+
+        page.goto(f"{BASE_URL}/quizzes/{quiz_id}/edit", wait_until="networkidle")
+        expect(page.locator(".question-editor")).to_have_count(4, timeout=15000)
+
+        # Saying no keeps the question: the dialog is a real brake, not a notice.
+        page.locator(".question-editor").nth(1).locator('[data-act="remove-question"]').click()
+        dialog = page.locator("dialog.modal")
+        expect(dialog).to_be_visible()
+        dialog.locator('button[value="cancel"]').click()
+        expect(dialog).to_be_hidden()
+        expect(page.locator(".question-editor")).to_have_count(4)
+
+        page.locator(".question-editor").nth(1).locator('[data-act="remove-question"]').click()
+        page.locator("dialog.modal").locator('button[value="ok"]').click()
+        expect(page.locator(".question-editor")).to_have_count(3)
+
+        def words():
+            return [re.sub(r"\s+", " ", text).strip() for text in page.locator(".question-editor .rte").all_inner_texts()]
+
+        assert words() == ["Question 1", "Question 3", "Question 4"], words()
+        # What is written is what the server keeps, not just what is on screen.
+        expect(page.locator("#save-flag")).to_have_attribute("data-state", "saved", timeout=15000)
+        page.reload(wait_until="networkidle")
+        expect(page.locator(".question-editor")).to_have_count(3, timeout=15000)
+        assert words() == ["Question 1", "Question 3", "Question 4"], words()
+        assert recorder.errors == [], f"frontend errors: {recorder.errors}"
+    finally:
+        context.close()
+
+
+def test_moving_a_question_carries_its_words_along(browser):
+    """A swap of two questions also swaps their texts, and does not blend them."""
+    context, page, recorder = new_page(browser)
+    try:
+        email = f"move-{uuid.uuid4().hex[:8]}@example.com"
+        register_through_ui(page, email, "Move Tester")
+        csrf = next(cookie["value"] for cookie in context.cookies() if cookie["name"] == "ol_csrf")
+        headers = {"X-CSRF-Token": csrf}
+        created = context.request.post(
+            f"{BASE_URL}/api/v1/quizzes",
+            headers=headers,
+            data={
+                "title": "Trois questions à réordonner",
+                "description": "",
+                "mode": "qcm",
+                "questions": [
+                    {
+                        "text_html": f"<p>Question {number}</p>",
+                        "time_limit_seconds": 30,
+                        "points": 100,
+                        "options": [
+                            {"text": f"Bonne {number}", "is_correct": True},
+                            {"text": f"Mauvaise {number}", "is_correct": False},
+                        ],
+                    }
+                    for number in range(1, 4)
+                ],
+            },
+        )
+        assert created.ok, created.text()
+        quiz_id = created.json()["id"]
+
+        page.goto(f"{BASE_URL}/quizzes/{quiz_id}/edit", wait_until="networkidle")
+        expect(page.locator(".question-editor")).to_have_count(3, timeout=15000)
+        page.locator(".question-editor").nth(0).locator('[data-act="move-down"]').click()
+        expect(page.locator(".question-editor").first.locator(".rte")).to_contain_text("Question 2", timeout=10000)
+
+        texts = [re.sub(r"\s+", " ", text).strip() for text in page.locator(".question-editor .rte").all_inner_texts()]
+        assert texts == ["Question 2", "Question 1", "Question 3"], texts
+        expect(page.locator("#save-flag")).to_have_attribute("data-state", "saved", timeout=15000)
+        page.reload(wait_until="networkidle")
+        expect(page.locator(".question-editor")).to_have_count(3, timeout=15000)
+        texts = [re.sub(r"\s+", " ", text).strip() for text in page.locator(".question-editor .rte").all_inner_texts()]
+        assert texts == ["Question 2", "Question 1", "Question 3"], texts
+        assert recorder.errors == [], f"frontend errors: {recorder.errors}"
+    finally:
+        context.close()
+
+
+def test_a_generated_questionnaire_shows_its_first_question(browser):
+    """The generated questions arrive whole, the first one included.
+
+    The same stale-read bug emptied question one: the single blank card of the
+    new form was copied over the first generated question, and its two empty
+    answers over the first two options.
+    """
+    context, page, recorder = new_page(browser)
+    try:
+        email = f"generate-{uuid.uuid4().hex[:8]}@example.com"
+        register_through_ui(page, email, "Generate Tester")
+
+        draft = {
+            "draft": {
+                "title": "Réglementation des ERP",
+                "description": "Généré par le modèle.",
+                "questions": [
+                    {
+                        "text_html": f"<p>Question générée {number}</p>",
+                        "time_limit_seconds": 30,
+                        "points": 100,
+                        "options": [
+                            {"text": f"Réponse juste {number}", "is_correct": True},
+                            {"text": f"Réponse fausse {number}", "is_correct": False},
+                        ],
+                    }
+                    for number in range(1, 4)
+                ],
+            },
+            "saved": None,
+        }
+        page.route(
+            "**/api/v1/ai/status",
+            lambda route: route.fulfill(
+                status=200,
+                content_type="application/json",
+                body='{"available": true, "model": "stub-model"}',
+            ),
+        )
+        page.route(
+            "**/api/v1/ai/quizzes",
+            lambda route: route.fulfill(
+                status=200, content_type="application/json", body=json.dumps(draft)
+            ),
+        )
+
+        page.goto(f"{BASE_URL}/quizzes/new/qcm/ai", wait_until="networkidle")
+        page.fill("#ai-topic", "La réglementation des ERP dans les centres équestres")
+        # A draft address first: generation writes into an existing document.
+        expect(page).to_have_url(re.compile(r".*/quizzes/\d+/edit$"), timeout=15000)
+        page.click('[data-act="ai-generate"]')
+        expect(page.locator(".question-editor")).to_have_count(3, timeout=30000)
+
+        texts = [re.sub(r"\s+", " ", text).strip() for text in page.locator(".question-editor .rte").all_inner_texts()]
+        assert texts == ["Question générée 1", "Question générée 2", "Question générée 3"], texts
+        answers = page.locator('input[data-field="option-text"]')
+        assert answers.nth(0).input_value() == "Réponse juste 1"
+        assert answers.nth(1).input_value() == "Réponse fausse 1"
+        assert recorder.errors == [], f"frontend errors: {recorder.errors}"
+    finally:
+        context.close()
+
+
 def test_story_editor_links_and_deletes_nodes_with_the_mouse(browser):
     context, page, recorder = new_page(browser)
     try:
@@ -3067,7 +3245,9 @@ def test_a_scene_keeps_its_words_on_the_first_screen(browser):
         )
         page.route("**/media/none.mp3", lambda route: route.fulfill(status=404, body=""))
 
-        for width, height in ((1280, 900), (820, 1180), (390, 844)):
+        # 768 and 720 model a laptop whose browser chrome eats the screen: the
+        # case where the paragraph used to start below the fold.
+        for width, height in ((1280, 900), (1366, 768), (1280, 720), (820, 1180), (390, 844)):
             page.set_viewport_size({"width": width, "height": height})
             page.goto(f"{BASE_URL}/adventures/{quiz_id}/play", wait_until="networkidle")
             page.wait_for_selector(".audio-card", timeout=20000)
@@ -3083,8 +3263,9 @@ def test_a_scene_keeps_its_words_on_the_first_screen(browser):
                 }"""
             )
             assert where["cardVisible"], f"no player at {width}x{height}"
-            # One line of the paragraph, not just its first pixel, must be on screen.
-            assert where["textTop"] <= where["height"] - 80, (
+            # Five lines, not just the first pixel of the paragraph, must be on
+            # screen — one line reads as "there is no text, only the audio".
+            assert where["textTop"] <= where["height"] - 160, (
                 f"the words start at {where['textTop']} px on a {where['height']} px screen "
                 f"({width}x{height})"
             )

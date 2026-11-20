@@ -594,6 +594,7 @@ export const ja = {
   "editor.correct": "正解",
   "editor.add_answer": "選択肢を追加",
   "editor.delete_question": "この問題を削除",
+  "editor.delete_question_confirm": "回答も一緒に削除されます。この操作は元に戻せません。",
   "editor.move_up": "上に移動",
   "editor.move_down": "下に移動",
   "editor.save": "クイズを保存",

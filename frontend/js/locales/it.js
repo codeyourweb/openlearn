@@ -594,6 +594,7 @@ export const it = {
   "editor.correct": "Corretta",
   "editor.add_answer": "Aggiungi una risposta",
   "editor.delete_question": "Elimina questa domanda",
+  "editor.delete_question_confirm": "Anche le sue risposte saranno eliminate. L'operazione non è reversibile.",
   "editor.move_up": "Sposta su",
   "editor.move_down": "Sposta giù",
   "editor.save": "Salva quiz",

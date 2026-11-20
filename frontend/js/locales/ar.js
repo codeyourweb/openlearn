@@ -595,6 +595,7 @@ export const ar = {
   "editor.correct": "صحيحة",
   "editor.add_answer": "إضافة إجابة",
   "editor.delete_question": "حذف هذا السؤال",
+  "editor.delete_question_confirm": "ستُحذف إجاباتها أيضًا. لا يمكن التراجع عن هذا الإجراء.",
   "editor.move_up": "أعلى",
   "editor.move_down": "أسفل",
   "editor.save": "حفظ الاختبار",

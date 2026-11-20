@@ -594,6 +594,7 @@ export const es = {
   "editor.correct": "Correcta",
   "editor.add_answer": "Añadir respuesta",
   "editor.delete_question": "Eliminar esta pregunta",
+  "editor.delete_question_confirm": "También se eliminarán sus respuestas. Esta acción no se puede deshacer.",
   "editor.move_up": "Subir",
   "editor.move_down": "Bajar",
   "editor.save": "Guardar cuestionario",

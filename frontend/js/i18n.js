@@ -663,6 +663,7 @@ export const en = {
   "editor.correct": "Correct",
   "editor.add_answer": "Add an answer",
   "editor.delete_question": "Delete this question",
+  "editor.delete_question_confirm": "Its answers will be removed too. This cannot be undone.",
   "editor.move_up": "Move up",
   "editor.move_down": "Move down",
   "editor.save": "Save quiz",

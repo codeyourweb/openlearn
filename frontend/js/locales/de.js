@@ -594,6 +594,7 @@ export const de = {
   "editor.correct": "Korrekt",
   "editor.add_answer": "Antwort hinzufügen",
   "editor.delete_question": "Diese Frage löschen",
+  "editor.delete_question_confirm": "Die Antworten werden mitgelöscht. Das lässt sich nicht rückgängig machen.",
   "editor.move_up": "Nach oben verschieben",
   "editor.move_down": "Nach unten verschieben",
   "editor.save": "Quiz speichern",

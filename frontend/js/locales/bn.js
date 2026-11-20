@@ -595,6 +595,7 @@ export const bn = {
   "editor.correct": "সঠিক",
   "editor.add_answer": "উত্তর যোগ করুন",
   "editor.delete_question": "এই প্রশ্নটি মুছুন",
+  "editor.delete_question_confirm": "এর উত্তরগুলিও মুছে যাবে। এটি ফিরিয়ে আনা যাবে না।",
   "editor.move_up": "উপরে নিন",
   "editor.move_down": "নিচে নিন",
   "editor.save": "কুইজ সংরক্ষণ করুন",

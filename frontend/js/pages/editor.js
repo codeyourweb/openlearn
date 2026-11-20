@@ -365,7 +365,15 @@ export async function renderEditor({ id, mode, variant }) {
     // Anything the author typed lives in the DOM until it is read back: without
     // this, changing the timer, the format or the language repainted the form
     // and silently threw the question being written away.
-    if (questionsHost) syncFromDom();
+    //
+    // Only when the cards on screen still describe the same questions, though.
+    // After a generation replaced the list, or a question was deleted or moved,
+    // the cards are the previous document: reading them back wrote the old
+    // answers over the new ones — the first generated question came out empty
+    // and deleting the second question removed the last one.
+    if (questionsHost && questionsHost.querySelectorAll(".question-editor").length === model.questions.length) {
+      syncFromDom();
+    }
     root.innerHTML = `
       <div class="editor-head">
         <div>
@@ -716,6 +724,31 @@ export async function renderEditor({ id, mode, variant }) {
   };
 
   let questionsHost = null;
+
+  /* A question and its answers are the author's work: deleting one is the only
+     edit in this form that cannot be undone by typing again, so it asks first. */
+  const confirmDeletion = () =>
+    new Promise((resolve) => {
+      const dialog = document.createElement("dialog");
+      dialog.className = "modal";
+      dialog.innerHTML = `
+        <h3>${t("editor.delete_question")}</h3>
+        <p>${t("editor.delete_question_confirm")}</p>
+        <div class="modal-actions">
+          <form method="dialog"><button class="btn" value="cancel">${t("action.cancel")}</button></form>
+          <form method="dialog"><button class="btn btn-danger" value="ok">${t("action.delete")}</button></form>
+        </div>`;
+      document.body.appendChild(dialog);
+      dialog.addEventListener("close", () => {
+        const accepted = dialog.returnValue === "ok";
+        // A dialog that was answered is not needed any more; removing it keeps
+        // the page clean for the next deletion.
+        dialog.remove();
+        resolve(accepted);
+      });
+      dialog.showModal();
+    });
+
   const drawQuestions = (section) => {
     questionsHost = section.querySelector("#questions");
     questionsHost.innerHTML = model.questions.map((question, index) => questionCard(question, index, model)).join("");
@@ -1190,6 +1223,9 @@ export async function renderEditor({ id, mode, variant }) {
             translations: {},
           })),
         }));
+        // The cards on screen belong to the previous draft: repainting must
+        // show the generated questions instead of reading the old ones back.
+        questionsHost = null;
         tab = "content";
         markDirty();
         shell();
@@ -1267,11 +1303,15 @@ export async function renderEditor({ id, mode, variant }) {
     }
     if (action === "remove-question") {
       syncFromDom();
-      if (model.questions.length > 1) {
-        model.questions.splice(index, 1);
-        markDirty();
-        shell();
-      }
+      if (model.questions.length <= 1) return;
+      // Deleting a question is the one edit here that typing cannot undo.
+      if (!(await confirmDeletion())) return;
+      model.questions.splice(index, 1);
+      // The cards no longer match the model: the repaint must draw the new
+      // list, not read the old one back.
+      questionsHost = null;
+      markDirty();
+      shell();
       return;
     }
     if (action === "move-up" || action === "move-down") {
@@ -1280,6 +1320,9 @@ export async function renderEditor({ id, mode, variant }) {
       if (target >= 0 && target < model.questions.length) {
         const [moved] = model.questions.splice(index, 1);
         model.questions.splice(target, 0, moved);
+        // Same count, different order: reading the cards back would put each
+        // text on its neighbour.
+        questionsHost = null;
         markDirty();
         shell();
       }

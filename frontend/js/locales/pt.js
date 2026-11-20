@@ -595,6 +595,7 @@ export const pt = {
   "editor.correct": "Correta",
   "editor.add_answer": "Adicionar uma resposta",
   "editor.delete_question": "Eliminar esta pergunta",
+  "editor.delete_question_confirm": "As respostas também serão eliminadas. Esta ação não pode ser anulada.",
   "editor.move_up": "Subir",
   "editor.move_down": "Descer",
   "editor.save": "Guardar o quiz",

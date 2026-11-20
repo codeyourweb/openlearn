@@ -594,6 +594,7 @@ export const ru = {
   "editor.correct": "Правильный",
   "editor.add_answer": "Добавить вариант ответа",
   "editor.delete_question": "Удалить этот вопрос",
+  "editor.delete_question_confirm": "Ответы тоже будут удалены. Это действие нельзя отменить.",
   "editor.move_up": "Переместить выше",
   "editor.move_down": "Переместить ниже",
   "editor.save": "Сохранить викторину",

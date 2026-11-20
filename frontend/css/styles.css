@@ -784,14 +784,21 @@ pre code { background: none; padding: 0; }
    pushed them below the fold: at 1280x900 the text began at 844 px, and on a
    phone it started off-screen entirely. The cap follows the viewport instead, so
    illustration, player and first lines always share the first screen. */
-.adv-image { width: 100%; height: auto; max-height: min(460px, 38vh); object-fit: contain; background: var(--surface-2); display: block; border-bottom: 1px solid var(--border); }
+.adv-image { width: 100%; height: auto; max-height: clamp(140px, min(460px, 38vh, 100vh - 560px), 460px); object-fit: contain; background: var(--surface-2); display: block; border-bottom: 1px solid var(--border); }
+
+/* A laptop window is 640-720 px high once the browser chrome is out: 38vh left
+   about one line of text under the player, which reads as "only the audio is
+   there". The subtraction keeps at least ~200 px of prose on the first screen. */
+@media (max-height: 820px) {
+  .adv-image { max-height: clamp(130px, 100vh - 560px, 340px); }
+}
 
 @media (max-width: 900px) {
-  .adv-image { max-height: min(360px, 32vh); }
+  .adv-image { max-height: clamp(120px, min(360px, 32vh, 100vh - 480px), 360px); }
 }
 
 @media (max-width: 560px) {
-  .adv-image { max-height: 30vh; }
+  .adv-image { max-height: clamp(110px, min(26vh, 100vh - 470px), 320px); }
 }
 .adv-body { padding: 26px 28px 22px; display: grid; gap: 20px; }
 .adv-text { font-size: 18px; line-height: 1.6; }

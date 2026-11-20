@@ -595,6 +595,7 @@ export const hi = {
   "editor.correct": "सही",
   "editor.add_answer": "उत्तर जोड़ें",
   "editor.delete_question": "यह प्रश्न हटाएँ",
+  "editor.delete_question_confirm": "इसके उत्तर भी हट जाएँगे। इसे पूर्ववत नहीं किया जा सकता।",
   "editor.move_up": "ऊपर ले जाएँ",
   "editor.move_down": "नीचे ले जाएँ",
   "editor.save": "क्विज़ सहेजें",
