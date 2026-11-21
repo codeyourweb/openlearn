@@ -853,6 +853,8 @@ export const zh = {
   "error.unauthorized": "请先登录。",
   "error.forbidden": "您没有权限执行此操作。",
   "error.rate_limited": "请求过于频繁，请稍候。",
+  "error.rate_limited_wait": "请求过于频繁，请在 {n} 秒后重试。",
+  "error.rate_limited_minutes": "请求过于频繁，请在 {n} 分钟后重试。",
   "error.ai_unavailable": "AI 助手目前不可用。",
   "admin.kind": "类型",
   "admin.model": "模型",

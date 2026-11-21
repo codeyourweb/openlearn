@@ -49,7 +49,9 @@ def generate_quiz(
             status_code=503,
             detail="AI assistance is not configured on this instance.",
         )
-    enforce_rate_limit(request, "ai-generate", settings.ai_rate_limit, settings.ai_rate_window_seconds)
+    enforce_rate_limit(
+        request, "ai-generate", settings.ai_rate_limit, settings.ai_rate_window_seconds, strike=False
+    )
     enforce_ai_interval(user)
     try:
         generated = ai.generate_quiz(
@@ -140,7 +142,9 @@ def generate_adventure(
             status_code=503,
             detail="AI assistance is not configured on this instance.",
         )
-    enforce_rate_limit(request, "ai-adventure", settings.ai_rate_limit, settings.ai_rate_window_seconds)
+    enforce_rate_limit(
+        request, "ai-adventure", settings.ai_rate_limit, settings.ai_rate_window_seconds, strike=False
+    )
     enforce_ai_interval(user)
     try:
         generated = ai.generate_adventure(
@@ -186,7 +190,9 @@ def revise_adventure(
         raise HTTPException(status_code=404, detail="Story not found.")
     if quiz.owner_id != user.id and not user.is_staff:
         raise HTTPException(status_code=403, detail="You do not own this story.")
-    enforce_rate_limit(request, "ai-adventure", settings.ai_rate_limit, settings.ai_rate_window_seconds)
+    enforce_rate_limit(
+        request, "ai-adventure", settings.ai_rate_limit, settings.ai_rate_window_seconds, strike=False
+    )
     enforce_ai_interval(user)
 
     current = serialise_quiz(quiz, include_answers=True).get("adventure") or {}

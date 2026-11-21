@@ -9,6 +9,7 @@ import { LANGUAGES, currentLanguage, languageLabel, t } from "../i18n.js";
 import { navigate } from "../router.js";
 import { isLoggedIn } from "../store.js";
 import { escapeHtml, showBusyOverlay, showUploadProgress, toast } from "../ui.js";
+import { explainError } from "../errors.js";
 import { htmlToText, sanitizeHtml } from "../sanitize.js";
 
 const MAX_OPTIONS = 8;
@@ -1232,7 +1233,7 @@ export async function renderEditor({ id, mode, variant }) {
         toast(t("editor.saved"), "success");
       }
     } catch (error) {
-      toast(error.detail || t("common.error"), "error");
+      toast(explainError(error, t("common.error")), "error");
     } finally {
       busy?.done();
       button.disabled = false;

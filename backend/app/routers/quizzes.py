@@ -1615,7 +1615,9 @@ def translate_quiz(
     quiz = _get_quiz_or_404(db, quiz_id)
     if not _can_edit(quiz, user):
         raise HTTPException(status_code=403, detail="You do not own this quiz.")
-    enforce_rate_limit(request, "ai", settings.ai_rate_limit, settings.ai_rate_window_seconds)
+    enforce_rate_limit(
+        request, "ai", settings.ai_rate_limit, settings.ai_rate_window_seconds, strike=False
+    )
 
     source_language = quiz.default_language or FALLBACK_LANGUAGE
     targets = [lang for lang in payload.languages if lang != source_language]
@@ -1727,7 +1729,9 @@ def review_legal(
     if user is None or not _can_edit(quiz, user):
         if quiz.status != "public":
             raise HTTPException(status_code=404, detail="Quiz not found.")
-    enforce_rate_limit(request, "ai", settings.ai_rate_limit, settings.ai_rate_window_seconds)
+    enforce_rate_limit(
+        request, "ai", settings.ai_rate_limit, settings.ai_rate_window_seconds, strike=False
+    )
 
     cached = next(
         (
@@ -1780,7 +1784,9 @@ def review_answers(
     quiz = _get_quiz_or_404(db, quiz_id)
     if not _can_view(quiz, user):
         raise HTTPException(status_code=404, detail="Quiz not found.")
-    enforce_rate_limit(request, "ai", settings.ai_rate_limit, settings.ai_rate_window_seconds)
+    enforce_rate_limit(
+        request, "ai", settings.ai_rate_limit, settings.ai_rate_window_seconds, strike=False
+    )
 
     cached = next(
         (

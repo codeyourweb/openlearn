@@ -853,6 +853,8 @@ export const es = {
   "error.unauthorized": "Por favor, inicia sesión primero.",
   "error.forbidden": "No tienes permiso para realizar esta acción.",
   "error.rate_limited": "Demasiadas solicitudes, por favor espera un momento.",
+  "error.rate_limited_wait": "Demasiadas solicitudes: inténtalo de nuevo en {n} s.",
+  "error.rate_limited_minutes": "Demasiadas solicitudes: inténtalo de nuevo en {n} min.",
   "error.ai_unavailable": "La asistencia de IA no está disponible en este momento.",
   "admin.kind": "Tipo",
   "admin.model": "Modelo",

@@ -853,6 +853,8 @@ export const de = {
   "error.unauthorized": "Bitte melden Sie sich zuerst an.",
   "error.forbidden": "Diese Aktion ist Ihnen nicht gestattet.",
   "error.rate_limited": "Zu viele Anfragen, bitte warten Sie einen Moment.",
+  "error.rate_limited_wait": "Zu viele Anfragen — versuchen Sie es in {n} s erneut.",
+  "error.rate_limited_minutes": "Zu viele Anfragen — versuchen Sie es in {n} min erneut.",
   "error.ai_unavailable": "Die KI-Unterstützung ist derzeit nicht verfügbar.",
   "admin.kind": "Typ",
   "admin.model": "Modell",

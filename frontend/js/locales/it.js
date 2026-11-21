@@ -853,6 +853,8 @@ export const it = {
   "error.unauthorized": "Effettua prima l'accesso.",
   "error.forbidden": "Non hai l'autorizzazione per eseguire questa operazione.",
   "error.rate_limited": "Troppe richieste, attendere un istante.",
+  "error.rate_limited_wait": "Troppe richieste: riprova tra {n} s.",
+  "error.rate_limited_minutes": "Troppe richieste: riprova tra {n} min.",
   "error.ai_unavailable": "L'assistenza AI non è disponibile al momento.",
   "admin.kind": "Tipo",
   "admin.model": "Modello",

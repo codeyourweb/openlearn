@@ -5,12 +5,14 @@
 const CSRF_COOKIE = "ol_csrf";
 
 export class ApiError extends Error {
-  constructor(status, detail, payload) {
+  constructor(status, detail, payload, retryAfter = 0) {
     super(detail || `HTTP ${status}`);
     this.name = "ApiError";
     this.status = status;
     this.detail = detail;
     this.payload = payload;
+    // Seconds the server asked us to wait, when it said so (429 + Retry-After).
+    this.retryAfter = retryAfter;
   }
 }
 
@@ -57,7 +59,8 @@ async function request(method, path, { body, headers = {}, raw = false, withHead
     if (Array.isArray(detail)) {
       detail = detail.map((item) => item.msg || item.detail || "Invalid value").join("; ");
     }
-    throw new ApiError(response.status, detail || response.statusText, payload);
+    const retryAfter = Number(response.headers.get("Retry-After")) || 0;
+    throw new ApiError(response.status, detail || response.statusText, payload, retryAfter);
   }
   // Callers that paginate need ``X-Total-Count`` from the same response.
   return withHeaders ? { data: payload, headers: response.headers } : payload;

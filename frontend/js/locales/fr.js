@@ -853,6 +853,8 @@ export const fr = {
   "error.unauthorized": "Veuillez d'abord vous connecter.",
   "error.forbidden": "Vous n'êtes pas autorisé à effectuer cette action.",
   "error.rate_limited": "Trop de requêtes, veuillez patienter un instant.",
+  "error.rate_limited_wait": "Trop de requêtes — réessayez dans {n} s.",
+  "error.rate_limited_minutes": "Trop de requêtes — réessayez dans {n} min.",
   "error.ai_unavailable": "L'assistance IA est actuellement indisponible.",
   "admin.kind": "Type",
   "admin.model": "Modèle",

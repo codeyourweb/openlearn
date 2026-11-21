@@ -853,6 +853,8 @@ export const pt = {
   "error.unauthorized": "Inicie sessão primeiro.",
   "error.forbidden": "Não tem autorização para efetuar esta ação.",
   "error.rate_limited": "Demasiados pedidos, aguarde um momento.",
+  "error.rate_limited_wait": "Demasiados pedidos: tente novamente em {n} s.",
+  "error.rate_limited_minutes": "Demasiados pedidos: tente novamente em {n} min.",
   "error.ai_unavailable": "A assistência de IA está atualmente indisponível.",
   "admin.kind": "Tipo",
   "admin.model": "Modelo",

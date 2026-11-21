@@ -160,3 +160,34 @@ def test_the_interval_does_not_reveal_whether_the_account_exists(client, mailbox
     assert throttled.status_code == unknown.status_code == 202
     assert throttled.json() == unknown.json()
     assert DEFAULT_PASSWORD  # the fixture password is the documented valid one
+
+
+def test_the_hourly_ai_allowance_never_bans_the_author(tight_ban):
+    """A budget a human can spend by working is not abuse.
+
+    Reaching the AI allowance used to record a strike like any refused form, so
+    three honest generations in an hour ended with the address banned from the
+    whole site — the author saw "too many requests" on her first command of the
+    day. The AI buckets no longer strike; the forms still do.
+    """
+    from fastapi import HTTPException
+    from starlette.requests import Request
+
+    from app.deps import enforce_rate_limit
+
+    request = Request({"type": "http", "client": ("203.0.113.9", 5000), "headers": []})
+
+    enforce_rate_limit(request, "ai-generate-proof", 1, 3600, strike=False)
+    for _ in range(4):
+        with pytest.raises(HTTPException) as refused:
+            enforce_rate_limit(request, "ai-generate-proof", 1, 3600, strike=False)
+        assert getattr(refused.value, "status_code", None) == 429
+    assert abuse.BANS.banned_for("203.0.113.9") == 0, "the AI allowance must not ban"
+
+    # A form that keeps being refused still escalates into a ban: the first
+    # call spends the budget, the next two are strikes, and the second strikes.
+    enforce_rate_limit(request, "auth-proof", 1, 3600)
+    for _ in range(2):
+        with pytest.raises(HTTPException):
+            enforce_rate_limit(request, "auth-proof", 1, 3600)
+    assert abuse.BANS.banned_for("203.0.113.9") > 0

@@ -853,6 +853,8 @@ export const hi = {
   "error.unauthorized": "कृपया पहले साइन इन करें।",
   "error.forbidden": "आपको यह क्रिया करने की अनुमति नहीं है।",
   "error.rate_limited": "बहुत अधिक अनुरोध, कृपया थोड़ी देर प्रतीक्षा करें।",
+  "error.rate_limited_wait": "बहुत अधिक अनुरोध — {n} सेकंड बाद पुनः प्रयास करें।",
+  "error.rate_limited_minutes": "बहुत अधिक अनुरोध — {n} मिनट बाद पुनः प्रयास करें।",
   "error.ai_unavailable": "AI सहायता अभी उपलब्ध नहीं है।",
   "admin.kind": "प्रकार",
   "admin.model": "मॉडल",

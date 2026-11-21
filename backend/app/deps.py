@@ -67,13 +67,20 @@ def external_base_url(request: Request) -> str:
     return f"{proto}://{host}".rstrip("/")
 
 
-def enforce_rate_limit(request: Request, bucket: str, limit: int, window: int) -> None:
+def enforce_rate_limit(
+    request: Request, bucket: str, limit: int, window: int, *, strike: bool = True
+) -> None:
     """Refuse a request past its budget, and remember who keeps coming back.
 
     The strike is recorded on every rejection, so a script that walks through
     addresses, or retries a form it was already told to slow down on, ends up
     banned from the forms for a while instead of being politely deferred each
     time. See :mod:`app.abuse` for the threshold and the allowlist.
+
+    ``strike=False`` is for a budget a human can spend by working — the hourly
+    AI allowance. An author who reaches it with honest generations must not be
+    turned into an abuser and locked out of every form on the site, which is
+    what a shared strike counter did.
     """
     ip = client_ip(request)
     banned = abuse.BANS.banned_for(ip)
@@ -85,7 +92,8 @@ def enforce_rate_limit(request: Request, bucket: str, limit: int, window: int) -
         )
     allowed, retry_after = rate_limiter.check(f"{bucket}:{ip}", limit, window)
     if not allowed:
-        abuse.BANS.strike(ip)
+        if strike:
+            abuse.BANS.strike(ip)
         raise HTTPException(
             status_code=status.HTTP_429_TOO_MANY_REQUESTS,
             detail="Too many requests. Please slow down.",

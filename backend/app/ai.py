@@ -203,6 +203,16 @@ def _json_call(messages: list[dict[str, str]], *, max_tokens: int = 3000, temper
 # ---------------------------------------------------------------------------
 # Web grounding (optional)
 # ---------------------------------------------------------------------------
+def _clip(raw: object, limit: int) -> str:
+    """A search snippet, trimmed to what the field accepts.
+
+    The search engine writes the summary; nothing here is trusted, and nothing
+    here may be long enough to be refused by `sanitize_plain`.
+    """
+    text = " ".join(str(raw or "").replace("\x00", "").split())
+    return text[:limit].rstrip()
+
+
 def web_context(query: str, *, limit: int = 5) -> list[str]:
     """Return short snippets from a SearXNG instance, or [] when unconfigured.
 
@@ -223,8 +233,12 @@ def web_context(query: str, *, limit: int = 5) -> list[str]:
         return []
     snippets: list[str] = []
     for result in (data.get("results") or [])[:limit]:
-        title = sanitize_plain(str(result.get("title") or ""), max_length=120)
-        body = sanitize_plain(str(result.get("content") or ""), max_length=400)
+        # A snippet longer than the field limit used to raise out of
+        # sanitize_plain, so one verbose search result took the whole generation
+        # down with a 500. Grounding is context, not content: cut it to fit and
+        # move on.
+        title = _clip(result.get("title"), 120)
+        body = _clip(result.get("content"), 400)
         if title or body:
             snippets.append(f"- {title}: {body}".strip())
     return snippets

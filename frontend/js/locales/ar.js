@@ -853,6 +853,8 @@ export const ar = {
   "error.unauthorized": "يرجى تسجيل الدخول أولاً.",
   "error.forbidden": "غير مسموح لك بتنفيذ هذا الإجراء.",
   "error.rate_limited": "طلبات كثيرة جدًا، يرجى الانتظار لحظة.",
+  "error.rate_limited_wait": "طلبات كثيرة جدًا — أعد المحاولة خلال {n} ثانية.",
+  "error.rate_limited_minutes": "طلبات كثيرة جدًا — أعد المحاولة خلال {n} دقيقة.",
   "error.ai_unavailable": "مساعدة الذكاء الاصطناعي غير متاحة حاليًا.",
   "admin.kind": "النوع",
   "admin.model": "النموذج",

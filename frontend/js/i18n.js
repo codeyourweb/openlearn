@@ -929,6 +929,8 @@ export const en = {
   "error.unauthorized": "Please sign in first.",
   "error.forbidden": "You are not allowed to do that.",
   "error.rate_limited": "Too many requests, please wait a moment.",
+  "error.rate_limited_wait": "Too many requests — try again in {n} s.",
+  "error.rate_limited_minutes": "Too many requests — try again in {n} min.",
   "error.ai_unavailable": "AI assistance is unavailable right now.",
   "admin.kind": "Type",
   "admin.model": "Model",

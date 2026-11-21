@@ -853,6 +853,8 @@ export const ru = {
   "error.unauthorized": "Пожалуйста, сначала войдите в систему.",
   "error.forbidden": "У вас нет прав для этого действия.",
   "error.rate_limited": "Слишком много запросов, пожалуйста, подождите.",
+  "error.rate_limited_wait": "Слишком много запросов — повторите через {n} с.",
+  "error.rate_limited_minutes": "Слишком много запросов — повторите через {n} мин.",
   "error.ai_unavailable": "Помощь ИИ сейчас недоступна.",
   "admin.kind": "Тип",
   "admin.model": "Модель",

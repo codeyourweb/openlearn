@@ -107,7 +107,10 @@ class Settings(BaseSettings):
     join_rate_window_seconds: int = 60
     api_rate_limit: int = 600
     api_rate_window_seconds: int = 60
-    ai_rate_limit: int = 6  # AI reviews are expensive: 6 per hour per IP
+    # AI calls are expensive, but an author spends several in an hour: one
+    # generation, the translations, the safety review. Six refused honest
+    # work; the model gateway caps the real cost (rpm and a monthly budget).
+    ai_rate_limit: int = 20
     ai_rate_window_seconds: int = 3600
     # One model call per account per window: the provider saturates quickly when
     # a page lets the same author fire several translations in a row.

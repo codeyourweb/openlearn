@@ -39,7 +39,7 @@ Name shown in the interface and in outgoing mail.
 SQLAlchemy URL: SQLite by default, or a PostgreSQL/MySQL server.
 
 - Type: `str`
-- Default: `f'sqlite:///{BASE_DIR / 'data' / 'openlearn.db'}'`
+- Default: `f"sqlite:///{BASE_DIR / 'data' / 'openlearn.db'}"`
 - Read as: `settings.database_url`
 
 ### OL_DEBUG
@@ -383,7 +383,7 @@ Model used for quizzes and general work.
 Model calls allowed per window, per account. Reviews are expensive.
 
 - Type: `int`
-- Default: `6`
+- Default: `20`
 - Read as: `settings.ai_rate_limit`
 
 ### OL_AI_RATE_WINDOW_SECONDS

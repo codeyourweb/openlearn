@@ -853,6 +853,8 @@ export const bn = {
   "error.unauthorized": "অনুগ্রহ করে আগে লগইন করুন।",
   "error.forbidden": "এই কাজটি করার অনুমতি আপনার নেই।",
   "error.rate_limited": "অনেক বেশি অনুরোধ, একটু অপেক্ষা করুন।",
+  "error.rate_limited_wait": "অনেক বেশি অনুরোধ — {n} সেকেন্ড পরে আবার চেষ্টা করুন।",
+  "error.rate_limited_minutes": "অনেক বেশি অনুরোধ — {n} মিনিট পরে আবার চেষ্টা করুন।",
   "error.ai_unavailable": "এআই সহায়তা এই মুহূর্তে উপলব্ধ নয়।",
   "admin.kind": "ধরন",
   "admin.model": "মডেল",

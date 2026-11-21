@@ -14,6 +14,7 @@ import { LANGUAGES, currentLanguage, t } from "../i18n.js";
 import { navigate } from "../router.js";
 import { isLoggedIn } from "../store.js";
 import { escapeHtml, toast } from "../ui.js";
+import { explainError } from "../errors.js";
 
 function escapeAttr(value) {
   return String(value)
@@ -184,8 +185,7 @@ export async function renderAdventureAi() {
       // one, and nothing about it is generated-only.
       navigate(`/adventures/${quiz.id}/edit`, { replace: true });
     } catch (error) {
-      const detail = (error.payload && error.payload.detail) || error.detail || "";
-      toast(detail || t("adv_new.failed"), "error");
+      toast(explainError(error, t("adv_new.failed")), "error");
       status.textContent = "";
       button.disabled = false;
     }

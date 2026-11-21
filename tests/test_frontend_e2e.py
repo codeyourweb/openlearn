@@ -740,6 +740,91 @@ def test_editor_autosaves_the_draft_across_a_reload(browser):
         context.close()
 
 
+def test_a_refused_ai_generation_says_how_long_to_wait(browser):
+    """A 429 is answered in the reader's language, with the delay it asked for.
+
+    The interface used to print the API's English sentence, so an author who had
+    spent her hourly AI allowance was told "Too many requests. Please slow down."
+    with no idea of when it would come back.
+    """
+    context, page, recorder = new_page(browser)
+    try:
+        email = f"quota-{uuid.uuid4().hex[:8]}@example.com"
+        register_through_ui(page, email, "Quota Tester")
+        csrf = next(cookie["value"] for cookie in context.cookies() if cookie["name"] == "ol_csrf")
+        created = context.request.post(
+            f"{BASE_URL}/api/v1/quizzes",
+            headers={"X-CSRF-Token": csrf},
+            data={
+                "title": "Questionnaire pour le quota",
+                "description": "",
+                "mode": "swipe",
+                "questions": [
+                    {
+                        "text_html": "<p>Le ciel est bleu.</p>",
+                        "time_limit_seconds": 30,
+                        "points": 100,
+                        "options": [
+                            {"text": "Yes", "is_correct": True},
+                            {"text": "No", "is_correct": False},
+                        ],
+                    },
+                    {
+                        "text_html": "<p>La mer est rouge.</p>",
+                        "time_limit_seconds": 30,
+                        "points": 100,
+                        "options": [
+                            {"text": "Yes", "is_correct": False},
+                            {"text": "No", "is_correct": True},
+                        ],
+                    },
+                ],
+            },
+            fail_on_status_code=True,
+        )
+        quiz_id = created.json()["id"]
+
+        # The model gateway answers what our own hourly budget answers.
+        def refuse(route):
+            route.fulfill(
+                status=429,
+                headers={"Content-Type": "application/json", "Retry-After": "120"},
+                body=json.dumps({"detail": "Too many requests. Please slow down."}),
+            )
+
+        # The panel is hidden when the instance has no model configured, and a
+        # disposable instance has none: report one, then refuse its calls.
+        page.route(
+            "**/api/v1/ai/status",
+            lambda route: route.fulfill(
+                status=200,
+                headers={"Content-Type": "application/json"},
+                body=json.dumps(
+                    {
+                        "available": True,
+                        "model": "e2e-model",
+                        "languages": ["fr", "en"],
+                        "web_search": False,
+                        "enabled": True,
+                    }
+                ),
+            ),
+        )
+        page.route("**/api/v1/ai/quizzes", refuse)
+        page.goto(f"{BASE_URL}/quizzes/{quiz_id}/edit", wait_until="networkidle")
+        # The AI form is a folded card on the content tab.
+        page.click("details.ai-draft-card summary")
+        page.fill("#ai-topic", "La photosynthèse")
+        page.click('[data-act="ai-generate"]')
+        toast = page.locator("#toast-region .toast").first
+        toast.wait_for(state="visible", timeout=15000)
+        message = toast.inner_text()
+        assert "slow down" not in message, message
+        assert "2 min" in message, message
+    finally:
+        context.close()
+
+
 def test_the_editor_deletes_the_question_that_was_clicked(browser):
     """The cross removes the card under the pointer, not the last one, and asks first.
 

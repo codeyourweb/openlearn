@@ -853,6 +853,8 @@ export const ja = {
   "error.unauthorized": "先にサインインしてください。",
   "error.forbidden": "この操作を行う権限がありません。",
   "error.rate_limited": "リクエストが多すぎます。しばらくお待ちください。",
+  "error.rate_limited_wait": "リクエストが多すぎます。{n} 秒後にもう一度お試しください。",
+  "error.rate_limited_minutes": "リクエストが多すぎます。{n} 分後にもう一度お試しください。",
   "error.ai_unavailable": "現在、AIアシスタンスをご利用いただけません。",
   "admin.kind": "タイプ",
   "admin.model": "モデル",

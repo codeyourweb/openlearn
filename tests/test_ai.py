@@ -626,3 +626,51 @@ def test_a_fill_job_hands_back_the_body_and_writes_nothing(client, fake_ai, monk
     after = client.get(f"/api/v1/wiki/pages/{home['id']}").json()
     assert after["version"] == before["version"]
     assert after["content_md"] == before["content_md"]
+
+
+def test_a_verbose_search_snippet_is_cut_instead_of_breaking_the_generation(monkeypatch):
+    """Grounding is context: a long result must not take the request down.
+
+    The search engine's summary went to `sanitize_plain` with a 400-character
+    limit, which raises. One verbose result therefore turned a generation into a
+    500 — and each failed attempt spent the hourly AI budget, so the author was
+    then refused with "too many requests" without having generated anything.
+    """
+    monkeypatch.setattr(settings, "search_base_url", "http://searxng.test")
+
+    long_body = "Grounding sentence. " * 120  # ~2 200 characters
+    assert len(long_body) > 400
+
+    class FakeResponse:
+        def raise_for_status(self):
+            return None
+
+        def json(self):
+            return {
+                "results": [
+                    {"title": "A very long title " * 20, "content": long_body},
+                    {"title": "Short", "content": "A short summary."},
+                ]
+            }
+
+    class FakeClient:
+        def __init__(self, *args, **kwargs):
+            pass
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *exc):
+            return False
+
+        def get(self, *args, **kwargs):
+            return FakeResponse()
+
+    monkeypatch.setattr(ai_module.httpx, "Client", FakeClient)
+
+    snippets = ai_module.web_context("kerberos")
+
+    assert len(snippets) == 2
+    # "- " + title (120) + ": " + body (400) at most, instead of a raised error.
+    assert all(len(snippet) <= 120 + 400 + 4 for snippet in snippets), snippets
+    assert "A short summary." in snippets[1]
